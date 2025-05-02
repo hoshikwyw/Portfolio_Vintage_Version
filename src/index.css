@@ -1,0 +1,33 @@
+@import "tailwindcss";
+
+@theme {
+  --color-main-white: #FFFFFF;
+  --color-secondary-white: #dfdde0;
+  --color-light-white: #dad9e1;
+  --color-dark-blue: #5768AD;
+  --color-light-blue: #7d9adc;
+  --color-main-black: #000000;
+  --color-medium-black: #45473a;
+  --color-light-black: #a9a9ab;
+  --color-green: #c0e692;
+  --color-gold: #ebbd8c;
+  --color-pink: #f3a3c0;
+}
+
+.menuBarPadding {
+  padding: 10px 21px;
+  border: 1px solid var(--color-main-black);
+  border-radius: 26px;
+  filter: drop-shadow(0px 4px 4px #C7C7C7);
+}
+
+.searchBarPadding {
+  padding: 2px 5px;
+  min-width: 400px;
+  border: 1px solid var(--color-main-black);
+  border-radius: 10px;
+}
+
+.inputPadding {
+  padding: 4px 14px;
+}
