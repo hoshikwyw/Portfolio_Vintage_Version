@@ -11,7 +11,7 @@ const App = () => {
         <div>
           <WindowFrame />
         </div>
-        <div className="fixed bottom-3">
+        <div className="fixed bottom-3 z-50">
           <MenuBar />
         </div>
       </div>

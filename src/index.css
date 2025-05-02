@@ -19,6 +19,7 @@
   border: 1px solid var(--color-main-black);
   border-radius: 26px;
   filter: drop-shadow(0px 4px 4px #C7C7C7);
+  z-index: 1000;
 }
 
 .searchBarPadding {
@@ -69,4 +70,76 @@
 
 .group:hover .tooltip {
   opacity: 1;
+}
+
+.windowFrame {
+  position: absolute;
+  top: 50px;
+  left: 50px;
+  width: 400px;
+  height: 300px;
+  background-color: var(--color-dark-blue);
+  border: 1px solid var(--color-main-black);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  resize: both;
+}
+
+.windowHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-main-black);
+  color: var(--color-main-white);
+  padding: 8px 12px;
+  cursor: move;
+}
+
+.windowTitle {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.windowControls button {
+  background: none;
+  border: none;
+  color: var(--color-main-white);
+  font-size: 16px;
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+.windowControls button:hover {
+  color: var(--color-gold);
+}
+
+.windowContent {
+  padding: 16px;
+  color: var(--color-main-white);
+  overflow: auto;
+}
+
+.minimizeBtn {
+  font-size: 14px;
+}
+
+.maximizeBtn {
+  font-size: 14px;
+}
+
+.closeBtn {
+  font-size: 18px;
+  color: var(--color-pink);
+}
+
+.closeBtn:hover {
+  color: red;
+}
+
+.draggable-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden; /* Prevent content from overflowing the viewport */
 }

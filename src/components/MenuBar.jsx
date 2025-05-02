@@ -4,11 +4,10 @@ import MenuIcon from '../common/MenuIcon'
 import { MenuContext } from '../utils/MenuContext'
 
 const MenuBar = () => {
-    const { menuName, setMenuName } = useContext(MenuContext)
+    const { openWindows, openWindow } = useContext(MenuContext)
 
     const handleMenuClick = (name) => {
-        console.log(`Menu clicked: ${name}`)
-        setMenuName(name)
+        openWindow(name) // Open the window for the selected menu
     }
 
     return (
@@ -16,27 +15,27 @@ const MenuBar = () => {
             <SearchBar />
             <div className="flex gap-10 items-center">
                 <MenuIcon
-                    icon='icons/home.svg'
-                    menuName='Home'
-                    isActive={menuName === 'Home'}
+                    icon="icons/home.svg"
+                    menuName="Home"
+                    isActive={openWindows.includes('Home')}
                     onClick={() => handleMenuClick('Home')}
                 />
                 <MenuIcon
-                    icon='icons/chatBox.svg'
-                    menuName='Chat'
-                    isActive={menuName === 'Chat'}
+                    icon="icons/chatBox.svg"
+                    menuName="Chat"
+                    isActive={openWindows.includes('Chat')}
                     onClick={() => handleMenuClick('Chat')}
                 />
                 <MenuIcon
-                    icon='icons/settings.svg'
-                    menuName='Settings'
-                    isActive={menuName === 'Settings'}
+                    icon="icons/settings.svg"
+                    menuName="Settings"
+                    isActive={openWindows.includes('Settings')}
                     onClick={() => handleMenuClick('Settings')}
                 />
                 <MenuIcon
-                    icon='icons/openFolder.svg'
-                    menuName='Folders'
-                    isActive={menuName === 'Folders'}
+                    icon="icons/openFolder.svg"
+                    menuName="Folders"
+                    isActive={openWindows.includes('Folders')}
                     onClick={() => handleMenuClick('Folders')}
                 />
             </div>
