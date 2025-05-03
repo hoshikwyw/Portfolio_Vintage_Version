@@ -11,7 +11,7 @@ const MenuBar = () => {
     }
 
     return (
-        <div className='bg-dark-blue flex justify-between items-center menuBarPadding gap-52'>
+        <div className='bg-dark-blue/50 flex justify-between items-center menuBarPadding gap-52'>
             <SearchBar />
             <div className="flex gap-10 items-center">
                 <MenuIcon

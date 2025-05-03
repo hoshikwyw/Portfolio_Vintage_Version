@@ -1,10 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-  --color-main-white: #FFFFFF;
+  --color-main-white: #ffffff;
   --color-secondary-white: #dfdde0;
   --color-light-white: #dad9e1;
-  --color-dark-blue: #5768AD;
+  --color-dark-blue: #5768ad;
   --color-light-blue: #7d9adc;
   --color-main-black: #000000;
   --color-medium-black: #45473a;
@@ -18,7 +18,7 @@
   padding: 10px 21px;
   border: 1px solid var(--color-main-black);
   border-radius: 26px;
-  filter: drop-shadow(0px 4px 4px #C7C7C7);
+  filter: drop-shadow(0px 4px 4px #c7c7c7);
   z-index: 1000;
 }
 
@@ -78,7 +78,7 @@
   left: 50px;
   width: 400px;
   height: 300px;
-  background-color: var(--color-dark-blue);
+  background-color: var(--color-main-white);
   border: 1px solid var(--color-main-black);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -90,15 +90,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--color-main-black);
+  background-color: var(--color-light-black);
   color: var(--color-main-white);
   padding: 8px 12px;
   cursor: move;
+  border-bottom: 1px solid var(--color-main-black);
 }
 
 .windowTitle {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
+  color: var(--color-main-black);
 }
 
 .windowControls button {
@@ -115,8 +117,8 @@
 }
 
 .windowContent {
-  padding: 16px;
-  color: var(--color-main-white);
+  margin: 10px;
+  color: var(--color-main-black);
   overflow: auto;
 }
 
@@ -129,7 +131,7 @@
 }
 
 .closeBtn {
-  font-size: 18px;
+  font-size: 12px;
   color: var(--color-pink);
 }
 
@@ -142,4 +144,11 @@
   height: 100vh;
   position: relative;
   overflow: hidden; /* Prevent content from overflowing the viewport */
+}
+
+.contentContainer {
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--color-main-black);
+  border-radius: 8px;
 }
