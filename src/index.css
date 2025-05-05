@@ -15,9 +15,10 @@
 }
 
 .menuBarPadding {
-  padding: 10px 21px;
+  /* margin: 0px 10px; */
+  padding: 2px 12px;
   border: 1px solid var(--color-main-black);
-  border-radius: 26px;
+  border-radius: 18px;
   filter: drop-shadow(0px 4px 4px #c7c7c7);
   z-index: 1000;
 }
@@ -30,12 +31,12 @@
 }
 
 .inputPadding {
-  padding: 4px 14px;
+  padding: 4px 10px;
 }
 
 .menuIconHover {
-  width: 52px;
-  height: 52px;
+  width: 32px;
+  height: 32px;
   &:hover {
     background-color: var(--color-light-blue);
     border-radius: 10px;
@@ -62,7 +63,7 @@
   padding: 4px 8px;
   background-color: var(--color-light-blue);
   color: var(--color-main-white);
-  font-size: 12px;
+  font-size: 8px;
   border-radius: 7px;
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
