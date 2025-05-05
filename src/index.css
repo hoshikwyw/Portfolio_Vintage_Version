@@ -25,7 +25,7 @@
 
 .searchBarPadding {
   padding: 2px 5px;
-  min-width: 400px;
+  min-width: 200px;
   border: 1px solid var(--color-main-black);
   border-radius: 10px;
 }
