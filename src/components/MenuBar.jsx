@@ -3,11 +3,12 @@ import SearchBar from '../common/SearchBar'
 import MenuIcon from '../common/MenuIcon'
 import { MenuContext } from '../utils/MenuContext'
 
-const MenuBar = () => {
+const MenuBar = ({ onMenuClick }) => {
     const { openWindows, openWindow } = useContext(MenuContext)
 
     const handleMenuClick = (name) => {
         openWindow(name) // Open the window for the selected menu
+        onMenuClick(name);
     }
 
     const currentDate = new Date()
@@ -33,22 +34,22 @@ const MenuBar = () => {
                         onClick={() => handleMenuClick('Home')}
                     />
                     <MenuIcon
+                        icon="icons/openFolder.svg"
+                        menuName="Projects"
+                        isActive={openWindows.includes('Projects')}
+                        onClick={() => handleMenuClick('Projects')}
+                    />
+                    <MenuIcon
                         icon="icons/chatBox.svg"
-                        menuName="Chat"
-                        isActive={openWindows.includes('Chat')}
-                        onClick={() => handleMenuClick('Chat')}
+                        menuName="Send-Message"
+                        isActive={openWindows.includes('Send-Message')}
+                        onClick={() => handleMenuClick('Send-Message')}
                     />
                     <MenuIcon
                         icon="icons/settings.svg"
                         menuName="Settings"
                         isActive={openWindows.includes('Settings')}
                         onClick={() => handleMenuClick('Settings')}
-                    />
-                    <MenuIcon
-                        icon="icons/openFolder.svg"
-                        menuName="Folders"
-                        isActive={openWindows.includes('Folders')}
-                        onClick={() => handleMenuClick('Folders')}
                     />
                 </div>
 

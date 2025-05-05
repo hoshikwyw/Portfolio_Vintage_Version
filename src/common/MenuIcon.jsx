@@ -2,10 +2,10 @@ import React from 'react'
 
 const MenuIcon = ({ icon, menuName, onClick, isActive }) => {
     return (
-        <div className="relative group" style={{ paddingTop: '5px' }}>
+        <div className="relative group cursor-pointer" style={{ paddingTop: '5px' }}>
             <button
                 type="button"
-                className={`w-8 h-8 menuIconHover ${isActive ? 'menuIconActive' : ''}`}
+                className={`w-8 h-8 cursor-pointer menuIconHover ${isActive ? 'menuIconActive' : ''}`}
                 onClick={onClick}
             >
                 <img src={icon} alt={menuName} />

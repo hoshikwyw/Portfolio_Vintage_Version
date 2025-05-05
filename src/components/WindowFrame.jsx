@@ -2,15 +2,17 @@ import React, { useContext, useRef, useState, useEffect } from 'react'
 import Draggable from 'react-draggable'
 import { MenuContext } from '../utils/MenuContext'
 import Home from './Home'
+import Settings from './Settings'
+import Projects from './Projects'
+import Chat from './Chat'
 
-const WindowFrame = () => {
+const WindowFrame = ({ focusedWindow, onFocus }) => {
     const { openWindows, closeWindow } = useContext(MenuContext)
     const refs = useRef({})
     const [windowSize, setWindowSize] = useState({
         width: window.innerWidth,
         height: window.innerHeight - 60,
     })
-    const [focusedWindow, setFocusedWindow] = useState(null)
 
     useEffect(() => {
         const handleResize = () => {
@@ -27,10 +29,6 @@ const WindowFrame = () => {
         closeWindow(menuName)
     }
 
-    const handleFocus = (menuName) => {
-        setFocusedWindow(menuName)
-    }
-
     return (
         <div className="draggable-container z-10" style={{ width: '100vw', height: '100vh', position: 'relative' }}>
             {openWindows.map((menuName, index) => {
@@ -45,15 +43,15 @@ const WindowFrame = () => {
                         handle=".windowHeader"
                         bounds="parent"
                         nodeRef={refs.current[menuName]}
-                        onStart={() => handleFocus(menuName)}
+                        onStart={() => onFocus(menuName)}
                     >
                         <div
                             className="windowFrame resizable"
                             ref={refs.current[menuName]}
-                            onClick={() => handleFocus(menuName)}
+                            onClick={() => onFocus(menuName)}
                             style={{
                                 width: '70vw',
-                                height: '69vh',
+                                height: '85vh',
                                 maxWidth: `${windowSize.width}px`,
                                 maxHeight: `${windowSize.height}px`,
                                 display: 'flex',
@@ -66,7 +64,7 @@ const WindowFrame = () => {
                             }}
                         >
                             <div className="windowHeader">
-                                <div className="windowTitle">{menuName}</div>
+                                <div className="windowTitle">vintage Oro / {menuName}</div>
                                 <div className="windowControls">
                                     <button
                                         className="closeBtn"
@@ -77,7 +75,10 @@ const WindowFrame = () => {
                                 </div>
                             </div>
                             <div className="windowContent" style={{ flex: 1, overflow: 'auto' }}>
-                                <Home />
+                                {menuName === 'Home' && <Home />}
+                                {menuName === 'Settings' && <Settings />}
+                                {menuName === 'Projects' && <Projects />}
+                                {menuName === 'Send-Message' && <Chat />}
                             </div>
                         </div>
                     </Draggable>
