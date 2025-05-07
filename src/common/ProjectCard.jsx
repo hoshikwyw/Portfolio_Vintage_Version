@@ -2,12 +2,12 @@ import React from 'react'
 
 const ProjectCard = ({ name, description, image, link, github }) => {
   return (
-    <div className=" border rounded-lg flex flex-col items-center gap-3 w-[370px]" style={{ padding: '10px' }}>
-      <div className="w-[330px]">
+    <div className="project-card border rounded-lg flex flex-col items-center gap-3" style={{ padding: '10px' }}>
+      <div className="image-container">
         <img
           src={image}
           alt={`${name} image`}
-          className="rounded-lg border-2 border-amber-400 w-[330px]"
+          className="project-image rounded-lg border-2 border-amber-400"
         />
       </div>
       <div className="text-center">

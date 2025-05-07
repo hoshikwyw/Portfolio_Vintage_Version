@@ -74,10 +74,10 @@ const WindowFrame = ({ focusedWindow, onFocus }) => {
                                     </button>
                                 </div>
                             </div>
-                            <div className="windowContent" style={{ flex: 1, overflow: 'auto' }}>
+                            <div className="windowContent project-container" style={{ flex: 1, overflow: 'auto' }}>
                                 {menuName === 'Home' && <Home />}
                                 {menuName === 'Settings' && <Settings />}
-                                {menuName === 'Projects' && <Projects />}
+                                {menuName === 'Projects' && <Projects windowSize={windowSize} />}
                                 {menuName === 'Send-Message' && <Chat />}
                             </div>
                         </div>
