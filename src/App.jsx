@@ -19,7 +19,7 @@ const App = () => {
       {booted && (
 
         <MenuProvider>
-          <div className='mainBackground relative flex h-screen w-screen justify-center items-center'>
+          <div className=' bg-gradient-to-b from-[#a4b3f2] via-[#b9c2f5] to-[#c8caf9] relative flex h-screen w-screen justify-center items-center'>
             <div>
               <WindowFrame focusedWindow={focusedWindow} onFocus={handleFocus} />
             </div>

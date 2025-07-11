@@ -14,6 +14,19 @@
   --color-pink: #f3a3c0;
 }
 
+.mainBackground {
+   background: linear-gradient(to bottom, #a4b3f2, #b9c2f5, #c8caf9);
+  height: 100vh;
+  width: 100vw;
+
+  background-image: repeating-radial-gradient(
+    circle at 1px 1px,
+    rgba(255, 255, 255, 0.04) 1px,
+    transparent 2px
+  );
+  background-blend-mode: screen;
+}
+
 .menuBarPadding {
   /* margin: 0px 10px; */
   padding: 2px 12px;
@@ -24,7 +37,7 @@
 }
 
 .searchBarPadding {
-  padding: 2px 5px;
+  padding: 6px 24px;
   min-width: 200px;
   border: 1px solid var(--color-main-black);
   border-radius: 10px;

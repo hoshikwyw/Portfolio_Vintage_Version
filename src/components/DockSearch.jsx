@@ -17,14 +17,14 @@ export default function DockSearch() {
         <div className=' bg-light-white/40 searchBarPadding'>
             <form
                 onSubmit={handleSubmit}
-                className=""
+                className=" flex justify-center"
             >
                 <input
                     type="text"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
-                    placeholder="What you wanna search ? ....."
-                    className="flex-1 bg-transparent outline-none placeholder-white/70 text-sm text-white"
+                    placeholder="What you wanna search....."
+                    className="flex-1 bg-transparent outline-none placeholder-white/70 text-sm text-white py-2 px-3"
                 />
                 <button
                     type="submit"
