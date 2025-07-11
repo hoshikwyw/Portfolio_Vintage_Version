@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
-import SearchBar from '../common/SearchBar'
 import MenuIcon from '../common/MenuIcon'
 import { MenuContext } from '../utils/MenuContext'
+import DockSearch from './DockSearch'
 
 const MenuBar = ({ onMenuClick }) => {
     const { openWindows, openWindow } = useContext(MenuContext)
@@ -25,7 +25,8 @@ const MenuBar = ({ onMenuClick }) => {
     return (
         <div className='bg-dark-blue flex justify-between items-center menuBarPadding gap-52 w-full'>
             <div className=" flex gap-5 flex-row items-center">
-                <SearchBar />
+                {/* <SearchBar /> */}
+                <DockSearch />
                 <div className="flex gap-10 items-center">
                     <MenuIcon
                         icon="icons/home.svg"
@@ -41,7 +42,7 @@ const MenuBar = ({ onMenuClick }) => {
                     />
                     <MenuIcon
                         icon="icons/chatBox.svg"
-                        menuName="Send-Message"
+                        menuName="OS-Assistant"
                         isActive={openWindows.includes('Send-Message')}
                         onClick={() => handleMenuClick('Send-Message')}
                     />

@@ -1,8 +1,11 @@
 import React from 'react'
+import ErrorPage from './error/ErrorPage'
 
 const Settings = () => {
   return (
-    <div className=' bg-amber-500'>Settings</div>
+    <div className=' w-full h-full'>
+      <ErrorPage />
+    </div>
   )
 }
 

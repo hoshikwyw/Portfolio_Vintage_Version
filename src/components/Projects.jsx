@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import ProjectCard from '../common/ProjectCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper';
+// import { Navigation } from 'swiper';
 import { projects } from '../utils/projects';
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -23,7 +23,7 @@ const Projects = ({ windowSize }) => {
 
     return (
         <div className="w-full h-full flex flex-col items-center justify-start gap-5 p-5 project-container relative">
-            <Swiper
+            {/* <Swiper
                 modules={[Navigation]}
                 slidesPerView="auto"
                 spaceBetween={50}
@@ -64,7 +64,6 @@ const Projects = ({ windowSize }) => {
                         />
                     </SwiperSlide>
                 ))}
-                {/* Add fake slides */}
                 <SwiperSlide
                     style={{
                         width: `${slideWidth}px`,
@@ -72,10 +71,10 @@ const Projects = ({ windowSize }) => {
                         backgroundColor: 'transparent',
                     }}
                 />
-            </Swiper>
+            </Swiper> */}
 
             {/* Custom Navigation Buttons */}
-            <button
+            {/* <button
                 ref={prevRef}
                 className="custom-nav-button left-0"
                 style={{
@@ -94,7 +93,7 @@ const Projects = ({ windowSize }) => {
                 }}
             >
                 &#9654;
-            </button>
+            </button> */}
         </div>
     );
 };
