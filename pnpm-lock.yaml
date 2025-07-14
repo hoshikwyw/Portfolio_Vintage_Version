@@ -2707,6 +2707,7 @@ snapshots:
 
   vintage-oro@file:(@types/react@19.1.2)(vite@6.3.4(jiti@2.4.2)(lightningcss@1.29.2)):
     dependencies:
+      '@heroicons/react': 2.2.0(react@19.1.0)
       '@react-three/drei': 10.0.7(@react-three/fiber@9.1.2(@types/react@19.1.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(three@0.176.0))(@types/react@19.1.2)(@types/three@0.176.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(three@0.176.0)
       '@react-three/fiber': 9.1.2(@types/react@19.1.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(three@0.176.0)
       '@tailwindcss/vite': 4.1.5(vite@6.3.4(jiti@2.4.2)(lightningcss@1.29.2))
