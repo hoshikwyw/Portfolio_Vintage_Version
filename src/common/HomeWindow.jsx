@@ -10,7 +10,7 @@ const skills = [
 
 const HomeWindow = () => {
     return (
-        <div className="min-h-screen bg-white py-8 px-4 sm:px-6 lg:px-8 font-serif">
+        <div className="min-h-screen bg-white py-12 px-4 sm:px-6 lg:px-8 font-serif">
             <div className="max-w-7xl mx-auto">
                 {/* Decorative border */}
                 <div className=" mb-8"></div>
@@ -44,14 +44,14 @@ const HomeWindow = () => {
                         </div>
 
                         {/* Contact Card */}
-                        <div style={{ padding: '20px 10px' }} className="bg-white rounded-lg border-2 border-gray-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 p-6 space-y-3">
+                        <div style={{ padding: '20px 10px' }} className="bg-white rounded-lg border-2 border-gray-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 p-6 space-y-3 flex flex-col gap-2">
                             <p className="font-bold text-lg text-gray-900 flex items-center gap-2 border-b border-gray-300 ps-6">
                                 <svg className="w-5 h-5 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                                 </svg>
                                 CONTACT
                             </p>
-                            <div className="space-y-2 pl-7">
+                            <div className="space-y-2 pl-7 flex flex-col gap-2">
                                 <p className="text-gray-700 flex items-center gap-2 text-sm">
                                     <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -71,7 +71,7 @@ const HomeWindow = () => {
                     {/* RIGHT COLUMN - DETAILS SECTION */}
                     <div className="lg:w-2/3 space-y-8 flex flex-col gap-6">
                         {/* Education Section */}
-                        <div style={{ padding: '20px 10px' }} className="bg-white rounded-lg border-2 border-gray-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 p-6 space-y-3">
+                        <div style={{ padding: '20px 10px' }} className="bg-white rounded-lg border-2 border-gray-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 p-6 space-y-3 flex flex-col gap-2">
                             <h3 className="font-bold text-xl mb-6 text-gray-900 flex items-center gap-2 border-b border-gray-300 pb-2">
                                 <svg className="w-6 h-6 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
@@ -80,7 +80,7 @@ const HomeWindow = () => {
                             </h3>
                             <ul className="space-y-4">
                                 <li className="flex items-start gap-4">
-                                    <div className="flex-shrink-0 mt-1">
+                                    <div className="flex-shrink-0 mt-3">
                                         <div className="w-3 h-3 bg-blue-600 rounded-full"></div>
                                     </div>
                                     <div>
