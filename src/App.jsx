@@ -5,6 +5,7 @@ import MenuBar from './components/MenuBar'
 import WindowFrame from './components/WindowFrame'
 import { MenuProvider } from './utils/MenuContext'
 import BootSplash from './components/BootSplash'
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 const App = () => {
   const [focusedWindow, setFocusedWindow] = useState("Home");
@@ -28,6 +29,7 @@ const App = () => {
               <MenuBar onMenuClick={handleFocus} />
             </div>
           </div>
+          <SpeedInsights />
         </MenuProvider>
       )}
     </>
