@@ -56,8 +56,8 @@ const MenuBar = ({ onMenuClick }) => {
 
             </div>
             <div className=" flex gap-5 items-center text-main-white lg:text-[12px] md:text-[10px]">
-                <p>{formattedDate}</p>
-                <p>{formattedTime}</p>
+                {/* <p>{formattedDate}</p> */}
+                {/* <p>{formattedTime}</p> */}
             </div>
         </div>
     )

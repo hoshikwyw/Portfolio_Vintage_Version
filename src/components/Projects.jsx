@@ -5,54 +5,12 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/autoplay';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
-
-const projects = [
-    {
-        name: "miniCollector",
-        description: "A collection of mini games and features including calculators, puzzles, and interactive tools.",
-        image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=500&auto=format&fit=crop&q=60", // Game controller placeholder
-        link: "#",
-        github: "#",
-        tags: ["React", "Games", "Interactive"]
-    },
-    {
-        name: "EDU",
-        description: "An e-learning platform for selling online courses with payment integration and user progress tracking.",
-        image: "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=500&auto=format&fit=crop&q=60", // Education placeholder
-        link: "#",
-        github: "#",
-        tags: ["Next.js", "E-commerce", "Education"]
-    },
-    {
-        name: "EDU Dashboard",
-        description: "Admin panel for managing courses, users, and content on the EDU platform with analytics.",
-        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&auto=format&fit=crop&q=60", // Dashboard placeholder
-        link: "#",
-        github: "#",
-        tags: ["React", "Admin", "Dashboard"]
-    },
-    {
-        name: "FoodCourt",
-        description: "Recipe and food ingredient website with search functionality and meal planning tools.",
-        image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop&q=60", // Food placeholder
-        link: "#",
-        github: "#",
-        tags: ["Next.js", "Food", "Recipes"]
-    },
-    {
-        name: "OroVibe",
-        description: "Guide to relaxing places with location-based recommendations and user reviews.",
-        image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&auto=format&fit=crop&q=60", // Beach placeholder
-        link: "#",
-        github: "#",
-        tags: ["React", "Travel", "Guide"]
-    }
-];
+import { useFetchProjects } from '../queries/projectQueries';
 
 const ProjectCard = ({ name, description, image, link, github, tags }) => {
     return (
         <div className="h-full w-full bg-amber-50 rounded-lg border-2 border-stone-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 overflow-hidden flex flex-col">
-            <div className=" h-52 overflow-hidden relative">
+            <div className=" h-52 overflow-hidden relative" style={{ padding: '10px 18px' }}>
                 <div className="absolute inset-0 bg-stone-300 animate-pulse"></div>
                 <img
                     src={image}
@@ -101,6 +59,9 @@ const ProjectCard = ({ name, description, image, link, github, tags }) => {
 };
 
 const Projects = ({ windowSize }) => {
+    const { data: projects, isLoading, error } = useFetchProjects();
+
+    console.log("Fetched projects:", projects);
     const slideWidth = Math.max(400, Math.min(100, windowSize?.width / 2));
     const slideHeight = Math.max(450, Math.min(450, windowSize?.height / 1.3));
 
@@ -158,7 +119,7 @@ const Projects = ({ windowSize }) => {
                     margin: '20px',
                 }}
             >
-                {projects.map((project, index) => (
+                {projects?.map((project, index) => (
                     <SwiperSlide
                         key={index}
                         style={{
@@ -170,12 +131,12 @@ const Projects = ({ windowSize }) => {
                     >
                         <div className="w-full h-full">
                             <ProjectCard
-                                name={project.name}
-                                description={project.description}
-                                image={project.image}
-                                link={project.link}
-                                github={project.github}
-                                tags={project.tags}
+                                name={project.title}
+                                description={project.desc}
+                                image={project.imgs[0]}
+                                link={project.demolink}
+                                github={project.repolink}
+                                tags={project.languages}
                             />
                         </div>
                     </SwiperSlide>
