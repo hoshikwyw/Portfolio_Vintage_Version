@@ -149,6 +149,7 @@
   height: 100vh;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .contentContainer {
@@ -252,11 +253,11 @@
   right: 10px;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
 
 .font-digital {
   font-family: 'Orbitron', monospace;
-}
+} */
 
 
 .custom-cursor {
