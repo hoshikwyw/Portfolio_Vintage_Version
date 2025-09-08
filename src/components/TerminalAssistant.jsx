@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useFetchProjects } from "../queries/projectQueries";
 
 export default function TerminalAssistant({
-    projects = [],
+    // projects = [],
     skills = [],
 }) {
     const initialMessage = <span className="text-amber-700">Type '<span className="text-stone-800 font-bold">help</span>' to see available commands</span>;
@@ -10,6 +11,8 @@ export default function TerminalAssistant({
     const [isLoading, setIsLoading] = useState(false);
     const inputRef = useRef(null);
     const historyEndRef = useRef(null);
+
+    const { data: projects } = useFetchProjects();
 
     // Focus the input and scroll to bottom
     useEffect(() => {
@@ -20,7 +23,6 @@ export default function TerminalAssistant({
     const scrollToBottom = () => {
         historyEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
-
     const addLine = (line) => {
         setHistory((h) => [...h, line]);
     };
@@ -58,31 +60,34 @@ export default function TerminalAssistant({
                         <span className="text-stone-700 font-medium">Hello! I'm a front-end developer specializing in:</span><br />
                         - React.js development<br />
                         - Interactive animations with GSAP<br />
-                        - Creating retro-style user interfaces<br />
+                        - Creating user-friendly and responsive cross-browser web apps<br />
                         <span className="text-stone-700 font-medium">I love building engaging web experiences with modern tech!</span>
                     </>);
                     break;
                 case "projects":
-                case "list projects":
-                    if (!projects.length) {
+                case "list projects": {
+                    const visibleProjects = projects.filter(p => p.status !== false);
+
+                    if (!visibleProjects.length) {
                         addLine("No projects available at the moment.");
                     } else {
                         addLine(<span className="text-stone-700 font-medium">My projects:</span>);
-                        projects.forEach((p, i) => {
+                        visibleProjects.forEach((p, i) => {
                             addLine(
                                 <a
                                     key={i}
-                                    href={p.url}
+                                    href={p.demolink}
                                     target="_blank"
                                     rel="noreferrer"
                                     className="underline decoration-dotted hover:text-amber-600"
                                 >
-                                    {`${i + 1}. ${p.name}`} - {p.description || "Check it out!"}
+                                    {`${i + 1}. ${p.title}`} - {p.description || "Check it out!"}
                                 </a>
                             );
                         });
                     }
                     break;
+                }
                 case "skills":
                 case "list skills":
                     if (!skills.length) {
@@ -129,7 +134,7 @@ export default function TerminalAssistant({
 
     return (
         <div
-        style={{ padding: '10px 18px' }}
+            style={{ padding: '10px 18px' }}
             className="relative flex flex-col h-full w-full bg-amber-50 text-stone-800 font-mono overflow-hidden p-4 text-sm border-2 border-stone-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rounded-md hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-300"
             onClick={() => inputRef.current?.focus()}
         >
