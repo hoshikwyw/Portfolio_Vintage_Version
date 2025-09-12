@@ -12,7 +12,8 @@ const ProjectCard = ({ name, description, image, link, github, tags, status }) =
 
   return (
     <div
-      className={`h-full w-full bg-white/80 backdrop-blur-md rounded-2xl border border-white/20 shadow-lg hover:shadow-xl 
+      style={{ padding: '10px' }}
+      className={`h-full w-full bg-blue-200/50 backdrop-blur-md rounded-2xl border border-blue-200/50 shadow-lg hover:shadow-xl 
         transition-all duration-300 overflow-hidden flex flex-col 
         ${isComingSoon ? 'opacity-70 pointer-events-none' : ''}`}
     >
@@ -21,7 +22,7 @@ const ProjectCard = ({ name, description, image, link, github, tags, status }) =
         <img
           src={image}
           alt={name}
-          className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 relative z-10"
+          className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 relative z-10 rounded-2xl"
           onLoad={(e) => {
             e.target.previousSibling.style.display = 'none';
           }}
@@ -33,7 +34,7 @@ const ProjectCard = ({ name, description, image, link, github, tags, status }) =
         )}
       </div>
 
-      <div style={{ padding: '10px' }} className="p-4 flex-grow flex flex-col">
+      <div style={{ padding: '10px' }} className=" flex-grow flex flex-col gap-2">
         {!isComingSoon ? (
           <>
             <h3 className="text-xl font-bold text-gray-900 mb-2">{name}</h3>
@@ -44,7 +45,7 @@ const ProjectCard = ({ name, description, image, link, github, tags, status }) =
                 <span
                   key={index}
                   style={{ padding: '3px 6px' }}
-                  className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-xs font-medium border border-indigo-200"
+                  className="bg-indigo-300 text-white px-3 py-1 rounded-full text-xs font-medium border border-indigo-200"
                 >
                   {tag}
                 </span>
@@ -54,9 +55,10 @@ const ProjectCard = ({ name, description, image, link, github, tags, status }) =
             <div className="flex justify-between mt-auto">
               <a
                 href={link}
+                type="button"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-indigo-600 hover:text-indigo-800 font-medium text-sm border-b border-indigo-300 hover:border-indigo-600 transition-colors duration-200"
+                className="no-underline text-indigo-600 hover:text-indigo-800 font-medium text-sm border-b border-indigo-300 hover:border-indigo-600 transition-colors duration-200 custom-link"
               >
                 Live Demo
               </a>
@@ -64,11 +66,12 @@ const ProjectCard = ({ name, description, image, link, github, tags, status }) =
                 href={github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-indigo-600 hover:text-indigo-800 font-medium text-sm border-b border-indigo-300 hover:border-indigo-600 transition-colors duration-200"
+                className="no-underline text-indigo-600 hover:text-indigo-800 font-medium text-sm border-b border-indigo-300 hover:border-indigo-600 transition-colors duration-200 custom-link"
               >
                 View Code
               </a>
             </div>
+
           </>
         ) : (
           <div className="flex justify-center items-center w-full h-full mt-auto gap-2">
@@ -102,9 +105,8 @@ const Projects = ({ windowSize }) => {
 
   return (
     <div
-      className="w-full h-full flex flex-col items-center justify-center p-5 project-container relative"
+      className="w-full h-full flex flex-col items-center project-container relative"
       style={{
-        padding: '10px',
         maxWidth: '100vw',
       }}
     >
@@ -136,7 +138,6 @@ const Projects = ({ windowSize }) => {
         style={{
           width: '100%',
           height: '100%',
-          padding: '40px',
           margin: '20px',
         }}
       >
