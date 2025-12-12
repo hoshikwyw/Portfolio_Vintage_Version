@@ -8,15 +8,15 @@ const skills = [
 
 const HomeWindow = () => {
     return (
-        <div style={{ padding: "10px" }} className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 ">
+        <div style={{ padding: "10px" }} className="min-h-screen py-12 px-4 sm:px-6 lg:px-8 font-mono">
             <div style={{ margin: "10px" }} className="max-w-7xl mx-auto">
                 {/* Main Container */}
-                <div className="flex flex-col lg:flex-row gap-8">
+                <div className="flex flex-col lg:flex-row gap-6">
                     {/* LEFT COLUMN - PROFILE SECTION */}
                     <div className="lg:w-1/3 space-y-6 flex flex-col gap-6">
                         {/* Profile Card */}
-                        <div style={{ padding: "10px" }} className="bg-white/80 backdrop-blur-md p-6 flex items-center flex-col rounded-2xl border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300">
-                            <div className="relative overflow-hidden w-[150px] h-[150px] rounded-lg aspect-square mb-4">
+                        <div style={{ padding: "10px" }} className="bg-white/95 p-6 flex items-center flex-col rounded-sm border-2 border-[#000000] shadow-lg hover:shadow-xl transition-all duration-300">
+                            <div className="relative overflow-hidden w-[150px] h-[150px] rounded-sm aspect-square mb-4 border-2 border-[#000000]">
                                 <img
                                     src="/myPf.png"
                                     alt="Oro avatar"
@@ -24,21 +24,21 @@ const HomeWindow = () => {
                                 />
                             </div>
                             <div className="text-center">
-                                <h1 className="text-3xl font-bold text-gray-900 tracking-tight">
+                                <h1 className="text-3xl font-bold text-[#45473a] tracking-wider uppercase">
                                     ORO
                                 </h1>
-                                <p className="text-gray-700 font-medium uppercase text-sm mt-1">
+                                <p className="text-[#5768ad] font-bold uppercase text-sm mt-1 tracking-wider">
                                     Frontend Developer
                                 </p>
-                                <p className="text-xs text-gray-600 mt-2 tracking-wider">
+                                <p className="text-xs text-[#45473a] mt-2 tracking-widest font-semibold">
                                     YANGON, MYANMAR
                                 </p>
                             </div>
                         </div>
 
                         {/* Bio Card */}
-                        <div style={{ padding: "10px" }} className="bg-white/80 backdrop-blur-md rounded-2xl border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300 p-4">
-                            <p className="text-gray-700 leading-relaxed italic">
+                        <div style={{ padding: "10px" }} className="bg-white/95 rounded-sm border-2 border-[#000000] shadow-lg hover:shadow-xl transition-all duration-300 p-4">
+                            <p className="text-[#45473a] leading-relaxed font-medium">
                                 "Hi! I'm Oro — a creative frontend developer who loves crafting
                                 smooth UIs with React and Tailwind. I'm always excited to learn
                                 something new that helps me grow professionally."
@@ -46,10 +46,10 @@ const HomeWindow = () => {
                         </div>
 
                         {/* Contact Card */}
-                        <div style={{ padding: "10px" }} className="bg-white/80 backdrop-blur-md rounded-2xl border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300 p-6 space-y-3 flex flex-col gap-2">
-                            <p className="font-bold text-lg text-gray-900 flex items-center gap-2 border-b border-gray-200 pb-2">
+                        <div style={{ padding: "10px" }} className="bg-white/95 rounded-sm border-2 border-[#000000] shadow-lg hover:shadow-xl transition-all duration-300 p-6 space-y-3 flex flex-col gap-2">
+                            <p className="font-bold text-lg text-[#45473a] flex items-center gap-2 border-b-2 border-[#000000] pb-2 uppercase tracking-wide">
                                 <svg
-                                    className="w-5 h-5 text-indigo-500"
+                                    className="w-5 h-5 text-[#5768ad]"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -64,9 +64,9 @@ const HomeWindow = () => {
                                 CONTACT
                             </p>
                             <div className="space-y-2 pl-7 flex flex-col gap-2">
-                                <p className="text-gray-700 flex items-center gap-2 text-sm">
+                                <p className="text-[#45473a] flex items-center gap-2 text-sm font-semibold">
                                     <svg
-                                        className="w-4 h-4 text-gray-600"
+                                        className="w-4 h-4 text-[#5768ad]"
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
@@ -80,9 +80,9 @@ const HomeWindow = () => {
                                     </svg>
                                     orodev@gmail.com
                                 </p>
-                                <p className="text-gray-700 flex items-center gap-2 text-sm">
+                                <p className="text-[#45473a] flex items-center gap-2 text-sm font-semibold">
                                     <svg
-                                        className="w-4 h-4 text-gray-600"
+                                        className="w-4 h-4 text-[#5768ad]"
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
@@ -101,12 +101,12 @@ const HomeWindow = () => {
                     </div>
 
                     {/* RIGHT COLUMN - DETAILS SECTION */}
-                    <div className="lg:w-2/3 space-y-8 flex flex-col gap-6">
+                    <div className="lg:w-2/3 space-y-6 flex flex-col gap-6">
                         {/* Education Section */}
-                        <div style={{ padding: "10px" }} className="bg-white/80 backdrop-blur-md rounded-2xl border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300 p-6 space-y-3">
-                            <h3 className="font-bold text-xl mb-6 text-gray-900 flex items-center gap-2 border-b border-gray-200 pb-2">
+                        <div style={{ padding: "10px" }} className="bg-white/95 rounded-sm border-2 border-[#000000] shadow-lg hover:shadow-xl transition-all duration-300 p-6 space-y-3">
+                            <h3 className="font-bold text-xl mb-6 text-[#45473a] flex items-center gap-2 border-b-2 border-[#000000] pb-2 uppercase tracking-wide">
                                 <svg
-                                    className="w-6 h-6 text-indigo-500"
+                                    className="w-6 h-6 text-[#5768ad]"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -123,24 +123,24 @@ const HomeWindow = () => {
                             <ul className="space-y-4">
                                 <li className="flex items-center gap-4">
                                     <div className="flex-shrink-0 mt-3">
-                                        <div className="w-3 h-3 bg-indigo-500 rounded-full"></div>
+                                        <div className="w-3 h-3 bg-[#5768ad] rounded-full border border-[#000000]"></div>
                                     </div>
                                     <div>
-                                        <h4 className="font-semibold text-gray-900">
+                                        <h4 className="font-bold text-[#45473a]">
                                             Computer Science
                                         </h4>
-                                        <p className="text-gray-600 text-sm">YUFL (2017 - 2021)</p>
+                                        <p className="text-[#5768ad] text-sm font-semibold">YUFL (2017 - 2021)</p>
                                     </div>
                                 </li>
                                 <li className="flex items-center gap-4">
                                     <div className="flex-shrink-0 mt-1">
-                                        <div className="w-3 h-3 bg-indigo-500 rounded-full"></div>
+                                        <div className="w-3 h-3 bg-[#5768ad] rounded-full border border-[#000000]"></div>
                                     </div>
                                     <div>
-                                        <h4 className="font-semibold text-gray-900">
+                                        <h4 className="font-bold text-[#45473a]">
                                             Self-taught Frontend Development
                                         </h4>
-                                        <p className="text-gray-600 text-sm">
+                                        <p className="text-[#5768ad] text-sm font-semibold">
                                             React, Tailwind CSS, Next.js
                                         </p>
                                     </div>
@@ -149,10 +149,10 @@ const HomeWindow = () => {
                         </div>
 
                         {/* Experience Section */}
-                        <div style={{ padding: '10px' }} className="bg-white/80 backdrop-blur-md rounded-2xl border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300 p-6 space-y-3">
-                            <h3 className="font-bold text-xl mb-6 text-gray-900 flex items-center gap-2 border-b border-gray-200 pb-2">
+                        <div style={{ padding: '10px' }} className="bg-white/95 rounded-sm border-2 border-[#000000] shadow-lg hover:shadow-xl transition-all duration-300 p-6 space-y-3">
+                            <h3 className="font-bold text-xl mb-6 text-[#45473a] flex items-center gap-2 border-b-2 border-[#000000] pb-2 uppercase tracking-wide">
                                 <svg
-                                    className="w-6 h-6 text-indigo-500"
+                                    className="w-6 h-6 text-[#5768ad]"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -169,24 +169,24 @@ const HomeWindow = () => {
                             <ul className="space-y-4">
                                 <li className="flex items-center gap-4">
                                     <div className="flex-shrink-0 mt-1">
-                                        <div className="w-3 h-3 bg-indigo-500 rounded-full"></div>
+                                        <div className="w-3 h-3 bg-[#5768ad] rounded-full border border-[#000000]"></div>
                                     </div>
                                     <div>
-                                        <h4 className="font-semibold text-gray-900">
+                                        <h4 className="font-bold text-[#45473a]">
                                             Junior Frontend Developer
                                         </h4>
-                                        <p className="text-gray-600 text-sm">@ LiiT Brand</p>
+                                        <p className="text-[#5768ad] text-sm font-semibold">@ LiiT Brand</p>
                                     </div>
                                 </li>
                                 <li className="flex items-center gap-4">
                                     <div className="flex-shrink-0 mt-1">
-                                        <div className="w-3 h-3 bg-indigo-500 rounded-full"></div>
+                                        <div className="w-3 h-3 bg-[#5768ad] rounded-full border border-[#000000]"></div>
                                     </div>
                                     <div>
-                                        <h4 className="font-semibold text-gray-900">
+                                        <h4 className="font-bold text-[#45473a]">
                                             Freelance Projects
                                         </h4>
-                                        <p className="text-gray-600 text-sm">
+                                        <p className="text-[#5768ad] text-sm font-semibold">
                                             Portfolio, Booking App, AI Assistant UI
                                         </p>
                                     </div>
@@ -195,10 +195,10 @@ const HomeWindow = () => {
                         </div>
 
                         {/* Skills Section */}
-                        <div style={{ padding: '10px' }} className="bg-white/80 backdrop-blur-md rounded-2xl border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300 p-6 space-y-3">
-                            <h3 style={{ paddingBottom: '2px' }} className="font-bold text-xl mb-6 text-gray-900 flex items-center gap-2 border-b border-gray-200 pb-2">
+                        <div style={{ padding: '10px' }} className="bg-white/95 rounded-sm border-2 border-[#000000] shadow-lg hover:shadow-xl transition-all duration-300 p-6 space-y-3">
+                            <h3 style={{ paddingBottom: '2px' }} className="font-bold text-xl mb-6 text-[#45473a] flex items-center gap-2 border-b-2 border-[#000000] pb-2 uppercase tracking-wide">
                                 <svg
-                                    className="w-6 h-6 text-indigo-500"
+                                    className="w-6 h-6 text-[#5768ad]"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -216,14 +216,14 @@ const HomeWindow = () => {
                                 {skills.map((skill) => (
                                     <div key={skill.name} className="mb-3">
                                         <div className="flex justify-between mb-2">
-                                            <span className="font-medium text-gray-900">
+                                            <span className="font-bold text-[#45473a] uppercase text-sm tracking-wide">
                                                 {skill.name}
                                             </span>
-                                            <span className="text-gray-600">{skill.level}</span>
+                                            <span className="text-[#5768ad] font-bold">{skill.level}</span>
                                         </div>
-                                        <div className="w-full bg-gray-200 rounded-full h-2.5 overflow-hidden">
+                                        <div className="w-full bg-[#dfdde0] border-2 border-[#000000] rounded-sm h-3 overflow-hidden">
                                             <div
-                                                className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-2.5 rounded-full"
+                                                className="bg-gradient-to-r from-[#5768ad] via-[#7d9adc] to-[#ebbd8c] h-full"
                                                 style={{ width: skill.level }}
                                             />
                                         </div>
@@ -235,10 +235,10 @@ const HomeWindow = () => {
                         {/* Languages & Interests */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {/* Languages Card */}
-                            <div style={{ padding: '10px' }} className="bg-white/80 backdrop-blur-md rounded-2xl border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300 space-y-3">
-                                <h3 className="font-bold text-lg mb-4 text-gray-900 flex items-center gap-2 border-b border-gray-200 pb-2">
+                            <div style={{ padding: '10px' }} className="bg-white/95 rounded-sm border-2 border-[#000000] shadow-lg hover:shadow-xl transition-all duration-300 space-y-3">
+                                <h3 className="font-bold text-lg mb-4 text-[#45473a] flex items-center gap-2 border-b-2 border-[#000000] pb-2 uppercase tracking-wide">
                                     <svg
-                                        className="w-5 h-5 text-indigo-500"
+                                        className="w-5 h-5 text-[#5768ad]"
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
@@ -254,14 +254,14 @@ const HomeWindow = () => {
                                 </h3>
                                 <div style={{ padding: '4px' }} className="space-y-3">
                                     <div className="flex items-center gap-3">
-                                        <span className="w-2.5 h-2.5 bg-indigo-500 rounded-full flex-shrink-0"></span>
-                                        <span className="text-gray-700 text-sm">
+                                        <span className="w-2.5 h-2.5 bg-[#5768ad] border border-[#000000] rounded-full flex-shrink-0"></span>
+                                        <span className="text-[#45473a] text-sm font-semibold">
                                             English — Intermediate
                                         </span>
                                     </div>
                                     <div className="flex items-center gap-3">
-                                        <span className="w-2.5 h-2.5 bg-indigo-500 rounded-full flex-shrink-0"></span>
-                                        <span className="text-gray-700 text-sm">
+                                        <span className="w-2.5 h-2.5 bg-[#5768ad] border border-[#000000] rounded-full flex-shrink-0"></span>
+                                        <span className="text-[#45473a] text-sm font-semibold">
                                             Burmese — Native
                                         </span>
                                     </div>
@@ -269,10 +269,10 @@ const HomeWindow = () => {
                             </div>
 
                             {/* Interests Card */}
-                            <div style={{ padding: '10px' }} className="bg-white/80 backdrop-blur-md rounded-2xl border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300 space-y-3">
-                                <h3 className="font-bold text-lg mb-4 text-gray-900 flex items-center gap-2 border-b border-gray-200 pb-2">
+                            <div style={{ padding: '10px' }} className="bg-white/95 rounded-sm border-2 border-[#000000] shadow-lg hover:shadow-xl transition-all duration-300 space-y-3">
+                                <h3 className="font-bold text-lg mb-4 text-[#45473a] flex items-center gap-2 border-b-2 border-[#000000] pb-2 uppercase tracking-wide">
                                     <svg
-                                        className="w-5 h-5 text-indigo-500"
+                                        className="w-5 h-5 text-[#5768ad]"
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
@@ -295,9 +295,9 @@ const HomeWindow = () => {
                                         "2D Games",
                                     ].map((interest) => (
                                         <span
-                                            style={{ padding: '3px 5px' }}
+                                            style={{ padding: '4px 8px' }}
                                             key={interest}
-                                            className="bg-indigo-100 text-indigo-700 rounded-full text-xs font-medium border border-indigo-200"
+                                            className="bg-[#ebbd8c] text-[#45473a] rounded-sm text-xs font-bold border-2 border-[#000000] uppercase tracking-wide"
                                         >
                                             {interest}
                                         </span>

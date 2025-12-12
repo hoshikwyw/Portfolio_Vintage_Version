@@ -91,12 +91,12 @@ const WeatherWidget = () => {
 
     if (loading) {
         return (
-            <div className=" w-full h-full flex items-center justify-center rounded-2xl p-6 bg-white/10 backdrop-blur-md shadow-lg border border-white/20">
+            <div className=" w-full h-full flex items-center justify-center rounded-sm p-6 bg-white/95 shadow-lg border-2 border-[#000000]">
                 <div className="flex flex-col items-center justify-center">
                     <div className="animate-spin">
-                        <Sun size={48} />
+                        <Sun size={48} className="text-[#5768ad]" />
                     </div>
-                    <p className="mt-4 text-gray-100 text-sm">Loading weather data...</p>
+                    <p className="mt-4 text-[#45473a] text-sm font-mono font-semibold">Loading weather data...</p>
                 </div>
             </div>
         );
@@ -104,91 +104,95 @@ const WeatherWidget = () => {
 
     if (error) {
         return (
-            <div className=" w-full h-full flex items-center justify-center rounded-2xl p-6 bg-white/10 backdrop-blur-md shadow-lg border border-white/20 text-center">
-                <p className="text-red-400">{error}</p>
-                <button
-                    onClick={getLocation}
-                    className="mt-4 px-4 py-2 bg-white/20 hover:bg-white/30 text-white text-sm rounded-lg transition"
-                >
-                    Try Again
-                </button>
+            <div className=" w-full h-full flex items-center justify-center rounded-sm p-6 bg-white/95 shadow-lg border-2 border-[#000000] text-center">
+                <div className="flex flex-col items-center">
+                    <p className="text-[#45473a] font-mono">{error}</p>
+                    <button
+                        onClick={getLocation}
+                        className="mt-4 px-4 py-2 bg-[#ebbd8c] hover:bg-[#c0e692] text-[#45473a] text-sm rounded-sm border-2 border-[#000000] transition font-mono font-semibold"
+                    >
+                        Try Again
+                    </button>
+                </div>
             </div>
         );
     }
 
     if (!weatherData) {
         return (
-            <div className=" w-full h-full flex items-center justify-center rounded-2xl bg-white/10 backdrop-blur-md shadow-lg border border-white/20 text-center">
-                <p className="text-gray-300">No weather data available</p>
+            <div className=" w-full h-full flex items-center justify-center rounded-sm bg-white/95 shadow-lg border-2 border-[#000000] text-center">
+                <p className="text-[#45473a] font-mono">No weather data available</p>
             </div>
         );
     }
 
     return (
-        <div style={{ padding: "12px" }} className="max-w-sm mx-auto rounded-2xl bg-white/10 backdrop-blur-xl shadow-2xl border border-white text-white">
+        <div style={{ padding: "12px" }} className="max-w-sm mx-auto rounded-sm bg-white/95 shadow-lg border-2 border-[#000000] text-[#45473a] font-mono">
             {/* Header */}
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between mb-6 border-b-2 border-[#000000] pb-3">
                 <div>
-                    <h2 className="text-xl font-semibold flex items-center gap-1">
+                    <h2 className="text-xl font-bold flex items-center gap-1 uppercase tracking-wide">
                         <MapPinIcon className="w-5 h-5" />
                         {weatherData.name}, {weatherData.sys.country}
                     </h2>
-                    <p className="text-xs text-white">
+                    <p className="text-xs text-[#5768ad] font-semibold mt-1">
                         {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' })}
                     </p>
                 </div>
                 <div className="text-right">
-                    {getWeatherIcon(weatherData.weather[0].main)}
-                    <p className="text-xs capitalize text-white mt-1">{weatherData.weather[0].description}</p>
+                    <div className="text-[#5768ad]">
+                        {getWeatherIcon(weatherData.weather[0].main)}
+                    </div>
+                    <p className="text-xs capitalize text-[#45473a] mt-1 font-semibold">{weatherData.weather[0].description}</p>
                 </div>
             </div>
 
             {/* Temperature */}
-            <div className="text-center mb-6">
+            <div className="text-center mb-6 border-2 border-[#000000] rounded-sm py-4 bg-[#dfdde0]">
                 <div className="flex items-center justify-center gap-2">
-                    <Thermometer size={24} />
-                    <span className="text-5xl font-bold">{formatTemp(weatherData.main.temp)}</span>
+                    <Thermometer size={24} className="text-[#5768ad]" />
+                    <span className="text-5xl font-bold text-[#45473a]">{formatTemp(weatherData.main.temp)}</span>
                 </div>
-                <p className="text-xs text-gray-500">Feels like {formatTemp(weatherData.main.feels_like)}</p>
+                <p className="text-xs text-[#5768ad] font-semibold mt-2">Feels like {formatTemp(weatherData.main.feels_like)}</p>
             </div>
 
             {/* Stats */}
             <div className="grid grid-cols-2 gap-3 text-sm">
-                <div className="bg-white/20 rounded-xl flex items-center gap-2" style={{ padding: "10px" }}>
-                    <Droplets size={18} />
+                <div className="bg-[#dfdde0] rounded-sm border-2 border-[#000000] flex items-center gap-2" style={{ padding: "10px" }}>
+                    <Droplets size={18} className="text-[#5768ad]" />
                     <div>
-                        <p className="text-xs text-gray-500">Humidity</p>
-                        <p className="font-medium">{weatherData.main.humidity}%</p>
+                        <p className="text-xs text-[#5768ad] font-semibold uppercase">Humidity</p>
+                        <p className="font-bold text-[#45473a]">{weatherData.main.humidity}%</p>
                     </div>
                 </div>
 
-                <div className="bg-white/20 rounded-xl flex items-center gap-2" style={{ padding: "10px" }}>
-                    <Gauge size={18} />
+                <div className="bg-[#dfdde0] rounded-sm border-2 border-[#000000] flex items-center gap-2" style={{ padding: "10px" }}>
+                    <Gauge size={18} className="text-[#5768ad]" />
                     <div>
-                        <p className="text-xs text-gray-500">Pressure</p>
-                        <p className="font-medium">{weatherData.main.pressure} hPa</p>
+                        <p className="text-xs text-[#5768ad] font-semibold uppercase">Pressure</p>
+                        <p className="font-bold text-[#45473a]">{weatherData.main.pressure} hPa</p>
                     </div>
                 </div>
 
-                <div className="bg-white/20 rounded-xl flex items-center gap-2" style={{ padding: "10px" }}>
-                    <Wind size={18} />
+                <div className="bg-[#dfdde0] rounded-sm border-2 border-[#000000] flex items-center gap-2" style={{ padding: "10px" }}>
+                    <Wind size={18} className="text-[#5768ad]" />
                     <div>
-                        <p className="text-xs text-gray-500">Wind Speed</p>
-                        <p className="font-medium">{weatherData.wind.speed} m/s</p>
+                        <p className="text-xs text-[#5768ad] font-semibold uppercase">Wind Speed</p>
+                        <p className="font-bold text-[#45473a]">{weatherData.wind.speed} m/s</p>
                     </div>
                 </div>
 
-                <div className="bg-white/20 rounded-xl flex items-center gap-2" style={{ padding: "10px" }}>
-                    <Navigation size={18} />
+                <div className="bg-[#dfdde0] rounded-sm border-2 border-[#000000] flex items-center gap-2" style={{ padding: "10px" }}>
+                    <Navigation size={18} className="text-[#5768ad]" />
                     <div>
-                        <p className="text-xs text-gray-500">Wind Dir</p>
-                        <p className="font-medium">{weatherData.wind.deg}°</p>
+                        <p className="text-xs text-[#5768ad] font-semibold uppercase">Wind Dir</p>
+                        <p className="font-bold text-[#45473a]">{weatherData.wind.deg}°</p>
                     </div>
                 </div>
             </div>
 
             {/* Refresh */}
-            <div className=" flex w-full justify-center items-center">
+            <div className=" flex w-full justify-center items-center mt-4">
                 <button
                     onClick={() => {
                         if (location) {
@@ -197,8 +201,8 @@ const WeatherWidget = () => {
                             getLocation();
                         }
                     }}
-                    className=" bg-white/40 hover:bg-white/30 rounded-lg text-sm transition text-gray-600"
-                    style={{ padding: "8px 16px", marginTop: "12px" }}
+                    className="bg-[#ebbd8c] hover:bg-[#c0e692] border-2 border-[#000000] rounded-sm text-sm transition font-mono font-semibold text-[#45473a]"
+                    style={{ padding: "8px 16px" }}
                 >
                     Refresh
                 </button>

@@ -33,9 +33,7 @@ const App = () => {
               <WindowFrame focusedWindow={focusedWindow} onFocus={handleFocus} />
             </div>
 
-            <div className="fixed bottom-3 z-50 w-[97%]">
-              <MenuBar onMenuClick={handleFocus} />
-            </div>
+            <MenuBar onMenuClick={handleFocus} />
           </div>
           <SpeedInsights />
         </MenuProvider>

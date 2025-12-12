@@ -1,33 +1,45 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import MenuIcon from '../common/MenuIcon'
 import { MenuContext } from '../utils/MenuContext'
 import DockSearch from './DockSearch'
 
 const MenuBar = ({ onMenuClick }) => {
     const { openWindows, openWindow } = useContext(MenuContext)
+    const [currentTime, setCurrentTime] = useState(new Date())
+
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentTime(new Date())
+        }, 1000)
+        return () => clearInterval(timer)
+    }, [])
 
     const handleMenuClick = (name) => {
         openWindow(name) // Open the window for the selected menu
         onMenuClick(name);
     }
 
-    const currentDate = new Date()
-    const formattedDate = currentDate.toLocaleDateString('en-US', {
+    const formattedDate = currentTime.toLocaleDateString('en-US', {
         weekday: 'short',
         month: 'short',
         day: 'numeric',
     })
-    const formattedTime = currentDate.toLocaleTimeString('en-US', {
+    const formattedTime = currentTime.toLocaleTimeString('en-US', {
         hour: '2-digit',
         minute: '2-digit',
     })
 
     return (
-        <div className='bg-dark-blue flex justify-between items-center menuBarPadding gap-52 w-full'>
-            <div className=" flex gap-5 flex-row items-center">
-                {/* <SearchBar /> */}
+        <div className='fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50'>
+            <div className='bg-white/95 backdrop-blur-sm shadow-[0_4px_12px_0_rgba(0,0,0,0.3)] border-2 border-[#000000] rounded-lg px-5 py-3 flex items-center gap-4 min-w-fit font-mono'>
+                {/* Search Bar */}
                 <DockSearch />
-                <div className="flex gap-10 items-center">
+
+                {/* Divider */}
+                <div className="h-10 w-[2px] bg-[#000000]"></div>
+
+                {/* Dock Icons */}
+                <div className="flex gap-2 items-center">
                     <MenuIcon
                         icon="icons/home.svg"
                         menuName="Home"
@@ -54,10 +66,14 @@ const MenuBar = ({ onMenuClick }) => {
                     />
                 </div>
 
-            </div>
-            <div className=" flex gap-5 items-center text-main-white lg:text-[12px] md:text-[10px]">
-                {/* <p>{formattedDate}</p> */}
-                {/* <p>{formattedTime}</p> */}
+                {/* Divider */}
+                <div className="h-10 w-[2px] bg-[#000000]"></div>
+
+                {/* Date & Time */}
+                <div className="flex flex-col items-end justify-center px-3 py-2 bg-[#dfdde0] rounded-sm border-2 border-[#000000] min-w-[90px]">
+                    <p className="text-[10px] text-[#45473a] leading-tight font-semibold tracking-wide uppercase">{formattedDate}</p>
+                    <p className="text-[12px] text-[#45473a] leading-tight font-bold">{formattedTime}</p>
+                </div>
             </div>
         </div>
     )

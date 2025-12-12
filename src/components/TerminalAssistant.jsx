@@ -5,7 +5,7 @@ export default function TerminalAssistant({
     // projects = [],
     skills = [],
 }) {
-    const initialMessage = <span className="text-amber-700">Type '<span className="text-stone-800 font-bold">help</span>' to see available commands</span>;
+    const initialMessage = <span className="text-[#5768ad]">Type '<span className="text-[#45473a] font-bold">help</span>' to see available commands</span>;
     const [history, setHistory] = useState([initialMessage]);
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +32,7 @@ export default function TerminalAssistant({
     };
 
     const Cmd = ({ children }) => (
-        <span className="text-stone-800 font-bold">{children}</span>
+        <span className="text-[#45473a] font-bold">{children}</span>
     );
 
     const execCommand = async (cmd) => {
@@ -47,7 +47,7 @@ export default function TerminalAssistant({
                     break;
                 case "help":
                     addLine(<>
-                        <span className="text-stone-700 font-medium">Available commands:</span><br />
+                        <span className="text-[#45473a] font-bold">Available commands:</span><br />
                         • <Cmd>help</Cmd> - Show this help message<br />
                         • <Cmd>about</Cmd> - Learn about me<br />
                         • <Cmd>projects</Cmd> - List my projects<br />
@@ -57,11 +57,11 @@ export default function TerminalAssistant({
                     break;
                 case "about":
                     addLine(<>
-                        <span className="text-stone-700 font-medium">Hello! I'm a front-end developer specializing in:</span><br />
+                        <span className="text-[#45473a] font-bold">Hello! I'm a front-end developer specializing in:</span><br />
                         - React.js development<br />
                         - Interactive animations with GSAP<br />
                         - Creating user-friendly and responsive cross-browser web apps<br />
-                        <span className="text-stone-700 font-medium">I love building engaging web experiences with modern tech!</span>
+                        <span className="text-[#45473a] font-bold">I love building engaging web experiences with modern tech!</span>
                     </>);
                     break;
                 case "projects":
@@ -71,7 +71,7 @@ export default function TerminalAssistant({
                     if (!visibleProjects.length) {
                         addLine("No projects available at the moment.");
                     } else {
-                        addLine(<span className="text-stone-700 font-medium">My projects:</span>);
+                        addLine(<span className="text-[#45473a] font-bold">My projects:</span>);
                         visibleProjects.forEach((p, i) => {
                             addLine(
                                 <a
@@ -79,7 +79,7 @@ export default function TerminalAssistant({
                                     href={p.demolink}
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="underline decoration-dotted hover:text-amber-600"
+                                    className="underline decoration-dotted hover:text-[#5768ad] text-[#45473a]"
                                 >
                                     {`${i + 1}. ${p.title}`} - {p.description || "Check it out!"}
                                 </a>
@@ -94,11 +94,11 @@ export default function TerminalAssistant({
                         addLine("No skills listed yet.");
                     } else {
                         addLine(<>
-                            <span className="text-stone-700 font-medium">My skills:</span><br />
+                            <span className="text-[#45473a] font-bold">My skills:</span><br />
                             {skills.map((skill, i) => (
                                 <span key={i}>
                                     {i > 0 && " · "}
-                                    <span className="text-stone-800 font-medium">{skill}</span>
+                                    <span className="text-[#45473a] font-bold">{skill}</span>
                                 </span>
                             ))}
                         </>);
@@ -109,8 +109,8 @@ export default function TerminalAssistant({
                     break;
                 default:
                     addLine(<>
-                        <span className="text-amber-700">Command not found: '{cmd}'</span><br />
-                        <span className="text-amber-700">Type '<Cmd>help</Cmd>' to see available commands</span>
+                        <span className="text-[#5768ad]">Command not found: '{cmd}'</span><br />
+                        <span className="text-[#5768ad]">Type '<Cmd>help</Cmd>' to see available commands</span>
                     </>);
             }
         } finally {
@@ -123,8 +123,8 @@ export default function TerminalAssistant({
         if (!input.trim()) return;
 
         addLine(
-            <div className="text-stone-800">
-                <span className="text-amber-700">❯</span> {input}
+            <div className="text-[#45473a]">
+                <span className="text-[#5768ad]">❯</span> {input}
             </div>
         );
 
@@ -135,10 +135,10 @@ export default function TerminalAssistant({
     return (
         <div
             style={{ padding: '10px 18px' }}
-            className="relative flex flex-col h-full w-full bg-amber-50 text-stone-800 font-mono overflow-hidden p-4 text-sm border-2 border-stone-800 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rounded-md hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-300"
+            className="relative flex flex-col h-full w-full bg-white/95 text-[#45473a] font-mono overflow-hidden p-4 text-sm border-2 border-[#000000] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rounded-sm hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-300"
             onClick={() => inputRef.current?.focus()}
         >
-            <div className="terminal-output flex-1 overflow-y-auto pr-2 mb-2 scrollbar-thin scrollbar-thumb-stone-300">
+            <div className="terminal-output flex-1 overflow-y-auto pr-2 mb-2 scrollbar-thin scrollbar-thumb-[#dfdde0]">
                 {history.map((line, idx) => (
                     <div
                         key={idx}
@@ -148,7 +148,7 @@ export default function TerminalAssistant({
                     </div>
                 ))}
                 {isLoading && (
-                    <div className="loading-dots flex items-center text-amber-700">
+                    <div className="loading-dots flex items-center text-[#5768ad]">
                         <span className="dot">.</span>
                         <span className="dot">.</span>
                         <span className="dot">.</span>
@@ -157,13 +157,13 @@ export default function TerminalAssistant({
                 <div ref={historyEndRef} />
             </div>
 
-            <form onSubmit={handleSubmit} style={{ paddingTop: '10px' }} className="terminal-input pt-2 flex items-center border-t border-stone-300">
-                <span style={{ paddingRight: '10px' }} className="text-amber-700 mr-2">❯</span>
+            <form onSubmit={handleSubmit} style={{ paddingTop: '10px' }} className="terminal-input pt-2 flex items-center border-t-2 border-[#000000]">
+                <span style={{ paddingRight: '10px' }} className="text-[#5768ad] mr-2 font-bold">❯</span>
                 <input
                     ref={inputRef}
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    className="flex-1 bg-transparent outline-none caret-amber-700 text-stone-800 placeholder-stone-400"
+                    className="flex-1 bg-transparent outline-none caret-[#5768ad] text-[#45473a] placeholder-[#a9a9ab] font-semibold"
                     placeholder={isLoading ? "Processing..." : "Type a command..."}
                     aria-label="Terminal input"
                     autoComplete="off"
@@ -185,7 +185,7 @@ export default function TerminalAssistant({
                     line-height: 1.6;
                 }
                 a:hover {
-                    color: #b45309;
+                    color: #5768ad;
                 }
                 .loading-dots {
                     height: 24px;
