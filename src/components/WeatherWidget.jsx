@@ -104,7 +104,7 @@ const WeatherWidget = () => {
 
     if (error) {
         return (
-            <div className=" w-full h-full flex items-center justify-center rounded-sm p-6 bg-white/95 shadow-lg border-2 border-[#000000] text-center">
+            <div style={{padding: '24px'}} className=" w-full h-full flex items-center justify-center rounded-sm bg-white/95 shadow-lg border-2 border-[#000000] text-center">
                 <div className="flex flex-col items-center">
                     <p className="text-[#45473a] font-mono">{error}</p>
                     <button
@@ -127,7 +127,7 @@ const WeatherWidget = () => {
     }
 
     return (
-        <div style={{ padding: "12px" }} className="max-w-sm mx-auto rounded-sm bg-white/95 shadow-lg border-2 border-[#000000] text-[#45473a] font-mono">
+        <div className="max-w-sm mx-auto rounded-sm bg-white/95 p-3 shadow-lg border-2 border-[#000000] text-[#45473a] font-mono">
             {/* Header */}
             <div className="flex items-center justify-between mb-6 border-b-2 border-[#000000] pb-3">
                 <div>
@@ -148,7 +148,7 @@ const WeatherWidget = () => {
             </div>
 
             {/* Temperature */}
-            <div className="text-center mb-6 border-2 border-[#000000] rounded-sm py-4 bg-[#dfdde0]">
+            <div className="text-center mb-6 border-2 border-[#000000] rounded-sm my-4 bg-[#dfdde0]">
                 <div className="flex items-center justify-center gap-2">
                     <Thermometer size={24} className="text-[#5768ad]" />
                     <span className="text-5xl font-bold text-[#45473a]">{formatTemp(weatherData.main.temp)}</span>

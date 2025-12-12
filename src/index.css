@@ -101,8 +101,90 @@
   border-radius: 4px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   overflow: hidden;
-  resize: both;
   font-family: monospace;
+  min-width: 400px;
+  min-height: 300px;
+}
+
+/* Resize handles */
+.resize-handle {
+  position: absolute;
+  background: transparent;
+  z-index: 1001;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.resize-top {
+  top: 0;
+  left: 4px;
+  right: 4px;
+  height: 4px;
+  cursor: ns-resize;
+}
+
+.resize-right {
+  top: 4px;
+  right: 0;
+  bottom: 4px;
+  width: 4px;
+  cursor: ew-resize;
+}
+
+.resize-bottom {
+  bottom: 0;
+  left: 4px;
+  right: 4px;
+  height: 4px;
+  cursor: ns-resize;
+}
+
+.resize-left {
+  top: 4px;
+  left: 0;
+  bottom: 4px;
+  width: 4px;
+  cursor: ew-resize;
+}
+
+.resize-top-left {
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  cursor: nwse-resize;
+  z-index: 1002;
+}
+
+.resize-top-right {
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  cursor: nesw-resize;
+  z-index: 1002;
+}
+
+.resize-bottom-left {
+  bottom: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  cursor: nesw-resize;
+  z-index: 1002;
+}
+
+.resize-bottom-right {
+  bottom: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  cursor: nwse-resize;
+  z-index: 1002;
+}
+
+.resize-handle:hover {
+  background: rgba(87, 104, 173, 0.3);
 }
 
 .windowHeader {
@@ -123,6 +205,11 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   font-family: monospace;
+}
+
+.windowControls {
+  display: flex;
+  gap: 1;
 }
 
 .windowControls button {
@@ -147,6 +234,27 @@
 .closeBtn {
   margin-top: 2px;
   width: 22px;
+}
+
+.fullscreenBtn {
+  margin-top: 2px;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--color-main-white);
+  cursor: pointer;
+  padding: 2px;
+  margin-right: 4px;
+}
+
+.fullscreenBtn:hover {
+  color: var(--color-gold);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
 }
 .draggable-container {
   width: 100vw;
