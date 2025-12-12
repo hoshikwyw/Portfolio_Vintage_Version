@@ -22,7 +22,7 @@ const App = () => {
       {booted && (
 
         <MenuProvider>
-          <div className=' bg-gradient-to-b from-[#a4b3f2] via-[#b9c2f5] to-[#c8caf9] relative flex h-screen w-screen justify-center items-center'>
+          <div className='bg-gradient-to-br from-[#2d1b4e] via-[#4a2c6b] via-[#6b5b95] to-[#8b7ba8] relative flex h-screen w-screen justify-center items-center'>
             <div className=" absolute inset-0 w-[280px] h-[300px] top-5 left-5 rounded-md shadow-xl">
               <WeatherWidget />
             </div>

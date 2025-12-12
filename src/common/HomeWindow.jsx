@@ -1,3 +1,5 @@
+import { Phone } from "lucide-react";
+
 const skills = [
     { name: "React.js", level: "90%" },
     { name: "Tailwind CSS", level: "85%" },
@@ -25,7 +27,7 @@ const HomeWindow = () => {
                             </div>
                             <div className="text-center">
                                 <h1 className="text-3xl font-bold text-[#45473a] tracking-wider uppercase">
-                                    ORO
+                                    Khaing Wut Yi Win
                                 </h1>
                                 <p className="text-[#5768ad] font-bold uppercase text-sm mt-1 tracking-wider">
                                     Frontend Developer
@@ -78,23 +80,11 @@ const HomeWindow = () => {
                                             d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                                         />
                                     </svg>
-                                    orodev@gmail.com
+                                    khaingwutyiwin1712@gmail.com
                                 </p>
                                 <p className="text-[#45473a] flex items-center gap-2 text-sm font-semibold">
-                                    <svg
-                                        className="w-4 h-4 text-[#5768ad]"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-                                        />
-                                    </svg>
-                                    @oro.codes
+                                    <Phone className="w-4 h-4 text-[#5768ad]" />
+                                    +959795847089
                                 </p>
                             </div>
                         </div>
@@ -127,9 +117,9 @@ const HomeWindow = () => {
                                     </div>
                                     <div>
                                         <h4 className="font-bold text-[#45473a]">
-                                            Computer Science
+                                            Frontend Web Developer
                                         </h4>
-                                        <p className="text-[#5768ad] text-sm font-semibold">YUFL (2017 - 2021)</p>
+                                        <p className="text-[#5768ad] text-sm font-semibold">MMS-IT</p>
                                     </div>
                                 </li>
                                 <li className="flex items-center gap-4">
@@ -141,7 +131,7 @@ const HomeWindow = () => {
                                             Self-taught Frontend Development
                                         </h4>
                                         <p className="text-[#5768ad] text-sm font-semibold">
-                                            React, Tailwind CSS, Next.js
+                                            React, Tailwind CSS, Next.js, React Native, Typescript
                                         </p>
                                     </div>
                                 </li>
@@ -175,7 +165,7 @@ const HomeWindow = () => {
                                         <h4 className="font-bold text-[#45473a]">
                                             Junior Frontend Developer
                                         </h4>
-                                        <p className="text-[#5768ad] text-sm font-semibold">@ LiiT Brand</p>
+                                        <p className="text-[#5768ad] text-sm font-semibold">IT-Wizard since 2024 November</p>
                                     </div>
                                 </li>
                                 <li className="flex items-center gap-4">

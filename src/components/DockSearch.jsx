@@ -14,26 +14,26 @@ export default function DockSearch() {
     };
 
     return (
-        <div className='bg-[#dfdde0] border-2 border-[#000000] rounded-sm px-3 py-2 min-w-[240px] hover:bg-[#dad9e1] transition-colors duration-200'>
+        <div className='bg-white/70 backdrop-blur-md border-[1.5px] border-black/15 rounded-2xl px-4 py-2 min-w-[240px] hover:bg-white/80 transition-all duration-300 focus-within:border-[#d4af37] focus-within:shadow-[0_0_0_3px_rgba(212,175,55,0.15),0_2px_8px_rgba(212,175,55,0.2)] shadow-[inset_0_2px_4px_rgba(0,0,0,0.05),0_1px_2px_rgba(212,175,55,0.1)]'>
             <form
                 onSubmit={handleSubmit}
-                className="flex items-center gap-2.5"
+                className="flex items-center gap-3"
             >
-                <MagnifyingGlassIcon className="h-4 w-4 text-[#45473a] flex-shrink-0" />
+                <MagnifyingGlassIcon className="h-4 w-4 text-[#2d1b4e] flex-shrink-0 opacity-70" />
                 <input
                     type="text"
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search..."
-                    className="flex-1 bg-transparent outline-none placeholder-[#a9a9ab] text-sm text-[#45473a] py-0.5 placeholder:text-xs font-mono"
+                    className="flex-1 bg-transparent outline-none placeholder-black/40 text-sm text-[#2d1b4e] py-0.5 placeholder:text-xs font-sans"
                 />
                 {query && (
                     <button
                         type="submit"
-                        className="p-1 hover:scale-110 transition-transform opacity-60 hover:opacity-100"
+                        className="p-1 hover:scale-110 transition-transform opacity-60 hover:opacity-100 rounded-md hover:bg-[#d4af37]/20"
                         aria-label="Search Google"
                     >
-                        <svg className="h-3.5 w-3.5 text-[#45473a]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="h-3.5 w-3.5 text-[#2d1b4e]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                         </svg>
                     </button>

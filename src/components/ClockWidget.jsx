@@ -21,8 +21,8 @@ const ClockWidget = () => {
   };
 
   return (
-    <div style={{ padding: "12px" }} className="w-full h-18 cursor-auto flex flex-col items-center justify-center text-[#45473a] font-mono rounded-sm bg-white/95 border-2 border-[#000000] shadow-lg">
-      <span className="text-xl md:text-xl tracking-widest font-bold uppercase">
+    <div style={{ padding: "16px" }} className="w-full h-18 cursor-auto flex flex-col items-center justify-center text-[#2d1b4e] font-sans rounded-xl bg-gradient-to-br from-[#faf9f6] to-[#fff8e7] border-[1.5px] border-black/15 shadow-[0_8px_24px_rgba(0,0,0,0.08),0_2px_8px_rgba(212,175,55,0.1),inset_0_1px_0_rgba(255,255,255,0.8)] backdrop-blur-sm">
+      <span className="text-xl md:text-xl tracking-widest font-bold uppercase text-[#2d1b4e]">
         {formatTime(time)}
       </span>
     </div>

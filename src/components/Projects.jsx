@@ -12,40 +12,40 @@ const ProjectCard = ({ name, description, image, link, github, tags, status }) =
 
   return (
     <div
-      style={{ padding: '10px' }}
-      className={`h-full w-full bg-white/95 border-2 border-[#000000] rounded-sm shadow-lg hover:shadow-xl 
-        transition-all duration-300 overflow-hidden flex flex-col font-mono
-        ${isComingSoon ? 'opacity-70 pointer-events-none' : ''}`}
+      style={{ padding: '12px' }}
+      className={`h-full w-full bg-gradient-to-br from-[#faf9f6] to-[#fff8e7] border-[1.5px] border-black/15 rounded-2xl shadow-[0_8px_24px_rgba(0,0,0,0.08),0_2px_8px_rgba(212,175,55,0.1),inset_0_1px_0_rgba(255,255,255,0.8)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.12),0_4px_12px_rgba(212,175,55,0.2),inset_0_1px_0_rgba(255,255,255,0.8)] 
+        transition-all duration-300 overflow-hidden flex flex-col font-sans backdrop-blur-sm
+        ${isComingSoon ? 'opacity-70 pointer-events-none' : 'hover:-translate-y-1'}`}
     >
-      <div style={{ padding: '10px' }} className="h-52 overflow-hidden relative p-4 border-2 border-[#000000] rounded-sm bg-[#dfdde0]">
-        <div className="absolute inset-0 bg-[#dfdde0] animate-pulse"></div>
+      <div style={{ padding: '12px' }} className="h-52 overflow-hidden relative p-4 border-[1.5px] border-black/10 rounded-xl bg-gradient-to-br from-[#f5f3ef] to-[#fff8e7]">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#f5f3ef] to-[#fff8e7] animate-pulse"></div>
         <img
           src={image}
           alt={name}
-          className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 relative z-10 rounded-sm"
+          className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 relative z-10 rounded-lg"
           onLoad={(e) => {
             e.target.previousSibling.style.display = 'none';
           }}
         />
         {isComingSoon && (
-          <div className="absolute inset-0 bg-[#45473a] bg-opacity-80 flex items-center justify-center z-20 border-2 border-[#000000]">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#2d1b4e]/90 to-[#6b5b95]/90 flex items-center justify-center z-20 border-[1.5px] border-[#d4af37]/30 rounded-xl backdrop-blur-sm">
             <span className="text-white text-lg font-bold uppercase tracking-wider">🚧 Coming Soon 🚧</span>
           </div>
         )}
       </div>
 
-      <div style={{ padding: '10px' }} className=" flex-grow flex flex-col gap-2">
+      <div style={{ padding: '12px' }} className=" flex-grow flex flex-col gap-3">
         {!isComingSoon ? (
           <>
-            <h3 className="text-xl font-bold text-[#45473a] mb-2 uppercase tracking-wide">{name}</h3>
-            <p className="text-[#45473a] mb-4 flex-grow font-medium">{description}</p>
+            <h3 className="text-xl font-bold text-[#2d1b4e] mb-1 uppercase tracking-wide">{name}</h3>
+            <p className="text-[#3d3d3d] mb-4 flex-grow font-medium leading-relaxed">{description}</p>
 
             <div className="flex flex-wrap gap-2 mb-4">
               {tags?.map((tag, index) => (
                 <span
                   key={index}
-                  style={{ padding: '4px 8px' }}
-                  className="bg-[#ebbd8c] text-[#45473a] rounded-sm text-xs font-bold border-2 border-[#000000] uppercase tracking-wide"
+                  style={{ padding: '6px 12px' }}
+                  className="bg-gradient-to-br from-[#d4af37] to-[#b8941f] text-[#2d1b4e] rounded-lg text-xs font-bold border-[1.5px] border-[#d4af37]/30 uppercase tracking-wide shadow-[0_2px_4px_rgba(212,175,55,0.2)]"
                 >
                   {tag}
                 </span>
@@ -58,7 +58,7 @@ const ProjectCard = ({ name, description, image, link, github, tags, status }) =
                 type="button"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="no-underline text-[#5768ad] hover:text-[#45473a] font-bold text-sm border-2 border-[#000000] px-3 py-1 rounded-sm bg-[#dfdde0] hover:bg-[#c0e692] transition-colors duration-200 custom-link uppercase tracking-wide"
+                className="no-underline text-[#2d1b4e] hover:text-white font-semibold text-sm border-[1.5px] border-[#2d1b4e]/20 px-4 py-2 rounded-xl bg-white/80 hover:bg-gradient-to-br hover:from-[#2d1b4e] hover:to-[#6b5b95] transition-all duration-300 custom-link uppercase tracking-wide shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:shadow-[0_4px_12px_rgba(45,27,78,0.3)]"
               >
                 Live Demo
               </a>
@@ -66,7 +66,7 @@ const ProjectCard = ({ name, description, image, link, github, tags, status }) =
                 href={github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="no-underline text-[#5768ad] hover:text-[#45473a] font-bold text-sm border-2 border-[#000000] px-3 py-1 rounded-sm bg-[#dfdde0] hover:bg-[#c0e692] transition-colors duration-200 custom-link uppercase tracking-wide"
+                className="no-underline text-[#2d1b4e] hover:text-white font-semibold text-sm border-[1.5px] border-[#2d1b4e]/20 px-4 py-2 rounded-xl bg-white/80 hover:bg-gradient-to-br hover:from-[#2d1b4e] hover:to-[#6b5b95] transition-all duration-300 custom-link uppercase tracking-wide shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:shadow-[0_4px_12px_rgba(45,27,78,0.3)]"
               >
                 View Code
               </a>
@@ -75,8 +75,8 @@ const ProjectCard = ({ name, description, image, link, github, tags, status }) =
           </>
         ) : (
           <div className="flex justify-center items-center w-full h-full mt-auto gap-2">
-            <span className="text-[#5768ad] font-bold text-sm uppercase">Coming Soon</span>
-            <span className="text-[#45473a] font-bold text-sm uppercase">{name}</span>
+            <span className="text-[#6b5b95] font-bold text-sm uppercase">Coming Soon</span>
+            <span className="text-[#2d1b4e] font-bold text-sm uppercase">{name}</span>
           </div>
         )}
       </div>
@@ -170,7 +170,7 @@ const Projects = ({ windowSize }) => {
       {/* Navigation Buttons */}
       <button
         ref={prevRef}
-        className="custom-nav-button absolute z-10 bg-[#5768ad] text-white rounded-sm w-12 h-12 flex items-center justify-center hover:bg-[#7d9adc] transition-all duration-300 shadow-lg hover:shadow-xl border-2 border-[#000000] font-mono font-bold"
+        className="custom-nav-button absolute z-10"
         style={{
           left: '20px',
           top: '50%',
@@ -182,7 +182,7 @@ const Projects = ({ windowSize }) => {
       </button>
       <button
         ref={nextRef}
-        className="custom-nav-button absolute z-10 bg-[#5768ad] text-white rounded-sm w-12 h-12 flex items-center justify-center hover:bg-[#7d9adc] transition-all duration-300 shadow-lg hover:shadow-xl border-2 border-[#000000] font-mono font-bold"
+        className="custom-nav-button absolute z-10"
         style={{
           right: '20px',
           top: '50%',
