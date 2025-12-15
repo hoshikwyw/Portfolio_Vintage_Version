@@ -5,6 +5,7 @@ import Home from './Home'
 import Settings from './Settings'
 import Projects from './Projects'
 import Chat from './Chat'
+import ProjectImages from './ProjectImages'
 
 const WindowFrame = ({ focusedWindow, onFocus }) => {
     const { openWindows, closeWindow } = useContext(MenuContext)
@@ -157,7 +158,7 @@ const WindowFrame = ({ focusedWindow, onFocus }) => {
     const getWindowStyle = (menuName, index) => {
         const isFullscreen = fullscreenWindows[menuName]
         const state = windowStates[menuName]
-        const defaultOffset = index * 30
+        // const defaultOffset = index * 30
         const defaultWidth = window.innerWidth * 0.7
         const defaultHeight = (window.innerHeight - 60) * 0.85
 
@@ -201,7 +202,7 @@ const WindowFrame = ({ focusedWindow, onFocus }) => {
                 if (!refs.current[menuName]) {
                     refs.current[menuName] = React.createRef()
                 }
-                const isFullscreen = true
+                // const isFullscreen = true
 
                 const windowContent = (
                     <div
@@ -239,6 +240,7 @@ const WindowFrame = ({ focusedWindow, onFocus }) => {
                         <div className="windowContent project-container" style={{ flex: 1, overflow: 'auto' }}>
                             {menuName === 'Home' && <Home />}
                             {menuName === 'Settings' && <Settings />}
+                            {menuName === 'Gallery' && <ProjectImages />}
                             {menuName === 'Projects' && <Projects windowSize={{ width: window.innerWidth, height: window.innerHeight }} />}
                             {menuName === 'Send-Message' && <Chat />}
                         </div>
@@ -357,6 +359,7 @@ const WindowFrame = ({ focusedWindow, onFocus }) => {
                                 <div className="windowContent project-container" style={{ flex: 1, overflow: 'auto' }}>
                                     {menuName === 'Home' && <Home />}
                                     {menuName === 'Settings' && <Settings />}
+                                    {menuName === 'Gallery' && <ProjectImages />}
                                     {menuName === 'Projects' && <Projects windowSize={windowSize} />}
                                     {menuName === 'Send-Message' && <Chat />}
                                 </div>

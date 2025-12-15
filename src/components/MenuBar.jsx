@@ -55,8 +55,8 @@ const MenuBar = ({ onMenuClick }) => {
                      <MenuIcon
                         icon="icons/gallery.svg"
                         menuName="Gallery"
-                        isActive={openWindows.includes('Settings')}
-                        onClick={() => handleMenuClick('Settings')}
+                        isActive={openWindows.includes('Gallery')}
+                        onClick={() => handleMenuClick('Gallery')}
                     />
                     <MenuIcon
                         icon="icons/terminal.svg"
