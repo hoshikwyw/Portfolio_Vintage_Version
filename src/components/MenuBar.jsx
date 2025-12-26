@@ -44,7 +44,7 @@ Best regards,
         e.preventDefault();
         e.stopPropagation();
 
-        const resumeUrl = '/Khaing_Wut_Yi_Win_Resume.pdf';
+        const resumeUrl = '/KhaingWutYiWinResume.pdf';
 
         const link = document.createElement('a');
         link.href = resumeUrl;
