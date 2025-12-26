@@ -8,7 +8,7 @@ const MenuBar = ({ onMenuClick }) => {
     const { openWindows, openWindow } = useContext(MenuContext)
 
     const handleMenuClick = (name) => {
-        openWindow(name) // Open the window for the selected menu
+        openWindow(name)
         onMenuClick(name);
     }
 
@@ -44,7 +44,7 @@ Best regards,
         e.preventDefault();
         e.stopPropagation();
 
-        const resumeUrl = '/resume.pdf';
+        const resumeUrl = '/Khaing_Wut_Yi_Win_Resume.pdf';
 
         const link = document.createElement('a');
         link.href = resumeUrl;
