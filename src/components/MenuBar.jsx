@@ -48,7 +48,7 @@ Best regards,
 
         const link = document.createElement('a');
         link.href = resumeUrl;
-        link.download = 'Khaing_Wut_Yi_Win_Resume.pdf';
+        link.download = 'KhaingWutYiWinResume.pdf';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
