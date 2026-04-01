@@ -29,7 +29,9 @@
   background: linear-gradient(135deg, #1a0e35 0%, #2d1b4e 20%, #4a2c6b 45%, #6b5b95 70%, #8b7ba8 100%);
   height: 100vh;
   width: 100vw;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
   overflow: hidden;
 }
 

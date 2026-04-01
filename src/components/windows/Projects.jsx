@@ -19,14 +19,16 @@ const ProjectCard = ({ name, description, image, link, github, tags, status }) =
     >
       <div style={{ padding: '12px' }} className="h-52 overflow-hidden relative p-4 border-[1.5px] border-black/10 rounded-xl bg-gradient-to-br from-[#f5f3ef] to-[#fff8e7]">
         <div className="absolute inset-0 bg-gradient-to-br from-[#f5f3ef] to-[#fff8e7] animate-pulse"></div>
-        <img
-          src={image}
-          alt={name}
-          className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 relative z-10 rounded-lg"
-          onLoad={(e) => {
-            e.target.previousSibling.style.display = 'none';
-          }}
-        />
+        {image && (
+          <img
+            src={image}
+            alt={name}
+            className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 relative z-10 rounded-lg"
+            onLoad={(e) => {
+              e.target.previousSibling.style.display = 'none';
+            }}
+          />
+        )}
         {isComingSoon && (
           <div className="absolute inset-0 bg-gradient-to-br from-[#2d1b4e]/90 to-[#6b5b95]/90 flex items-center justify-center z-20 border-[1.5px] border-[#d4af37]/30 rounded-xl backdrop-blur-sm">
             <span className="text-white text-lg font-bold uppercase tracking-wider">🚧 Coming Soon 🚧</span>
@@ -155,7 +157,7 @@ const Projects = ({ windowSize }) => {
               <ProjectCard
                 name={project?.title}
                 description={project?.desc}
-                image={project?.imgs ? project?.imgs[0] : ''}
+                image={project?.imgs?.[0] || null}
                 link={project?.demolink}
                 github={project?.repolink}
                 tags={project?.languages}

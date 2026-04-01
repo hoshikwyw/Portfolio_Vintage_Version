@@ -12,7 +12,7 @@ const Desktop = ({ focusedWindow, onFocus }) => {
   const wallpaperClass = wallpaper !== 'default' ? `wallpaper-${wallpaper}` : ''
 
   return (
-    <div className={`mainBackground ${wallpaperClass} relative flex h-screen w-screen justify-center items-center overflow-hidden`}>
+    <div className={`mainBackground ${wallpaperClass} relative h-screen w-screen overflow-hidden`}>
       {/* Animated gradient orbs */}
       <div className="gradient-orb gradient-orb-1" />
       <div className="gradient-orb gradient-orb-2" />
@@ -22,18 +22,10 @@ const Desktop = ({ focusedWindow, onFocus }) => {
       <DesktopIcons onFocus={onFocus} />
 
       {/* Windows */}
-      <div>
-        <WindowFrame focusedWindow={focusedWindow} onFocus={onFocus} />
-      </div>
+      <WindowFrame focusedWindow={focusedWindow} onFocus={onFocus} />
 
       {/* Taskbar */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2, duration: 0.5, type: 'spring', stiffness: 200, damping: 20 }}
-      >
-        <MenuBar onMenuClick={onFocus} />
-      </motion.div>
+      <MenuBar onMenuClick={onFocus} />
     </div>
   )
 }

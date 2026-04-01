@@ -55,18 +55,17 @@ const DraggableWindow = ({
     const resizeRef = useRef(null)
     const rafRef = useRef(null)
 
-    // Motion values — imperative, no React re-renders, no spring on resize
     const mvX = useMotionValue(initialState.x)
     const mvY = useMotionValue(initialState.y)
     const mvW = useMotionValue(initialState.width)
     const mvH = useMotionValue(initialState.height)
 
-    // Sync if parent state changes (e.g. after drag end commit)
+    // Sync from parent state
     useEffect(() => {
-        mvX.set(initialState.x)
-        mvY.set(initialState.y)
-        mvW.set(initialState.width)
-        mvH.set(initialState.height)
+        mvX.jump(initialState.x)
+        mvY.jump(initialState.y)
+        mvW.jump(initialState.width)
+        mvH.jump(initialState.height)
     }, [initialState.x, initialState.y, initialState.width, initialState.height])
 
     const startResize = useCallback((direction, e) => {
@@ -99,22 +98,17 @@ const DraggableWindow = ({
 
                 let nw = r.origW, nh = r.origH, nx = r.origX, ny = r.origY
 
-                if (r.direction.includes('right')) {
-                    nw = Math.min(Math.max(r.origW + dx, minW), maxW)
-                }
+                if (r.direction.includes('right')) nw = Math.min(Math.max(r.origW + dx, minW), maxW)
                 if (r.direction.includes('left')) {
                     nw = Math.min(Math.max(r.origW - dx, minW), maxW)
                     nx = r.origX + (r.origW - nw)
                 }
-                if (r.direction.includes('bottom')) {
-                    nh = Math.min(Math.max(r.origH + dy, minH), maxH)
-                }
+                if (r.direction.includes('bottom')) nh = Math.min(Math.max(r.origH + dy, minH), maxH)
                 if (r.direction.includes('top')) {
                     nh = Math.min(Math.max(r.origH - dy, minH), maxH)
                     ny = r.origY + (r.origH - nh)
                 }
 
-                // Imperative set — instant, no animation
                 mvW.set(nw)
                 mvH.set(nh)
                 mvX.set(nx)
@@ -123,12 +117,9 @@ const DraggableWindow = ({
         }
 
         const handleMouseUp = () => {
-            // Commit final values to parent state
             onStateCommit(menuName, {
-                width: mvW.get(),
-                height: mvH.get(),
-                x: mvX.get(),
-                y: mvY.get(),
+                width: mvW.get(), height: mvH.get(),
+                x: mvX.get(), y: mvY.get(),
             })
             resizeRef.current = null
             if (rafRef.current) cancelAnimationFrame(rafRef.current)
@@ -154,29 +145,30 @@ const DraggableWindow = ({
             dragControls={dragControls}
             dragListener={false}
             dragConstraints={{
-                left: 0, top: 0,
-                right: Math.max(0, windowSize.width - mvW.get()),
-                bottom: Math.max(0, windowSize.height - mvH.get()),
+                left: -mvX.get(),
+                top: -mvY.get(),
+                right: Math.max(0, windowSize.width - mvW.get() - mvX.get()),
+                bottom: Math.max(0, windowSize.height - mvH.get() - mvY.get()),
             }}
             dragElastic={0.04}
             dragMomentum={false}
             dragTransition={{ power: 0, timeConstant: 0 }}
             whileDrag={{
-                scale: 1.008,
+                scale: 1.005,
                 boxShadow: '0 30px 90px rgba(0,0,0,0.28), 0 12px 36px rgba(0,0,0,0.18)',
-                cursor: 'grabbing',
             }}
             onDragStart={() => onFocus(menuName)}
             onDragEnd={(_, info) => {
-                const newX = mvX.get() + info.offset.x
-                const newY = mvY.get() + info.offset.y
-                mvX.set(newX)
-                mvY.set(newY)
+                // info.point has the final position, but we need to commit
+                // the delta to our tracked position
+                const finalX = mvX.get() + info.offset.x
+                const finalY = mvY.get() + info.offset.y
+                // Clamp to bounds
+                const clampedX = Math.max(0, Math.min(finalX, windowSize.width - mvW.get()))
+                const clampedY = Math.max(0, Math.min(finalY, windowSize.height - mvH.get()))
                 onStateCommit(menuName, {
-                    width: mvW.get(),
-                    height: mvH.get(),
-                    x: newX,
-                    y: newY,
+                    width: mvW.get(), height: mvH.get(),
+                    x: clampedX, y: clampedY,
                 })
             }}
             onClick={() => onFocus(menuName)}
@@ -217,28 +209,15 @@ const DraggableWindow = ({
                     vintage Oro / {menuName}
                 </div>
                 <div className="windowControls">
-                    <button
-                        className="minimizeBtn"
-                        onClick={(e) => { e.stopPropagation(); onMinimize(menuName) }}
-                        title="Minimize"
-                    >
-                        <svg width="16" height="16" viewBox="0 0 16 16">
-                            <path d="M3 8h10" stroke="currentColor" strokeWidth="1.5" fill="none" />
-                        </svg>
+                    <button className="minimizeBtn" onClick={(e) => { e.stopPropagation(); onMinimize(menuName) }} title="Minimize">
+                        <svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8h10" stroke="currentColor" strokeWidth="1.5" fill="none" /></svg>
                     </button>
-                    <button
-                        className="fullscreenBtn"
-                        onClick={(e) => { e.stopPropagation(); onFullscreen(menuName) }}
-                        title="Fullscreen"
-                    >
+                    <button className="fullscreenBtn" onClick={(e) => { e.stopPropagation(); onFullscreen(menuName) }} title="Fullscreen">
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                             <path d="M2.5 2.5h3M2.5 2.5v3M13.5 2.5h-3M13.5 2.5v3M2.5 13.5h3M2.5 13.5v-3M13.5 13.5h-3M13.5 13.5v-3" stroke="currentColor" strokeWidth="1.5" fill="none" />
                         </svg>
                     </button>
-                    <button
-                        className="closeBtn"
-                        onClick={(e) => { e.stopPropagation(); onClose(menuName) }}
-                    >
+                    <button className="closeBtn" onClick={(e) => { e.stopPropagation(); onClose(menuName) }}>
                         <img src="icons/delete.png" alt="delete" />
                     </button>
                 </div>
@@ -251,33 +230,41 @@ const DraggableWindow = ({
     )
 }
 
+// Counter for cascading new windows
+let windowCounter = 0
+
 const WindowFrame = ({ focusedWindow, onFocus }) => {
     const { openWindows, minimizedWindows, closeWindow, minimizeWindow } = useContext(MenuContext)
     const [windowSize, setWindowSize] = useState({
         width: window.innerWidth,
-        height: window.innerHeight - 60,
+        height: window.innerHeight - 48, // taskbar height
     })
     const [windowStates, setWindowStates] = useState({})
     const [fullscreenWindows, setFullscreenWindows] = useState({})
 
     useEffect(() => {
         const handleResize = () => {
-            setWindowSize({ width: window.innerWidth, height: window.innerHeight - 60 })
+            setWindowSize({ width: window.innerWidth, height: window.innerHeight - 48 })
         }
         window.addEventListener('resize', handleResize)
         return () => window.removeEventListener('resize', handleResize)
     }, [])
 
+    // Initialize new windows with cascading position
     useEffect(() => {
         const newStates = {}
-        openWindows.forEach((menuName, index) => {
+        openWindows.forEach((menuName) => {
             if (!windowStates[menuName] && !fullscreenWindows[menuName]) {
-                const offset = index * 30
+                const cascade = (windowCounter++ % 6) * 30
+                const w = Math.min(window.innerWidth * 0.65, 900)
+                const h = Math.min((window.innerHeight - 48) * 0.75, 650)
+                const maxX = window.innerWidth - w
+                const maxY = window.innerHeight - 48 - h
                 newStates[menuName] = {
-                    width: window.innerWidth * 0.7,
-                    height: (window.innerHeight - 60) * 0.85,
-                    x: window.innerWidth * 0.05 + offset,
-                    y: (window.innerHeight - 60) * 0.05 + offset,
+                    width: w,
+                    height: h,
+                    x: Math.min(60 + cascade, maxX),
+                    y: Math.min(30 + cascade, maxY),
                 }
             }
         })
@@ -289,9 +276,11 @@ const WindowFrame = ({ focusedWindow, onFocus }) => {
     const handleClose = useCallback((menuName) => {
         closeWindow(menuName)
         setFullscreenWindows((prev) => {
-            const next = { ...prev }
-            delete next[menuName]
-            return next
+            const next = { ...prev }; delete next[menuName]; return next
+        })
+        // Clean up state so reopening gets a fresh position
+        setWindowStates((prev) => {
+            const next = { ...prev }; delete next[menuName]; return next
         })
     }, [closeWindow])
 
@@ -306,11 +295,8 @@ const WindowFrame = ({ focusedWindow, onFocus }) => {
 
     const handleMinimize = useCallback((menuName) => {
         minimizeWindow(menuName)
-        // Also exit fullscreen if minimizing
         setFullscreenWindows((prev) => {
-            const next = { ...prev }
-            delete next[menuName]
-            return next
+            const next = { ...prev }; delete next[menuName]; return next
         })
     }, [minimizeWindow])
 
@@ -324,7 +310,43 @@ const WindowFrame = ({ focusedWindow, onFocus }) => {
 
     return (
         <>
-            {/* Fullscreen windows */}
+            {/* Normal draggable windows — absolute overlay, no document flow impact */}
+            <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: 'calc(100% - 48px)',
+                zIndex: 20,
+                overflow: 'hidden',
+                pointerEvents: 'none',
+            }}>
+                <div style={{ width: '100%', height: '100%', position: 'relative', pointerEvents: 'auto' }}>
+                    <AnimatePresence>
+                        {normalWindowsList.map((menuName, index) => {
+                            const state = windowStates[menuName]
+                            if (!state) return null
+                            return (
+                                <DraggableWindow
+                                    key={menuName}
+                                    menuName={menuName}
+                                    index={index}
+                                    initialState={state}
+                                    windowSize={windowSize}
+                                    focusedWindow={focusedWindow}
+                                    onFocus={onFocus}
+                                    onClose={handleClose}
+                                    onFullscreen={handleFullscreen}
+                                    onMinimize={handleMinimize}
+                                    onStateCommit={handleStateCommit}
+                                />
+                            )
+                        })}
+                    </AnimatePresence>
+                </div>
+            </div>
+
+            {/* Fullscreen windows — fixed overlay */}
             <AnimatePresence>
                 {fullscreenWindowsList.map((menuName) => (
                     <motion.div
@@ -351,28 +373,15 @@ const WindowFrame = ({ focusedWindow, onFocus }) => {
                                 vintage Oro / {menuName}
                             </div>
                             <div className="windowControls">
-                                <button
-                                    className="minimizeBtn"
-                                    onClick={(e) => { e.stopPropagation(); handleMinimize(menuName) }}
-                                    title="Minimize"
-                                >
-                                    <svg width="16" height="16" viewBox="0 0 16 16">
-                                        <path d="M3 8h10" stroke="currentColor" strokeWidth="1.5" fill="none" />
-                                    </svg>
+                                <button className="minimizeBtn" onClick={(e) => { e.stopPropagation(); handleMinimize(menuName) }} title="Minimize">
+                                    <svg width="16" height="16" viewBox="0 0 16 16"><path d="M3 8h10" stroke="currentColor" strokeWidth="1.5" fill="none" /></svg>
                                 </button>
-                                <button
-                                    className="fullscreenBtn"
-                                    onClick={(e) => { e.stopPropagation(); handleFullscreen(menuName) }}
-                                    title="Exit Fullscreen"
-                                >
+                                <button className="fullscreenBtn" onClick={(e) => { e.stopPropagation(); handleFullscreen(menuName) }} title="Exit Fullscreen">
                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
                                         <path d="M5.5 2.5h-3A1 1 0 0 0 1.5 3.5v3M10.5 2.5h3A1 1 0 0 1 14.5 3.5v3M5.5 13.5h-3A1 1 0 0 1 1.5 12.5v-3M10.5 13.5h3a1 1 0 0 0 1-1v-3" stroke="currentColor" strokeWidth="1.5" fill="none" />
                                     </svg>
                                 </button>
-                                <button
-                                    className="closeBtn"
-                                    onClick={(e) => { e.stopPropagation(); handleClose(menuName) }}
-                                >
+                                <button className="closeBtn" onClick={(e) => { e.stopPropagation(); handleClose(menuName) }}>
                                     <img src="icons/delete.png" alt="delete" />
                                 </button>
                             </div>
@@ -383,35 +392,6 @@ const WindowFrame = ({ focusedWindow, onFocus }) => {
                     </motion.div>
                 ))}
             </AnimatePresence>
-
-            {/* Normal draggable windows */}
-            <div className="draggable-container" style={{ width: '100vw', height: '100vh', position: 'relative', zIndex: 20 }}>
-                <AnimatePresence>
-                    {normalWindowsList.map((menuName, index) => {
-                        const state = windowStates[menuName] || {
-                            width: window.innerWidth * 0.7,
-                            height: (window.innerHeight - 60) * 0.85,
-                            x: window.innerWidth * 0.05 + index * 30,
-                            y: (window.innerHeight - 60) * 0.05 + index * 30,
-                        }
-                        return (
-                            <DraggableWindow
-                                key={menuName}
-                                menuName={menuName}
-                                index={index}
-                                initialState={state}
-                                windowSize={windowSize}
-                                focusedWindow={focusedWindow}
-                                onFocus={onFocus}
-                                onClose={handleClose}
-                                onFullscreen={handleFullscreen}
-                                onMinimize={handleMinimize}
-                                onStateCommit={handleStateCommit}
-                            />
-                        )
-                    })}
-                </AnimatePresence>
-            </div>
         </>
     )
 }

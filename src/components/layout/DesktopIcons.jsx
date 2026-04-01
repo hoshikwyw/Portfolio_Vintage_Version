@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { motion } from 'framer-motion'
 import { MenuContext } from '../../context/MenuContext'
 
@@ -13,59 +13,45 @@ const shortcuts = [
 const containerVariants = {
     hidden: {},
     visible: {
-        transition: { staggerChildren: 0.06, delayChildren: 0.5 },
+        transition: { staggerChildren: 0.07, delayChildren: 0.4 },
     },
 }
 
 const iconVariants = {
-    hidden: { opacity: 0, y: 15, scale: 0.8 },
+    hidden: { opacity: 0, scale: 0.6 },
     visible: {
-        opacity: 1, y: 0, scale: 1,
+        opacity: 1, scale: 1,
         transition: { type: 'spring', stiffness: 300, damping: 20 },
     },
 }
 
 export default function DesktopIcons({ onFocus }) {
     const { openWindow } = useContext(MenuContext)
-    const [selected, setSelected] = useState(null)
 
-    const handleDoubleClick = (name) => {
+    const handleClick = (name) => {
         openWindow(name)
         onFocus(name)
     }
 
-    const handleClick = (name) => {
-        setSelected(name)
-    }
-
-    // Deselect when clicking desktop background
-    const handleDesktopClick = (e) => {
-        if (e.target === e.currentTarget) {
-            setSelected(null)
-        }
-    }
-
     return (
         <motion.div
-            className="absolute top-6 left-6 z-10 flex flex-col gap-2"
+            className="absolute top-5 left-5 z-10 grid grid-cols-2 sm:grid-cols-1 gap-1"
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            onClick={handleDesktopClick}
         >
-            {shortcuts.map((shortcut) => (
-                <motion.div
-                    key={shortcut.name}
-                    className={`desktop-icon ${selected === shortcut.name ? 'selected' : ''}`}
+            {shortcuts.map((s) => (
+                <motion.button
+                    key={s.name}
+                    className="desktop-icon"
                     variants={iconVariants}
-                    onClick={() => handleClick(shortcut.name)}
-                    onDoubleClick={() => handleDoubleClick(shortcut.name)}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    onClick={() => handleClick(s.name)}
+                    whileHover={{ scale: 1.08 }}
+                    whileTap={{ scale: 0.92 }}
                 >
-                    <img src={shortcut.icon} alt={shortcut.label} draggable={false} />
-                    <span>{shortcut.label}</span>
-                </motion.div>
+                    <img src={s.icon} alt={s.label} draggable={false} />
+                    <span>{s.label}</span>
+                </motion.button>
             ))}
         </motion.div>
     )
