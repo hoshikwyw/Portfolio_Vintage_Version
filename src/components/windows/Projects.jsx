@@ -5,7 +5,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/autoplay';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
-import { useFetchProjects } from '../queries/projectQueries';
+import { useFetchProjects } from '../../queries/projectQueries';
 
 const ProjectCard = ({ name, description, image, link, github, tags, status }) => {
   const isComingSoon = status === false;
@@ -13,7 +13,7 @@ const ProjectCard = ({ name, description, image, link, github, tags, status }) =
   return (
     <div
       style={{ padding: '12px' }}
-      className={`h-full w-full bg-gradient-to-br from-[#faf9f6] to-[#fff8e7] border-[1.5px] border-black/15 rounded-2xl shadow-[0_8px_24px_rgba(0,0,0,0.08),0_2px_8px_rgba(212,175,55,0.1),inset_0_1px_0_rgba(255,255,255,0.8)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.12),0_4px_12px_rgba(212,175,55,0.2),inset_0_1px_0_rgba(255,255,255,0.8)] 
+      className={`h-full w-full bg-gradient-to-br from-[#faf9f6] to-[#fff8e7] border-[1.5px] border-black/15 rounded-2xl shadow-[0_8px_24px_rgba(0,0,0,0.08),0_2px_8px_rgba(212,175,55,0.1),inset_0_1px_0_rgba(255,255,255,0.8)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.12),0_4px_12px_rgba(212,175,55,0.2),inset_0_1px_0_rgba(255,255,255,0.8)]
         transition-all duration-300 overflow-hidden flex flex-col font-sans backdrop-blur-sm
         ${isComingSoon ? 'opacity-70 pointer-events-none' : 'hover:-translate-y-1'}`}
     >

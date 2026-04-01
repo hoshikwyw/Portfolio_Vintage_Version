@@ -14,7 +14,7 @@ import {
     Gauge,
     Navigation
 } from 'lucide-react';
-import { fetchWeatherData } from '../queries/weatherQueries';
+import { fetchWeatherData } from '../../queries/weatherQueries';
 
 const WeatherWidget = () => {
     const [weatherData, setWeatherData] = useState(null);

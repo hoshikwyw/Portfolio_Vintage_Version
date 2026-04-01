@@ -1,13 +1,11 @@
-import React from 'react'
 import { useState } from 'react'
-import './App.css'
-import MenuBar from './components/MenuBar'
-import WindowFrame from './components/WindowFrame'
-import { MenuProvider } from './utils/MenuContext'
-import BootSplash from './components/BootSplash'
+import MenuBar from './components/layout/MenuBar'
+import WindowFrame from './components/layout/WindowFrame'
+import { MenuProvider } from './context/MenuContext'
+import BootSplash from './components/layout/BootSplash'
 import { SpeedInsights } from '@vercel/speed-insights/react';
-import WeatherWidget from './components/WeatherWidget'
-import ClockWidget from './components/ClockWidget'
+import WeatherWidget from './components/widgets/WeatherWidget'
+import ClockWidget from './components/widgets/ClockWidget'
 
 const App = () => {
   const [focusedWindow, setFocusedWindow] = useState("Home");

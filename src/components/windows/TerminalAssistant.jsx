@@ -1,8 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useFetchProjects } from "../queries/projectQueries";
+import { useFetchProjects } from "../../queries/projectQueries";
 
 export default function TerminalAssistant({
-    // projects = [],
     skills = [],
 }) {
     const initialMessage = <span className="text-[#5768ad]">Type '<span className="text-[#45473a] font-bold">help</span>' to see available commands</span>;
@@ -14,7 +13,6 @@ export default function TerminalAssistant({
 
     const { data: projects } = useFetchProjects();
 
-    // Focus the input and scroll to bottom
     useEffect(() => {
         inputRef.current?.focus();
         scrollToBottom();
@@ -202,7 +200,7 @@ export default function TerminalAssistant({
                     animation-delay: -0.16s;
                 }
                 @keyframes bounce {
-                    0%, 80%, 100% { 
+                    0%, 80%, 100% {
                         transform: translateY(0);
                     }
                     40% {

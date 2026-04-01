@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
-import MenuIcon from '../common/MenuIcon'
-import { MenuContext } from '../utils/MenuContext'
+import MenuIcon from './MenuIcon'
+import { MenuContext } from '../../context/MenuContext'
 import DockSearch from './DockSearch'
 import { Mail, Download } from 'lucide-react'
 
@@ -21,12 +21,12 @@ const MenuBar = ({ onMenuClick }) => {
         const subject = 'Hire Request - Frontend Developer';
         const body = `Hello Khaing Wut Yi Win,
 
-I am interested in discussing a potential opportunity with you. 
+I am interested in discussing a potential opportunity with you.
 
 Project Details:
-- Project Type: 
-- Timeline: 
-- Budget: 
+- Project Type:
+- Timeline:
+- Budget:
 
 Please let me know your availability and we can schedule a call to discuss further.
 

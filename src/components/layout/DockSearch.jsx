@@ -1,16 +1,15 @@
-// DockSearch.jsx
 import { useState } from "react";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline"; // optional icon
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 export default function DockSearch() {
     const [query, setQuery] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!query.trim()) return;             // ignore empty
+        if (!query.trim()) return;
         const url = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
-        window.open(url, "_blank", "noopener,noreferrer"); // new tab
-        setQuery("");                          // clear field after launch
+        window.open(url, "_blank", "noopener,noreferrer");
+        setQuery("");
     };
 
     return (

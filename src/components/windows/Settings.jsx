@@ -1,5 +1,5 @@
 import React from 'react'
-import ErrorPage from './error/ErrorPage'
+import ErrorPage from './ErrorPage'
 
 const Settings = () => {
   return (

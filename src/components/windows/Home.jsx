@@ -1,5 +1,5 @@
 import React from 'react'
-import HomeWindow from '../common/HomeWindow'
+import HomeWindow from './HomeWindow'
 
 const Home = () => {
     return (

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useFetchProjectImages } from '../queries/projectImagesQueries'
+import { useFetchProjectImages } from '../../queries/projectImagesQueries'
 import './ProjectImages.css'
 
 const ProjectImages = () => {
@@ -33,21 +33,16 @@ const ProjectImages = () => {
             items.forEach(item => {
                 const img = item.querySelector('img');
                 if (img && img.naturalHeight && img.naturalWidth) {
-                    // Calculate row span based on image aspect ratio
                     const aspectRatio = img.naturalHeight / img.naturalWidth;
-                    // Adjust the multiplier to control density
                     const rowSpan = Math.ceil(aspectRatio * 25);
                     item.style.setProperty('--row-span', rowSpan);
                 }
             });
         };
 
-        // Calculate after images load with a small delay
         const timer = setTimeout(calculateRowSpans, 100);
-        
-        // Recalculate on window resize
         window.addEventListener('resize', calculateRowSpans);
-        
+
         return () => {
             clearTimeout(timer);
             window.removeEventListener('resize', calculateRowSpans);
@@ -106,7 +101,7 @@ const ProjectImages = () => {
                             key={image.id}
                             onClick={() => handleImageClick(image)}
                             className="masonry-item group"
-                            style={{ '--row-span': 30 }} // Default value
+                            style={{ '--row-span': 30 }}
                         >
                             <div className="image-card">
                                 {!loadedImages.has(image.id) && (
@@ -134,8 +129,7 @@ const ProjectImages = () => {
                         >
                             ×
                         </button>
-                        
-                        {/* SIMPLE IMAGE ONLY - NO SIDEBAR */}
+
                         <div className="image-modal-image-container">
                             <img
                                 src={selectedImage.url}
@@ -143,8 +137,7 @@ const ProjectImages = () => {
                                 className="image-modal-image"
                             />
                         </div>
-                        
-                        {/* FLOATING ACTIONS BAR AT BOTTOM */}
+
                         <div className="image-modal-actions-bar">
                             <a
                                 href={selectedImage.project}

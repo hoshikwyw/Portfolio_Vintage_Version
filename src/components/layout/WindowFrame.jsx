@@ -1,11 +1,11 @@
 import React, { useContext, useRef, useState, useEffect } from 'react'
 import Draggable from 'react-draggable'
-import { MenuContext } from '../utils/MenuContext'
-import Home from './Home'
-import Settings from './Settings'
-import Projects from './Projects'
-import Chat from './Chat'
-import ProjectImages from './ProjectImages'
+import { MenuContext } from '../../context/MenuContext'
+import Home from '../windows/Home'
+import Settings from '../windows/Settings'
+import Projects from '../windows/Projects'
+import Chat from '../windows/Chat'
+import ProjectImages from '../windows/ProjectImages'
 
 const WindowFrame = ({ focusedWindow, onFocus }) => {
     const { openWindows, closeWindow } = useContext(MenuContext)
@@ -35,7 +35,6 @@ const WindowFrame = ({ focusedWindow, onFocus }) => {
         openWindows.forEach((menuName, index) => {
             if (!windowStates[menuName] && !fullscreenWindows[menuName]) {
                 const offset = index * 30
-                // Calculate initial position based on offset
                 const initialX = window.innerWidth * 0.05 + offset
                 const initialY = (window.innerHeight - 60) * 0.05 + offset
                 newStates[menuName] = {
@@ -158,7 +157,6 @@ const WindowFrame = ({ focusedWindow, onFocus }) => {
     const getWindowStyle = (menuName, index) => {
         const isFullscreen = fullscreenWindows[menuName]
         const state = windowStates[menuName]
-        // const defaultOffset = index * 30
         const defaultWidth = window.innerWidth * 0.7
         const defaultHeight = (window.innerHeight - 60) * 0.85
 
@@ -202,7 +200,6 @@ const WindowFrame = ({ focusedWindow, onFocus }) => {
                 if (!refs.current[menuName]) {
                     refs.current[menuName] = React.createRef()
                 }
-                // const isFullscreen = true
 
                 const windowContent = (
                     <div

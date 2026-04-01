@@ -4,7 +4,6 @@ export default function BootSplash({ onFinish = () => { } }) {
   const [percent, setPercent] = useState(0);
   const [loadingText, setLoadingText] = useState("Initializing system...");
 
-  // Simulate boot progress
   useEffect(() => {
     let current = 0;
     const loadingMessages = [
@@ -16,15 +15,13 @@ export default function BootSplash({ onFinish = () => { } }) {
     let messageIndex = 0;
 
     const timer = setInterval(() => {
-      current += Math.floor(Math.random() * 15) + 5; // 5‑19 % bumps
+      current += Math.floor(Math.random() * 15) + 5;
       if (current >= 100) {
         current = 100;
         clearInterval(timer);
         setLoadingText("Ready!");
-        // Small pause so users can see 100 %
         setTimeout(onFinish, 600);
       } else {
-        // Update loading message based on progress
         const newIndex = Math.floor((current / 100) * loadingMessages.length);
         if (newIndex < loadingMessages.length && newIndex !== messageIndex) {
           messageIndex = newIndex;
@@ -32,7 +29,7 @@ export default function BootSplash({ onFinish = () => { } }) {
         }
       }
       setPercent(current);
-    }, 300); // every 0.3 s
+    }, 300);
     return () => clearInterval(timer);
   }, [onFinish]);
 
