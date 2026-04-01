@@ -1,7 +1,13 @@
 {
   "permissions": {
     "allow": [
-      "Bash(grep -E \"\\\\.\\(json|js|html|md\\)$|^d\")"
+      "Bash(grep -E \"\\\\.\\(json|js|html|md\\)$|^d\")",
+      "WebFetch(domain:posthog.com)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "Bash(npm install:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(npm run:*)"
     ]
   }
 }

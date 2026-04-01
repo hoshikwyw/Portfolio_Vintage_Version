@@ -26,7 +26,7 @@
 } */
 
 .mainBackground {
-  background: linear-gradient(135deg, #2d1b4e 0%, #4a2c6b 25%, #6b5b95 50%, #8b7ba8 75%, #a99bb8 100%);
+  background: linear-gradient(135deg, #1a0e35 0%, #2d1b4e 20%, #4a2c6b 45%, #6b5b95 70%, #8b7ba8 100%);
   height: 100vh;
   width: 100vw;
   position: relative;
@@ -36,43 +36,71 @@
 .mainBackground::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: 
+  inset: 0;
+  background-image:
     repeating-linear-gradient(
       0deg,
       transparent,
       transparent 2px,
-      rgba(255, 255, 255, 0.03) 2px,
-      rgba(255, 255, 255, 0.03) 4px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent,
-      transparent 2px,
-      rgba(255, 255, 255, 0.03) 2px,
-      rgba(255, 255, 255, 0.03) 4px
+      rgba(255, 255, 255, 0.02) 2px,
+      rgba(255, 255, 255, 0.02) 4px
     );
   pointer-events: none;
+  z-index: 1;
 }
 
-.mainBackground::after {
-  content: '';
+/* Floating gradient orbs for ambient motion */
+.gradient-orb {
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle at 30% 30%, rgba(212, 175, 55, 0.15) 0%, transparent 50%);
-  animation: shimmer 20s ease-in-out infinite;
+  border-radius: 50%;
+  filter: blur(80px);
   pointer-events: none;
+  z-index: 0;
+  will-change: transform;
 }
 
-@keyframes shimmer {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  50% { transform: translate(10%, 10%) rotate(180deg); }
+.gradient-orb-1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+  top: -10%;
+  left: -5%;
+  animation: orb-float-1 25s ease-in-out infinite;
+}
+
+.gradient-orb-2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(107, 91, 149, 0.2) 0%, transparent 70%);
+  bottom: -10%;
+  right: -5%;
+  animation: orb-float-2 20s ease-in-out infinite;
+}
+
+.gradient-orb-3 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, transparent 70%);
+  top: 40%;
+  left: 50%;
+  animation: orb-float-3 30s ease-in-out infinite;
+}
+
+@keyframes orb-float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(80px, 60px) scale(1.1); }
+  66% { transform: translate(-40px, 30px) scale(0.95); }
+}
+
+@keyframes orb-float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-60px, -40px) scale(1.05); }
+  66% { transform: translate(50px, -20px) scale(0.9); }
+}
+
+@keyframes orb-float-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-100px, -60px) scale(1.15); }
 }
 
 .menuBarPadding {
@@ -165,24 +193,28 @@
 }
 
 .windowFrame {
-  position: absolute;
-  top: 50px;
-  left: 50px;
-  width: 400px;
-  height: 500px;
   background: linear-gradient(135deg, var(--color-main-white) 0%, var(--color-cream) 100%);
-  border: 2px solid rgba(26, 26, 26, 0.15);
+  border: 1.5px solid rgba(26, 26, 26, 0.12);
   border-radius: 16px;
-  box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.15),
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.18),
     0 8px 24px rgba(0, 0, 0, 0.1),
-    0 0 0 1px rgba(212, 175, 55, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    0 0 0 1px rgba(212, 175, 55, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
   overflow: hidden;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
   min-width: 400px;
   min-height: 300px;
   backdrop-filter: blur(20px);
+  transition: box-shadow 0.3s cubic-bezier(.23,1,.32,1);
+}
+
+.windowFrame:hover {
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.2),
+    0 10px 30px rgba(0, 0, 0, 0.12),
+    0 0 0 1px rgba(212, 175, 55, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
 }
 
 /* Resize handles */
@@ -196,41 +228,41 @@
 
 .resize-top {
   top: 0;
-  left: 4px;
-  right: 4px;
-  height: 4px;
+  left: 6px;
+  right: 6px;
+  height: 6px;
   cursor: ns-resize;
 }
 
 .resize-right {
-  top: 4px;
+  top: 6px;
   right: 0;
-  bottom: 4px;
-  width: 4px;
+  bottom: 6px;
+  width: 6px;
   cursor: ew-resize;
 }
 
 .resize-bottom {
   bottom: 0;
-  left: 4px;
-  right: 4px;
-  height: 4px;
+  left: 6px;
+  right: 6px;
+  height: 6px;
   cursor: ns-resize;
 }
 
 .resize-left {
-  top: 4px;
+  top: 6px;
   left: 0;
-  bottom: 4px;
-  width: 4px;
+  bottom: 6px;
+  width: 6px;
   cursor: ew-resize;
 }
 
 .resize-top-left {
   top: 0;
   left: 0;
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
   cursor: nwse-resize;
   z-index: 1002;
 }
@@ -238,8 +270,8 @@
 .resize-top-right {
   top: 0;
   right: 0;
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
   cursor: nesw-resize;
   z-index: 1002;
 }
@@ -247,8 +279,8 @@
 .resize-bottom-left {
   bottom: 0;
   left: 0;
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
   cursor: nesw-resize;
   z-index: 1002;
 }
@@ -256,8 +288,8 @@
 .resize-bottom-right {
   bottom: 0;
   right: 0;
-  width: 8px;
-  height: 8px;
+  width: 12px;
+  height: 12px;
   cursor: nwse-resize;
   z-index: 1002;
 }
@@ -274,12 +306,18 @@
   background: linear-gradient(135deg, var(--color-dark-blue) 0%, var(--color-light-blue) 100%);
   color: var(--color-main-white);
   padding: 10px 16px;
-  cursor: move;
+  cursor: grab;
   border-bottom: 2px solid rgba(212, 175, 55, 0.3);
-  box-shadow: 
+  box-shadow:
     0 2px 8px rgba(0, 0, 0, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   position: relative;
+  touch-action: none;
+  user-select: none;
+}
+
+.windowHeader:active {
+  cursor: grabbing;
 }
 
 .windowHeader::after {
