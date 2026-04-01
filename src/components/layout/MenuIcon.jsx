@@ -1,7 +1,7 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 
-const MenuIcon = ({ icon, menuName, onClick, isActive }) => {
+const MenuIcon = ({ icon, menuName, onClick, isActive, isMinimized }) => {
     return (
         <div className="relative group cursor-pointer">
             <motion.button
@@ -28,8 +28,11 @@ const MenuIcon = ({ icon, menuName, onClick, isActive }) => {
             {/* Active indicator dot */}
             {isActive && (
                 <motion.div
-                    className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#d4af37]"
-                    layoutId="activeIndicator"
+                    className={`absolute -bottom-1.5 left-1/2 -translate-x-1/2 rounded-full ${
+                        isMinimized
+                            ? 'w-1 h-1 bg-[#6b5b95]'
+                            : 'w-1.5 h-1.5 bg-[#d4af37]'
+                    }`}
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ type: 'spring', stiffness: 500, damping: 25 }}

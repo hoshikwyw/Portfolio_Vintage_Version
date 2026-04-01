@@ -103,6 +103,93 @@
   50% { transform: translate(-100px, -60px) scale(1.15); }
 }
 
+/* Wallpaper variants */
+.mainBackground.wallpaper-midnight {
+  background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 30%, #2d1b4e 60%, #3d2b5e 80%, #d4af37 100%);
+}
+.mainBackground.wallpaper-ocean {
+  background: linear-gradient(135deg, #0c1445 0%, #1a3a6b 30%, #2d5f95 60%, #6b9bc0 100%);
+}
+.mainBackground.wallpaper-forest {
+  background: linear-gradient(135deg, #0a1f0a 0%, #1a3d1a 30%, #2d5f2d 60%, #8fb88f 100%);
+}
+.mainBackground.wallpaper-rose {
+  background: linear-gradient(135deg, #2d1b2d 0%, #6b3a5b 30%, #8b4a6b 60%, #d4a5a5 100%);
+}
+.mainBackground.wallpaper-ember {
+  background: linear-gradient(135deg, #1a0a00 0%, #3d1a00 25%, #6b3a1a 50%, #d4af37 80%, #f4e4a6 100%);
+}
+
+/* Minimize button */
+.minimizeBtn {
+  margin-top: 2px;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--color-main-white);
+  cursor: pointer;
+  padding: 2px;
+  margin-right: 4px;
+}
+
+.minimizeBtn:hover {
+  color: var(--color-gold-light);
+  background: rgba(212, 175, 55, 0.2);
+  border-radius: 6px;
+  transform: scale(1.1);
+}
+
+/* Desktop shortcut icons */
+.desktop-icon {
+  width: 72px;
+  padding: 8px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  border-radius: 12px;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.desktop-icon:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(212, 175, 55, 0.2);
+}
+
+.desktop-icon.selected {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+.desktop-icon img {
+  width: 36px;
+  height: 36px;
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+  transition: transform 0.2s ease;
+}
+
+.desktop-icon:hover img {
+  transform: scale(1.1);
+}
+
+.desktop-icon span {
+  font-size: 10px;
+  color: white;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.2;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.3px;
+}
+
 .menuBarPadding {
   padding: 2px 12px;
   border: 1.5px solid rgba(26, 26, 26, 0.2);

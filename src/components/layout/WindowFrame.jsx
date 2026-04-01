@@ -9,6 +9,14 @@ import ProjectImages from '../windows/ProjectImages'
 
 const windowSpring = { type: 'spring', stiffness: 300, damping: 28, mass: 0.8 }
 
+const windowIcons = {
+    'Home': 'icons/home.svg',
+    'Projects': 'icons/openFolder.svg',
+    'Gallery': 'icons/gallery.svg',
+    'Send-Message': 'icons/terminal.svg',
+    'Settings': 'icons/settings.svg',
+}
+
 const windowVariants = {
     hidden: { opacity: 0, scale: 0.85 },
     visible: {
@@ -40,7 +48,7 @@ const WindowContent = React.memo(({ menuName, windowSize }) => {
 
 const DraggableWindow = ({
     menuName, index, initialState, windowSize,
-    focusedWindow, onFocus, onClose, onFullscreen,
+    focusedWindow, onFocus, onClose, onFullscreen, onMinimize,
     onStateCommit,
 }) => {
     const dragControls = useDragControls()
@@ -202,8 +210,22 @@ const DraggableWindow = ({
                     dragControls.start(e)
                 }}
             >
-                <div className="windowTitle">vintage Oro / {menuName}</div>
+                <div className="windowTitle">
+                    {windowIcons[menuName] && (
+                        <img src={windowIcons[menuName]} alt="" className="w-4 h-4 inline-block mr-2 filter brightness-0 invert opacity-80" style={{ verticalAlign: 'middle' }} />
+                    )}
+                    vintage Oro / {menuName}
+                </div>
                 <div className="windowControls">
+                    <button
+                        className="minimizeBtn"
+                        onClick={(e) => { e.stopPropagation(); onMinimize(menuName) }}
+                        title="Minimize"
+                    >
+                        <svg width="16" height="16" viewBox="0 0 16 16">
+                            <path d="M3 8h10" stroke="currentColor" strokeWidth="1.5" fill="none" />
+                        </svg>
+                    </button>
                     <button
                         className="fullscreenBtn"
                         onClick={(e) => { e.stopPropagation(); onFullscreen(menuName) }}
@@ -230,7 +252,7 @@ const DraggableWindow = ({
 }
 
 const WindowFrame = ({ focusedWindow, onFocus }) => {
-    const { openWindows, closeWindow } = useContext(MenuContext)
+    const { openWindows, minimizedWindows, closeWindow, minimizeWindow } = useContext(MenuContext)
     const [windowSize, setWindowSize] = useState({
         width: window.innerWidth,
         height: window.innerHeight - 60,
@@ -282,12 +304,23 @@ const WindowFrame = ({ focusedWindow, onFocus }) => {
         })
     }, [])
 
+    const handleMinimize = useCallback((menuName) => {
+        minimizeWindow(menuName)
+        // Also exit fullscreen if minimizing
+        setFullscreenWindows((prev) => {
+            const next = { ...prev }
+            delete next[menuName]
+            return next
+        })
+    }, [minimizeWindow])
+
     const handleStateCommit = useCallback((menuName, state) => {
         setWindowStates((prev) => ({ ...prev, [menuName]: state }))
     }, [])
 
-    const fullscreenWindowsList = openWindows.filter(name => fullscreenWindows[name])
-    const normalWindowsList = openWindows.filter(name => !fullscreenWindows[name])
+    const visibleWindows = openWindows.filter(name => !minimizedWindows.includes(name))
+    const fullscreenWindowsList = visibleWindows.filter(name => fullscreenWindows[name])
+    const normalWindowsList = visibleWindows.filter(name => !fullscreenWindows[name])
 
     return (
         <>
@@ -311,8 +344,22 @@ const WindowFrame = ({ focusedWindow, onFocus }) => {
                         }}
                     >
                         <div className="windowHeader" style={{ cursor: 'default' }}>
-                            <div className="windowTitle">vintage Oro / {menuName}</div>
+                            <div className="windowTitle">
+                                {windowIcons[menuName] && (
+                                    <img src={windowIcons[menuName]} alt="" className="w-4 h-4 inline-block mr-2 filter brightness-0 invert opacity-80" style={{ verticalAlign: 'middle' }} />
+                                )}
+                                vintage Oro / {menuName}
+                            </div>
                             <div className="windowControls">
+                                <button
+                                    className="minimizeBtn"
+                                    onClick={(e) => { e.stopPropagation(); handleMinimize(menuName) }}
+                                    title="Minimize"
+                                >
+                                    <svg width="16" height="16" viewBox="0 0 16 16">
+                                        <path d="M3 8h10" stroke="currentColor" strokeWidth="1.5" fill="none" />
+                                    </svg>
+                                </button>
                                 <button
                                     className="fullscreenBtn"
                                     onClick={(e) => { e.stopPropagation(); handleFullscreen(menuName) }}
@@ -358,6 +405,7 @@ const WindowFrame = ({ focusedWindow, onFocus }) => {
                                 onFocus={onFocus}
                                 onClose={handleClose}
                                 onFullscreen={handleFullscreen}
+                                onMinimize={handleMinimize}
                                 onStateCommit={handleStateCommit}
                             />
                         )
