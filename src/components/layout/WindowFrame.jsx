@@ -121,6 +121,7 @@ const DraggableWindow = ({
                 zIndex: focusedWindow === menuName ? 1000 : 100 + index,
                 display: 'flex',
                 flexDirection: 'column',
+                pointerEvents: 'auto',
             }}
         >
             {['top', 'right', 'bottom', 'left', 'top-left', 'top-right', 'bottom-left', 'bottom-right'].map((dir) => (
@@ -215,7 +216,7 @@ const WindowFrame = ({ focusedWindow, onFocus }) => {
 
     return (
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: `calc(100vh - ${TASKBAR_HEIGHT}px)`, zIndex: 20, pointerEvents: 'none', overflow: 'hidden' }}>
-            <div style={{ width: '100%', height: '100%', position: 'relative', pointerEvents: 'auto', overflow: 'hidden' }}>
+            <div style={{ width: '100%', height: '100%', position: 'relative', pointerEvents: 'none', overflow: 'hidden' }}>
                 <AnimatePresence>
                     {normalWindowsList.map((menuName, index) => {
                         const state = windowStates[menuName]
