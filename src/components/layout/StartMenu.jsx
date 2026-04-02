@@ -73,70 +73,89 @@ export default function StartMenu({ onClose, onFocus }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
-            className="absolute bottom-full left-0 mb-2 w-72 rounded-2xl overflow-hidden border-[1.5px] border-black/15 shadow-[0_20px_60px_rgba(0,0,0,0.3)] z-[9999]"
-            style={{ backdropFilter: 'blur(24px)' }}
+            className="absolute bottom-full left-0 mb-1 w-64 overflow-hidden shadow-[4px_4px_12px_rgba(0,0,0,0.4)] z-[9999]"
+            style={{
+                border: '2px solid #8a8070',
+                borderTopColor: '#e0d8c8',
+                borderLeftColor: '#e0d8c8',
+                borderRadius: '4px',
+                fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+            }}
         >
-            {/* Top: user info */}
-            <div className="bg-gradient-to-br from-[#2d1b4e] to-[#6b5b95] px-5 pt-5 pb-4">
-                <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full border-2 border-[#d4af37]/50 overflow-hidden">
-                        <img src="/myPf.png" alt="Kayv" className="w-full h-full object-cover" />
-                    </div>
-                    <div>
-                        <p className="text-white font-bold text-sm">Khaing Wut Yi Win</p>
-                        <p className="text-white/60 text-[10px] font-semibold uppercase tracking-wider">Frontend Developer</p>
-                    </div>
+            {/* Top: user info — sidebar stripe */}
+            <div className="flex">
+                <div className="w-8 bg-gradient-to-b from-[#4a3aad] to-[#2b2b3d] flex items-end justify-center pb-2 flex-shrink-0">
+                    <span className="text-[9px] font-black text-white/60 tracking-widest" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>KAYV OS</span>
                 </div>
-            </div>
+                <div className="flex-1 bg-[#c0b8a8]">
+                    {/* User card */}
+                    <div className="px-3 py-3 border-b border-[#a0a090] flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-sm border border-[#8a8070] overflow-hidden">
+                            <img src="/myPf.png" alt="Kayv" className="w-full h-full object-cover" />
+                        </div>
+                        <div>
+                            <p className="text-[11px] font-bold text-[#2b2b3d]">Khaing Wut Yi Win</p>
+                            <p className="text-[9px] text-[#5a5a5a] font-semibold">Frontend Developer</p>
+                        </div>
+                    </div>
 
-            {/* Search */}
-            <div className="bg-[#faf9f6] px-4 py-3 border-b border-black/10">
-                <form onSubmit={handleSearch} className="flex items-center gap-2 bg-white rounded-xl border border-black/10 px-3 py-2">
-                    <Search size={14} className="text-[#6b5b95] flex-shrink-0" />
-                    <input
-                        ref={inputRef}
-                        type="text"
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                        placeholder="Search apps or web..."
-                        className="flex-1 bg-transparent outline-none text-xs text-[#2d1b4e] placeholder-black/30 font-sans"
-                    />
-                </form>
-            </div>
+                    {/* Search */}
+                    <div className="px-3 py-2 border-b border-[#a0a090]">
+                        <form onSubmit={handleSearch} className="flex items-center gap-2 px-2 py-1" style={{
+                            border: '2px solid #8a8070',
+                            borderTopColor: '#6a6050',
+                            borderLeftColor: '#6a6050',
+                            borderBottomColor: '#d0c8b8',
+                            borderRightColor: '#d0c8b8',
+                            background: '#f0ebe3',
+                        }}>
+                            <Search size={12} className="text-[#5a5a7a] flex-shrink-0" />
+                            <input
+                                ref={inputRef}
+                                type="text"
+                                value={query}
+                                onChange={(e) => setQuery(e.target.value)}
+                                placeholder="Search..."
+                                className="flex-1 bg-transparent outline-none text-[11px] text-[#2b2b3d] placeholder-[#8a8a8a]"
+                            />
+                        </form>
+                    </div>
 
-            {/* App grid */}
-            <div className="bg-[#faf9f6] px-4 py-3">
-                <p className="text-[9px] text-[#6b5b95] font-bold uppercase tracking-widest mb-2">Applications</p>
-                <div className="grid grid-cols-3 gap-1">
-                    {filtered.map((app) => (
+                    {/* App list */}
+                    <div className="py-1">
+                        {filtered.map((app) => (
+                            <button
+                                key={app.name}
+                                onClick={() => openApp(app.name)}
+                                className="flex items-center gap-2 w-full px-3 py-1.5 hover:bg-[#4a3aad] hover:text-white text-[#2b2b3d] transition-colors cursor-pointer text-left group"
+                            >
+                                <img src={app.icon} alt={app.label} className="w-5 h-5 filter brightness-0 opacity-60 group-hover:brightness-0 group-hover:invert group-hover:opacity-100" />
+                                <span className="text-[11px] font-semibold">{app.label}</span>
+                            </button>
+                        ))}
+                    </div>
+
+                    {/* Divider */}
+                    <div className="mx-3 border-t border-[#a0a090]" />
+
+                    {/* Quick actions */}
+                    <div className="py-1">
                         <button
-                            key={app.name}
-                            onClick={() => openApp(app.name)}
-                            className="flex flex-col items-center gap-1.5 py-2.5 px-1 rounded-xl hover:bg-[#d4af37]/10 transition-colors cursor-pointer"
+                            onClick={handleResume}
+                            className="flex items-center gap-2 w-full px-3 py-1.5 hover:bg-[#4a3aad] hover:text-white text-[#2b2b3d] transition-colors cursor-pointer group"
                         >
-                            <img src={app.icon} alt={app.label} className="w-7 h-7 filter brightness-0 opacity-70" />
-                            <span className="text-[10px] text-[#2d1b4e] font-semibold">{app.label}</span>
+                            <Download size={14} className="opacity-60 group-hover:opacity-100 group-hover:text-white" />
+                            <span className="text-[11px] font-semibold">Download Resume</span>
                         </button>
-                    ))}
+                        <button
+                            onClick={handleHire}
+                            className="flex items-center gap-2 w-full px-3 py-1.5 hover:bg-[#4a3aad] hover:text-white text-[#2b2b3d] transition-colors cursor-pointer group"
+                        >
+                            <Mail size={14} className="opacity-60 group-hover:opacity-100 group-hover:text-white" />
+                            <span className="text-[11px] font-semibold">Hire Me</span>
+                        </button>
+                    </div>
                 </div>
-            </div>
-
-            {/* Quick actions */}
-            <div className="bg-[#f5f3ef] px-4 py-3 border-t border-black/10 flex gap-2">
-                <button
-                    onClick={handleResume}
-                    className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl bg-gradient-to-br from-[#d4af37] to-[#b8941f] text-[#2d1b4e] text-[10px] font-bold uppercase tracking-wider hover:scale-[1.02] active:scale-[0.98] transition-transform border border-[#d4af37]/50"
-                >
-                    <Download size={12} />
-                    Resume
-                </button>
-                <button
-                    onClick={handleHire}
-                    className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl bg-gradient-to-br from-[#2d1b4e] to-[#6b5b95] text-white text-[10px] font-bold uppercase tracking-wider hover:scale-[1.02] active:scale-[0.98] transition-transform border border-[#d4af37]/30"
-                >
-                    <Mail size={12} className="text-[#d4af37]" />
-                    Hire Me
-                </button>
             </div>
         </motion.div>
     )

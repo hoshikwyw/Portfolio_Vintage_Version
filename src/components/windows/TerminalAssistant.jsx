@@ -1,10 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useFetchProjects } from "../../queries/projectQueries";
 
-export default function TerminalAssistant({
-    skills = [],
-}) {
-    const initialMessage = <span className="text-[#5768ad]">Type '<span className="text-[#45473a] font-bold">help</span>' to see available commands</span>;
+export default function TerminalAssistant({ skills = [] }) {
+    const initialMessage = <span className="text-[#6a8a6a]">Type '<span className="text-[#a0d0a0] font-bold">help</span>' to see available commands</span>;
     const [history, setHistory] = useState([initialMessage]);
     const [input, setInput] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -21,64 +19,49 @@ export default function TerminalAssistant({
     const scrollToBottom = () => {
         historyEndRef.current?.scrollIntoView({ behavior: "smooth" });
     };
-    const addLine = (line) => {
-        setHistory((h) => [...h, line]);
-    };
+    const addLine = (line) => setHistory((h) => [...h, line]);
+    const clearTerminal = () => setHistory([initialMessage]);
 
-    const clearTerminal = () => {
-        setHistory([initialMessage]);
-    };
-
-    const Cmd = ({ children }) => (
-        <span className="text-[#45473a] font-bold">{children}</span>
-    );
+    const Cmd = ({ children }) => <span className="text-[#a0d0a0] font-bold">{children}</span>;
 
     const execCommand = async (cmd) => {
         const lower = cmd.toLowerCase().trim();
         setIsLoading(true);
-
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise(resolve => setTimeout(resolve, 400));
 
         try {
             switch (lower) {
-                case "":
-                    break;
+                case "": break;
                 case "help":
                     addLine(<>
-                        <span className="text-[#45473a] font-bold">Available commands:</span><br />
-                        • <Cmd>help</Cmd> - Show this help message<br />
-                        • <Cmd>about</Cmd> - Learn about me<br />
-                        • <Cmd>projects</Cmd> - List my projects<br />
-                        • <Cmd>skills</Cmd> - List my skills<br />
-                        • <Cmd>clear</Cmd> - Clear the terminal
+                        <span className="text-[#a0d0a0] font-bold">Available commands:</span><br />
+                        {"  "}<Cmd>help</Cmd> — Show this help message<br />
+                        {"  "}<Cmd>about</Cmd> — Learn about me<br />
+                        {"  "}<Cmd>projects</Cmd> — List my projects<br />
+                        {"  "}<Cmd>skills</Cmd> — List my skills<br />
+                        {"  "}<Cmd>clear</Cmd> — Clear the terminal
                     </>);
                     break;
                 case "about":
                     addLine(<>
-                        <span className="text-[#45473a] font-bold">Hello! I'm a front-end developer specializing in:</span><br />
-                        - React.js development<br />
-                        - Interactive animations with GSAP<br />
-                        - Creating user-friendly and responsive cross-browser web apps<br />
-                        <span className="text-[#45473a] font-bold">I love building engaging web experiences with modern tech!</span>
+                        <span className="text-[#a0d0a0]">Hello! I'm a front-end developer specializing in:</span><br />
+                        {"  "}- React.js development<br />
+                        {"  "}- Interactive animations with GSAP<br />
+                        {"  "}- User-friendly responsive web apps<br />
+                        <span className="text-[#a0d0a0]">I love building engaging web experiences!</span>
                     </>);
                     break;
                 case "projects":
                 case "list projects": {
-                    const visibleProjects = projects.filter(p => p.status !== false);
-
+                    const visibleProjects = projects?.filter(p => p.status !== false) || [];
                     if (!visibleProjects.length) {
-                        addLine("No projects available at the moment.");
+                        addLine("No projects available.");
                     } else {
-                        addLine(<span className="text-[#45473a] font-bold">My projects:</span>);
+                        addLine(<span className="text-[#a0d0a0]">My projects:</span>);
                         visibleProjects.forEach((p, i) => {
                             addLine(
-                                <a
-                                    key={i}
-                                    href={p.demolink}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="underline decoration-dotted hover:text-[#5768ad] text-[#45473a]"
-                                >
+                                <a key={i} href={p.demolink} target="_blank" rel="noreferrer"
+                                    className="underline decoration-dotted hover:text-[#a0d0a0] text-[#6a8a6a]">
                                     {`${i + 1}. ${p.title}`} - {p.description || "Check it out!"}
                                 </a>
                             );
@@ -92,12 +75,9 @@ export default function TerminalAssistant({
                         addLine("No skills listed yet.");
                     } else {
                         addLine(<>
-                            <span className="text-[#45473a] font-bold">My skills:</span><br />
+                            <span className="text-[#a0d0a0]">My skills:</span><br />
                             {skills.map((skill, i) => (
-                                <span key={i}>
-                                    {i > 0 && " · "}
-                                    <span className="text-[#45473a] font-bold">{skill}</span>
-                                </span>
+                                <span key={i}>{i > 0 && " · "}<span className="text-[#a0d0a0]">{skill}</span></span>
                             ))}
                         </>);
                     }
@@ -107,8 +87,8 @@ export default function TerminalAssistant({
                     break;
                 default:
                     addLine(<>
-                        <span className="text-[#5768ad]">Command not found: '{cmd}'</span><br />
-                        <span className="text-[#5768ad]">Type '<Cmd>help</Cmd>' to see available commands</span>
+                        <span className="text-[#c07070]">Command not found: '{cmd}'</span><br />
+                        <span className="text-[#6a8a6a]">Type '<Cmd>help</Cmd>' for available commands</span>
                     </>);
             }
         } finally {
@@ -119,50 +99,52 @@ export default function TerminalAssistant({
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!input.trim()) return;
-
-        addLine(
-            <div className="text-[#45473a]">
-                <span className="text-[#5768ad]">❯</span> {input}
-            </div>
-        );
-
+        addLine(<div><span className="text-[#a0d0a0]">kayv@os</span><span className="text-[#6a8a6a]">:</span><span className="text-[#6a6aaa]">~</span><span className="text-[#e0d8c8]">$ {input}</span></div>);
         await execCommand(input);
         setInput("");
     };
 
     return (
         <div
-            style={{ padding: '10px 18px' }}
-            className="relative flex flex-col h-full w-full bg-white/95 text-[#45473a] font-mono overflow-hidden p-4 text-sm border-2 border-[#000000] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] rounded-sm hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transition-all duration-300"
+            className="relative flex flex-col h-full w-full overflow-hidden text-sm"
+            style={{
+                background: '#1a1a2a',
+                color: '#c0c0c0',
+                fontFamily: "'Consolas', 'Courier New', monospace",
+                padding: '12px',
+                border: '2px inset #3a3a4a',
+            }}
             onClick={() => inputRef.current?.focus()}
         >
-            <div className="terminal-output flex-1 overflow-y-auto pr-2 mb-2 scrollbar-thin scrollbar-thumb-[#dfdde0]">
+            {/* CRT scanline effect */}
+            <div className="absolute inset-0 pointer-events-none opacity-[0.04]" style={{
+                backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,255,0,0.03) 1px, rgba(0,255,0,0.03) 2px)',
+            }} />
+
+            <div className="flex-1 overflow-y-auto pr-2 mb-2 relative z-10" style={{ scrollbarWidth: 'thin', scrollbarColor: '#3a3a4a #1a1a2a' }}>
                 {history.map((line, idx) => (
-                    <div
-                        key={idx}
-                        className="terminal-line whitespace-pre-wrap select-text leading-relaxed mb-1"
-                    >
-                        {line}
-                    </div>
+                    <div key={idx} className="whitespace-pre-wrap select-text leading-relaxed mb-0.5">{line}</div>
                 ))}
                 {isLoading && (
-                    <div className="loading-dots flex items-center text-[#5768ad]">
-                        <span className="dot">.</span>
-                        <span className="dot">.</span>
-                        <span className="dot">.</span>
+                    <div className="flex items-center text-[#6a8a6a] gap-0.5">
+                        <span className="dot">.</span><span className="dot">.</span><span className="dot">.</span>
                     </div>
                 )}
                 <div ref={historyEndRef} />
             </div>
 
-            <form onSubmit={handleSubmit} style={{ paddingTop: '10px' }} className="terminal-input pt-2 flex items-center border-t-2 border-[#000000]">
-                <span style={{ paddingRight: '10px' }} className="text-[#5768ad] mr-2 font-bold">❯</span>
+            <form onSubmit={handleSubmit} className="flex items-center pt-2 relative z-10" style={{ borderTop: '1px solid #3a3a4a' }}>
+                <span className="text-[#a0d0a0] mr-1 font-bold">kayv@os</span>
+                <span className="text-[#6a8a6a] mr-1">:</span>
+                <span className="text-[#6a6aaa] mr-1">~</span>
+                <span className="text-[#e0d8c8] mr-2">$</span>
                 <input
                     ref={inputRef}
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    className="flex-1 bg-transparent outline-none caret-[#5768ad] text-[#45473a] placeholder-[#a9a9ab] font-semibold"
-                    placeholder={isLoading ? "Processing..." : "Type a command..."}
+                    className="flex-1 bg-transparent outline-none text-[#e0d8c8] placeholder-[#4a4a5a] font-semibold"
+                    style={{ caretColor: '#a0d0a0' }}
+                    placeholder={isLoading ? "Processing..." : ""}
                     aria-label="Terminal input"
                     autoComplete="off"
                     autoCorrect="off"
@@ -172,40 +154,16 @@ export default function TerminalAssistant({
             </form>
 
             <style>{`
-                @keyframes blink {
-                    0%, 100% { opacity: 1; }
-                    50% { opacity: 0; }
-                }
-                input::placeholder {
-                    animation: blink 1.2s step-end infinite;
-                }
-                .terminal-line {
-                    line-height: 1.6;
-                }
-                a:hover {
-                    color: #5768ad;
-                }
-                .loading-dots {
-                    height: 24px;
-                }
                 .dot {
-                    animation: bounce 1.4s infinite ease-in-out both;
-                    font-size: 24px;
+                    animation: blink-dot 1.4s infinite ease-in-out both;
+                    font-size: 20px;
                     line-height: 1;
                 }
-                .dot:nth-child(1) {
-                    animation-delay: -0.32s;
-                }
-                .dot:nth-child(2) {
-                    animation-delay: -0.16s;
-                }
-                @keyframes bounce {
-                    0%, 80%, 100% {
-                        transform: translateY(0);
-                    }
-                    40% {
-                        transform: translateY(-5px);
-                    }
+                .dot:nth-child(1) { animation-delay: -0.32s; }
+                .dot:nth-child(2) { animation-delay: -0.16s; }
+                @keyframes blink-dot {
+                    0%, 80%, 100% { opacity: 0.2; }
+                    40% { opacity: 1; }
                 }
             `}</style>
         </div>

@@ -35,9 +35,9 @@ const TrayTime = () => {
     const date = time.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
 
     return (
-        <div className="flex flex-col items-end leading-tight px-2">
-            <span className="text-[11px] font-bold text-[#2d1b4e] tracking-wide">{h}:{m} {ap}</span>
-            <span className="text-[9px] text-[#6b5b95] font-semibold">{date}</span>
+        <div className="flex flex-col items-end leading-tight px-1">
+            <span className="text-[10px] font-bold text-[#2b2b3d] tracking-wide">{h}:{m} {ap}</span>
+            <span className="text-[9px] text-[#5a5a5a] font-semibold">{date}</span>
         </div>
     )
 }
@@ -72,9 +72,9 @@ const TrayWeather = () => {
 
     if (!weather) return null
     return (
-        <div className="flex items-center gap-1 px-2">
-            <span className="text-[#d4af37]">{getIcon(weather.weather[0].main)}</span>
-            <span className="text-[11px] font-bold text-[#2d1b4e]">{Math.round(weather.main.temp)}°</span>
+        <div className="flex items-center gap-1 px-1">
+            <span className="text-[#5a5a7a]">{getIcon(weather.weather[0].main)}</span>
+            <span className="text-[10px] font-bold text-[#2b2b3d]">{Math.round(weather.main.temp)}°</span>
         </div>
     )
 }
@@ -93,20 +93,25 @@ const MenuBar = ({ onMenuClick }) => {
     }
 
     return (
-        <div className="fixed bottom-0 left-0 right-0 z-50 px-1 pb-1">
-            <div className="taskbar relative flex items-center h-11 bg-[#fff8e7]/92 backdrop-blur-xl border-t-[1.5px] border-black/10 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] rounded-t-xl sm:rounded-t-2xl font-sans px-1">
+        <div className="fixed bottom-0 left-0 right-0 z-50">
+            <div className="taskbar relative flex items-center h-10 bg-gradient-to-b from-[#c0b8a8] to-[#a8a090] border-t-2 border-t-[#d8d0c0] shadow-[0_-2px_8px_rgba(0,0,0,0.2)] font-sans px-1" style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" }}>
 
                 {/* Start Button */}
                 <div className="relative flex-shrink-0">
                     <motion.button
                         onClick={() => setStartOpen(!startOpen)}
-                        className={`flex items-center gap-2 h-8 px-3 rounded-xl transition-colors cursor-pointer ${startOpen ? 'bg-[#d4af37]/20' : 'hover:bg-black/5'}`}
-                        whileTap={{ scale: 0.95 }}
+                        className={`flex items-center gap-1.5 h-7 px-2.5 border transition-colors cursor-pointer ${
+                            startOpen
+                                ? 'bg-gradient-to-b from-[#8a8070] to-[#a09888] border-t-[#6a6050] border-l-[#6a6050] border-b-[#c0b8a8] border-r-[#c0b8a8]'
+                                : 'bg-gradient-to-b from-[#d0c8b8] to-[#b0a898] border-t-[#e0d8c8] border-l-[#e0d8c8] border-b-[#7a7060] border-r-[#7a7060] hover:brightness-105'
+                        }`}
+                        whileTap={{ scale: 0.98 }}
+                        style={{ borderRadius: '3px' }}
                     >
-                        <div className="w-5 h-5 rounded-md bg-gradient-to-br from-[#d4af37] to-[#b8941f] flex items-center justify-center shadow-sm">
-                            <span className="text-[#2d1b4e] text-[9px] font-black">K</span>
+                        <div className="w-4 h-4 rounded-sm bg-gradient-to-br from-[#6a5acd] to-[#4a3aad] flex items-center justify-center">
+                            <span className="text-white text-[8px] font-black">K</span>
                         </div>
-                        <span className="text-[11px] font-bold text-[#2d1b4e] uppercase tracking-wider hidden sm:inline">Kayv</span>
+                        <span className="text-[11px] font-bold text-[#2b2b3d] hidden sm:inline" style={{ textShadow: '0 1px 0 rgba(255,255,255,0.4)' }}>Kayv</span>
                     </motion.button>
 
                     <AnimatePresence>
@@ -120,36 +125,36 @@ const MenuBar = ({ onMenuClick }) => {
                 </div>
 
                 {/* Divider */}
-                <div className="h-6 w-[1px] bg-black/10 mx-1 flex-shrink-0" />
+                <div className="h-6 w-[2px] mx-1 flex-shrink-0" style={{ borderLeft: '1px solid #8a8070', borderRight: '1px solid #d8d0c0' }} />
 
                 {/* Running Apps */}
-                <div className="flex-1 flex items-center gap-0.5 overflow-x-auto scrollbar-hide px-1">
+                <div className="flex-1 flex items-center gap-1 overflow-x-auto scrollbar-hide px-1">
                     {openWindows.map((name) => {
                         const isMinimized = minimizedWindows.includes(name)
                         return (
                             <motion.button
                                 key={name}
                                 onClick={() => handleAppClick(name)}
-                                className={`flex items-center gap-1.5 h-8 px-2.5 rounded-lg transition-all cursor-pointer flex-shrink-0 ${
+                                className={`flex items-center gap-1.5 h-7 px-2 cursor-pointer flex-shrink-0 border ${
                                     isMinimized
-                                        ? 'bg-black/5 hover:bg-black/8'
-                                        : 'bg-[#d4af37]/15 hover:bg-[#d4af37]/25 border border-[#d4af37]/20'
+                                        ? 'bg-gradient-to-b from-[#c0b8a8] to-[#b0a898] border-t-[#e0d8c8] border-l-[#e0d8c8] border-b-[#7a7060] border-r-[#7a7060]'
+                                        : 'bg-gradient-to-b from-[#9a9080] to-[#b0a898] border-t-[#7a7060] border-l-[#7a7060] border-b-[#d0c8b8] border-r-[#d0c8b8]'
                                 }`}
-                                initial={{ opacity: 0, scale: 0.8, width: 0 }}
-                                animate={{ opacity: 1, scale: 1, width: 'auto' }}
-                                exit={{ opacity: 0, scale: 0.8, width: 0 }}
+                                style={{ borderRadius: '3px' }}
+                                initial={{ opacity: 0, width: 0 }}
+                                animate={{ opacity: 1, width: 'auto' }}
+                                exit={{ opacity: 0, width: 0 }}
                                 transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                                whileHover={{ y: -1 }}
-                                whileTap={{ scale: 0.95 }}
+                                whileTap={{ scale: 0.98 }}
                             >
                                 <img
                                     src={windowIcons[name]}
                                     alt={name}
-                                    className={`w-4 h-4 filter brightness-0 ${isMinimized ? 'opacity-40' : 'opacity-70'}`}
+                                    className={`w-4 h-4 filter brightness-0 ${isMinimized ? 'opacity-30' : 'opacity-60'}`}
                                 />
-                                <span className={`text-[10px] font-semibold tracking-wide hidden sm:inline ${
-                                    isMinimized ? 'text-[#6b5b95]/60' : 'text-[#2d1b4e]'
-                                }`}>
+                                <span className={`text-[10px] font-semibold hidden sm:inline ${
+                                    isMinimized ? 'text-[#6a6a6a]' : 'text-[#2b2b3d]'
+                                }`} style={{ textShadow: '0 1px 0 rgba(255,255,255,0.3)' }}>
                                     {windowLabels[name] || name}
                                 </span>
                             </motion.button>
@@ -157,10 +162,17 @@ const MenuBar = ({ onMenuClick }) => {
                     })}
                 </div>
 
-                {/* System Tray */}
-                <div className="flex items-center flex-shrink-0 border-l border-black/10 ml-1">
+                {/* System Tray — sunken panel */}
+                <div className="flex items-center flex-shrink-0 ml-1 px-2 h-7 border" style={{
+                    borderRadius: '2px',
+                    borderTop: '1px solid #8a8070',
+                    borderLeft: '1px solid #8a8070',
+                    borderBottom: '1px solid #d8d0c0',
+                    borderRight: '1px solid #d8d0c0',
+                    background: 'linear-gradient(180deg, #b0a898, #c0b8a8)',
+                }}>
                     <TrayWeather />
-                    <div className="h-5 w-[1px] bg-black/8" />
+                    <div className="h-4 w-[1px] mx-1" style={{ borderLeft: '1px solid #8a8070', borderRight: '1px solid #d8d0c0' }} />
                     <TrayTime />
                 </div>
             </div>

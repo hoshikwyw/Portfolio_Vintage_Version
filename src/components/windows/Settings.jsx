@@ -2,57 +2,52 @@ import React, { useContext } from 'react'
 import { MenuContext } from '../../context/MenuContext'
 
 const wallpapers = [
-    { key: 'default', label: 'Royal Purple', gradient: 'linear-gradient(135deg, #1a0e35, #2d1b4e, #4a2c6b, #6b5b95, #8b7ba8)' },
-    { key: 'midnight', label: 'Midnight Gold', gradient: 'linear-gradient(135deg, #0a0a1a, #1a1a3e, #2d1b4e, #3d2b5e, #d4af37)' },
-    { key: 'ocean', label: 'Deep Ocean', gradient: 'linear-gradient(135deg, #0c1445, #1a3a6b, #2d5f95, #6b9bc0)' },
-    { key: 'forest', label: 'Forest Night', gradient: 'linear-gradient(135deg, #0a1f0a, #1a3d1a, #2d5f2d, #8fb88f)' },
-    { key: 'rose', label: 'Vintage Rose', gradient: 'linear-gradient(135deg, #2d1b2d, #6b3a5b, #8b4a6b, #d4a5a5)' },
-    { key: 'ember', label: 'Golden Ember', gradient: 'linear-gradient(135deg, #1a0a00, #3d1a00, #6b3a1a, #d4af37, #f4e4a6)' },
+    { key: 'default', label: 'Classic', gradient: 'linear-gradient(180deg, #1e1e32, #2a2a3e, #3a3a52)' },
+    { key: 'midnight', label: 'Midnight', gradient: 'linear-gradient(180deg, #08081a, #0e0e2a, #1a1a3e)' },
+    { key: 'ocean', label: 'Ocean', gradient: 'linear-gradient(180deg, #081020, #0e1e35, #1a3050)' },
+    { key: 'forest', label: 'Forest', gradient: 'linear-gradient(180deg, #081208, #0e1e0e, #1a301a)' },
+    { key: 'rose', label: 'Rose', gradient: 'linear-gradient(180deg, #18101a, #2a1a22, #3a2a32)' },
+    { key: 'ember', label: 'Ember', gradient: 'linear-gradient(180deg, #140e05, #2a1a08, #3a2a10)' },
 ]
 
 const Settings = () => {
     const { wallpaper, setWallpaper } = useContext(MenuContext)
 
     return (
-        <div className="w-full h-full overflow-y-auto" style={{ padding: '24px' }}>
-            <div className="max-w-lg mx-auto font-mono">
-                {/* Header */}
-                <div className="flex items-center gap-3 mb-8 border-b-2 border-[#000000] pb-4">
-                    <svg className="w-6 h-6 text-[#5768ad]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                    <h2 className="text-xl font-bold text-[#45473a] uppercase tracking-wider">System Settings</h2>
-                </div>
-
+        <div className="w-full h-full overflow-y-auto p-4" style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" }}>
+            <div className="max-w-md mx-auto">
                 {/* Wallpaper Section */}
-                <div className="bg-white/95 rounded-sm border-2 border-[#000000] shadow-lg p-6 mb-6">
-                    <h3 className="font-bold text-sm text-[#45473a] uppercase tracking-wider mb-4 flex items-center gap-2">
-                        <svg className="w-4 h-4 text-[#5768ad]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                        Wallpaper
-                    </h3>
-                    <div className="grid grid-cols-3 gap-3">
+                <fieldset className="mb-4" style={{
+                    border: '2px groove #c0b8a8',
+                    borderRadius: '2px',
+                    padding: '12px 14px',
+                }}>
+                    <legend className="text-[11px] font-bold text-[#2b2b3d] px-1 uppercase tracking-wide">Desktop Wallpaper</legend>
+                    <div className="grid grid-cols-3 gap-2 mt-1">
                         {wallpapers.map((wp) => (
                             <button
                                 key={wp.key}
                                 onClick={() => setWallpaper(wp.key)}
-                                className={`relative h-20 rounded-xl border-2 transition-all duration-300 overflow-hidden group ${
-                                    wallpaper === wp.key
-                                        ? 'border-[#d4af37] shadow-[0_0_0_3px_rgba(212,175,55,0.3)] scale-[1.02]'
-                                        : 'border-black/10 hover:border-[#d4af37]/50 hover:scale-[1.02]'
-                                }`}
-                                style={{ background: wp.gradient }}
+                                className="relative h-16 overflow-hidden cursor-pointer"
+                                style={{
+                                    background: wp.gradient,
+                                    border: wallpaper === wp.key
+                                        ? '2px solid #4a3aad'
+                                        : '2px solid #8a8070',
+                                    borderRadius: '2px',
+                                    boxShadow: wallpaper === wp.key
+                                        ? '0 0 0 1px #4a3aad, inset 0 0 0 1px rgba(106,90,205,0.3)'
+                                        : 'inset 1px 1px 0 rgba(255,255,255,0.1)',
+                                }}
                             >
-                                <div className="absolute inset-0 flex items-end justify-center pb-1.5">
-                                    <span className="text-[9px] text-white font-bold uppercase tracking-wide drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
+                                <div className="absolute inset-0 flex items-end justify-center pb-1">
+                                    <span className="text-[8px] text-white/80 font-bold uppercase tracking-wider" style={{ textShadow: '0 1px 2px rgba(0,0,0,0.8)' }}>
                                         {wp.label}
                                     </span>
                                 </div>
                                 {wallpaper === wp.key && (
-                                    <div className="absolute top-1.5 right-1.5 w-4 h-4 bg-[#d4af37] rounded-full flex items-center justify-center">
-                                        <svg className="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <div className="absolute top-1 right-1 w-3 h-3 bg-[#4a3aad] rounded-sm flex items-center justify-center">
+                                        <svg className="w-2 h-2 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                                         </svg>
                                     </div>
@@ -60,35 +55,34 @@ const Settings = () => {
                             </button>
                         ))}
                     </div>
-                </div>
+                </fieldset>
 
                 {/* About Section */}
-                <div className="bg-white/95 rounded-sm border-2 border-[#000000] shadow-lg p-6">
-                    <h3 className="font-bold text-sm text-[#45473a] uppercase tracking-wider mb-4 flex items-center gap-2">
-                        <svg className="w-4 h-4 text-[#5768ad]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        About This System
-                    </h3>
-                    <div className="space-y-2 text-sm text-[#45473a]">
+                <fieldset style={{
+                    border: '2px groove #c0b8a8',
+                    borderRadius: '2px',
+                    padding: '12px 14px',
+                }}>
+                    <legend className="text-[11px] font-bold text-[#2b2b3d] px-1 uppercase tracking-wide">About This System</legend>
+                    <div className="space-y-1.5 text-[11px] text-[#2b2b3d] mt-1">
                         <div className="flex justify-between">
-                            <span className="font-semibold">System</span>
-                            <span className="text-[#5768ad] font-bold">vintage Kayv OS</span>
+                            <span>System</span>
+                            <span className="font-bold">Kayv OS</span>
                         </div>
                         <div className="flex justify-between">
-                            <span className="font-semibold">Version</span>
-                            <span className="text-[#5768ad]">1.0.0</span>
+                            <span>Version</span>
+                            <span className="font-bold">1.0.0</span>
                         </div>
                         <div className="flex justify-between">
-                            <span className="font-semibold">Built with</span>
-                            <span className="text-[#5768ad]">React + Vite + Tailwind</span>
+                            <span>Built with</span>
+                            <span className="font-bold">React + Vite + Tailwind</span>
                         </div>
                         <div className="flex justify-between">
-                            <span className="font-semibold">Developer</span>
-                            <span className="text-[#5768ad]">Khaing Wut Yi Win</span>
+                            <span>Developer</span>
+                            <span className="font-bold">Khaing Wut Yi Win</span>
                         </div>
                     </div>
-                </div>
+                </fieldset>
             </div>
         </div>
     )
