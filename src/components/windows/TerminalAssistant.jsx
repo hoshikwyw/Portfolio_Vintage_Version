@@ -39,6 +39,10 @@ export default function TerminalAssistant({ skills = [] }) {
                         {"  "}<Cmd>about</Cmd> — Learn about me<br />
                         {"  "}<Cmd>projects</Cmd> — List my projects<br />
                         {"  "}<Cmd>skills</Cmd> — List my skills<br />
+                        {"  "}<Cmd>neofetch</Cmd> — System info<br />
+                        {"  "}<Cmd>whoami</Cmd> — Who am I?<br />
+                        {"  "}<Cmd>cowsay</Cmd> — Moo!<br />
+                        {"  "}<Cmd>date</Cmd> — Current date<br />
                         {"  "}<Cmd>clear</Cmd> — Clear the terminal
                     </>);
                     break;
@@ -81,6 +85,67 @@ export default function TerminalAssistant({ skills = [] }) {
                             ))}
                         </>);
                     }
+                    break;
+                case "whoami":
+                    addLine(<span className="text-[#a0d0a0]">kayv — Frontend Developer from Yangon, Myanmar. Loves React, vintage UIs, and 2D games.</span>);
+                    break;
+                case "neofetch": {
+                    const ascii = `  ╔══════╗
+  ║  K   ║
+  ║  OS  ║
+  ╚══════╝`
+                    addLine(<pre className="text-[#6a6aaa] leading-tight">{ascii}</pre>);
+                    addLine(<>
+                        <span className="text-[#a0d0a0] font-bold">kayv@os</span><br />
+                        {"  "}OS: Kayv OS v1.0<br />
+                        {"  "}Shell: kayv-terminal<br />
+                        {"  "}Stack: React 19 + Vite + Tailwind<br />
+                        {"  "}Theme: Vintage Retro<br />
+                        {"  "}Resolution: {window.innerWidth}x{window.innerHeight}<br />
+                        {"  "}Uptime: since you opened this tab<br />
+                        {"  "}Developer: Khaing Wut Yi Win
+                    </>);
+                    break;
+                }
+                case "date":
+                    addLine(<span className="text-[#e0d8c8]">{new Date().toString()}</span>);
+                    break;
+                case "cowsay":
+                case "cowsay hello": {
+                    const msg = lower === "cowsay" ? "Moo! Hire Kayv!" : cmd.slice(7) || "Moo!"
+                    const line = "─".repeat(msg.length + 2)
+                    addLine(<pre className="text-[#e0d8c8] leading-tight">{`
+ ┌${line}┐
+ │ ${msg} │
+ └${line}┘
+        \\   ^__^
+         \\  (oo)\\_______
+            (__)\\       )\\/\\
+                ||----w |
+                ||     ||`}
+                    </pre>);
+                    break;
+                }
+                case "ls":
+                    addLine(<>
+                        <span className="text-[#6a6aaa]">about.txt</span>{"  "}
+                        <span className="text-[#a0d0a0]">projects/</span>{"  "}
+                        <span className="text-[#6a6aaa]">resume.pdf</span>{"  "}
+                        <span className="text-[#a0d0a0]">gallery/</span>{"  "}
+                        <span className="text-[#6a6aaa]">README.md</span>
+                    </>);
+                    break;
+                case "cat readme.md":
+                case "cat about.txt":
+                    addLine(<span className="text-[#e0d8c8]">Hi! I'm Kayv, a frontend developer from Yangon. I build interactive web experiences with React, Tailwind, and a love for vintage aesthetics. This entire portfolio is a fake desktop OS — how cool is that?</span>);
+                    break;
+                case "sudo":
+                case "sudo rm -rf /":
+                case "rm -rf /":
+                    addLine(<span className="text-[#c07070]">Nice try. 😏</span>);
+                    break;
+                case "exit":
+                    addLine(<span className="text-[#6a8a6a]">There is no escape. You're stuck in Kayv OS forever.</span>);
                     break;
                 case "clear":
                     clearTerminal();
