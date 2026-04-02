@@ -1,5 +1,4 @@
 import { useState, useContext } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
 import MenuBar from './components/layout/MenuBar'
 import WindowFrame from './components/layout/WindowFrame'
 import DesktopIcons from './components/layout/DesktopIcons'
@@ -12,19 +11,12 @@ const Desktop = ({ focusedWindow, onFocus }) => {
   const wallpaperClass = wallpaper !== 'default' ? `wallpaper-${wallpaper}` : ''
 
   return (
-    <div className={`mainBackground ${wallpaperClass} relative h-screen w-screen overflow-hidden`}>
-      {/* Animated gradient orbs */}
+    <div className={`mainBackground ${wallpaperClass}`}>
       <div className="gradient-orb gradient-orb-1" />
       <div className="gradient-orb gradient-orb-2" />
       <div className="gradient-orb gradient-orb-3" />
-
-      {/* Desktop shortcut icons */}
       <DesktopIcons onFocus={onFocus} />
-
-      {/* Windows */}
       <WindowFrame focusedWindow={focusedWindow} onFocus={onFocus} />
-
-      {/* Taskbar */}
       <MenuBar onMenuClick={onFocus} />
     </div>
   )
@@ -34,40 +26,15 @@ const App = () => {
   const [focusedWindow, setFocusedWindow] = useState("Home")
   const [booted, setBooted] = useState(false)
 
-  const handleFocus = (menuName) => {
-    setFocusedWindow(menuName)
+  if (!booted) {
+    return <BootSplash onFinish={() => setBooted(true)} />
   }
 
   return (
-    <>
-      <AnimatePresence mode="wait">
-        {!booted && (
-          <motion.div
-            key="boot"
-            exit={{ opacity: 0, scale: 1.02 }}
-            transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
-          >
-            <BootSplash onFinish={() => setBooted(true)} />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      <AnimatePresence>
-        {booted && (
-          <motion.div
-            key="app"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-          >
-            <MenuProvider>
-              <Desktop focusedWindow={focusedWindow} onFocus={handleFocus} />
-              <SpeedInsights />
-            </MenuProvider>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+    <MenuProvider>
+      <Desktop focusedWindow={focusedWindow} onFocus={(name) => setFocusedWindow(name)} />
+      <SpeedInsights />
+    </MenuProvider>
   )
 }
 
