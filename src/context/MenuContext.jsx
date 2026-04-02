@@ -6,7 +6,7 @@ export const MenuProvider = ({ children }) => {
     const [openWindows, setOpenWindows] = useState([])
     const [minimizedWindows, setMinimizedWindows] = useState([])
     const [wallpaper, setWallpaperState] = useState(
-        () => localStorage.getItem('oro-wallpaper') || 'default'
+        () => localStorage.getItem('kayv-wallpaper') || 'default'
     )
 
     const openWindow = (menuName) => {
@@ -34,7 +34,7 @@ export const MenuProvider = ({ children }) => {
 
     const setWallpaper = (key) => {
         setWallpaperState(key)
-        localStorage.setItem('oro-wallpaper', key)
+        localStorage.setItem('kayv-wallpaper', key)
     }
 
     return (

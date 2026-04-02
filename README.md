@@ -1,12 +1,60 @@
-# React + Vite
+# Vintage Kayv — OS-Themed Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A retro OS-styled portfolio website that presents my professional profile as an interactive desktop environment, complete with draggable windows, a taskbar, boot splash screen, and a terminal.
 
-Currently, two official plugins are available:
+Built with **React 19**, **Vite**, **Tailwind CSS**, and **Framer Motion**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **Boot Splash Screen** — Animated OS startup sequence
+- **Draggable & Resizable Windows** — 8-directional resize handles, minimize/fullscreen/close controls, z-index focus management
+- **Home Window** — About me, education, experience timeline, skills with progress bars, and contact info
+- **Projects Window** — Swiper carousel showcasing projects fetched from Supabase, with live demo and source code links
+- **Gallery Window** — Visual showcase of project work
+- **Terminal Window** — CLI-style interface with commands (`help`, `about`, `projects`, `skills`, `clear`)
+- **Settings Window** — 6 wallpaper themes (persisted to localStorage) and system info
+- **Taskbar** — Start menu, open window indicators, live weather widget, and real-time clock
+- **3D Character** — Three.js model with waving animation via React Three Fiber
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Tech Stack
+
+| Category | Tools |
+|---|---|
+| Framework | React 19, Vite |
+| Styling | Tailwind CSS, custom CSS variables |
+| Animation | Framer Motion, Lottie |
+| 3D | Three.js, React Three Fiber, Drei |
+| Data | Supabase, TanStack React Query |
+| Routing | React Router DOM |
+| UI | Lucide React, Ant Design Icons, Heroicons |
+| Other | Lenis (smooth scroll), Swiper, Vercel Speed Insights |
+
+## Getting Started
+
+```bash
+# Install dependencies
+npm install
+
+# Start dev server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+## Environment Variables
+
+Create a `.env` file in the project root:
+
+```
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+VITE_OPENWEATHER_API_KEY=your_openweather_api_key
+```
+
+## Author
+
+**Khaing Wut Yi Win (Kayv)** — Creative Frontend Developer based in Yangon, Myanmar

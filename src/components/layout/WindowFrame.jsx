@@ -206,7 +206,7 @@ const DraggableWindow = ({
                     {windowIcons[menuName] && (
                         <img src={windowIcons[menuName]} alt="" className="w-4 h-4 inline-block mr-2 filter brightness-0 invert opacity-80" style={{ verticalAlign: 'middle' }} />
                     )}
-                    vintage Oro / {menuName}
+                    vintage Kayv / {menuName}
                 </div>
                 <div className="windowControls">
                     <button className="minimizeBtn" onClick={(e) => { e.stopPropagation(); onMinimize(menuName) }} title="Minimize">
@@ -370,7 +370,7 @@ const WindowFrame = ({ focusedWindow, onFocus }) => {
                                 {windowIcons[menuName] && (
                                     <img src={windowIcons[menuName]} alt="" className="w-4 h-4 inline-block mr-2 filter brightness-0 invert opacity-80" style={{ verticalAlign: 'middle' }} />
                                 )}
-                                vintage Oro / {menuName}
+                                vintage Kayv / {menuName}
                             </div>
                             <div className="windowControls">
                                 <button className="minimizeBtn" onClick={(e) => { e.stopPropagation(); handleMinimize(menuName) }} title="Minimize">

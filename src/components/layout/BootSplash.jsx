@@ -54,7 +54,7 @@ export default function BootSplash({ onFinish = () => { } }) {
         {/* Title */}
         <div className="text-center">
           <h1 className="text-4xl md:text-5xl font-bold tracking-wider mb-2 text-[#45473a]">
-            VINTAGE ORO
+            VINTAGE KAYV
           </h1>
           <div className="h-1 w-24 bg-[#ebbd8c] mx-auto mb-4"></div>
           <p className="text-sm uppercase tracking-widest text-[#5768ad] font-semibold">
@@ -94,7 +94,7 @@ export default function BootSplash({ onFinish = () => { } }) {
         {/* Vintage footer text */}
         <div className="mt-4 text-center">
           <p className="text-[10px] text-[#a9a9ab] uppercase tracking-widest">
-            © 2024 Oro Development
+            © 2024 Kayv Development
           </p>
         </div>
       </div>

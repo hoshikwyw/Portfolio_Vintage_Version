@@ -73,7 +73,7 @@ const Settings = () => {
                     <div className="space-y-2 text-sm text-[#45473a]">
                         <div className="flex justify-between">
                             <span className="font-semibold">System</span>
-                            <span className="text-[#5768ad] font-bold">vintage Oro OS</span>
+                            <span className="text-[#5768ad] font-bold">vintage Kayv OS</span>
                         </div>
                         <div className="flex justify-between">
                             <span className="font-semibold">Version</span>

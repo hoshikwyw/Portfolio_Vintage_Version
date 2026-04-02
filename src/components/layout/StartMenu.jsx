@@ -80,7 +80,7 @@ export default function StartMenu({ onClose, onFocus }) {
             <div className="bg-gradient-to-br from-[#2d1b4e] to-[#6b5b95] px-5 pt-5 pb-4">
                 <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full border-2 border-[#d4af37]/50 overflow-hidden">
-                        <img src="/myPf.png" alt="Oro" className="w-full h-full object-cover" />
+                        <img src="/myPf.png" alt="Kayv" className="w-full h-full object-cover" />
                     </div>
                     <div>
                         <p className="text-white font-bold text-sm">Khaing Wut Yi Win</p>

@@ -21,7 +21,7 @@ const HomeWindow = () => {
                             <div className="relative overflow-hidden w-[150px] h-[150px] rounded-sm aspect-square mb-4 border-2 border-[#000000]">
                                 <img
                                     src="/myPf.png"
-                                    alt="Oro avatar"
+                                    alt="Kayv avatar"
                                     className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
                                 />
                             </div>
@@ -41,7 +41,7 @@ const HomeWindow = () => {
                         {/* Bio Card */}
                         <div style={{ padding: "10px" }} className="bg-white/95 rounded-sm border-2 border-[#000000] shadow-lg hover:shadow-xl transition-all duration-300 p-4">
                             <p className="text-[#45473a] leading-relaxed font-medium">
-                                "Hi! I'm Oro — a creative frontend developer who loves crafting
+                                "Hi! I'm Kayv — a creative frontend developer who loves crafting
                                 smooth UIs with React and Tailwind. I'm always excited to learn
                                 something new that helps me grow professionally."
                             </p>

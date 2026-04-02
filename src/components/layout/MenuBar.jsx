@@ -104,9 +104,9 @@ const MenuBar = ({ onMenuClick }) => {
                         whileTap={{ scale: 0.95 }}
                     >
                         <div className="w-5 h-5 rounded-md bg-gradient-to-br from-[#d4af37] to-[#b8941f] flex items-center justify-center shadow-sm">
-                            <span className="text-[#2d1b4e] text-[9px] font-black">O</span>
+                            <span className="text-[#2d1b4e] text-[9px] font-black">K</span>
                         </div>
-                        <span className="text-[11px] font-bold text-[#2d1b4e] uppercase tracking-wider hidden sm:inline">Oro</span>
+                        <span className="text-[11px] font-bold text-[#2d1b4e] uppercase tracking-wider hidden sm:inline">Kayv</span>
                     </motion.button>
 
                     <AnimatePresence>
