@@ -64,7 +64,7 @@ export default function TerminalAssistant({ skills = [] }) {
                         addLine(<span className="text-[#a0d0a0]">My projects:</span>);
                         visibleProjects.forEach((p, i) => {
                             addLine(
-                                <a key={i} href={p.demolink} target="_blank" rel="noreferrer"
+                                <a key={i} href={p.demo_url} target="_blank" rel="noreferrer"
                                     className="underline decoration-dotted hover:text-[#a0d0a0] text-[#6a8a6a]">
                                     {`${i + 1}. ${p.title}`} - {p.description || "Check it out!"}
                                 </a>

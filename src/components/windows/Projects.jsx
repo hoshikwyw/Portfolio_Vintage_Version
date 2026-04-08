@@ -119,7 +119,8 @@ const Projects = ({ windowSize }) => {
     }
   }, [swiperInstance, windowSize]);
 
-  const sortedProjects = projects ? [...projects].sort((a, b) => a.id - b.id) : [];
+  // Already sorted by sort_order from the query
+  const sortedProjects = projects || [];
 
   return (
     <div className="w-full h-full flex flex-col items-center project-container relative" style={{ maxWidth: '100vw' }}>
@@ -149,11 +150,11 @@ const Projects = ({ windowSize }) => {
             <div className="w-full h-full">
               <ProjectCard
                 name={project?.title}
-                description={project?.desc}
-                image={project?.imgs?.[0] || null}
-                link={project?.demolink}
-                github={project?.repolink}
-                tags={project?.languages}
+                description={project?.description}
+                image={project?.cover_image || null}
+                link={project?.demo_url}
+                github={project?.repo_url}
+                tags={project?.tags}
                 status={project?.status}
               />
             </div>

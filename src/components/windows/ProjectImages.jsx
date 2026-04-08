@@ -108,7 +108,7 @@ const ProjectImages = () => {
                                     <div className="image-skeleton"></div>
                                 )}
                                 <img
-                                    src={image.url}
+                                    src={image.image_url}
                                     alt={`Project image ${image.id}`}
                                     className={`project-image ${loadedImages.has(image.id) ? 'loaded' : ''}`}
                                     onLoad={() => handleImageLoad(image.id)}
@@ -132,7 +132,7 @@ const ProjectImages = () => {
 
                         <div className="image-modal-image-container">
                             <img
-                                src={selectedImage.url}
+                                src={selectedImage.image_url}
                                 alt={`Project image ${selectedImage.id}`}
                                 className="image-modal-image"
                             />
@@ -140,10 +140,10 @@ const ProjectImages = () => {
 
                         <div className="image-modal-actions-bar">
                             <a
-                                href={selectedImage.project}
+                                href={selectedImage.projects?.demo_url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                onClick={(e) => handleProjectClick(e, selectedImage.project)}
+                                onClick={(e) => handleProjectClick(e, selectedImage.projects?.demo_url)}
                                 className="image-modal-action-btn image-modal-view-btn"
                             >
                                 <svg className="image-modal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -157,7 +157,7 @@ const ProjectImages = () => {
                                 className="image-modal-action-btn image-modal-download-btn"
                                 onClick={() => {
                                     const link = document.createElement('a');
-                                    link.href = selectedImage.url;
+                                    link.href = selectedImage.image_url;
                                     link.download = `project-image-${selectedImage.id}.jpg`;
                                     link.click();
                                 }}
