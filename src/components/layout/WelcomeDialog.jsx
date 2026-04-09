@@ -30,19 +30,21 @@ export default function WelcomeDialog({ onOpenWindow }) {
             <div
                 style={{
                     width: 340,
-                    background: '#c0b8a8',
-                    border: '2px solid #8a8070',
-                    borderTopColor: '#e0d8c8',
-                    borderLeftColor: '#e0d8c8',
-                    borderRadius: '4px',
-                    boxShadow: '4px 4px 12px rgba(0,0,0,0.4)',
+                    background: 'var(--os-window)',
+                    border: '2px solid var(--os-border-dark)',
+                    borderTopColor: 'var(--os-border-light)',
+                    borderLeftColor: 'var(--os-border-light)',
+                    borderRadius: 'var(--os-window-radius)',
+                    boxShadow: 'var(--os-window-shadow)',
                     fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+                    backdropFilter: 'var(--os-glass-blur)',
+                    WebkitBackdropFilter: 'var(--os-glass-blur)',
                 }}
             >
                 {/* Title bar */}
                 <div
                     className="flex items-center justify-between px-2 py-1"
-                    style={{ background: 'linear-gradient(180deg, #4a4a6a, #2b2b3d)' }}
+                    style={{ background: 'var(--os-titlebar)', borderRadius: 'calc(var(--os-window-radius) - 2px) calc(var(--os-window-radius) - 2px) 0 0' }}
                 >
                     <span className="text-[11px] font-bold text-[#e0d8c8] uppercase tracking-wide">Welcome</span>
                     <button

@@ -173,11 +173,12 @@ export default function TerminalAssistant({ skills = [] }) {
         <div
             className="relative flex flex-col h-full w-full overflow-hidden text-sm"
             style={{
-                background: '#1a1a2a',
-                color: '#c0c0c0',
+                background: 'var(--os-terminal-bg)',
+                color: 'var(--os-terminal-text)',
                 fontFamily: "'Consolas', 'Courier New', monospace",
                 padding: '12px',
-                border: '2px inset #3a3a4a',
+                border: '1px solid var(--os-border-dark)',
+                borderRadius: 'var(--os-btn-radius)',
             }}
             onClick={() => inputRef.current?.focus()}
         >

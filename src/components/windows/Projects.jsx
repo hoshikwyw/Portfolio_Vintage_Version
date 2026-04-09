@@ -14,17 +14,19 @@ const ProjectCard = ({ name, description, image, link, github, tags, status }) =
     <div
       className={`h-full w-full flex flex-col overflow-hidden transition-all duration-200 ${isComingSoon ? 'opacity-60 pointer-events-none' : ''}`}
       style={{
-        background: '#e8e0d4',
-        border: '2px solid #8a8070',
-        borderTopColor: '#d0c8b8',
-        borderLeftColor: '#d0c8b8',
-        borderRadius: '4px',
+        background: 'var(--os-panel-bg)',
+        border: '2px solid var(--os-border-dark)',
+        borderTopColor: 'var(--os-border-light)',
+        borderLeftColor: 'var(--os-border-light)',
+        borderRadius: 'var(--os-window-radius)',
         fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
         padding: '8px',
+        backdropFilter: 'var(--os-glass-blur)',
+        WebkitBackdropFilter: 'var(--os-glass-blur)',
       }}
     >
-      <div className="h-48 overflow-hidden relative" style={{ border: '2px inset #a0a090', background: '#c0b8a8' }}>
-        <div className="absolute inset-0 bg-[#c0b8a8] animate-pulse"></div>
+      <div className="h-48 overflow-hidden relative" style={{ border: 'var(--os-input-border)', background: 'var(--os-window)' }}>
+        <div className="absolute inset-0 animate-pulse" style={{ background: 'var(--os-window)' }}></div>
         {image && (
           <img
             src={image}
@@ -43,15 +45,15 @@ const ProjectCard = ({ name, description, image, link, github, tags, status }) =
       <div className="flex-grow flex flex-col gap-2 pt-2">
         {!isComingSoon ? (
           <>
-            <h3 className="text-sm font-bold text-[#2b2b3d] uppercase tracking-wide">{name}</h3>
-            <p className="text-[#4a4a4a] text-[11px] flex-grow leading-relaxed">{description}</p>
+            <h3 className="text-sm font-bold uppercase tracking-wide" style={{ color: 'var(--os-text)' }}>{name}</h3>
+            <p className="text-[11px] flex-grow leading-relaxed" style={{ color: 'var(--os-text-secondary)' }}>{description}</p>
 
             <div className="flex flex-wrap gap-1 mb-2">
               {tags?.map((tag, index) => (
                 <span
                   key={index}
-                  className="text-[9px] font-bold text-[#2b2b3d] uppercase tracking-wide px-2 py-0.5"
-                  style={{ border: '1px solid #8a8070', background: '#d0c8b8', borderRadius: '2px' }}
+                  className="text-[9px] font-bold uppercase tracking-wide px-2 py-0.5"
+                  style={{ border: '1px solid var(--os-border-dark)', background: 'var(--os-window)', color: 'var(--os-text)', borderRadius: 'var(--os-btn-radius)' }}
                 >
                   {tag}
                 </span>
@@ -59,36 +61,14 @@ const ProjectCard = ({ name, description, image, link, github, tags, status }) =
             </div>
 
             <div className="flex justify-between mt-auto gap-2">
-              <a
-                href={link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="no-underline text-[#2b2b3d] text-[11px] font-bold uppercase tracking-wide px-3 py-1.5 text-center flex-1 cursor-pointer hover:brightness-105"
-                style={{
-                  background: 'linear-gradient(180deg, #d0c8b8, #b0a898)',
-                  border: '2px solid #7a7060',
-                  borderTopColor: '#e0d8c8',
-                  borderLeftColor: '#e0d8c8',
-                  borderRadius: '3px',
-                }}
-              >
-                Live Demo
-              </a>
-              <a
-                href={github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="no-underline text-[#2b2b3d] text-[11px] font-bold uppercase tracking-wide px-3 py-1.5 text-center flex-1 cursor-pointer hover:brightness-105"
-                style={{
-                  background: 'linear-gradient(180deg, #d0c8b8, #b0a898)',
-                  border: '2px solid #7a7060',
-                  borderTopColor: '#e0d8c8',
-                  borderLeftColor: '#e0d8c8',
-                  borderRadius: '3px',
-                }}
-              >
-                View Code
-              </a>
+              <a href={link} target="_blank" rel="noopener noreferrer"
+                className="no-underline text-[11px] font-bold uppercase tracking-wide px-3 py-1.5 text-center flex-1 cursor-pointer hover:brightness-110"
+                style={{ background: 'var(--os-btn-bg)', color: 'var(--os-text)', border: '2px solid var(--os-border-dark)', borderTopColor: 'var(--os-border-light)', borderLeftColor: 'var(--os-border-light)', borderRadius: 'var(--os-btn-radius)' }}
+              >Live Demo</a>
+              <a href={github} target="_blank" rel="noopener noreferrer"
+                className="no-underline text-[11px] font-bold uppercase tracking-wide px-3 py-1.5 text-center flex-1 cursor-pointer hover:brightness-110"
+                style={{ background: 'var(--os-btn-bg)', color: 'var(--os-text)', border: '2px solid var(--os-border-dark)', borderTopColor: 'var(--os-border-light)', borderLeftColor: 'var(--os-border-light)', borderRadius: 'var(--os-btn-radius)' }}
+              >View Code</a>
             </div>
           </>
         ) : (

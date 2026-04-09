@@ -9,155 +9,106 @@ const skills = [
 ];
 
 const HomeWindow = () => {
+    const s = {
+        fieldset: { border: 'var(--os-fieldset-border)', borderRadius: 'var(--os-btn-radius)', padding: '12px' },
+        legend: { fontSize: 10, fontWeight: 700, color: 'var(--os-text)', paddingInline: 4, textTransform: 'uppercase', letterSpacing: '0.05em' },
+        text: { color: 'var(--os-text)' },
+        sub: { color: 'var(--os-accent)' },
+        muted: { color: 'var(--os-text-secondary)' },
+        input: { border: 'var(--os-input-border)', background: 'var(--os-input-bg)' },
+        tag: { border: '1px solid var(--os-border-dark)', background: 'var(--os-panel-bg)', borderRadius: 'var(--os-btn-radius)' },
+        dot: { width: 8, height: 8, borderRadius: '50%', background: 'var(--os-accent)', flexShrink: 0 },
+    }
+
     return (
         <div className="min-h-screen p-4" style={{ fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" }}>
             <div className="max-w-7xl mx-auto">
                 <div className="flex flex-col lg:flex-row gap-4">
-                    {/* LEFT COLUMN */}
                     <div className="lg:w-1/3 flex flex-col gap-4">
-                        {/* Profile Card */}
-                        <fieldset style={{ border: '2px groove #c0b8a8', borderRadius: '2px', padding: '12px' }}>
-                            <legend className="text-[10px] font-bold text-[#2b2b3d] px-1 uppercase tracking-wide">Profile</legend>
+                        <fieldset style={s.fieldset}>
+                            <legend style={s.legend}>Profile</legend>
                             <div className="flex items-center flex-col">
-                                <div className="w-[120px] h-[120px] mb-3 overflow-hidden" style={{ border: '2px inset #a0a090' }}>
-                                    <img
-                                        src="/myPf.png"
-                                        alt="Kayv avatar"
-                                        className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
-                                    />
+                                <div className="w-[120px] h-[120px] mb-3 overflow-hidden" style={s.input}>
+                                    <img src="/myPf.png" alt="Kayv" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" />
                                 </div>
-                                <h1 className="text-xl font-bold text-[#2b2b3d] tracking-wider uppercase text-center">
-                                    Khaing Wut Yi Win
-                                </h1>
-                                <p className="text-[#4a3aad] font-bold uppercase text-xs mt-1 tracking-wider">
-                                    Frontend Developer
-                                </p>
-                                <p className="text-[10px] text-[#5a5a5a] mt-1 tracking-widest font-semibold">
-                                    YANGON, MYANMAR
-                                </p>
+                                <h1 className="text-xl font-bold tracking-wider uppercase text-center" style={s.text}>Khaing Wut Yi Win</h1>
+                                <p className="font-bold uppercase text-xs mt-1 tracking-wider" style={s.sub}>Frontend Developer</p>
+                                <p className="text-[10px] mt-1 tracking-widest font-semibold" style={s.muted}>YANGON, MYANMAR</p>
                             </div>
                         </fieldset>
-
-                        {/* Bio Card */}
-                        <fieldset style={{ border: '2px groove #c0b8a8', borderRadius: '2px', padding: '12px' }}>
-                            <legend className="text-[10px] font-bold text-[#2b2b3d] px-1 uppercase tracking-wide">About</legend>
-                            <p className="text-[#3a3a3a] text-[12px] leading-relaxed">
-                                "Hi! I'm Kayv — a creative frontend developer who loves crafting
-                                smooth UIs with React and Tailwind. I'm always excited to learn
-                                something new that helps me grow professionally."
+                        <fieldset style={s.fieldset}>
+                            <legend style={s.legend}>About</legend>
+                            <p className="text-[12px] leading-relaxed" style={s.text}>
+                                "Hi! I'm Kayv — a creative frontend developer who loves crafting smooth UIs with React and Tailwind. I'm always excited to learn something new."
                             </p>
                         </fieldset>
-
-                        {/* Contact Card */}
-                        <fieldset style={{ border: '2px groove #c0b8a8', borderRadius: '2px', padding: '12px' }}>
-                            <legend className="text-[10px] font-bold text-[#2b2b3d] px-1 uppercase tracking-wide">Contact</legend>
+                        <fieldset style={s.fieldset}>
+                            <legend style={s.legend}>Contact</legend>
                             <div className="space-y-2">
-                                <p className="text-[#3a3a3a] flex items-center gap-2 text-[11px]">
-                                    <svg className="w-3.5 h-3.5 text-[#4a3aad]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                                    </svg>
+                                <p className="flex items-center gap-2 text-[11px]" style={s.text}>
+                                    <svg className="w-3.5 h-3.5" style={{ color: 'var(--os-accent)' }} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
                                     khaingwutyiwin1712@gmail.com
                                 </p>
-                                <p className="text-[#3a3a3a] flex items-center gap-2 text-[11px]">
-                                    <Phone className="w-3.5 h-3.5 text-[#4a3aad]" />
+                                <p className="flex items-center gap-2 text-[11px]" style={s.text}>
+                                    <Phone className="w-3.5 h-3.5" style={{ color: 'var(--os-accent)' }} />
                                     +959795847089
                                 </p>
                             </div>
                         </fieldset>
                     </div>
-
-                    {/* RIGHT COLUMN */}
                     <div className="lg:w-2/3 flex flex-col gap-4">
-                        {/* Education */}
-                        <fieldset style={{ border: '2px groove #c0b8a8', borderRadius: '2px', padding: '12px' }}>
-                            <legend className="text-[10px] font-bold text-[#2b2b3d] px-1 uppercase tracking-wide">Education</legend>
-                            <ul className="space-y-3">
-                                <li className="flex items-center gap-3">
-                                    <div className="w-2 h-2 bg-[#4a3aad] rounded-full flex-shrink-0"></div>
-                                    <div>
-                                        <h4 className="font-bold text-[12px] text-[#2b2b3d]">Frontend Web Developer</h4>
-                                        <p className="text-[#4a3aad] text-[11px] font-semibold">MMS-IT</p>
-                                    </div>
-                                </li>
-                                <li className="flex items-center gap-3">
-                                    <div className="w-2 h-2 bg-[#4a3aad] rounded-full flex-shrink-0"></div>
-                                    <div>
-                                        <h4 className="font-bold text-[12px] text-[#2b2b3d]">Self-taught Frontend Development</h4>
-                                        <p className="text-[#4a3aad] text-[11px] font-semibold">React, Tailwind CSS, Next.js, React Native, Typescript</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </fieldset>
-
-                        {/* Experience */}
-                        <fieldset style={{ border: '2px groove #c0b8a8', borderRadius: '2px', padding: '12px' }}>
-                            <legend className="text-[10px] font-bold text-[#2b2b3d] px-1 uppercase tracking-wide">Experience</legend>
-                            <ul className="space-y-3">
-                                <li className="flex items-center gap-3">
-                                    <div className="w-2 h-2 bg-[#4a3aad] rounded-full flex-shrink-0"></div>
-                                    <div>
-                                        <h4 className="font-bold text-[12px] text-[#2b2b3d]">Junior Frontend Developer</h4>
-                                        <p className="text-[#4a3aad] text-[11px] font-semibold">IT-Wizard since 2024 November</p>
-                                    </div>
-                                </li>
-                                <li className="flex items-center gap-3">
-                                    <div className="w-2 h-2 bg-[#4a3aad] rounded-full flex-shrink-0"></div>
-                                    <div>
-                                        <h4 className="font-bold text-[12px] text-[#2b2b3d]">Freelance Projects</h4>
-                                        <p className="text-[#4a3aad] text-[11px] font-semibold">Portfolio, Booking App, AI Assistant UI</p>
-                                    </div>
-                                </li>
-                            </ul>
-                        </fieldset>
-
-                        {/* Skills */}
-                        <fieldset style={{ border: '2px groove #c0b8a8', borderRadius: '2px', padding: '12px' }}>
-                            <legend className="text-[10px] font-bold text-[#2b2b3d] px-1 uppercase tracking-wide">Skills</legend>
+                        {[
+                            { title: 'Education', items: [{ h: 'Frontend Web Developer', p: 'MMS-IT' }, { h: 'Self-taught Frontend Development', p: 'React, Tailwind CSS, Next.js, React Native, Typescript' }] },
+                            { title: 'Experience', items: [{ h: 'Junior Frontend Developer', p: 'IT-Wizard since 2024 November' }, { h: 'Freelance Projects', p: 'Portfolio, Booking App, AI Assistant UI' }] },
+                        ].map(section => (
+                            <fieldset key={section.title} style={s.fieldset}>
+                                <legend style={s.legend}>{section.title}</legend>
+                                <ul className="space-y-3">
+                                    {section.items.map(item => (
+                                        <li key={item.h} className="flex items-center gap-3">
+                                            <div style={s.dot} />
+                                            <div>
+                                                <h4 className="font-bold text-[12px]" style={s.text}>{item.h}</h4>
+                                                <p className="text-[11px] font-semibold" style={s.sub}>{item.p}</p>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </fieldset>
+                        ))}
+                        <fieldset style={s.fieldset}>
+                            <legend style={s.legend}>Skills</legend>
                             <div className="flex flex-col gap-2.5">
-                                {skills.map((skill) => (
+                                {skills.map(skill => (
                                     <div key={skill.name}>
                                         <div className="flex justify-between mb-1">
-                                            <span className="font-bold text-[#2b2b3d] uppercase text-[11px] tracking-wide">{skill.name}</span>
-                                            <span className="text-[#4a3aad] font-bold text-[11px]">{skill.level}</span>
+                                            <span className="font-bold uppercase text-[11px] tracking-wide" style={s.text}>{skill.name}</span>
+                                            <span className="font-bold text-[11px]" style={s.sub}>{skill.level}</span>
                                         </div>
-                                        <div className="w-full h-3 overflow-hidden" style={{ border: '2px inset #a0a090', background: '#e8e0d4' }}>
-                                            <div
-                                                className="h-full bg-gradient-to-r from-[#4a3aad] to-[#6a5acd]"
-                                                style={{ width: skill.level }}
-                                            />
+                                        <div className="w-full h-3 overflow-hidden" style={s.input}>
+                                            <div className="h-full" style={{ width: skill.level, background: 'var(--os-accent)' }} />
                                         </div>
                                     </div>
                                 ))}
                             </div>
                         </fieldset>
-
-                        {/* Languages & Interests */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <fieldset style={{ border: '2px groove #c0b8a8', borderRadius: '2px', padding: '12px' }}>
-                                <legend className="text-[10px] font-bold text-[#2b2b3d] px-1 uppercase tracking-wide">Languages</legend>
+                            <fieldset style={s.fieldset}>
+                                <legend style={s.legend}>Languages</legend>
                                 <div className="space-y-1.5">
-                                    <div className="flex items-center gap-2">
-                                        <span className="w-1.5 h-1.5 bg-[#4a3aad] rounded-full"></span>
-                                        <span className="text-[#3a3a3a] text-[11px]">English — Intermediate</span>
-                                    </div>
-                                    <div className="flex items-center gap-2">
-                                        <span className="w-1.5 h-1.5 bg-[#4a3aad] rounded-full"></span>
-                                        <span className="text-[#3a3a3a] text-[11px]">Burmese — Native</span>
-                                    </div>
+                                    {['English — Intermediate', 'Burmese — Native'].map(l => (
+                                        <div key={l} className="flex items-center gap-2">
+                                            <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: 'var(--os-accent)' }} />
+                                            <span className="text-[11px]" style={s.text}>{l}</span>
+                                        </div>
+                                    ))}
                                 </div>
                             </fieldset>
-
-                            <fieldset style={{ border: '2px groove #c0b8a8', borderRadius: '2px', padding: '12px' }}>
-                                <legend className="text-[10px] font-bold text-[#2b2b3d] px-1 uppercase tracking-wide">Interests</legend>
+                            <fieldset style={s.fieldset}>
+                                <legend style={s.legend}>Interests</legend>
                                 <div className="flex flex-wrap gap-1.5">
-                                    {["Design", "Animation", "AI", "Vintage UI", "2D Games"].map((interest) => (
-                                        <span
-                                            key={interest}
-                                            className="text-[10px] font-bold text-[#2b2b3d] uppercase tracking-wide px-2 py-0.5"
-                                            style={{ border: '1px solid #a0a090', background: '#e8e0d4', borderRadius: '2px' }}
-                                        >
-                                            {interest}
-                                        </span>
+                                    {["Design", "Animation", "AI", "Vintage UI", "2D Games"].map(i => (
+                                        <span key={i} className="text-[10px] font-bold uppercase tracking-wide px-2 py-0.5" style={{ ...s.tag, color: 'var(--os-text)' }}>{i}</span>
                                     ))}
                                 </div>
                             </fieldset>

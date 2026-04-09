@@ -17,54 +17,19 @@ export default function StartMenu({ onClose, onFocus }) {
     const ref = useRef(null)
     const inputRef = useRef(null)
 
+    useEffect(() => { inputRef.current?.focus() }, [])
     useEffect(() => {
-        inputRef.current?.focus()
-    }, [])
-
-    // Close on outside click
-    useEffect(() => {
-        const handle = (e) => {
-            if (ref.current && !ref.current.contains(e.target)) onClose()
-        }
+        const handle = (e) => { if (ref.current && !ref.current.contains(e.target)) onClose() }
         document.addEventListener('mousedown', handle)
         return () => document.removeEventListener('mousedown', handle)
     }, [onClose])
 
-    const filtered = apps.filter((a) =>
-        a.label.toLowerCase().includes(query.toLowerCase())
-    )
+    const filtered = apps.filter(a => a.label.toLowerCase().includes(query.toLowerCase()))
+    const openApp = (name) => { openWindow(name); onFocus(name); onClose() }
 
-    const openApp = (name) => {
-        openWindow(name)
-        onFocus(name)
-        onClose()
-    }
-
-    const handleSearch = (e) => {
-        e.preventDefault()
-        if (!query.trim()) return
-        window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank', 'noopener,noreferrer')
-        setQuery('')
-        onClose()
-    }
-
-    const handleHire = () => {
-        const email = 'khaingwutyiwin1712@gmail.com'
-        const subject = 'Hire Request - Frontend Developer'
-        const body = `Hello Khaing Wut Yi Win,\n\nI am interested in discussing a potential opportunity with you.\n\nProject Details:\n- Project Type:\n- Timeline:\n- Budget:\n\nBest regards,\n[Your Name]`
-        window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`, '_blank', 'noopener,noreferrer')
-        onClose()
-    }
-
-    const handleResume = () => {
-        const link = document.createElement('a')
-        link.href = '/KhaingWutYiWinResume.pdf'
-        link.download = 'KhaingWutYiWinResume.pdf'
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
-        onClose()
-    }
+    const handleSearch = (e) => { e.preventDefault(); if (!query.trim()) return; window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank', 'noopener'); setQuery(''); onClose() }
+    const handleHire = () => { const e = 'khaingwutyiwin1712@gmail.com'; window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(e)}&su=${encodeURIComponent('Hire Request')}`, '_blank', 'noopener'); onClose() }
+    const handleResume = () => { const a = document.createElement('a'); a.href = '/KhaingWutYiWinResume.pdf'; a.download = 'KhaingWutYiWinResume.pdf'; document.body.appendChild(a); a.click(); document.body.removeChild(a); onClose() }
 
     return (
         <motion.div
@@ -72,88 +37,72 @@ export default function StartMenu({ onClose, onFocus }) {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            transition={{ duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
-            className="absolute bottom-full left-0 mb-1 w-64 overflow-hidden shadow-[4px_4px_12px_rgba(0,0,0,0.4)] z-[9999]"
+            transition={{ duration: 0.15 }}
+            className="absolute bottom-full left-0 mb-1 w-64 overflow-hidden z-[9999] start-menu-panel"
             style={{
-                border: '2px solid #8a8070',
-                borderTopColor: '#e0d8c8',
-                borderLeftColor: '#e0d8c8',
-                borderRadius: '4px',
+                background: 'var(--os-window)',
+                border: '2px solid var(--os-border-dark)',
+                borderTopColor: 'var(--os-border-light)',
+                borderLeftColor: 'var(--os-border-light)',
+                borderRadius: 'var(--os-window-radius)',
+                boxShadow: 'var(--os-window-shadow)',
+                backdropFilter: 'var(--os-glass-blur)',
+                WebkitBackdropFilter: 'var(--os-glass-blur)',
                 fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
             }}
         >
-            {/* Top: user info — sidebar stripe */}
             <div className="flex">
-                <div className="w-8 bg-gradient-to-b from-[#4a3aad] to-[#2b2b3d] flex items-end justify-center pb-2 flex-shrink-0">
-                    <span className="text-[9px] font-black text-white/60 tracking-widest" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>KAYV OS</span>
+                {/* Sidebar stripe — hidden in glass theme via CSS */}
+                <div className="start-menu-sidebar w-7 flex items-end justify-center pb-2 flex-shrink-0" style={{ background: 'var(--os-accent)' }}>
+                    <span className="text-[8px] font-black text-white/60 tracking-widest" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>KAYV OS</span>
                 </div>
-                <div className="flex-1 bg-[#c0b8a8]">
-                    {/* User card */}
-                    <div className="px-3 py-3 border-b border-[#a0a090] flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-sm border border-[#8a8070] overflow-hidden">
-                            <img src="/myPf.png" alt="Kayv" className="w-full h-full object-cover" />
+                <div className="flex-1">
+                    {/* User */}
+                    <div className="px-3 py-2.5 flex items-center gap-2" style={{ borderBottom: '1px solid var(--os-border-dark)' }}>
+                        <div className="w-7 h-7 rounded-sm overflow-hidden" style={{ border: '1px solid var(--os-border-dark)' }}>
+                            <img src="/myPf.png" alt="" className="w-full h-full object-cover" />
                         </div>
                         <div>
-                            <p className="text-[11px] font-bold text-[#2b2b3d]">Khaing Wut Yi Win</p>
-                            <p className="text-[9px] text-[#5a5a5a] font-semibold">Frontend Developer</p>
+                            <p className="text-[11px] font-bold" style={{ color: 'var(--os-text)' }}>Khaing Wut Yi Win</p>
+                            <p className="text-[9px]" style={{ color: 'var(--os-text-secondary)' }}>Frontend Developer</p>
                         </div>
                     </div>
-
                     {/* Search */}
-                    <div className="px-3 py-2 border-b border-[#a0a090]">
-                        <form onSubmit={handleSearch} className="flex items-center gap-2 px-2 py-1" style={{
-                            border: '2px solid #8a8070',
-                            borderTopColor: '#6a6050',
-                            borderLeftColor: '#6a6050',
-                            borderBottomColor: '#d0c8b8',
-                            borderRightColor: '#d0c8b8',
-                            background: '#f0ebe3',
-                        }}>
-                            <Search size={12} className="text-[#5a5a7a] flex-shrink-0" />
-                            <input
-                                ref={inputRef}
-                                type="text"
-                                value={query}
-                                onChange={(e) => setQuery(e.target.value)}
-                                placeholder="Search..."
-                                className="flex-1 bg-transparent outline-none text-[11px] text-[#2b2b3d] placeholder-[#8a8a8a]"
-                            />
+                    <div className="px-3 py-2" style={{ borderBottom: '1px solid var(--os-border-dark)' }}>
+                        <form onSubmit={handleSearch} className="flex items-center gap-2 px-2 py-1" style={{ border: 'var(--os-input-border)', background: 'var(--os-input-bg)', borderRadius: 'var(--os-btn-radius)' }}>
+                            <Search size={12} style={{ color: 'var(--os-text-muted)' }} />
+                            <input ref={inputRef} type="text" value={query} onChange={e => setQuery(e.target.value)} placeholder="Search..."
+                                className="flex-1 bg-transparent outline-none text-[11px]" style={{ color: 'var(--os-text)' }} />
                         </form>
                     </div>
-
-                    {/* App list */}
+                    {/* Apps */}
                     <div className="py-1">
-                        {filtered.map((app) => (
-                            <button
-                                key={app.name}
-                                onClick={() => openApp(app.name)}
-                                className="flex items-center gap-2 w-full px-3 py-1.5 hover:bg-[#4a3aad] hover:text-white text-[#2b2b3d] transition-colors cursor-pointer text-left group"
+                        {filtered.map(app => (
+                            <button key={app.name} onClick={() => openApp(app.name)}
+                                className="flex items-center gap-2 w-full px-3 py-1.5 transition-colors cursor-pointer text-left group"
+                                style={{ color: 'var(--os-text)' }}
+                                onMouseEnter={e => { e.currentTarget.style.background = 'var(--os-accent)'; e.currentTarget.style.color = '#fff' }}
+                                onMouseLeave={e => { e.currentTarget.style.background = ''; e.currentTarget.style.color = 'var(--os-text)' }}
                             >
-                                <img src={app.icon} alt={app.label} className="w-5 h-5 filter brightness-0 opacity-60 group-hover:brightness-0 group-hover:invert group-hover:opacity-100" />
+                                <img src={app.icon} alt="" className="w-5 h-5" style={{ filter: 'brightness(0)', opacity: 0.6 }} />
                                 <span className="text-[11px] font-semibold">{app.label}</span>
                             </button>
                         ))}
                     </div>
-
-                    {/* Divider */}
-                    <div className="mx-3 border-t border-[#a0a090]" />
-
-                    {/* Quick actions */}
+                    <div className="mx-3" style={{ borderTop: '1px solid var(--os-border-dark)' }} />
+                    {/* Actions */}
                     <div className="py-1">
-                        <button
-                            onClick={handleResume}
-                            className="flex items-center gap-2 w-full px-3 py-1.5 hover:bg-[#4a3aad] hover:text-white text-[#2b2b3d] transition-colors cursor-pointer group"
-                        >
-                            <Download size={14} className="opacity-60 group-hover:opacity-100 group-hover:text-white" />
-                            <span className="text-[11px] font-semibold">Download Resume</span>
-                        </button>
-                        <button
-                            onClick={handleHire}
-                            className="flex items-center gap-2 w-full px-3 py-1.5 hover:bg-[#4a3aad] hover:text-white text-[#2b2b3d] transition-colors cursor-pointer group"
-                        >
-                            <Mail size={14} className="opacity-60 group-hover:opacity-100 group-hover:text-white" />
-                            <span className="text-[11px] font-semibold">Hire Me</span>
-                        </button>
+                        {[{ label: 'Download Resume', icon: <Download size={14} />, action: handleResume }, { label: 'Hire Me', icon: <Mail size={14} />, action: handleHire }].map(item => (
+                            <button key={item.label} onClick={item.action}
+                                className="flex items-center gap-2 w-full px-3 py-1.5 transition-colors cursor-pointer"
+                                style={{ color: 'var(--os-text)' }}
+                                onMouseEnter={e => { e.currentTarget.style.background = 'var(--os-accent)'; e.currentTarget.style.color = '#fff' }}
+                                onMouseLeave={e => { e.currentTarget.style.background = ''; e.currentTarget.style.color = 'var(--os-text)' }}
+                            >
+                                <span style={{ opacity: 0.6 }}>{item.icon}</span>
+                                <span className="text-[11px] font-semibold">{item.label}</span>
+                            </button>
+                        ))}
                     </div>
                 </div>
             </div>

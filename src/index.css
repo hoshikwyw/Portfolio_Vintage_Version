@@ -1,44 +1,99 @@
 @import "tailwindcss";
 
-@theme {
-  /* Retro Vintage OS Color Palette */
-  --color-main-white: #f0ebe3;
-  --color-secondary-white: #e8e0d4;
-  --color-light-white: #f5f0e8;
-  --color-dark-blue: #2b2b3d;
-  --color-light-blue: #5b5b7a;
-  --color-main-black: #1a1a1a;
-  --color-medium-black: #3d3d3d;
-  --color-light-black: #6b6b6b;
-  --color-green: #4a7a4a;
-  --color-gold: #c4a035;
-  --color-gold-light: #e8d48a;
-  --color-gold-dark: #a08020;
-  --color-pink: #b88a8a;
-  --color-accent-purple: #6a5acd;
-  --color-accent-purple-light: #8a7ae0;
-  --color-cream: #e8dcc8;
-  --color-burgundy: #7a3a5a;
-  --color-retro-bg: #c0b8a8;
-  --color-retro-border-light: #e0d8c8;
-  --color-retro-border-dark: #8a8070;
-  --color-retro-title: #2b2b3d;
-  --color-retro-title-active: #3a3a5a;
+/* ============================
+   THEME SYSTEM — CSS Variables
+   ============================ */
+
+:root {
+  /* Classic Retro Theme (default) */
+  --os-bg: #2a2a3e;
+  --os-bg-image: linear-gradient(180deg, #1e1e32, #2a2a3e, #3a3a52);
+  --os-window: #c0b8a8;
+  --os-window-content: #f0ebe3;
+  --os-titlebar: linear-gradient(180deg, #4a4a6a, #3a3a5a, #2b2b3d);
+  --os-titlebar-text: #e0d8c8;
+  --os-taskbar: linear-gradient(to bottom, #c0b8a8, #a8a090);
+  --os-taskbar-border: #d8d0c0;
+  --os-accent: #4a3aad;
+  --os-accent-hover: #5a4acd;
+  --os-text: #2b2b3d;
+  --os-text-secondary: #5a5a5a;
+  --os-text-muted: #8a8a8a;
+  --os-border-light: #e0d8c8;
+  --os-border-dark: #8a8070;
+  --os-btn-bg: linear-gradient(180deg, #d0c8b8, #b0a898);
+  --os-btn-border-top: #e0d8c8;
+  --os-btn-border-bottom: #7a7060;
+  --os-input-bg: #f0ebe3;
+  --os-input-border: 2px inset #a0a090;
+  --os-panel-bg: #e8e0d4;
+  --os-scrollbar-track: #e8e0d4;
+  --os-scrollbar-thumb: linear-gradient(180deg, #c0b8a8, #a0a090);
+  --os-terminal-bg: #1a1a2a;
+  --os-terminal-text: #c0c0c0;
+  --os-terminal-accent: #a0d0a0;
+  --os-terminal-prompt: #6a8a6a;
+  --os-desktop-icon-text: #e0d8c8;
+  --os-desktop-icon-shadow: 0 1px 3px rgba(0,0,0,0.8);
+  --os-window-shadow: 2px 2px 0 rgba(0,0,0,0.15), 4px 4px 12px rgba(0,0,0,0.25), inset 1px 1px 0 rgba(255,255,255,0.3);
+  --os-window-radius: 6px;
+  --os-btn-radius: 3px;
+  --os-fieldset-border: 2px groove #c0b8a8;
+  --os-glass-bg: none;
+  --os-glass-blur: none;
+  --os-glass-border: none;
+}
+
+/* Glass / iOS Theme */
+[data-theme="glass"] {
+  --os-bg: #0a0a1e;
+  --os-bg-image: linear-gradient(135deg, #0a0a1e, #141428, #1e1e3a);
+  --os-window: rgba(255, 255, 255, 0.08);
+  --os-window-content: rgba(255, 255, 255, 0.04);
+  --os-titlebar: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+  --os-titlebar-text: rgba(255, 255, 255, 0.9);
+  --os-taskbar: linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+  --os-taskbar-border: rgba(255, 255, 255, 0.1);
+  --os-accent: #007aff;
+  --os-accent-hover: #3a9aff;
+  --os-text: rgba(255, 255, 255, 0.92);
+  --os-text-secondary: rgba(255, 255, 255, 0.55);
+  --os-text-muted: rgba(255, 255, 255, 0.3);
+  --os-border-light: rgba(255, 255, 255, 0.15);
+  --os-border-dark: rgba(255, 255, 255, 0.08);
+  --os-btn-bg: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+  --os-btn-border-top: rgba(255, 255, 255, 0.18);
+  --os-btn-border-bottom: rgba(255, 255, 255, 0.05);
+  --os-input-bg: rgba(255, 255, 255, 0.06);
+  --os-input-border: 1px solid rgba(255, 255, 255, 0.12);
+  --os-panel-bg: rgba(255, 255, 255, 0.05);
+  --os-scrollbar-track: rgba(255, 255, 255, 0.03);
+  --os-scrollbar-thumb: linear-gradient(180deg, rgba(255,255,255,0.15), rgba(255,255,255,0.08));
+  --os-terminal-bg: rgba(0, 0, 0, 0.4);
+  --os-terminal-text: rgba(255, 255, 255, 0.8);
+  --os-terminal-accent: #34d399;
+  --os-terminal-prompt: rgba(52, 211, 153, 0.6);
+  --os-desktop-icon-text: rgba(255, 255, 255, 0.9);
+  --os-desktop-icon-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  --os-window-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.1);
+  --os-window-radius: 14px;
+  --os-btn-radius: 8px;
+  --os-fieldset-border: 1px solid rgba(255, 255, 255, 0.1);
+  --os-glass-bg: rgba(255, 255, 255, 0.06);
+  --os-glass-blur: blur(20px) saturate(1.5);
+  --os-glass-border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 html, body {
-  background: #1a1a2e;
+  background: #0a0a1e;
 }
 
 /* ============================
    DESKTOP BACKGROUND
    ============================ */
 .mainBackground {
-  background: #2a2a3e;
-  background-image:
-    radial-gradient(ellipse at 20% 50%, rgba(106, 90, 205, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(196, 160, 53, 0.06) 0%, transparent 50%),
-    linear-gradient(180deg, #1e1e32 0%, #2a2a3e 40%, #3a3a52 100%);
+  background: var(--os-bg);
+  background-image: var(--os-bg-image);
   height: 100vh;
   width: 100vw;
   position: fixed;
@@ -47,24 +102,24 @@ html, body {
   overflow: hidden;
 }
 
-/* CRT scanline overlay */
+/* CRT scanline overlay — only on classic */
 .mainBackground::before {
   content: '';
   position: absolute;
   inset: 0;
   background-image:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 1px,
-      rgba(0, 0, 0, 0.06) 1px,
-      rgba(0, 0, 0, 0.06) 2px
-    );
+    repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,0,0,0.06) 1px, rgba(0,0,0,0.06) 2px);
   pointer-events: none;
   z-index: 1;
+  opacity: 1;
 }
 
-/* Subtle noise texture */
+[data-theme="glass"] .mainBackground::before {
+  background-image: none;
+  opacity: 0;
+}
+
+/* Noise texture — only on classic */
 .mainBackground::after {
   content: '';
   position: absolute;
@@ -75,7 +130,10 @@ html, body {
   z-index: 1;
 }
 
-/* Ambient glow orbs — muted for retro feel */
+[data-theme="glass"] .mainBackground::after {
+  opacity: 0;
+}
+
 .gradient-orb {
   position: absolute;
   border-radius: 50%;
@@ -86,81 +144,26 @@ html, body {
   opacity: 0.5;
 }
 
-.gradient-orb-1 {
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(106, 90, 205, 0.12) 0%, transparent 70%);
-  top: -10%;
-  left: -5%;
-  animation: orb-float-1 30s ease-in-out infinite;
-}
+.gradient-orb-1 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(106,90,205,0.12) 0%, transparent 70%); top: -10%; left: -5%; animation: orb-float-1 30s ease-in-out infinite; }
+.gradient-orb-2 { width: 350px; height: 350px; background: radial-gradient(circle, rgba(196,160,53,0.08) 0%, transparent 70%); bottom: -10%; right: -5%; animation: orb-float-2 25s ease-in-out infinite; }
+.gradient-orb-3 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(90,90,130,0.1) 0%, transparent 70%); top: 40%; left: 50%; animation: orb-float-3 35s ease-in-out infinite; }
 
-.gradient-orb-2 {
-  width: 350px;
-  height: 350px;
-  background: radial-gradient(circle, rgba(196, 160, 53, 0.08) 0%, transparent 70%);
-  bottom: -10%;
-  right: -5%;
-  animation: orb-float-2 25s ease-in-out infinite;
-}
+/* Glass theme: vibrant orbs */
+[data-theme="glass"] .gradient-orb { opacity: 0.7; filter: blur(120px); }
+[data-theme="glass"] .gradient-orb-1 { background: radial-gradient(circle, rgba(0,122,255,0.2) 0%, transparent 70%); }
+[data-theme="glass"] .gradient-orb-2 { background: radial-gradient(circle, rgba(175,82,222,0.18) 0%, transparent 70%); }
+[data-theme="glass"] .gradient-orb-3 { background: radial-gradient(circle, rgba(52,211,153,0.12) 0%, transparent 70%); }
 
-.gradient-orb-3 {
-  width: 300px;
-  height: 300px;
-  background: radial-gradient(circle, rgba(90, 90, 130, 0.1) 0%, transparent 70%);
-  top: 40%;
-  left: 50%;
-  animation: orb-float-3 35s ease-in-out infinite;
-}
+@keyframes orb-float-1 { 0%, 100% { transform: translate(0,0); } 33% { transform: translate(60px,40px); } 66% { transform: translate(-30px,20px); } }
+@keyframes orb-float-2 { 0%, 100% { transform: translate(0,0); } 33% { transform: translate(-40px,-30px); } 66% { transform: translate(30px,-15px); } }
+@keyframes orb-float-3 { 0%, 100% { transform: translate(0,0); } 50% { transform: translate(-70px,-40px); } }
 
-@keyframes orb-float-1 {
-  0%, 100% { transform: translate(0, 0); }
-  33% { transform: translate(60px, 40px); }
-  66% { transform: translate(-30px, 20px); }
-}
-@keyframes orb-float-2 {
-  0%, 100% { transform: translate(0, 0); }
-  33% { transform: translate(-40px, -30px); }
-  66% { transform: translate(30px, -15px); }
-}
-@keyframes orb-float-3 {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-70px, -40px); }
-}
-
-/* ============================
-   WALLPAPER VARIANTS
-   ============================ */
-.mainBackground.wallpaper-midnight {
-  background: #0e0e1a;
-  background-image:
-    radial-gradient(ellipse at 50% 50%, rgba(196, 160, 53, 0.06) 0%, transparent 60%),
-    linear-gradient(180deg, #08081a 0%, #0e0e2a 40%, #1a1a3e 100%);
-}
-.mainBackground.wallpaper-ocean {
-  background: #0a1525;
-  background-image:
-    radial-gradient(ellipse at 30% 70%, rgba(60, 120, 180, 0.1) 0%, transparent 50%),
-    linear-gradient(180deg, #081020 0%, #0e1e35 40%, #1a3050 100%);
-}
-.mainBackground.wallpaper-forest {
-  background: #0a1a0e;
-  background-image:
-    radial-gradient(ellipse at 60% 40%, rgba(80, 140, 80, 0.08) 0%, transparent 50%),
-    linear-gradient(180deg, #081208 0%, #0e1e0e 40%, #1a301a 100%);
-}
-.mainBackground.wallpaper-rose {
-  background: #1e1218;
-  background-image:
-    radial-gradient(ellipse at 40% 60%, rgba(180, 100, 120, 0.08) 0%, transparent 50%),
-    linear-gradient(180deg, #18101a 0%, #2a1a22 40%, #3a2a32 100%);
-}
-.mainBackground.wallpaper-ember {
-  background: #1a1008;
-  background-image:
-    radial-gradient(ellipse at 50% 50%, rgba(196, 160, 53, 0.1) 0%, transparent 50%),
-    linear-gradient(180deg, #140e05 0%, #2a1a08 40%, #3a2a10 100%);
-}
+/* Wallpaper variants (classic only) */
+.mainBackground.wallpaper-midnight { background-image: linear-gradient(180deg, #08081a, #0e0e2a, #1a1a3e); }
+.mainBackground.wallpaper-ocean { background-image: linear-gradient(180deg, #081020, #0e1e35, #1a3050); }
+.mainBackground.wallpaper-forest { background-image: linear-gradient(180deg, #081208, #0e1e0e, #1a301a); }
+.mainBackground.wallpaper-rose { background-image: linear-gradient(180deg, #18101a, #2a1a22, #3a2a32); }
+.mainBackground.wallpaper-ember { background-image: linear-gradient(180deg, #140e05, #2a1a08, #3a2a10); }
 
 /* ============================
    DESKTOP ICONS
@@ -178,54 +181,41 @@ html, body {
   transition: all 0.15s ease;
   user-select: none;
 }
+[data-theme="glass"] .desktop-icon { border-radius: 12px; }
 
-.desktop-icon:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.1);
-}
-
-.desktop-icon.selected {
-  background: rgba(106, 90, 205, 0.15);
-  border-color: rgba(106, 90, 205, 0.3);
-}
+.desktop-icon:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
+.desktop-icon.selected { background: rgba(106,90,205,0.15); border-color: rgba(106,90,205,0.3); }
+[data-theme="glass"] .desktop-icon:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.15); }
+[data-theme="glass"] .desktop-icon.selected { background: rgba(0,122,255,0.15); border-color: rgba(0,122,255,0.3); }
 
 .desktop-icon img {
-  width: 36px;
-  height: 36px;
+  width: 36px; height: 36px;
   filter: brightness(0) invert(1) drop-shadow(0 1px 2px rgba(0,0,0,0.4));
   opacity: 0.85;
   transition: transform 0.15s ease;
 }
-
-.desktop-icon:hover img {
-  transform: scale(1.05);
-  opacity: 1;
-}
+.desktop-icon:hover img { transform: scale(1.05); opacity: 1; }
 
 .desktop-icon span {
   font-size: 10px;
-  color: #e0d8c8;
+  color: var(--os-desktop-icon-text);
   font-weight: 600;
   text-align: center;
   line-height: 1.2;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8), 0 0 6px rgba(0, 0, 0, 0.4);
+  text-shadow: var(--os-desktop-icon-shadow);
   letter-spacing: 0.3px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* ============================
-   WINDOW FRAME — Retro OS Style
+   WINDOW FRAME
    ============================ */
 .windowFrame {
-  background: var(--color-retro-bg);
-  border: 2px solid var(--color-retro-border-dark);
-  border-top-color: var(--color-retro-border-light);
-  border-left-color: var(--color-retro-border-light);
-  border-radius: 6px;
-  box-shadow:
-    2px 2px 0 rgba(0, 0, 0, 0.15),
-    4px 4px 12px rgba(0, 0, 0, 0.25),
-    inset 1px 1px 0 rgba(255, 255, 255, 0.3);
+  background: var(--os-window);
+  border: 2px solid var(--os-border-dark);
+  border-top-color: var(--os-border-light);
+  border-left-color: var(--os-border-light);
+  border-radius: var(--os-window-radius);
+  box-shadow: var(--os-window-shadow);
   overflow: hidden;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   min-width: 400px;
@@ -233,21 +223,13 @@ html, body {
   transition: box-shadow 0.2s ease;
 }
 
-.windowFrame:hover {
-  box-shadow:
-    2px 2px 0 rgba(0, 0, 0, 0.15),
-    6px 6px 18px rgba(0, 0, 0, 0.3),
-    inset 1px 1px 0 rgba(255, 255, 255, 0.3);
+[data-theme="glass"] .windowFrame {
+  backdrop-filter: var(--os-glass-blur);
+  -webkit-backdrop-filter: var(--os-glass-blur);
+  border: var(--os-glass-border);
 }
 
-/* Resize handles */
-.resize-handle {
-  position: absolute;
-  background: transparent;
-  z-index: 1001;
-  user-select: none;
-}
-
+.resize-handle { position: absolute; background: transparent; z-index: 1001; user-select: none; }
 .resize-top { top: 0; left: 6px; right: 6px; height: 6px; cursor: ns-resize; }
 .resize-right { top: 6px; right: 0; bottom: 6px; width: 6px; cursor: ew-resize; }
 .resize-bottom { bottom: 0; left: 6px; right: 6px; height: 6px; cursor: ns-resize; }
@@ -258,226 +240,149 @@ html, body {
 .resize-bottom-right { bottom: 0; right: 0; width: 12px; height: 12px; cursor: nwse-resize; z-index: 1002; }
 
 /* ============================
-   WINDOW HEADER — Classic Title Bar
+   WINDOW HEADER
    ============================ */
 .windowHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(180deg, #4a4a6a 0%, #3a3a5a 40%, #2b2b3d 100%);
-  color: #e0d8c8;
+  background: var(--os-titlebar);
+  color: var(--os-titlebar-text);
   padding: 6px 10px;
   cursor: grab;
-  border-bottom: 1px solid #1a1a2a;
+  border-bottom: 1px solid var(--os-border-dark);
   position: relative;
   touch-action: none;
   user-select: none;
 }
-
-.windowHeader:active {
-  cursor: grabbing;
-}
-
+.windowHeader:active { cursor: grabbing; }
 .windowHeader::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.15);
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: rgba(255,255,255,0.15);
 }
+
+[data-theme="glass"] .windowHeader {
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+[data-theme="glass"] .windowHeader::after { background: rgba(255,255,255,0.08); }
 
 .windowTitle {
-  font-size: 12px;
-  font-weight: 600;
-  color: #e0d8c8;
+  font-size: 12px; font-weight: 600;
+  color: var(--os-titlebar-text);
   text-transform: uppercase;
   letter-spacing: 0.8px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
 }
+[data-theme="glass"] .windowTitle { text-transform: none; letter-spacing: 0; font-weight: 500; text-shadow: none; }
 
-.windowControls {
-  display: flex;
-  gap: 2px;
-}
+.windowControls { display: flex; gap: 2px; }
 
 .windowControls button {
-  width: 20px;
-  height: 20px;
-  background: linear-gradient(180deg, #6a6a7a 0%, #4a4a5a 100%);
-  border: 1px solid #2a2a3a;
-  border-top-color: #8a8a9a;
-  border-left-color: #8a8a9a;
-  border-radius: 3px;
-  color: #e0d8c8;
-  font-size: 14px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  margin-left: 3px;
+  width: 20px; height: 20px;
+  background: var(--os-btn-bg);
+  border: 1px solid var(--os-btn-border-bottom);
+  border-top-color: var(--os-btn-border-top);
+  border-left-color: var(--os-btn-border-top);
+  border-radius: var(--os-btn-radius);
+  color: var(--os-titlebar-text);
+  font-size: 14px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0; margin-left: 3px;
 }
+.windowControls button:hover { filter: brightness(1.15); }
+.windowControls button:active { filter: brightness(0.9); }
 
-.windowControls button:hover {
-  background: linear-gradient(180deg, #7a7a8a 0%, #5a5a6a 100%);
-  color: #fff;
+[data-theme="glass"] .windowControls button {
+  border: none; margin-left: 6px;
 }
+[data-theme="glass"] .windowControls button:nth-child(1) { background: #febc2e; } /* minimize - yellow */
+[data-theme="glass"] .windowControls button:nth-child(2) { background: #28c840; } /* maximize - green */
+[data-theme="glass"] .windowControls button:nth-child(3) { background: #ff5f57; } /* close - red */
+[data-theme="glass"] .windowControls button svg { opacity: 0; }
+[data-theme="glass"] .windowControls button:hover svg { opacity: 1; }
+[data-theme="glass"] .windowControls button { width: 12px; height: 12px; border-radius: 50%; }
 
-.windowControls button:active {
-  background: linear-gradient(180deg, #3a3a4a 0%, #5a5a6a 100%);
-  border-top-color: #2a2a3a;
-  border-left-color: #2a2a3a;
-  border-bottom-color: #8a8a9a;
-  border-right-color: #8a8a9a;
-}
+.minimizeBtn, .fullscreenBtn, .closeBtn { margin: 0 !important; padding: 0 !important; }
+.closeBtn img { width: 10px; height: 10px; filter: brightness(0) invert(0.9); }
 
-/* Override specific button sizes */
-.minimizeBtn, .fullscreenBtn, .closeBtn {
-  margin: 0 !important;
-  width: 20px !important;
-  height: 20px !important;
-  padding: 0 !important;
-}
-
-.closeBtn img {
-  width: 10px;
-  height: 10px;
-  filter: brightness(0) invert(0.9);
-}
-
+/* ============================
+   WINDOW CONTENT
+   ============================ */
 .windowContent {
-  margin: 0;
-  padding: 8px;
-  color: var(--color-main-black);
+  margin: 0; padding: 8px;
+  color: var(--os-text);
   overflow: auto;
-  background: var(--color-main-white);
-  border: 1px solid #a0a090;
+  background: var(--os-window-content);
+  border: 1px solid var(--os-border-dark);
   border-top: none;
   margin: 4px;
   border-radius: 0 0 3px 3px;
 }
-
-.windowContent::-webkit-scrollbar {
-  width: 14px;
+[data-theme="glass"] .windowContent {
+  background: var(--os-window-content);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 0 0 10px 10px;
 }
 
-.windowContent::-webkit-scrollbar-track {
-  background: var(--color-secondary-white);
-  border-left: 1px solid #a0a090;
-}
-
-.windowContent::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #c0b8a8 0%, #a0a090 100%);
-  border: 1px solid #8a8070;
-  border-top-color: #d0c8b8;
-  border-left-color: #d0c8b8;
-  border-radius: 0;
-}
-
-.windowContent::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #d0c8b8 0%, #b0a898 100%);
-}
-
-.windowContent::-webkit-scrollbar-button {
-  height: 14px;
-  background: var(--color-retro-bg);
-  border: 1px solid #8a8070;
-  border-top-color: #d0c8b8;
-  border-left-color: #d0c8b8;
-}
+.windowContent::-webkit-scrollbar { width: 10px; }
+.windowContent::-webkit-scrollbar-track { background: var(--os-scrollbar-track); }
+.windowContent::-webkit-scrollbar-thumb { background: var(--os-scrollbar-thumb); border-radius: 5px; }
+[data-theme="glass"] .windowContent::-webkit-scrollbar { width: 6px; }
+[data-theme="glass"] .windowContent::-webkit-scrollbar-thumb { border-radius: 3px; }
 
 /* ============================
-   UNUSED / LEGACY (kept for compat)
+   LEGACY / COMPAT
    ============================ */
-.draggable-container {
-  width: 100vw;
-  height: 100vh;
-  position: relative;
-  overflow: hidden;
-}
-
-.contentContainer {
-  width: 100%;
-  height: 100%;
-}
+.draggable-container { width: 100vw; height: 100vh; position: relative; overflow: hidden; }
+.contentContainer { width: 100%; height: 100%; }
 
 /* ============================
    SWIPER / PROJECT CARDS
    ============================ */
-.project-card {
-  flex: 0 0 auto;
-  width: clamp(350px, 25%, 450px);
-  height: clamp(500px, 30vh, 450px);
-  transition: transform 0.2s ease, height 0.2s ease;
-  box-sizing: border-box;
-}
-
-.swiper {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.swiper-slide {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: transform 0.2s ease;
-}
-
-.swiper-slide:hover {
-  transform: scale(1.03);
-}
-
+.project-card { flex: 0 0 auto; width: clamp(350px,25%,450px); height: clamp(500px,30vh,450px); transition: transform 0.2s ease; }
+.swiper { width: 100%; height: 100%; overflow: hidden; scrollbar-width: none; }
+.swiper-slide { display: flex; justify-content: center; align-items: center; transition: transform 0.2s ease; }
+.swiper-slide:hover { transform: scale(1.03); }
 .swiper::-webkit-scrollbar { display: none; }
-
-.project-container {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
+.project-container { scrollbar-width: none; }
 .project-container::-webkit-scrollbar { display: none; }
 
 .custom-nav-button {
-  position: absolute;
-  z-index: 1000;
-  background: linear-gradient(180deg, #5a5a6a 0%, #3a3a4a 100%);
-  color: #e0d8c8;
-  border: 2px solid #2a2a3a;
-  border-top-color: #7a7a8a;
-  border-left-color: #7a7a8a;
-  border-radius: 4px;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.15s ease;
+  position: absolute; z-index: 1000;
+  background: var(--os-btn-bg);
+  color: var(--os-text);
+  border: 2px solid var(--os-border-dark);
+  border-top-color: var(--os-border-light);
+  border-left-color: var(--os-border-light);
+  border-radius: var(--os-btn-radius);
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.15s ease;
+}
+.custom-nav-button:hover { filter: brightness(1.1); }
+
+[data-theme="glass"] .custom-nav-button {
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 50%;
+  color: rgba(255,255,255,0.8);
 }
 
-.custom-nav-button:hover {
-  background: linear-gradient(180deg, #6a6a7a 0%, #4a4a5a 100%);
-  color: #fff;
+/* Start menu glass override */
+[data-theme="glass"] .start-menu-panel {
+  background: rgba(20, 20, 40, 0.85) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+}
+[data-theme="glass"] .start-menu-sidebar {
+  display: none !important;
 }
 
-.custom-nav-button:active {
-  border-top-color: #2a2a3a;
-  border-left-color: #2a2a3a;
-  border-bottom-color: #7a7a8a;
-  border-right-color: #7a7a8a;
+/* Glass theme: taskbar icon filters */
+[data-theme="glass"] .taskbar img {
+  filter: brightness(0) invert(1) !important;
 }
 
-.custom-link {
-  text-decoration-line: none;
-}
-
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
+.custom-link { text-decoration-line: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 .scrollbar-hide::-webkit-scrollbar { display: none; }
