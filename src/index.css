@@ -383,6 +383,57 @@ html, body {
   filter: brightness(0) invert(1) !important;
 }
 
+/* Quick action buttons */
+.quick-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  background: var(--os-btn-bg);
+  color: var(--os-text);
+  border: 2px solid var(--os-border-dark);
+  border-top-color: var(--os-border-light);
+  border-left-color: var(--os-border-light);
+  border-radius: var(--os-btn-radius);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.quick-action-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.quick-action-btn:active {
+  filter: brightness(0.95);
+  transform: translateY(0);
+}
+
+.quick-action-primary {
+  background: var(--os-accent) !important;
+  color: #fff !important;
+  border-color: var(--os-accent) !important;
+}
+
+[data-theme="glass"] .quick-action-btn {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  color: rgba(255,255,255,0.85);
+}
+
+[data-theme="glass"] .quick-action-primary {
+  background: var(--os-accent) !important;
+  border-color: var(--os-accent) !important;
+}
+
 .custom-link { text-decoration-line: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 .scrollbar-hide::-webkit-scrollbar { display: none; }

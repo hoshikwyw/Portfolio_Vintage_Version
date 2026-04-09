@@ -3,6 +3,7 @@ import MenuBar from './components/layout/MenuBar'
 import WindowFrame from './components/layout/WindowFrame'
 import DesktopIcons from './components/layout/DesktopIcons'
 import StickyNote from './components/layout/StickyNote'
+import QuickActions from './components/layout/QuickActions'
 import DesktopContextMenu from './components/layout/DesktopContextMenu'
 import WelcomeDialog from './components/layout/WelcomeDialog'
 import { MenuContext, MenuProvider } from './context/MenuContext'
@@ -26,6 +27,7 @@ const Desktop = ({ focusedWindow, onFocus }) => {
 
       <DesktopIcons onFocus={onFocus} />
       <StickyNote />
+      <QuickActions />
       <WindowFrame focusedWindow={focusedWindow} onFocus={onFocus} />
       <MenuBar onMenuClick={onFocus} />
 
