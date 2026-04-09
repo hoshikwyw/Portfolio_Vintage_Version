@@ -44,15 +44,15 @@
   --os-glass-border: none;
 }
 
-/* Glass / iOS Theme */
+/* Glass / iOS Theme — opaque enough to work without backdrop-filter */
 [data-theme="glass"] {
   --os-bg: #0a0a1e;
   --os-bg-image: linear-gradient(135deg, #0a0a1e, #141428, #1e1e3a);
-  --os-window: rgba(255, 255, 255, 0.08);
-  --os-window-content: rgba(255, 255, 255, 0.04);
-  --os-titlebar: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+  --os-window: rgba(18, 18, 35, 0.88);
+  --os-window-content: rgba(14, 14, 28, 0.75);
+  --os-titlebar: linear-gradient(180deg, rgba(30,30,55,0.95), rgba(20,20,40,0.95));
   --os-titlebar-text: rgba(255, 255, 255, 0.9);
-  --os-taskbar: linear-gradient(to bottom, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+  --os-taskbar: linear-gradient(to bottom, rgba(18,18,35,0.92), rgba(12,12,25,0.95));
   --os-taskbar-border: rgba(255, 255, 255, 0.1);
   --os-accent: #007aff;
   --os-accent-hover: #3a9aff;
@@ -61,25 +61,25 @@
   --os-text-muted: rgba(255, 255, 255, 0.3);
   --os-border-light: rgba(255, 255, 255, 0.15);
   --os-border-dark: rgba(255, 255, 255, 0.08);
-  --os-btn-bg: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+  --os-btn-bg: linear-gradient(180deg, rgba(40,40,65,0.8), rgba(25,25,45,0.8));
   --os-btn-border-top: rgba(255, 255, 255, 0.18);
   --os-btn-border-bottom: rgba(255, 255, 255, 0.05);
-  --os-input-bg: rgba(255, 255, 255, 0.06);
+  --os-input-bg: rgba(10, 10, 25, 0.6);
   --os-input-border: 1px solid rgba(255, 255, 255, 0.12);
-  --os-panel-bg: rgba(255, 255, 255, 0.05);
+  --os-panel-bg: rgba(18, 18, 35, 0.7);
   --os-scrollbar-track: rgba(255, 255, 255, 0.03);
   --os-scrollbar-thumb: linear-gradient(180deg, rgba(255,255,255,0.15), rgba(255,255,255,0.08));
-  --os-terminal-bg: rgba(0, 0, 0, 0.4);
+  --os-terminal-bg: rgba(5, 5, 15, 0.85);
   --os-terminal-text: rgba(255, 255, 255, 0.8);
   --os-terminal-accent: #34d399;
   --os-terminal-prompt: rgba(52, 211, 153, 0.6);
   --os-desktop-icon-text: rgba(255, 255, 255, 0.9);
   --os-desktop-icon-shadow: 0 1px 4px rgba(0,0,0,0.5);
-  --os-window-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.1);
+  --os-window-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.06);
   --os-window-radius: 14px;
   --os-btn-radius: 8px;
   --os-fieldset-border: 1px solid rgba(255, 255, 255, 0.1);
-  --os-glass-bg: rgba(255, 255, 255, 0.06);
+  --os-glass-bg: rgba(18, 18, 35, 0.7);
   --os-glass-blur: blur(20px) saturate(1.5);
   --os-glass-border: 1px solid rgba(255, 255, 255, 0.12);
 }
@@ -371,7 +371,7 @@ html, body {
 
 /* Start menu glass override */
 [data-theme="glass"] .start-menu-panel {
-  background: rgba(20, 20, 40, 0.85) !important;
+  background: rgba(14, 14, 30, 0.92) !important;
   border: 1px solid rgba(255,255,255,0.12) !important;
 }
 [data-theme="glass"] .start-menu-sidebar {
