@@ -47,7 +47,7 @@ const Tab = ({ active, children, onClick }) => (
     </button>
 )
 
-export default function AdminDashboard() {
+export default function AdminDashboard({ onLogout, userEmail }) {
     const [tab, setTab] = useState('projects')
     const [projects, setProjects] = useState([])
     const [allTags, setAllTags] = useState([])
@@ -166,6 +166,20 @@ export default function AdminDashboard() {
 
     return (
         <div className="w-full h-full overflow-y-auto p-3" style={{ background: '#c0b8a8', fontFamily: "'Segoe UI', Tahoma, sans-serif" }}>
+            {/* Admin header */}
+            <div className="flex items-center justify-between mb-2 px-2 py-1.5" style={{ background: '#e8e0d4', border: '1px solid #a0a090', borderRadius: '2px' }}>
+                <span className="text-[10px] text-[#5a5a5a]">
+                    Signed in as <span className="font-bold text-[#2b2b3d]">{userEmail}</span>
+                </span>
+                <button
+                    onClick={onLogout}
+                    className="px-3 py-0.5 text-[9px] font-bold uppercase tracking-wide cursor-pointer hover:brightness-105"
+                    style={btnDanger}
+                >
+                    Logout
+                </button>
+            </div>
+
             {/* Status message */}
             {msg && (
                 <div className="mb-2 px-3 py-1.5 text-[11px] font-semibold" style={{ background: '#d8e8d8', border: '1px solid #80a080', borderRadius: '2px', color: '#2a4a2a' }}>
