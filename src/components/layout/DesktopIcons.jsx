@@ -2,12 +2,20 @@ import { useContext } from 'react'
 import { motion } from 'framer-motion'
 import { MenuContext } from '../../context/MenuContext'
 
+const LockSvg = () => (
+    <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ filter: 'brightness(0) invert(1) drop-shadow(0 1px 2px rgba(0,0,0,0.4))', opacity: 0.85 }}>
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+        <path d="M7 11V7a5 5 0 0110 0v4" />
+    </svg>
+)
+
 const shortcuts = [
     { name: 'Home', icon: 'icons/home.svg', label: 'About Me' },
     { name: 'Projects', icon: 'icons/openFolder.svg', label: 'Projects' },
     { name: 'Gallery', icon: 'icons/gallery.svg', label: 'Gallery' },
     { name: 'Send-Message', icon: 'icons/terminal.svg', label: 'Terminal' },
     { name: 'Settings', icon: 'icons/settings.svg', label: 'Settings' },
+    { name: 'Dashboard', icon: null, label: 'Dashboard', customIcon: true },
 ]
 
 const containerVariants = {
@@ -49,7 +57,7 @@ export default function DesktopIcons({ onFocus }) {
                     whileHover={{ scale: 1.08 }}
                     whileTap={{ scale: 0.92 }}
                 >
-                    <img src={s.icon} alt={s.label} draggable={false} />
+                    {s.customIcon ? <LockSvg /> : <img src={s.icon} alt={s.label} draggable={false} />}
                     <span>{s.label}</span>
                 </motion.button>
             ))}
