@@ -11,57 +11,15 @@ const ProjectImages = () => {
         setLoadedImages(prev => new Set([...prev, id]))
     }
 
-    const handleImageClick = (image) => {
-        setSelectedImage(image)
-    }
-
-    const handleCloseModal = () => {
-        setSelectedImage(null)
-    }
-
-    const handleProjectClick = (e, projectUrl) => {
-        e.stopPropagation()
-        window.open(projectUrl, '_blank', 'noopener,noreferrer')
-    }
-
-    // Calculate dynamic row spans for Pinterest-like layout
-    useEffect(() => {
-        if (!images || images.length === 0) return;
-
-        const calculateRowSpans = () => {
-            const items = document.querySelectorAll('.masonry-item');
-            items.forEach(item => {
-                const img = item.querySelector('img');
-                if (img && img.naturalHeight && img.naturalWidth) {
-                    const aspectRatio = img.naturalHeight / img.naturalWidth;
-                    const rowSpan = Math.ceil(aspectRatio * 25);
-                    item.style.setProperty('--row-span', rowSpan);
-                }
-            });
-        };
-
-        const timer = setTimeout(calculateRowSpans, 100);
-        window.addEventListener('resize', calculateRowSpans);
-
-        return () => {
-            clearTimeout(timer);
-            window.removeEventListener('resize', calculateRowSpans);
-        };
-    }, [images, loadedImages]);
-
     // Escape key handler for modal
     useEffect(() => {
         const handleEscape = (e) => {
-            if (e.key === 'Escape') {
-                handleCloseModal()
-            }
+            if (e.key === 'Escape') setSelectedImage(null)
         }
-
         if (selectedImage) {
             document.addEventListener('keydown', handleEscape)
             document.body.style.overflow = 'hidden'
         }
-
         return () => {
             document.removeEventListener('keydown', handleEscape)
             document.body.style.overflow = 'unset'
@@ -71,7 +29,7 @@ const ProjectImages = () => {
     if (isLoading) {
         return (
             <div className="w-full h-full flex items-center justify-center">
-                <div className="text-[#2d1b4e] text-lg font-semibold">Loading images...</div>
+                <p className="text-[12px] text-[#5a5a5a]" style={{ fontFamily: "'Segoe UI', Tahoma, sans-serif" }}>Loading images...</p>
             </div>
         )
     }
@@ -79,7 +37,7 @@ const ProjectImages = () => {
     if (isError) {
         return (
             <div className="w-full h-full flex items-center justify-center">
-                <div className="text-red-500 text-lg font-semibold">Error loading images</div>
+                <p className="text-[12px] text-[#8a3030]" style={{ fontFamily: "'Segoe UI', Tahoma, sans-serif" }}>Error loading images</p>
             </div>
         )
     }
@@ -87,7 +45,7 @@ const ProjectImages = () => {
     if (!images || images.length === 0) {
         return (
             <div className="w-full h-full flex items-center justify-center">
-                <div className="text-[#2d1b4e] text-lg font-semibold">No images found</div>
+                <p className="text-[12px] text-[#5a5a5a]" style={{ fontFamily: "'Segoe UI', Tahoma, sans-serif" }}>No images found</p>
             </div>
         )
     }
@@ -99,9 +57,8 @@ const ProjectImages = () => {
                     {images.map((image) => (
                         <div
                             key={image.id}
-                            onClick={() => handleImageClick(image)}
-                            className="masonry-item group"
-                            style={{ '--row-span': 30 }}
+                            onClick={() => setSelectedImage(image)}
+                            className="masonry-item"
                         >
                             <div className="image-card">
                                 {!loadedImages.has(image.id) && (
@@ -109,10 +66,14 @@ const ProjectImages = () => {
                                 )}
                                 <img
                                     src={image.image_url}
-                                    alt={`Project image ${image.id}`}
+                                    alt={image.projects?.title || `Image ${image.id}`}
                                     className={`project-image ${loadedImages.has(image.id) ? 'loaded' : ''}`}
                                     onLoad={() => handleImageLoad(image.id)}
                                 />
+                                {/* Project name overlay */}
+                                <div className="image-label">
+                                    <span>{image.projects?.title}</span>
+                                </div>
                             </div>
                         </div>
                     ))}
@@ -120,11 +81,11 @@ const ProjectImages = () => {
             </div>
 
             {selectedImage && (
-                <div className="image-modal-overlay" onClick={handleCloseModal}>
+                <div className="image-modal-overlay" onClick={() => setSelectedImage(null)}>
                     <div className="image-modal-container" onClick={(e) => e.stopPropagation()}>
                         <button
                             className="image-modal-close"
-                            onClick={handleCloseModal}
+                            onClick={() => setSelectedImage(null)}
                             aria-label="Close modal"
                         >
                             ×
@@ -133,39 +94,41 @@ const ProjectImages = () => {
                         <div className="image-modal-image-container">
                             <img
                                 src={selectedImage.image_url}
-                                alt={`Project image ${selectedImage.id}`}
+                                alt={selectedImage.projects?.title || `Image ${selectedImage.id}`}
                                 className="image-modal-image"
                             />
                         </div>
 
                         <div className="image-modal-actions-bar">
-                            <a
-                                href={selectedImage.projects?.demo_url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                onClick={(e) => handleProjectClick(e, selectedImage.projects?.demo_url)}
-                                className="image-modal-action-btn image-modal-view-btn"
-                            >
-                                <svg className="image-modal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                    <polyline points="15 3 21 3 21 9"></polyline>
-                                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                                </svg>
-                                View Project
-                            </a>
+                            {selectedImage.projects?.demo_url && (
+                                <a
+                                    href={selectedImage.projects.demo_url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="image-modal-action-btn image-modal-view-btn"
+                                    onClick={(e) => e.stopPropagation()}
+                                >
+                                    <svg className="image-modal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                                        <polyline points="15 3 21 3 21 9" />
+                                        <line x1="10" y1="14" x2="21" y2="3" />
+                                    </svg>
+                                    View Project
+                                </a>
+                            )}
                             <button
                                 className="image-modal-action-btn image-modal-download-btn"
                                 onClick={() => {
-                                    const link = document.createElement('a');
-                                    link.href = selectedImage.image_url;
-                                    link.download = `project-image-${selectedImage.id}.jpg`;
-                                    link.click();
+                                    const link = document.createElement('a')
+                                    link.href = selectedImage.image_url
+                                    link.download = `project-image-${selectedImage.id}.jpg`
+                                    link.click()
                                 }}
                             >
                                 <svg className="image-modal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                                    <polyline points="7 10 12 15 17 10"></polyline>
-                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                    <polyline points="7 10 12 15 17 10" />
+                                    <line x1="12" y1="15" x2="12" y2="3" />
                                 </svg>
                                 Download
                             </button>
