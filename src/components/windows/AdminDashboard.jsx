@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 
-const inputStyle = { border: '2px inset #a0a090', background: '#f0ebe3', borderRadius: '1px' }
+const inputStyle = { border: '2px inset #a0a090', background: '#f0ebe3', borderRadius: '1px', color: '#2b2b3d' }
 const btnStyle = {
     background: 'linear-gradient(180deg, #d0c8b8, #b0a898)',
     border: '2px solid #7a7060',
