@@ -1,14 +1,15 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Autoplay } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/autoplay';
-import { LeftOutlined, RightOutlined } from '@ant-design/icons';
-import { useFetchProjects } from '../../queries/projectQueries';
+import { useRef, useEffect, useState } from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, Autoplay } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/autoplay'
+import { LeftOutlined, RightOutlined } from '@ant-design/icons'
+import { useProjects } from '@/hooks/useProjects'
+import { FONT_STACK } from '@/constants/ui'
 
 const ProjectCard = ({ name, description, image, link, github, tags, status }) => {
-  const isComingSoon = status === false;
+  const isComingSoon = status === false
 
   return (
     <div
@@ -19,7 +20,7 @@ const ProjectCard = ({ name, description, image, link, github, tags, status }) =
         borderTopColor: 'var(--os-border-light)',
         borderLeftColor: 'var(--os-border-light)',
         borderRadius: 'var(--os-window-radius)',
-        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+        fontFamily: FONT_STACK,
         padding: '8px',
         backdropFilter: 'var(--os-glass-blur)',
         WebkitBackdropFilter: 'var(--os-glass-blur)',
@@ -32,7 +33,7 @@ const ProjectCard = ({ name, description, image, link, github, tags, status }) =
             src={image}
             alt={name}
             className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 relative z-10"
-            onLoad={(e) => { e.target.previousSibling.style.display = 'none'; }}
+            onLoad={(e) => { e.target.previousSibling.style.display = 'none' }}
           />
         )}
         {isComingSoon && (
@@ -79,28 +80,28 @@ const ProjectCard = ({ name, description, image, link, github, tags, status }) =
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
 const Projects = ({ windowSize }) => {
-  const { data: projects } = useFetchProjects();
+  const { data: projects } = useProjects()
 
-  const slideWidth = Math.max(350, Math.min(100, windowSize?.width / 2));
-  const slideHeight = Math.max(420, Math.min(420, windowSize?.height / 1.3));
+  const slideWidth = Math.max(350, Math.min(100, windowSize?.width / 2))
+  const slideHeight = Math.max(420, Math.min(420, windowSize?.height / 1.3))
 
-  const [swiperInstance, setSwiperInstance] = useState(null);
-  const prevRef = useRef(null);
-  const nextRef = useRef(null);
+  const [swiperInstance, setSwiperInstance] = useState(null)
+  const prevRef = useRef(null)
+  const nextRef = useRef(null)
 
   useEffect(() => {
     if (swiperInstance && prevRef.current && nextRef.current) {
-      swiperInstance.navigation.init();
-      swiperInstance.navigation.update();
+      swiperInstance.navigation.init()
+      swiperInstance.navigation.update()
     }
-  }, [swiperInstance, windowSize]);
+  }, [swiperInstance, windowSize])
 
-  // Already sorted by sort_order from the query
-  const sortedProjects = projects || [];
+  // Already sorted by sort_order from the query.
+  const sortedProjects = projects || []
 
   return (
     <div className="w-full h-full flex flex-col items-center project-container relative" style={{ maxWidth: '100vw' }}>
@@ -113,12 +114,12 @@ const Projects = ({ windowSize }) => {
         navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
         autoplay={{ delay: 3000, disableOnInteraction: true }}
         onSwiper={(swiper) => {
-          setSwiperInstance(swiper);
-          setTimeout(() => { swiper.navigation?.init(); swiper.navigation?.update(); }, 100);
+          setSwiperInstance(swiper)
+          setTimeout(() => { swiper.navigation?.init(); swiper.navigation?.update() }, 100)
         }}
         onBeforeInit={(swiper) => {
-          swiper.params.navigation.prevEl = prevRef.current;
-          swiper.params.navigation.nextEl = nextRef.current;
+          swiper.params.navigation.prevEl = prevRef.current
+          swiper.params.navigation.nextEl = nextRef.current
         }}
         style={{ width: '100%', height: '100%', margin: '12px' }}
       >
@@ -150,7 +151,7 @@ const Projects = ({ windowSize }) => {
         <RightOutlined style={{ fontSize: '14px' }} />
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default Projects;
+export default Projects
