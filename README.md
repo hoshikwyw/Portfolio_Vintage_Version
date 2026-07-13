@@ -94,6 +94,10 @@ src/
     │   └── WelcomeDialog.jsx
     ├── ui/
     │   └── LockIcon.jsx     # shared padlock glyph
+    ├── system/              # error + not-found handling
+    │   ├── ErrorBoundary.jsx#   catches render crashes (root + per-window)
+    │   ├── ErrorScreen.jsx  #   OS-styled crash dialog (retry / reload)
+    │   └── NotFound.jsx     #   retro 404 for unknown windows
     ├── seo/
     │   └── SeoContent.jsx   # visually-hidden crawlable copy
     └── windows/             # the "apps" that render inside windows
@@ -122,6 +126,10 @@ src/
   the view layer.
 - **Theming.** Chrome is driven by CSS custom properties (`--os-*`) in
   `index.css`; `OSContext` toggles the `data-theme` attribute for the glass theme.
+- **Resilience.** An `ErrorBoundary` wraps the app root (full-screen crash
+  screen) and each window individually — a single broken window shows an inline
+  error while the rest of the desktop keeps running. Unknown window ids render a
+  retro `NotFound` (404) instead of a blank frame.
 
 ---
 
