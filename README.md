@@ -130,6 +130,10 @@ src/
   screen) and each window individually — a single broken window shows an inline
   error while the rest of the desktop keeps running. Unknown window ids render a
   retro `NotFound` (404) instead of a blank frame.
+- **Routing.** React Router drives three routes: `/` (desktop), `/window/:appId`
+  (a shareable deep link that opens one window on load), and `*` (a full-page
+  404). `vercel.json` rewrites all non-`/api` paths to `index.html` so these
+  resolve on direct load / refresh.
 
 ---
 
@@ -189,10 +193,36 @@ external cron (e.g. cron-job.org) at `/api/keep-alive` to keep the database warm
 
 ---
 
+## Security
+
+- **No SQL injection surface.** All database access goes through the Supabase
+  client (`.from().select().eq()…`), which sends **parameterized** requests —
+  SQL strings are never concatenated from input. No user input flows into a
+  query anywhere in the app.
+- **RLS is the boundary.** The browser uses the public **anon** key by design;
+  read/write permissions are enforced by Supabase **Row Level Security**
+  (`supabase/auth_policies.sql`), not by client code. The admin dashboard is
+  gated by Supabase Auth.
+- **XSS-safe rendering.** React escapes all interpolated values (including
+  terminal input); there is no `dangerouslySetInnerHTML` or `eval`.
+- **Hardened keep-alive endpoint** (`api/keep-alive.js`): accepts `GET`/`HEAD`
+  only, runs a fully static query, never leaks error details to the caller, and
+  — when `CRON_SECRET` is set — requires a shared secret (via
+  `Authorization: Bearer …` or `?secret=`) so the public URL can't be abused.
+- **Security headers** for every response via `vercel.json`:
+  `X-Content-Type-Options: nosniff`, `X-Frame-Options: SAMEORIGIN`,
+  `Referrer-Policy`, and a `Permissions-Policy` that keeps geolocation (needed
+  by the weather widget) but disables camera/microphone.
+
+Optional: set `CRON_SECRET` in your Vercel + cron provider to lock down the
+keep-alive endpoint.
+
 ## Deployment
 
 Deployed on **Vercel**. `npm run build` outputs a static SPA to `dist/`; the
 `api/` directory is deployed as serverless functions automatically.
+`vercel.json` provides the SPA rewrite (so client routes resolve) and the
+security headers above.
 
 ---
 

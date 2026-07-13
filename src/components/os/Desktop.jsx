@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { useOS } from '@/context/OSContext'
 import DesktopIcons from './DesktopIcons'
 import StickyNote from './StickyNote'
@@ -10,9 +11,10 @@ import WelcomeDialog from './WelcomeDialog'
 /**
  * The desktop environment: wallpaper background plus every shell surface
  * (icons, taskbar, windows, context menu). `focusedWindow` drives z-index
- * focus; `onFocus` bubbles focus changes up to <App>.
+ * focus; `onFocus` bubbles focus changes up to <OSRoot>. `initialWindow`, when
+ * set, opens that window once on mount (used by `/window/:appId` deep links).
  */
-const Desktop = ({ focusedWindow, onFocus }) => {
+const Desktop = ({ focusedWindow, onFocus, initialWindow }) => {
   const { wallpaper, openWindow } = useOS()
   const wallpaperClass = wallpaper !== 'default' ? `wallpaper-${wallpaper}` : ''
 
@@ -20,6 +22,16 @@ const Desktop = ({ focusedWindow, onFocus }) => {
     openWindow(id)
     onFocus(id)
   }
+
+  // Open the deep-linked window exactly once, after boot.
+  const deepLinkOpened = useRef(false)
+  useEffect(() => {
+    if (initialWindow && !deepLinkOpened.current) {
+      deepLinkOpened.current = true
+      handleOpenWindow(initialWindow)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialWindow])
 
   return (
     <div className={`mainBackground ${wallpaperClass}`}>

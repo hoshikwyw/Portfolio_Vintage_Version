@@ -1,25 +1,19 @@
-import { useState } from 'react'
-import { SpeedInsights } from '@vercel/speed-insights/react'
-import { OSProvider } from '@/context/OSContext'
-import BootSplash from '@/components/os/BootSplash'
-import Desktop from '@/components/os/Desktop'
-import SeoContent from '@/components/seo/SeoContent'
+import { Routes, Route } from 'react-router-dom'
+import OSRoot from '@/components/os/OSRoot'
+import NotFoundPage from '@/components/system/NotFoundPage'
 
-const App = () => {
-  const [focusedWindow, setFocusedWindow] = useState('Home')
-  const [booted, setBooted] = useState(false)
-
-  if (!booted) {
-    return <BootSplash onFinish={() => setBooted(true)} />
-  }
-
-  return (
-    <OSProvider>
-      <SeoContent />
-      <Desktop focusedWindow={focusedWindow} onFocus={setFocusedWindow} />
-      <SpeedInsights />
-    </OSProvider>
-  )
-}
+/**
+ * Routes:
+ *   /                 → the desktop OS
+ *   /window/:appId    → the OS with a specific window deep-linked open
+ *   *                 → full-page 404
+ */
+const App = () => (
+  <Routes>
+    <Route path="/" element={<OSRoot />} />
+    <Route path="/window/:appId" element={<OSRoot />} />
+    <Route path="*" element={<NotFoundPage />} />
+  </Routes>
+)
 
 export default App
