@@ -7,10 +7,10 @@ import { WindowTitleBar } from './WindowChrome'
 const FullscreenWindow = ({ id, onFocus, onClose, onFullscreen, onMinimize }) => (
   <motion.div
     className="windowFrame"
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-    transition={{ duration: 0.2 }}
+    initial={{ opacity: 0, scale: 1.015 }}
+    animate={{ opacity: 1, scale: 1 }}
+    exit={{ opacity: 0, scale: 1.01, transition: { duration: 0.12, ease: 'easeIn' } }}
+    transition={{ duration: 0.22, ease: [0.2, 0, 0, 1] }}
     onClick={() => onFocus(id)}
     style={{
       position: 'fixed',

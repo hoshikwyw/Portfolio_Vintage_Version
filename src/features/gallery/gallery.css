@@ -27,11 +27,16 @@
   margin-bottom: 8px;
   cursor: pointer;
   position: relative;
-  transition: transform 0.15s ease;
+  transition: transform var(--os-dur-base) var(--os-ease);
 }
 
 .masonry-item:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+}
+
+.masonry-item:active {
+  transform: translateY(-1px) scale(0.99);
+  transition-duration: var(--os-dur-press);
 }
 
 .image-card {
@@ -40,23 +45,29 @@
   border-radius: 4px;
   background: #c0b8a8;
   border: 1px solid #a0a090;
-  transition: box-shadow 0.15s ease;
+  transition: box-shadow var(--os-dur-base) var(--os-ease);
 }
 
 .masonry-item:hover .image-card {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
+/* Slow push-in on the photo itself, so the tile has depth rather than just lifting. */
+.masonry-item .project-image {
+  transition:
+    opacity 0.3s ease,
+    transform var(--os-dur-base) var(--os-ease);
+}
+.masonry-item:hover .project-image { transform: scale(1.03); }
+
+/*
+ * Sized here, shimmered by the shared `.os-skeleton` class the tile also
+ * carries — so the placeholder for a single image matches the full-window
+ * loading state instead of pulsing to its own rhythm.
+ */
 .image-skeleton {
   width: 100%;
   padding-bottom: 75%; /* 4:3 placeholder ratio */
-  background: #d8d0c0;
-  animation: pulse 1.5s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
 }
 
 .project-image {

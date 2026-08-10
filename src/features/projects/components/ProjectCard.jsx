@@ -28,12 +28,12 @@ const CardCover = ({ src, alt, isComingSoon }) => {
 
   return (
     <div className="h-48 overflow-hidden relative" style={{ border: 'var(--os-input-border)', background: 'var(--os-window)' }}>
-      {!loaded && <div className="absolute inset-0 animate-pulse" style={{ background: 'var(--os-window)' }} />}
+      {!loaded && <div className="os-skeleton absolute inset-0" style={{ borderRadius: 0 }} />}
       {src && (
         <img
           src={src}
           alt={alt}
-          className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500 relative z-10"
+          className="os-card-media w-full h-full object-cover relative z-10"
           onLoad={() => setLoaded(true)}
         />
       )}
@@ -58,7 +58,7 @@ const ProjectCard = ({ project }) => {
 
   return (
     <div
-      className={`h-full w-full flex flex-col overflow-hidden transition-all duration-200 ${isComingSoon ? 'opacity-60 pointer-events-none' : ''}`}
+      className={`os-card-lift h-full w-full flex flex-col overflow-hidden ${isComingSoon ? 'opacity-60 pointer-events-none' : ''}`}
       style={{
         background: 'var(--os-panel-bg)',
         border: '2px solid var(--os-border-dark)',

@@ -9,18 +9,10 @@ import { FONT_STACK } from '@/shared/constants/fonts'
 import { downloadResume, openHireEmail, openGoogleSearch } from '@/shared/lib/browser'
 import { useOutsideClick } from '@/shared/hooks/useOutsideClick'
 
-// A row that highlights with the accent color on hover.
-const hoverIn = (e) => { e.currentTarget.style.background = 'var(--os-accent)'; e.currentTarget.style.color = '#fff' }
-const hoverOut = (e) => { e.currentTarget.style.background = ''; e.currentTarget.style.color = 'var(--os-text)' }
-
+// Highlight lives in `.start-menu-row` (see styles/index.css) rather than in
+// JS mouse handlers, so it can ease instead of snapping.
 const MenuRow = ({ icon, label, onClick }) => (
-  <button
-    onClick={onClick}
-    className="flex items-center gap-2 w-full px-3 py-1.5 transition-colors cursor-pointer text-left"
-    style={{ color: 'var(--os-text)' }}
-    onMouseEnter={hoverIn}
-    onMouseLeave={hoverOut}
-  >
+  <button onClick={onClick} className="start-menu-row">
     {icon}
     <span className="text-[11px] font-semibold">{label}</span>
   </button>

@@ -25,7 +25,8 @@ const AppButton = ({ id, isMinimized, onClick }) => (
     animate={{ opacity: 1, width: 'auto' }}
     exit={{ opacity: 0, width: 0 }}
     transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-    whileTap={{ scale: 0.98 }}
+    whileHover={{ y: -2, filter: 'brightness(1.08)' }}
+    whileTap={{ y: 0, scale: 0.96 }}
   >
     {getApp(id)?.locked ? (
       <LockIcon size={16} variant="tray" />
@@ -49,11 +50,18 @@ const StartButton = ({ isOpen, onToggle }) => (
       borderLeftColor: isOpen ? 'var(--os-border-dark)' : 'var(--os-border-light)',
       borderRadius: 'var(--os-btn-radius)',
     }}
-    whileTap={{ scale: 0.98 }}
+    whileHover={{ filter: 'brightness(1.08)' }}
+    whileTap={{ scale: 0.95 }}
   >
-    <div className="w-4 h-4 rounded-sm flex items-center justify-center" style={{ background: 'var(--os-accent)', borderRadius: 'var(--os-btn-radius)' }}>
+    <motion.div
+      className="w-4 h-4 rounded-sm flex items-center justify-center"
+      style={{ background: 'var(--os-accent)', borderRadius: 'var(--os-btn-radius)' }}
+      // The logo tile leads the press, so the button feels physically pushed.
+      animate={{ rotate: isOpen ? -8 : 0, scale: isOpen ? 1.08 : 1 }}
+      transition={{ type: 'spring', stiffness: 500, damping: 22 }}
+    >
       <span className="text-white text-[8px] font-black">K</span>
-    </div>
+    </motion.div>
     <span className="text-[11px] font-bold hidden sm:inline" style={{ color: 'var(--os-text)' }}>{profile.alias}</span>
   </motion.button>
 )

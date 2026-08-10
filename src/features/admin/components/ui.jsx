@@ -42,7 +42,12 @@ const VARIANT_STYLES = {
 /** Beveled push-button. */
 export const Button = ({ variant = 'default', className = '', children, ...props }) => (
   <button
-    className={`font-bold uppercase tracking-wide cursor-pointer hover:brightness-105 active:brightness-95 disabled:opacity-40 disabled:cursor-not-allowed ${className}`}
+    className={
+      'font-bold uppercase tracking-wide cursor-pointer transition-[filter,transform] duration-150 ' +
+      'hover:brightness-105 active:brightness-95 active:scale-[0.97] ' +
+      'disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100 ' +
+      className
+    }
     style={VARIANT_STYLES[variant]}
     {...props}
   >
@@ -53,7 +58,7 @@ export const Button = ({ variant = 'default', className = '', children, ...props
 /** Notebook-style tab header. */
 export const Tab = ({ active, children, ...props }) => (
   <button
-    className="px-3 py-1 text-[11px] font-bold uppercase tracking-wide cursor-pointer"
+    className="px-3 py-1 text-[11px] font-bold uppercase tracking-wide cursor-pointer transition-[background,color,filter] duration-150 hover:brightness-105"
     style={{
       background: active ? adminColors.panel : '#b0a898',
       border: `2px solid ${adminColors.borderDark}`,

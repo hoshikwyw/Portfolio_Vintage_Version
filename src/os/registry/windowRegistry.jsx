@@ -1,7 +1,7 @@
 import { lazy, Suspense } from 'react'
 import ErrorBoundary from '@/shared/components/feedback/ErrorBoundary'
 import NotFound from '@/shared/components/feedback/NotFound'
-import StatusMessage from '@/shared/components/feedback/StatusMessage'
+import WindowSkeleton from '@/shared/components/feedback/WindowSkeleton'
 
 /**
  * Maps an app id (see `@/os/config/apps`) to the component rendered inside its
@@ -34,7 +34,7 @@ const WindowContent = ({ id }) => {
 
   return (
     <ErrorBoundary key={id} variant="inline">
-      <Suspense fallback={<StatusMessage>Opening {id}...</StatusMessage>}>
+      <Suspense fallback={<WindowSkeleton label={`Opening ${id}`} />}>
         <Window />
       </Suspense>
     </ErrorBoundary>

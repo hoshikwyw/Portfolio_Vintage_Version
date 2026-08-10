@@ -40,10 +40,14 @@ const DraggableWindow = ({
   return (
     <motion.div
       className="windowFrame resizable"
-      initial={{ opacity: 0, scale: 0.95 }}
+      // Only opacity and scale are animated: `y` is already bound to the
+      // dragY motion value below, and animating it here would fight the drag.
+      // Opening eases out over 0.22s; closing is quicker so dismissing feels
+      // immediate.
+      initial={{ opacity: 0, scale: 0.96 }}
       animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ duration: 0.12 }}
+      exit={{ opacity: 0, scale: 0.97, transition: { duration: 0.1, ease: 'easeIn' } }}
+      transition={{ duration: 0.22, ease: [0.2, 0, 0, 1] }}
       drag
       dragControls={dragControls}
       dragListener={false}

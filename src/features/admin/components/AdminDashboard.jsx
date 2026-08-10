@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { FONT_STACK } from '@/shared/constants/fonts'
 import StatusMessage from '@/shared/components/feedback/StatusMessage'
+import WindowSkeleton from '@/shared/components/feedback/WindowSkeleton'
 import { adminColors } from '@/features/admin/theme'
 import { useAdminImages, useAdminProjects, useAdminTags } from '@/features/admin/hooks/useAdminData'
 import { useFlash } from '@/features/admin/hooks/useFlash'
@@ -71,7 +72,7 @@ const AdminDashboard = ({ onLogout, userEmail }) => {
           padding: '12px',
         }}
       >
-        {isLoading && <StatusMessage>Loading...</StatusMessage>}
+        {isLoading && <WindowSkeleton label="Loading dashboard" />}
         {!isLoading && error && <StatusMessage tone="error">{error.message}</StatusMessage>}
         {!isLoading && !error && (
           <Panel

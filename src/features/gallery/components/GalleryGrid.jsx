@@ -8,7 +8,7 @@ const GalleryTile = ({ image, onSelect }) => {
   return (
     <div className="masonry-item" onClick={() => onSelect(image)}>
       <div className="image-card">
-        {!loaded && <div className="image-skeleton" />}
+        {!loaded && <div className="image-skeleton os-skeleton" />}
         <img
           src={image.image_url}
           alt={title || `Image ${image.id}`}

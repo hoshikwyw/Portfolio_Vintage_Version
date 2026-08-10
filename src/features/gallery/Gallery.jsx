@@ -2,6 +2,7 @@ import { useState } from 'react'
 import StatusMessage from '@/shared/components/feedback/StatusMessage'
 import { useProjectImages } from './hooks/useProjectImages'
 import GalleryGrid from './components/GalleryGrid'
+import GallerySkeleton from './components/GallerySkeleton'
 import ImageLightbox from './components/ImageLightbox'
 import './gallery.css'
 
@@ -10,7 +11,7 @@ const Gallery = () => {
   const { data: images, isLoading, isError } = useProjectImages()
   const [selectedImage, setSelectedImage] = useState(null)
 
-  if (isLoading) return <StatusMessage>Loading images...</StatusMessage>
+  if (isLoading) return <GallerySkeleton />
   if (isError) return <StatusMessage tone="error">Error loading images</StatusMessage>
   if (!images?.length) return <StatusMessage>No images found</StatusMessage>
 

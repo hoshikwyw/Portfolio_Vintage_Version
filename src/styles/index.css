@@ -42,6 +42,15 @@
   --os-glass-bg: none;
   --os-glass-blur: none;
   --os-glass-border: none;
+  --os-skeleton-bg: #d8d0c0;
+  --os-skeleton-sheen: rgba(255, 255, 255, 0.55);
+
+  /* Motion — one scale for every hover, press and transition in the shell. */
+  --os-ease: cubic-bezier(0.2, 0, 0, 1);
+  --os-ease-back: cubic-bezier(0.34, 1.3, 0.64, 1);
+  --os-dur-press: 90ms;
+  --os-dur-fast: 140ms;
+  --os-dur-base: 220ms;
 }
 
 /* Glass / iOS Theme — opaque enough to work without backdrop-filter */
@@ -82,6 +91,8 @@
   --os-glass-bg: rgba(18, 18, 35, 0.7);
   --os-glass-blur: blur(20px) saturate(1.5);
   --os-glass-border: 1px solid rgba(255, 255, 255, 0.12);
+  --os-skeleton-bg: rgba(255, 255, 255, 0.06);
+  --os-skeleton-sheen: rgba(255, 255, 255, 0.12);
 }
 
 html, body {
@@ -178,7 +189,14 @@ html, body {
   border-radius: 4px;
   border: 1px solid transparent;
   cursor: pointer;
-  transition: all 0.15s ease;
+  /*
+   * Deliberately not `transition: all` — Framer Motion writes this element's
+   * transform inline every frame, and transitioning transform made CSS
+   * interpolate between those frames, so the hover lagged behind the cursor.
+   */
+  transition:
+    background-color var(--os-dur-fast) var(--os-ease),
+    border-color var(--os-dur-fast) var(--os-ease);
   user-select: none;
 }
 [data-theme="glass"] .desktop-icon { border-radius: 12px; }
@@ -192,9 +210,19 @@ html, body {
   width: 36px; height: 36px;
   filter: brightness(0) invert(1) drop-shadow(0 1px 2px rgba(0,0,0,0.4));
   opacity: 0.85;
-  transition: transform 0.15s ease;
+  /*
+   * No transform here — the button itself is scaled by Framer Motion on hover
+   * and press. Scaling the image too compounded the two (1.08 × 1.05) and the
+   * inline transform Framer writes fought this transition.
+   */
+  transition:
+    opacity var(--os-dur-fast) var(--os-ease),
+    filter var(--os-dur-fast) var(--os-ease);
 }
-.desktop-icon:hover img { transform: scale(1.05); opacity: 1; }
+.desktop-icon:hover img {
+  opacity: 1;
+  filter: brightness(0) invert(1) drop-shadow(0 2px 5px rgba(0,0,0,0.5));
+}
 
 .desktop-icon span {
   font-size: 10px;
@@ -289,8 +317,13 @@ html, body {
   display: flex; align-items: center; justify-content: center;
   padding: 0; margin-left: 3px;
 }
+.windowControls button {
+  transition:
+    filter var(--os-dur-fast) var(--os-ease),
+    transform var(--os-dur-press) var(--os-ease);
+}
 .windowControls button:hover { filter: brightness(1.15); }
-.windowControls button:active { filter: brightness(0.9); }
+.windowControls button:active { filter: brightness(0.9); transform: scale(0.86); }
 
 [data-theme="glass"] .windowControls button {
   border: none; margin-left: 6px;
@@ -341,8 +374,36 @@ html, body {
    ============================ */
 .project-card { flex: 0 0 auto; width: clamp(350px,25%,450px); height: clamp(500px,30vh,450px); transition: transform 0.2s ease; }
 .swiper { width: 100%; height: 100%; overflow: hidden; scrollbar-width: none; }
-.swiper-slide { display: flex; justify-content: center; align-items: center; transition: transform 0.2s ease; }
-.swiper-slide:hover { transform: scale(1.03); }
+.swiper-slide { display: flex; justify-content: center; align-items: center; }
+
+/*
+ * The lift lives on the card, not the slide. Scaling the whole slide grew its
+ * padding box too, so neighbouring cards visibly shifted on hover.
+ */
+.os-card-lift {
+  transition:
+    transform var(--os-dur-base) var(--os-ease),
+    box-shadow var(--os-dur-base) var(--os-ease);
+}
+.os-card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 22px rgba(0,0,0,0.22);
+}
+/*
+ * Cover art desaturates until its card is hovered. Driven from the card rather
+ * than the image's own :hover so the colour returns the moment the pointer
+ * enters the card, not only once it reaches the image.
+ */
+.os-card-media {
+  filter: grayscale(1);
+  transition:
+    filter 500ms var(--os-ease),
+    transform var(--os-dur-base) var(--os-ease);
+}
+.os-card-lift:hover .os-card-media {
+  filter: grayscale(0);
+  transform: scale(1.04);
+}
 .swiper::-webkit-scrollbar { display: none; }
 .project-container { scrollbar-width: none; }
 .project-container::-webkit-scrollbar { display: none; }
@@ -357,9 +418,35 @@ html, body {
   border-radius: var(--os-btn-radius);
   width: 36px; height: 36px;
   display: flex; align-items: center; justify-content: center;
-  cursor: pointer; transition: all 0.15s ease;
+  cursor: pointer;
+  /*
+   * Vertical centring lives here rather than in an inline style, so the hover
+   * and press rules below can add to the transform instead of being
+   * outranked by it.
+   */
+  top: 50%;
+  transform: translateY(-50%) scale(1);
+  opacity: 0.85;
+  transition:
+    transform var(--os-dur-fast) var(--os-ease-back),
+    filter var(--os-dur-fast) var(--os-ease),
+    opacity var(--os-dur-fast) var(--os-ease),
+    box-shadow var(--os-dur-fast) var(--os-ease);
 }
-.custom-nav-button:hover { filter: brightness(1.1); }
+.custom-nav-prev { left: 12px; }
+.custom-nav-next { right: 12px; }
+
+.custom-nav-button:hover {
+  filter: brightness(1.1);
+  opacity: 1;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+}
+.custom-nav-button:active {
+  transform: translateY(-50%) scale(0.94);
+  filter: brightness(0.95);
+  box-shadow: none;
+}
 
 [data-theme="glass"] .custom-nav-button {
   background: rgba(255,255,255,0.1);
@@ -394,7 +481,10 @@ html, body {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition:
+    transform var(--os-dur-fast) var(--os-ease-back),
+    filter var(--os-dur-fast) var(--os-ease),
+    box-shadow var(--os-dur-fast) var(--os-ease);
   background: var(--os-btn-bg);
   color: var(--os-text);
   border: 2px solid var(--os-border-dark);
@@ -406,13 +496,21 @@ html, body {
 
 .quick-action-btn:hover {
   filter: brightness(1.1);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.22);
 }
 
 .quick-action-btn:active {
   filter: brightness(0.95);
-  transform: translateY(0);
+  transform: translateY(0) scale(0.97);
+  box-shadow: none;
+  transition-duration: var(--os-dur-press);
 }
+
+.quick-action-btn svg {
+  transition: transform var(--os-dur-base) var(--os-ease-back);
+}
+.quick-action-btn:hover svg { transform: translateY(-1px) scale(1.1); }
 
 .quick-action-primary {
   background: var(--os-accent) !important;
@@ -437,3 +535,72 @@ html, body {
 .custom-link { text-decoration-line: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 .scrollbar-hide::-webkit-scrollbar { display: none; }
+
+/* ============================
+   LOADING SKELETONS
+   ============================ */
+
+/*
+ * Shimmering placeholder block. The sheen is a pseudo-element sweeping across
+ * the box, so the skeleton itself keeps whatever size and radius the caller
+ * gives it.
+ */
+.os-skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--os-skeleton-bg);
+  border-radius: var(--os-btn-radius);
+}
+
+.os-skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, var(--os-skeleton-sheen), transparent);
+  animation: os-shimmer 1.5s var(--os-ease) infinite;
+}
+
+@keyframes os-shimmer {
+  to { transform: translateX(100%); }
+}
+
+/* The sheen loops forever, so let it settle for anyone who asks for less motion. */
+@media (prefers-reduced-motion: reduce) {
+  .os-skeleton::after { animation: none; }
+}
+
+/* ============================
+   MENU ROWS
+   ============================ */
+
+/*
+ * Start-menu rows. Previously highlighted by swapping inline styles from JS
+ * `onMouseEnter`/`onMouseLeave`, which could not transition; as CSS they ease
+ * in and cost nothing per render.
+ */
+.start-menu-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 6px 12px;
+  text-align: left;
+  color: var(--os-text);
+  cursor: pointer;
+  transition:
+    background-color var(--os-dur-fast) var(--os-ease),
+    color var(--os-dur-fast) var(--os-ease),
+    padding-left var(--os-dur-fast) var(--os-ease);
+}
+
+.start-menu-row:hover {
+  background: var(--os-accent);
+  color: #fff;
+  /* A couple of pixels of travel makes the highlight feel responsive. */
+  padding-left: 15px;
+}
+
+.start-menu-row:active { background: var(--os-accent-hover); }
+.start-menu-row img { transition: filter var(--os-dur-fast) var(--os-ease); }
+.start-menu-row:hover img { filter: brightness(0) invert(1) !important; }

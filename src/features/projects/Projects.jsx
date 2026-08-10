@@ -8,16 +8,18 @@ import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 import StatusMessage from '@/shared/components/feedback/StatusMessage'
 import { useProjects } from './hooks/useProjects'
 import ProjectCard from './components/ProjectCard'
+import ProjectsSkeleton from './components/ProjectsSkeleton'
 import { AUTOPLAY_DELAY, SLIDE_HEIGHT, SLIDE_WIDTH } from './constants'
 
 const slideStyle = { width: `${SLIDE_WIDTH}px`, height: `${SLIDE_HEIGHT}px`, padding: '8px' }
 
+// Position and centring come from the stylesheet so the hover/press rules can
+// build on the transform instead of losing to an inline one.
 const NavButton = ({ side, innerRef, children }) => (
   <button
     ref={innerRef}
-    className="custom-nav-button absolute z-10"
-    style={{ [side]: '12px', top: '50%', transform: 'translateY(-50%)' }}
-    aria-label={side === 'left' ? 'Previous project' : 'Next project'}
+    className={`custom-nav-button custom-nav-${side}`}
+    aria-label={side === 'prev' ? 'Previous project' : 'Next project'}
   >
     {children}
   </button>
@@ -29,7 +31,7 @@ const Projects = () => {
   const prevRef = useRef(null)
   const nextRef = useRef(null)
 
-  if (isLoading) return <StatusMessage>Loading projects...</StatusMessage>
+  if (isLoading) return <ProjectsSkeleton />
   if (isError) return <StatusMessage tone="error">Error loading projects</StatusMessage>
   if (!projects?.length) return <StatusMessage>No projects yet</StatusMessage>
 
@@ -62,8 +64,8 @@ const Projects = () => {
         <SwiperSlide style={slideStyle} />
       </Swiper>
 
-      <NavButton side="left" innerRef={prevRef}><LeftOutlined style={{ fontSize: '14px' }} /></NavButton>
-      <NavButton side="right" innerRef={nextRef}><RightOutlined style={{ fontSize: '14px' }} /></NavButton>
+      <NavButton side="prev" innerRef={prevRef}><LeftOutlined style={{ fontSize: '14px' }} /></NavButton>
+      <NavButton side="next" innerRef={nextRef}><RightOutlined style={{ fontSize: '14px' }} /></NavButton>
     </div>
   )
 }
