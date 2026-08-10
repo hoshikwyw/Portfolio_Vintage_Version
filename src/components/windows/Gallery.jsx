@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useProjectImages } from '@/hooks/useProjectImages'
-import { FONT_STACK } from '@/constants/ui'
+import { FONT_STACK } from '@/shared/constants/fonts'
 import './Gallery.css'
 
 // Centered single-line status message (loading / error / empty states).

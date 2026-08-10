@@ -1,6 +1,7 @@
 import { useOS } from '@/context/OSContext'
-import { FONT_STACK, wallpapers, themes } from '@/constants/ui'
-import { system, profile } from '@/config/profile'
+import { FONT_STACK } from '@/shared/constants/fonts'
+import { wallpapers, themes } from '@/shared/config/theme'
+import { system, profile } from '@/shared/config/profile'
 
 const aboutRows = [
   ['System', system.name],

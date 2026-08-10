@@ -1,5 +1,5 @@
 import { Mail, Download } from 'lucide-react'
-import { downloadResume, openHireEmail } from '@/lib/actions'
+import { downloadResume, openHireEmail } from '@/shared/lib/browser'
 
 /** Floating résumé + hire shortcuts anchored above the taskbar. */
 export default function QuickActions() {

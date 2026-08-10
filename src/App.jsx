@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import OSRoot from '@/components/os/OSRoot'
-import NotFoundPage from '@/components/system/NotFoundPage'
+import NotFoundPage from '@/shared/components/feedback/NotFoundPage'
 
 /**
  * Routes:

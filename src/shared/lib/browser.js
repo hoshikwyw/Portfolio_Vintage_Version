@@ -1,10 +1,12 @@
 /**
- * Small imperative browser actions shared by the desktop shortcuts, start menu
- * and context menu. Centralised so the résumé path and contact email are not
- * duplicated (and cannot drift) across components.
+ * Small imperative browser side effects (download, mailto, external search)
+ * shared by the desktop shortcuts, start menu and context menu.
+ *
+ * Centralised so the résumé path and contact email are not duplicated — and
+ * cannot drift — across components.
  */
 
-import { profile } from '@/config/profile'
+import { profile } from '@/shared/config/profile'
 
 /** Trigger a download of the résumé PDF from /public. */
 export const downloadResume = () => {

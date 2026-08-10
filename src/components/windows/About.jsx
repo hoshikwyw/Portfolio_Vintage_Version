@@ -1,5 +1,5 @@
 import { Phone } from 'lucide-react'
-import { FONT_STACK } from '@/constants/ui'
+import { FONT_STACK } from '@/shared/constants/fonts'
 import {
   profile,
   skills,
@@ -7,7 +7,7 @@ import {
   experience,
   languages,
   interests,
-} from '@/config/profile'
+} from '@/shared/config/profile'
 
 // Inline style tokens shared across the retro fieldset layout.
 const s = {

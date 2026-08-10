@@ -3,9 +3,10 @@ import { motion } from 'framer-motion'
 import { Mail, Download, Search } from 'lucide-react'
 import { useOS } from '@/context/OSContext'
 import { startMenuApps } from '@/config/apps'
-import { profile } from '@/config/profile'
-import { FONT_STACK } from '@/constants/ui'
-import { downloadResume, openHireEmail, openGoogleSearch } from '@/lib/actions'
+import { profile } from '@/shared/config/profile'
+import { FONT_STACK } from '@/shared/constants/fonts'
+import { downloadResume, openHireEmail, openGoogleSearch } from '@/shared/lib/browser'
+import { useOutsideClick } from '@/shared/hooks/useOutsideClick'
 
 // A row that highlights with the accent color on hover.
 const hoverIn = (e) => { e.currentTarget.style.background = 'var(--os-accent)'; e.currentTarget.style.color = '#fff' }
@@ -14,15 +15,10 @@ const hoverOut = (e) => { e.currentTarget.style.background = ''; e.currentTarget
 export default function StartMenu({ onClose, onFocus }) {
   const { openWindow } = useOS()
   const [query, setQuery] = useState('')
-  const ref = useRef(null)
+  const ref = useOutsideClick(onClose)
   const inputRef = useRef(null)
 
   useEffect(() => { inputRef.current?.focus() }, [])
-  useEffect(() => {
-    const handle = (e) => { if (ref.current && !ref.current.contains(e.target)) onClose() }
-    document.addEventListener('mousedown', handle)
-    return () => document.removeEventListener('mousedown', handle)
-  }, [onClose])
 
   const filtered = startMenuApps.filter((a) => a.label.toLowerCase().includes(query.toLowerCase()))
 

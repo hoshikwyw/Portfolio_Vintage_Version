@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useOS } from '@/context/OSContext'
-import { profile } from '@/config/profile'
-import { FONT_STACK } from '@/constants/ui'
+import { profile } from '@/shared/config/profile'
+import { FONT_STACK } from '@/shared/constants/fonts'
 
 const MENU_WIDTH = 180
 const MENU_HEIGHT = 160

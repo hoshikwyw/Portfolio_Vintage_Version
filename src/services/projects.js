@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase'
+import { supabase } from '@/shared/lib/supabase'
 
 /**
  * Fetch all projects from the `projects_with_details` view, which joins

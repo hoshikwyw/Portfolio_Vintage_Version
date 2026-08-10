@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { FONT_STACK } from '@/constants/ui'
-import { system } from '@/config/profile'
+import { FONT_STACK } from '@/shared/constants/fonts'
+import { system } from '@/shared/config/profile'
 
 const STORAGE_KEY = 'kayv-welcomed'
 

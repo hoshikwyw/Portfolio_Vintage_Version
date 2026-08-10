@@ -1,12 +1,12 @@
-/** Shared UI constants for the retro-OS theme. */
+/**
+ * Selectable appearance options for the OS.
+ *
+ * These are user-facing *choices* (persisted by key in Settings), not fixed
+ * constants — hence `config/` rather than `constants/`. The actual colours for
+ * each theme live in `src/index.css` behind `[data-theme]`.
+ */
 
-/** The system font stack used across every window and chrome surface. */
-export const FONT_STACK = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
-
-/** Monospace stack for terminal / boot surfaces. */
-export const MONO_STACK = "'Consolas', 'Courier New', monospace"
-
-/** Desktop wallpaper gradients (persisted by key in Settings). */
+/** Desktop wallpaper gradients. `key` maps to a `.wallpaper-<key>` CSS class. */
 export const wallpapers = [
   { key: 'default', label: 'Classic', gradient: 'linear-gradient(180deg, #1e1e32, #2a2a3e, #3a3a52)' },
   { key: 'midnight', label: 'Midnight', gradient: 'linear-gradient(180deg, #08081a, #0e0e2a, #1a1a3e)' },
@@ -21,3 +21,7 @@ export const themes = [
   { key: 'classic', label: 'Classic Retro', desc: 'Win95 beveled borders, gray chrome', preview: 'linear-gradient(135deg, #c0b8a8, #a8a090)' },
   { key: 'glass', label: 'Glass', desc: 'iOS-style blur, translucent panels', preview: 'linear-gradient(135deg, #1a1a3a, #0a0a2e)' },
 ]
+
+/** Default selections used before the user has picked anything. */
+export const DEFAULT_WALLPAPER = 'default'
+export const DEFAULT_THEME = 'classic'

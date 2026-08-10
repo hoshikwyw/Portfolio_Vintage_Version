@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { MONO_STACK } from '@/constants/ui'
-import { system } from '@/config/profile'
+import { MONO_STACK } from '@/shared/constants/fonts'
+import { system } from '@/shared/config/profile'
 
 const LOADING_MESSAGES = [
   'Initializing system...',

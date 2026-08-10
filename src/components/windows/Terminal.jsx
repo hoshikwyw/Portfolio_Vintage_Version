@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { useProjects } from '@/hooks/useProjects'
-import { MONO_STACK } from '@/constants/ui'
-import { profile, terminalSkills, system } from '@/config/profile'
+import { MONO_STACK } from '@/shared/constants/fonts'
+import { profile, terminalSkills, system } from '@/shared/config/profile'
 
 const Cmd = ({ children }) => <span className="text-[#a0d0a0] font-bold">{children}</span>
 

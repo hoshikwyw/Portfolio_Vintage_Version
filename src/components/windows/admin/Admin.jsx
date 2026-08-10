@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '@/lib/supabase'
-import { FONT_STACK } from '@/constants/ui'
+import { supabase } from '@/shared/lib/supabase'
+import { FONT_STACK } from '@/shared/constants/fonts'
 import AdminLogin from './AdminLogin'
 import AdminDashboard from './AdminDashboard'
 

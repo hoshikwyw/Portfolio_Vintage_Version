@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase'
+import { supabase } from '@/shared/lib/supabase'
 
 /** Fetch gallery-visible project images, joined with their parent project. */
 export const getProjectImages = async () => {

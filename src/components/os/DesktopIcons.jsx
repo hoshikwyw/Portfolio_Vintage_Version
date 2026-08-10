@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { useOS } from '@/context/OSContext'
 import { apps } from '@/config/apps'
-import LockIcon from '@/components/ui/LockIcon'
+import LockIcon from '@/shared/components/ui/LockIcon'
 
 const containerVariants = {
   hidden: {},

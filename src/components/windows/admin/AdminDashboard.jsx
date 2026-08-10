@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '@/lib/supabase'
+import { supabase } from '@/shared/lib/supabase'
 
 const inputStyle = { border: '2px inset #a0a090', background: '#f0ebe3', borderRadius: '1px', color: '#2b2b3d' }
 const btnStyle = {

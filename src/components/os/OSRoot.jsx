@@ -6,7 +6,7 @@ import { getApp } from '@/config/apps'
 import BootSplash from '@/components/os/BootSplash'
 import Desktop from '@/components/os/Desktop'
 import SeoContent from '@/components/seo/SeoContent'
-import NotFoundPage from '@/components/system/NotFoundPage'
+import NotFoundPage from '@/shared/components/feedback/NotFoundPage'
 
 /**
  * The OS experience for a route. Renders the boot splash, then the desktop.

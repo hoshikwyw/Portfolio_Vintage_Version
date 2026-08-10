@@ -1,4 +1,4 @@
-import { MONO_STACK } from '@/constants/ui'
+import { MONO_STACK } from '@/shared/constants/fonts'
 
 /**
  * Retro terminal-style 404, rendered inside a window frame when an unknown

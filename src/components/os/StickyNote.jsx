@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FONT_STACK } from '@/constants/ui'
+import { FONT_STACK } from '@/shared/constants/fonts'
 
 const notes = [
   'Currently exploring Three.js & WebGL',

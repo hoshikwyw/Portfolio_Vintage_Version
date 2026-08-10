@@ -6,7 +6,7 @@ import 'swiper/css/navigation'
 import 'swiper/css/autoplay'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 import { useProjects } from '@/hooks/useProjects'
-import { FONT_STACK } from '@/constants/ui'
+import { FONT_STACK } from '@/shared/constants/fonts'
 
 const ProjectCard = ({ name, description, image, link, github, tags, status }) => {
   const isComingSoon = status === false

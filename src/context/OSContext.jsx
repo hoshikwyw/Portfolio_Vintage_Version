@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react'
+import { DEFAULT_THEME, DEFAULT_WALLPAPER } from '@/shared/config/theme'
 
 /**
  * Global OS state: which windows are open / minimized and the active
@@ -17,10 +18,10 @@ export const OSProvider = ({ children }) => {
   const [openWindows, setOpenWindows] = useState([])
   const [minimizedWindows, setMinimizedWindows] = useState([])
   const [wallpaper, setWallpaperState] = useState(
-    () => localStorage.getItem(STORAGE_KEYS.wallpaper) || 'default',
+    () => localStorage.getItem(STORAGE_KEYS.wallpaper) || DEFAULT_WALLPAPER,
   )
   const [theme, setThemeState] = useState(
-    () => localStorage.getItem(STORAGE_KEYS.theme) || 'classic',
+    () => localStorage.getItem(STORAGE_KEYS.theme) || DEFAULT_THEME,
   )
 
   // Reflect the chrome theme on <html> so global CSS can react to it.

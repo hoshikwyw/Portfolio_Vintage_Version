@@ -4,8 +4,8 @@ import Gallery from './Gallery'
 import Terminal from './Terminal'
 import Settings from './Settings'
 import Admin from './admin/Admin'
-import ErrorBoundary from '@/components/system/ErrorBoundary'
-import NotFound from '@/components/system/NotFound'
+import ErrorBoundary from '@/shared/components/feedback/ErrorBoundary'
+import NotFound from '@/shared/components/feedback/NotFound'
 
 /**
  * Maps an app id (see `@/config/apps`) to the component rendered inside its

@@ -1,4 +1,4 @@
-import { profile, skills, languages, interests } from '@/config/profile'
+import { profile, skills, languages, interests } from '@/shared/config/profile'
 
 // Visually hidden but crawlable copy — gives search engines real text to
 // index, since the desktop UI itself is mostly canvas/absolute layers.
