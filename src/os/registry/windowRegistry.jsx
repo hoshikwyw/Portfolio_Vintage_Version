@@ -3,7 +3,7 @@ import { Projects } from '@/features/projects'
 import { Gallery } from '@/features/gallery'
 import { Terminal } from '@/features/terminal'
 import { Settings } from '@/features/settings'
-import Admin from '@/components/windows/admin/Admin'
+import { Admin } from '@/features/admin'
 import ErrorBoundary from '@/shared/components/feedback/ErrorBoundary'
 import NotFound from '@/shared/components/feedback/NotFound'
 
