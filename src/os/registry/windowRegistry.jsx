@@ -1,8 +1,8 @@
-import About from '@/components/windows/About'
-import Projects from '@/components/windows/Projects'
-import Gallery from '@/components/windows/Gallery'
-import Terminal from '@/components/windows/Terminal'
-import Settings from '@/components/windows/Settings'
+import { About } from '@/features/about'
+import { Projects } from '@/features/projects'
+import { Gallery } from '@/features/gallery'
+import { Terminal } from '@/features/terminal'
+import { Settings } from '@/features/settings'
 import Admin from '@/components/windows/admin/Admin'
 import ErrorBoundary from '@/shared/components/feedback/ErrorBoundary'
 import NotFound from '@/shared/components/feedback/NotFound'
@@ -10,14 +10,17 @@ import NotFound from '@/shared/components/feedback/NotFound'
 /**
  * Maps an app id (see `@/os/config/apps`) to the component rendered inside its
  * window. Adding a window is: register it in `apps.js` and add a line here.
+ *
+ * This is the single seam between the OS shell and the feature slices — no
+ * other shell module imports a feature.
  */
 const windowRegistry = {
-  Home: () => <About />,
-  Projects: ({ windowSize }) => <Projects windowSize={windowSize} />,
-  Gallery: () => <Gallery />,
-  'Send-Message': () => <Terminal />,
-  Settings: () => <Settings />,
-  Dashboard: () => <Admin />,
+  Home: About,
+  Projects,
+  Gallery,
+  'Send-Message': Terminal,
+  Settings,
+  Dashboard: Admin,
 }
 
 /**
@@ -25,13 +28,12 @@ const windowRegistry = {
  * and every window is wrapped in its own error boundary so one crashing app
  * shows an inline error instead of taking down the whole desktop.
  */
-const WindowContent = ({ id, windowSize }) => {
-  const render = windowRegistry[id]
-  const body = render ? render({ windowSize }) : <NotFound title={id} />
+const WindowContent = ({ id }) => {
+  const Window = windowRegistry[id]
 
   return (
     <ErrorBoundary key={id} variant="inline">
-      {body}
+      {Window ? <Window /> : <NotFound title={id} />}
     </ErrorBoundary>
   )
 }

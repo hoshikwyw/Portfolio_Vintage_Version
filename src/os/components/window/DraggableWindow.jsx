@@ -83,7 +83,7 @@ const DraggableWindow = ({
       />
 
       <div className="windowContent project-container" style={{ flex: 1, overflow: 'auto' }}>
-        <WindowContent id={id} windowSize={viewport} />
+        <WindowContent id={id} />
       </div>
     </motion.div>
   )

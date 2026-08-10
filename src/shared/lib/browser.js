@@ -8,15 +8,27 @@
 
 import { profile } from '@/shared/config/profile'
 
-/** Trigger a download of the résumé PDF from /public. */
-export const downloadResume = () => {
+/**
+ * Trigger a browser download via a temporary anchor.
+ *
+ * The anchor is attached to the document before clicking — a detached one is
+ * ignored by Firefox — and removed again immediately after.
+ *
+ * @param {string} url
+ * @param {string} [filename] Suggested name for the saved file.
+ */
+export const downloadFile = (url, filename) => {
   const link = document.createElement('a')
-  link.href = profile.resume
-  link.download = profile.resume.replace(/^\//, '')
+  link.href = url
+  if (filename) link.download = filename
   document.body.appendChild(link)
   link.click()
   document.body.removeChild(link)
 }
+
+/** Trigger a download of the résumé PDF from /public. */
+export const downloadResume = () =>
+  downloadFile(profile.resume, profile.resume.replace(/^\//, ''))
 
 /** Open a pre-filled Gmail compose window addressed to Kayv. */
 export const openHireEmail = ({

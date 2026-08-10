@@ -31,7 +31,7 @@ const FullscreenWindow = ({ id, onFocus, onClose, onFullscreen, onMinimize }) =>
       onClose={onClose}
     />
     <div className="windowContent project-container" style={{ flex: 1, overflow: 'auto' }}>
-      <WindowContent id={id} windowSize={{ width: window.innerWidth, height: window.innerHeight }} />
+      <WindowContent id={id} />
     </div>
   </motion.div>
 )
