@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# This project uses pnpm. A stray `npm install` must not commit a second
+# lockfile — two lockfiles drift apart and break Vercel's frozen install.
+package-lock.json
+yarn.lock
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
