@@ -1,2 +1,2 @@
-export { default as Projects } from './Projects'
-export { useProjects, PROJECTS_QUERY_KEY } from './hooks/useProjects'
+/** Window entry point — see @/features/about/index.js for the convention. */
+export { default } from './Projects'

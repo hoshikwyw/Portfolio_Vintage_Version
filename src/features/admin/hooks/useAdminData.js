@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { PROJECTS_QUERY_KEY } from '@/features/projects'
-import { PROJECT_IMAGES_QUERY_KEY } from '@/features/gallery'
+import { PROJECTS_QUERY_KEY } from '@/features/projects/hooks/useProjects'
+import { PROJECT_IMAGES_QUERY_KEY } from '@/features/gallery/hooks/useProjectImages'
 import * as projectsApi from '@/features/admin/api/projects'
 import * as tagsApi from '@/features/admin/api/tags'
 import * as imagesApi from '@/features/admin/api/images'

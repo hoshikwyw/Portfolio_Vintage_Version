@@ -5,7 +5,7 @@ import { OSProvider } from '@/os/context/OSProvider'
 import { getApp } from '@/os/config/apps'
 import BootSplash from '@/os/components/BootSplash'
 import Desktop from '@/os/components/desktop/Desktop'
-import { SeoContent } from '@/features/seo'
+import SeoContent from '@/features/seo'
 import NotFoundPage from '@/shared/components/feedback/NotFoundPage'
 
 /**

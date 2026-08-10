@@ -1,1 +1,2 @@
-export { default as SeoContent } from './SeoContent'
+/** Crawlable portfolio copy — rendered eagerly, not a lazy window. */
+export { default } from './SeoContent'

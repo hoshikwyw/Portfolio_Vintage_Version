@@ -45,87 +45,69 @@ Built with **React 19**, **Vite**, **Tailwind CSS v4**, **Framer Motion**, and
 
 ## Project Structure
 
-Code is organised by **responsibility**, not by file type. A `@/` path alias
+Code is organised into four layers, each of which may only import from the ones
+below it: **app** → **os** → **features** → **shared**. A `@/` path alias
 (configured in `vite.config.js` + `jsconfig.json`) points at `src/`, so imports
-read `@/config/profile` instead of `../../../config/profile`.
+read `@/shared/config/profile` instead of `../../../shared/config/profile`.
 
 ```
 src/
-├── main.jsx                 # App entry — mounts providers (React Query)
-├── App.jsx                  # Boot gate → Desktop
+├── main.jsx                 # Entry — mounts <AppProviders><App/>
 │
-├── config/                  # ← single source of truth for content
-│   ├── profile.js           #   name, contact, skills, timeline, résumé path
-│   └── apps.js              #   window registry (id, icon, label, flags)
+├── app/                     # composition root
+│   ├── App.jsx              #   route table
+│   ├── AppProviders.jsx     #   ErrorBoundary → React Query → Router
+│   └── routes.js            #   route paths
 │
-├── constants/
-│   └── ui.js                # font stacks, wallpapers, themes
+├── os/                      # the desktop shell ("kernel" + chrome)
+│   ├── constants.js         #   sizes, cascade, Z_LAYERS stacking scale
+│   ├── config/apps.js       #   window registry (id, icon, label, flags)
+│   ├── context/             #   OSProvider — composes the hooks below
+│   ├── hooks/               #   useOS, useWindowManager, useAppearance,
+│   │                        #   useWindowLayout, useResizable, useViewportSize
+│   ├── registry/            #   app id → lazily-loaded window component
+│   ├── services/weather.js
+│   └── components/
+│       ├── OSRoot, BootSplash
+│       ├── desktop/         #   Desktop, icons, context menu, sticky note…
+│       ├── taskbar/         #   Taskbar, StartMenu, SystemTray
+│       └── window/          #   WindowLayer, Draggable/Fullscreen, chrome
 │
-├── context/
-│   └── OSContext.jsx        # open/minimized windows + wallpaper/theme  → useOS()
+├── features/                # vertical slices — one per window
+│   ├── about/  projects/  gallery/  terminal/  settings/  admin/  seo/
+│   └── …each with: api/ · hooks/ · components/ · index.js (window entry)
 │
-├── lib/
-│   ├── supabase.js          # Supabase browser client
-│   ├── queryClient.js       # React Query client config
-│   └── actions.js           # downloadResume / openHireEmail / openGoogleSearch
+├── shared/                  # feature-agnostic building blocks
+│   ├── config/              #   profile.js (all personal copy), theme.js
+│   ├── constants/           #   fonts.js, palette.js
+│   ├── lib/                 #   supabase, queryClient, browser side effects
+│   ├── hooks/               #   useClock, useOutsideClick
+│   └── components/          #   ui/ (Panel, LockIcon) · feedback/ (errors, 404)
 │
-├── services/                # framework-agnostic data fetchers
-│   ├── projects.js
-│   ├── projectImages.js
-│   └── weather.js
-│
-├── hooks/                   # reusable React hooks
-│   ├── useProjects.js       # React Query wrappers over services/
-│   ├── useProjectImages.js
-│   ├── useClock.js          # live clock
-│   └── useWeather.js        # geolocation + weather
-│
-└── components/
-    ├── os/                  # the desktop shell (chrome)
-    │   ├── Desktop.jsx      #   composes the whole shell
-    │   ├── BootSplash.jsx
-    │   ├── WindowFrame.jsx  #   drag/resize/focus engine
-    │   ├── Taskbar.jsx
-    │   ├── StartMenu.jsx
-    │   ├── DesktopIcons.jsx
-    │   ├── DesktopContextMenu.jsx
-    │   ├── StickyNote.jsx
-    │   ├── QuickActions.jsx
-    │   └── WelcomeDialog.jsx
-    ├── ui/
-    │   └── LockIcon.jsx     # shared padlock glyph
-    ├── system/              # error + not-found handling
-    │   ├── ErrorBoundary.jsx#   catches render crashes (root + per-window)
-    │   ├── ErrorScreen.jsx  #   OS-styled crash dialog (retry / reload)
-    │   └── NotFound.jsx     #   retro 404 for unknown windows
-    ├── seo/
-    │   └── SeoContent.jsx   # visually-hidden crawlable copy
-    └── windows/             # the "apps" that render inside windows
-        ├── registry.jsx     #   app id → window component
-        ├── About.jsx
-        ├── Projects.jsx
-        ├── Gallery.jsx (+ .css)
-        ├── Terminal.jsx
-        ├── Settings.jsx
-        └── admin/
-            ├── Admin.jsx    #   auth gate
-            ├── AdminLogin.jsx
-            └── AdminDashboard.jsx
+└── styles/index.css         # global CSS + --os-* theme variables
 ```
 
 ### Design notes
 
-- **Content vs. code.** All personal copy lives in `src/config/profile.js`;
+- **Layering.** `shared/` knows nothing about anything; `features/` are
+  independent of each other; `os/` reaches features only through its window
+  registry; `app/` just wires it together. If an import points "up" a layer,
+  something is in the wrong place.
+- **Content vs. code.** All personal copy lives in `src/shared/config/profile.js`;
   every component reads from it. Edit your details in one place.
-- **App registry.** `src/config/apps.js` is the one list of windows. The
+- **App registry.** `src/os/config/apps.js` is the one list of windows. The
   desktop icons, taskbar, start menu, and window chrome all derive from it, and
-  `windows/registry.jsx` maps each app `id` to its component. Adding a window =
-  one entry in each file.
-- **Layered data flow.** `services/` fetch raw data → `hooks/` wrap them in
+  `os/registry/windowRegistry.jsx` maps each app `id` to its component. Adding a
+  window = one entry in each file.
+- **Code splitting.** Each window is `lazy()`-imported by the registry, so a
+  feature's dependencies (Swiper, Supabase, the admin surface) stay out of the
+  initial bundle and load when that window is first opened. Feature barrels
+  therefore export *only* the window, as the default.
+- **Layered data flow.** `api/` fetch raw data → `hooks/` wrap them in
   React Query → components consume hooks. Supabase/query details never leak into
   the view layer.
 - **Theming.** Chrome is driven by CSS custom properties (`--os-*`) in
-  `index.css`; `OSContext` toggles the `data-theme` attribute for the glass theme.
+  `styles/index.css`; `useAppearance` toggles the `data-theme` attribute.
 - **Resilience.** An `ErrorBoundary` wraps the app root (full-screen crash
   screen) and each window individually — a single broken window shows an inline
   error while the rest of the desktop keeps running. Unknown window ids render a

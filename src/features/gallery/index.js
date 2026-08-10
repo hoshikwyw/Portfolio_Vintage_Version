@@ -1,2 +1,2 @@
-export { default as Gallery } from './Gallery'
-export { useProjectImages, PROJECT_IMAGES_QUERY_KEY } from './hooks/useProjectImages'
+/** Window entry point — see @/features/about/index.js for the convention. */
+export { default } from './Gallery'

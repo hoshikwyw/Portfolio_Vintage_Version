@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { useProjects } from '@/features/projects'
+import { useProjects } from '@/features/projects/hooks/useProjects'
 import { MONO_STACK } from '@/shared/constants/fonts'
 import { resolveCommand, unknownCommand, welcomeMessage } from './commands'
 

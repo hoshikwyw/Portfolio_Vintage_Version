@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import OSRoot from '@/os/components/OSRoot'
 import NotFoundPage from '@/shared/components/feedback/NotFoundPage'
+import { ROUTES } from './routes'
 
 /**
  * Routes:
@@ -10,8 +11,8 @@ import NotFoundPage from '@/shared/components/feedback/NotFoundPage'
  */
 const App = () => (
   <Routes>
-    <Route path="/" element={<OSRoot />} />
-    <Route path="/window/:appId" element={<OSRoot />} />
+    <Route path={ROUTES.desktop} element={<OSRoot />} />
+    <Route path={ROUTES.window} element={<OSRoot />} />
     <Route path="*" element={<NotFoundPage />} />
   </Routes>
 )
