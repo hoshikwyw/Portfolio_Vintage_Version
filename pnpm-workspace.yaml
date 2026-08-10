@@ -1,0 +1,17 @@
+# pnpm 10+ refuses to run a dependency's install scripts unless it is approved
+# here. These three need theirs: @tailwindcss/oxide and esbuild link their
+# native binaries, without which `vite build` cannot start.
+#
+# The setting is spelled differently per major version, so both forms are kept:
+# pnpm 11 reads `allowBuilds` from this file, while pnpm 10 — the version
+# Vercel selects — reads `pnpm.onlyBuiltDependencies` from package.json.
+# Keep the three lists in sync when adding a dependency that builds.
+allowBuilds:
+  '@tailwindcss/oxide': true
+  '@vercel/speed-insights': true
+  esbuild: true
+
+onlyBuiltDependencies:
+  - '@tailwindcss/oxide'
+  - esbuild
+  - '@vercel/speed-insights'
