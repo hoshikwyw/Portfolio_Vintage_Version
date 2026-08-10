@@ -30,7 +30,12 @@ export default [
       // Mark identifiers referenced in JSX (incl. `motion.div`) as used.
       'react/jsx-uses-vars': 'error',
       'react/jsx-uses-react': 'off', // not needed with the automatic JSX runtime
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      // `ignoreRestSiblings` allows the `const { [id]: _drop, ...rest }` idiom
+      // used to remove a key from state without mutating.
+      'no-unused-vars': [
+        'error',
+        { varsIgnorePattern: '^[A-Z_]', argsIgnorePattern: '^_', ignoreRestSiblings: true },
+      ],
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     },
   },

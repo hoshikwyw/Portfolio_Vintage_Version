@@ -1,8 +1,11 @@
-import { useState, useEffect } from 'react'
-import { FONT_STACK } from '@/shared/constants/fonts'
+import { useEffect, useState } from 'react'
+import { useOS } from '@/os/hooks/useOS'
+import { Z_LAYERS } from '@/os/constants'
 import { system } from '@/shared/config/profile'
+import { FONT_STACK } from '@/shared/constants/fonts'
 
 const STORAGE_KEY = 'kayv-welcomed'
+const SHOW_DELAY = 600
 
 // Deep-links rendered in the dialog body.
 const links = [
@@ -12,14 +15,14 @@ const links = [
 ]
 
 /** First-visit welcome dialog (shown once per session). */
-export default function WelcomeDialog({ onOpenWindow }) {
+const WelcomeDialog = () => {
+  const { openWindow } = useOS()
   const [show, setShow] = useState(false)
 
   useEffect(() => {
-    if (!sessionStorage.getItem(STORAGE_KEY)) {
-      const timer = setTimeout(() => setShow(true), 600)
-      return () => clearTimeout(timer)
-    }
+    if (sessionStorage.getItem(STORAGE_KEY)) return
+    const timer = setTimeout(() => setShow(true), SHOW_DELAY)
+    return () => clearTimeout(timer)
   }, [])
 
   if (!show) return null
@@ -31,11 +34,11 @@ export default function WelcomeDialog({ onOpenWindow }) {
 
   const handleOpen = (id) => {
     dismiss()
-    onOpenWindow(id)
+    openWindow(id)
   }
 
   return (
-    <div className="fixed inset-0 z-[9998] flex items-center justify-center" style={{ background: 'rgba(0,0,0,0.4)' }}>
+    <div className="fixed inset-0 flex items-center justify-center" style={{ zIndex: Z_LAYERS.dialog, background: 'rgba(0,0,0,0.4)' }}>
       <div
         style={{
           width: 340,
@@ -58,6 +61,7 @@ export default function WelcomeDialog({ onOpenWindow }) {
           <span className="text-[11px] font-bold text-[#e0d8c8] uppercase tracking-wide">Welcome</span>
           <button
             onClick={dismiss}
+            aria-label="Close welcome dialog"
             className="w-4 h-4 flex items-center justify-center text-[#e0d8c8] hover:text-white cursor-pointer"
             style={{
               background: 'linear-gradient(180deg, #6a6a7a, #4a4a5a)',
@@ -90,16 +94,19 @@ export default function WelcomeDialog({ onOpenWindow }) {
           <div className="text-[10px] text-[#5a5a5a] space-y-1 mb-4 pl-11">
             {links.map((link) => (
               <p key={link.id}>
-                <span className="cursor-pointer text-[#4a3aad] underline hover:text-[#2b2b3d]" onClick={() => handleOpen(link.id)}>
+                <button
+                  type="button"
+                  className="cursor-pointer text-[#4a3aad] underline hover:text-[#2b2b3d]"
+                  onClick={() => handleOpen(link.id)}
+                >
                   {link.label}
-                </span>{' '}
+                </button>{' '}
                 — {link.suffix}
                 {link.code && <> <code className="bg-[#e8e0d4] px-1 rounded-sm">{link.code}</code></>}
               </p>
             ))}
           </div>
 
-          {/* OK button */}
           <div className="flex justify-end">
             <button
               onClick={dismiss}
@@ -120,3 +127,5 @@ export default function WelcomeDialog({ onOpenWindow }) {
     </div>
   )
 }
+
+export default WelcomeDialog

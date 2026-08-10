@@ -1,8 +1,9 @@
-import { useState, useRef, useEffect } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Download, Search } from 'lucide-react'
-import { useOS } from '@/context/OSContext'
-import { startMenuApps } from '@/config/apps'
+import { useOS } from '@/os/hooks/useOS'
+import { startMenuApps } from '@/os/config/apps'
+import { Z_LAYERS } from '@/os/constants'
 import { profile } from '@/shared/config/profile'
 import { FONT_STACK } from '@/shared/constants/fonts'
 import { downloadResume, openHireEmail, openGoogleSearch } from '@/shared/lib/browser'
@@ -12,7 +13,20 @@ import { useOutsideClick } from '@/shared/hooks/useOutsideClick'
 const hoverIn = (e) => { e.currentTarget.style.background = 'var(--os-accent)'; e.currentTarget.style.color = '#fff' }
 const hoverOut = (e) => { e.currentTarget.style.background = ''; e.currentTarget.style.color = 'var(--os-text)' }
 
-export default function StartMenu({ onClose, onFocus }) {
+const MenuRow = ({ icon, label, onClick }) => (
+  <button
+    onClick={onClick}
+    className="flex items-center gap-2 w-full px-3 py-1.5 transition-colors cursor-pointer text-left"
+    style={{ color: 'var(--os-text)' }}
+    onMouseEnter={hoverIn}
+    onMouseLeave={hoverOut}
+  >
+    {icon}
+    <span className="text-[11px] font-semibold">{label}</span>
+  </button>
+)
+
+const StartMenu = ({ onClose }) => {
   const { openWindow } = useOS()
   const [query, setQuery] = useState('')
   const ref = useOutsideClick(onClose)
@@ -20,16 +34,17 @@ export default function StartMenu({ onClose, onFocus }) {
 
   useEffect(() => { inputRef.current?.focus() }, [])
 
-  const filtered = startMenuApps.filter((a) => a.label.toLowerCase().includes(query.toLowerCase()))
+  const filtered = startMenuApps.filter((app) => app.label.toLowerCase().includes(query.toLowerCase()))
 
-  const openApp = (id) => { openWindow(id); onFocus(id); onClose() }
-  const handleSearch = (e) => { e.preventDefault(); openGoogleSearch(query); setQuery(''); onClose() }
-  const handleHire = () => { openHireEmail({ subject: 'Hire Request' }); onClose() }
-  const handleResume = () => { downloadResume(); onClose() }
+  /** Run an action then dismiss the menu. */
+  const andClose = (action) => (...args) => { action(...args); onClose() }
+
+  const openApp = andClose(openWindow)
+  const handleSearch = andClose((e) => { e.preventDefault(); openGoogleSearch(query); setQuery('') })
 
   const actions = [
-    { label: 'Download Resume', icon: <Download size={14} />, onClick: handleResume },
-    { label: 'Hire Me', icon: <Mail size={14} />, onClick: handleHire },
+    { label: 'Download Resume', icon: <Download size={14} />, onClick: andClose(downloadResume) },
+    { label: 'Hire Me', icon: <Mail size={14} />, onClick: andClose(() => openHireEmail({ subject: 'Hire Request' })) },
   ]
 
   return (
@@ -39,8 +54,9 @@ export default function StartMenu({ onClose, onFocus }) {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 20, scale: 0.95 }}
       transition={{ duration: 0.15 }}
-      className="absolute bottom-full left-0 mb-1 w-64 overflow-hidden z-[9999] start-menu-panel"
+      className="absolute bottom-full left-0 mb-1 w-64 overflow-hidden start-menu-panel"
       style={{
+        zIndex: Z_LAYERS.startMenu,
         background: 'var(--os-window)',
         border: '2px solid var(--os-border-dark)',
         borderTopColor: 'var(--os-border-light)',
@@ -57,6 +73,7 @@ export default function StartMenu({ onClose, onFocus }) {
         <div className="start-menu-sidebar w-7 flex items-end justify-center pb-2 flex-shrink-0" style={{ background: 'var(--os-accent)' }}>
           <span className="text-[8px] font-black text-white/60 tracking-widest" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>KAYV OS</span>
         </div>
+
         <div className="flex-1">
           {/* User */}
           <div className="px-3 py-2.5 flex items-center gap-2" style={{ borderBottom: '1px solid var(--os-border-dark)' }}>
@@ -68,41 +85,46 @@ export default function StartMenu({ onClose, onFocus }) {
               <p className="text-[9px]" style={{ color: 'var(--os-text-secondary)' }}>{profile.role}</p>
             </div>
           </div>
+
           {/* Search */}
           <div className="px-3 py-2" style={{ borderBottom: '1px solid var(--os-border-dark)' }}>
             <form onSubmit={handleSearch} className="flex items-center gap-2 px-2 py-1" style={{ border: 'var(--os-input-border)', background: 'var(--os-input-bg)', borderRadius: 'var(--os-btn-radius)' }}>
               <Search size={12} style={{ color: 'var(--os-text-muted)' }} />
-              <input ref={inputRef} type="text" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search..."
-                className="flex-1 bg-transparent outline-none text-[11px]" style={{ color: 'var(--os-text)' }} />
+              <input
+                ref={inputRef}
+                type="text"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search..."
+                className="flex-1 bg-transparent outline-none text-[11px]"
+                style={{ color: 'var(--os-text)' }}
+              />
             </form>
           </div>
+
           {/* Apps */}
           <div className="py-1">
             {filtered.map((app) => (
-              <button key={app.id} onClick={() => openApp(app.id)}
-                className="flex items-center gap-2 w-full px-3 py-1.5 transition-colors cursor-pointer text-left group"
-                style={{ color: 'var(--os-text)' }}
-                onMouseEnter={hoverIn}
-                onMouseLeave={hoverOut}
-              >
-                <img src={app.icon} alt="" className="w-5 h-5" style={{ filter: 'brightness(0)', opacity: 0.6 }} />
-                <span className="text-[11px] font-semibold">{app.label}</span>
-              </button>
+              <MenuRow
+                key={app.id}
+                label={app.label}
+                icon={<img src={app.icon} alt="" className="w-5 h-5" style={{ filter: 'brightness(0)', opacity: 0.6 }} />}
+                onClick={() => openApp(app.id)}
+              />
             ))}
           </div>
+
           <div className="mx-3" style={{ borderTop: '1px solid var(--os-border-dark)' }} />
+
           {/* Actions */}
           <div className="py-1">
             {actions.map((item) => (
-              <button key={item.label} onClick={item.onClick}
-                className="flex items-center gap-2 w-full px-3 py-1.5 transition-colors cursor-pointer"
-                style={{ color: 'var(--os-text)' }}
-                onMouseEnter={hoverIn}
-                onMouseLeave={hoverOut}
-              >
-                <span style={{ opacity: 0.6 }}>{item.icon}</span>
-                <span className="text-[11px] font-semibold">{item.label}</span>
-              </button>
+              <MenuRow
+                key={item.label}
+                label={item.label}
+                icon={<span style={{ opacity: 0.6 }}>{item.icon}</span>}
+                onClick={item.onClick}
+              />
             ))}
           </div>
         </div>
@@ -110,3 +132,5 @@ export default function StartMenu({ onClose, onFocus }) {
     </motion.div>
   )
 }
+
+export default StartMenu

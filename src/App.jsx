@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
-import OSRoot from '@/components/os/OSRoot'
+import OSRoot from '@/os/components/OSRoot'
 import NotFoundPage from '@/shared/components/feedback/NotFoundPage'
 
 /**

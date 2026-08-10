@@ -1,14 +1,14 @@
-import About from './About'
-import Projects from './Projects'
-import Gallery from './Gallery'
-import Terminal from './Terminal'
-import Settings from './Settings'
-import Admin from './admin/Admin'
+import About from '@/components/windows/About'
+import Projects from '@/components/windows/Projects'
+import Gallery from '@/components/windows/Gallery'
+import Terminal from '@/components/windows/Terminal'
+import Settings from '@/components/windows/Settings'
+import Admin from '@/components/windows/admin/Admin'
 import ErrorBoundary from '@/shared/components/feedback/ErrorBoundary'
 import NotFound from '@/shared/components/feedback/NotFound'
 
 /**
- * Maps an app id (see `@/config/apps`) to the component rendered inside its
+ * Maps an app id (see `@/os/config/apps`) to the component rendered inside its
  * window. Adding a window is: register it in `apps.js` and add a line here.
  */
 const windowRegistry = {

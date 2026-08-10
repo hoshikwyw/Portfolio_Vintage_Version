@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
-import { useOS } from '@/context/OSContext'
-import { apps } from '@/config/apps'
+import { useOS } from '@/os/hooks/useOS'
+import { apps } from '@/os/config/apps'
+import { Z_LAYERS } from '@/os/constants'
 import LockIcon from '@/shared/components/ui/LockIcon'
 
 const containerVariants = {
@@ -13,17 +14,14 @@ const iconVariants = {
   visible: { opacity: 1, scale: 1, transition: { type: 'spring', stiffness: 300, damping: 20 } },
 }
 
-export default function DesktopIcons({ onFocus }) {
+/** Desktop shortcuts, one per registered app. */
+const DesktopIcons = () => {
   const { openWindow } = useOS()
-
-  const handleClick = (id) => {
-    openWindow(id)
-    onFocus(id)
-  }
 
   return (
     <motion.div
-      className="absolute top-5 left-5 z-10 grid grid-cols-2 sm:grid-cols-1 gap-1"
+      className="absolute top-5 left-5 grid grid-cols-2 sm:grid-cols-1 gap-1"
+      style={{ zIndex: Z_LAYERS.desktopItem }}
       variants={containerVariants}
       initial="hidden"
       animate="visible"
@@ -33,7 +31,7 @@ export default function DesktopIcons({ onFocus }) {
           key={app.id}
           className="desktop-icon"
           variants={iconVariants}
-          onClick={() => handleClick(app.id)}
+          onClick={() => openWindow(app.id)}
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.92 }}
         >
@@ -44,3 +42,5 @@ export default function DesktopIcons({ onFocus }) {
     </motion.div>
   )
 }
+
+export default DesktopIcons

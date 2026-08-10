@@ -1,4 +1,4 @@
-import { useOS } from '@/context/OSContext'
+import { useOS } from '@/os/hooks/useOS'
 import { FONT_STACK } from '@/shared/constants/fonts'
 import { wallpapers, themes } from '@/shared/config/theme'
 import { system, profile } from '@/shared/config/profile'
