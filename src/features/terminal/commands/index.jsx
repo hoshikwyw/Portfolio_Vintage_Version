@@ -1,5 +1,5 @@
 import { profile, system, terminalSkills } from '@/shared/config/profile'
-import { Alert, Cmd, Dim, Green, Plain } from '@/features/terminal/components/TerminalText'
+import { Alert, Cmd, Dim, Green, Path, Plain } from '@/features/terminal/components/TerminalText'
 
 const NEOFETCH_LOGO = `  ╔══════╗
   ║  K   ║
@@ -71,7 +71,7 @@ const commands = {
                 href={project.demo_url}
                 target="_blank"
                 rel="noreferrer"
-                className="underline decoration-dotted hover:text-[#a0d0a0] text-[#6a8a6a]"
+                className="os-terminal-link underline decoration-dotted"
               >
                 {i + 1}. {project.title} — {project.description || 'Check it out!'}
               </a>
@@ -99,7 +99,7 @@ const commands = {
     help: 'System info',
     run: () => (
       <>
-        <pre className="text-[#6a6aaa] leading-tight">{NEOFETCH_LOGO}</pre>
+        <pre className="leading-tight" style={{ color: 'var(--os-terminal-path)' }}>{NEOFETCH_LOGO}</pre>
         <Cmd>{profile.alias.toLowerCase()}@os</Cmd><br />
         {'  '}OS: {system.name} v{system.version}<br />
         {'  '}Shell: kayv-terminal<br />
@@ -125,7 +125,11 @@ const commands = {
     help: 'Moo!',
     run: ({ input }) => {
       const argument = input.slice('cowsay'.length).trim()
-      return <pre className="text-[#e0d8c8] leading-tight">{cowsay(argument || 'Moo! Hire Kayv!')}</pre>
+      return (
+        <pre className="leading-tight" style={{ color: 'var(--os-terminal-plain)' }}>
+          {cowsay(argument || 'Moo! Hire Kayv!')}
+        </pre>
+      )
     },
   },
 
@@ -144,11 +148,11 @@ const commands = {
     help: 'List files',
     run: () => (
       <>
-        <span className="text-[#6a6aaa]">about.txt</span>{'  '}
+        <Path>about.txt</Path>{'  '}
         <Green>projects/</Green>{'  '}
-        <span className="text-[#6a6aaa]">resume.pdf</span>{'  '}
+        <Path>resume.pdf</Path>{'  '}
         <Green>gallery/</Green>{'  '}
-        <span className="text-[#6a6aaa]">README.md</span>
+        <Path>README.md</Path>
       </>
     ),
   },

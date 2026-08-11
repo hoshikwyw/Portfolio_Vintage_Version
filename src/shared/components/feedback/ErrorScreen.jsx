@@ -4,8 +4,9 @@ import { RETRO_PALETTE as palette, beveledPanel, beveledButton } from '@/shared/
 /**
  * OS-styled error dialog shown by <ErrorBoundary> when a render crashes.
  *
- * Uses the literal palette rather than CSS variables so it still renders
- * correctly when the crash happened before the theme stylesheet applied.
+ * Colours come from `RETRO_PALETTE`, whose entries are CSS variables backed by
+ * literal fallbacks — so this follows the user's theme normally, and still
+ * renders correctly if the crash happened before the stylesheet applied.
  *
  * @param {Error}    [error]    The caught error (message shown in detail box).
  * @param {Function} [onReset]  Retry handler — re-mounts the boundary's children.
@@ -49,9 +50,9 @@ const ErrorScreen = ({ error, onReset, variant = 'fullscreen' }) => {
               style={{
                 maxHeight: 96,
                 color: palette.danger,
-                background: '#f0ebe3',
-                border: '2px inset #a0a090',
-                borderRadius: '2px',
+                background: palette.field,
+                border: palette.fieldBorder,
+                borderRadius: 'var(--os-btn-radius, 2px)',
                 fontFamily: MONO_STACK,
               }}
             >

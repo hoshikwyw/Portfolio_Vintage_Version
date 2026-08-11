@@ -6,8 +6,9 @@ import { RETRO_PALETTE as palette, beveledPanel, beveledButton } from '@/shared/
  * Full-page 404 for unmatched routes (react-router `path="*"`). Styled as a
  * standalone retro error window with a link back to the desktop.
  *
- * Renders outside the OS shell, so it uses the literal palette rather than the
- * `--os-*` CSS variables.
+ * Renders outside the OS shell, so it draws from `RETRO_PALETTE` — CSS
+ * variables with literal fallbacks, which follow the theme when the stylesheet
+ * is present and degrade to the classic skin when it is not.
  */
 const NotFoundPage = () => {
   const { pathname } = useLocation()
@@ -27,7 +28,7 @@ const NotFoundPage = () => {
 
         {/* Body */}
         <div className="p-5 flex flex-col items-center text-center gap-3">
-          <pre className="text-[#4a4a6a] text-xs leading-tight select-none">{`  ┌───────────┐
+          <pre className="text-xs leading-tight select-none" style={{ color: palette.muted }}>{`  ┌───────────┐
   │  4 0 4    │
   │  ¯\\_(ツ)_/¯ │
   └───────────┘`}</pre>

@@ -44,15 +44,15 @@ export default function BootSplash({ onFinish = () => {} }) {
   return (
     <div
       className="fixed inset-0 z-50 flex flex-col items-center justify-center overflow-hidden"
-      style={{ background: '#1a1a2a', fontFamily: MONO_STACK }}
+      style={{ background: 'var(--os-terminal-bg)', fontFamily: MONO_STACK }}
     >
       {/* CRT scanlines */}
       <div
         className="absolute inset-0 pointer-events-none opacity-[0.05]"
-        style={{ backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,255,0,0.05) 1px, rgba(0,255,0,0.05) 2px)' }}
+        style={{ backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 1px, var(--os-terminal-scanline) 1px, var(--os-terminal-scanline) 2px)' }}
       />
 
-      <div className="relative z-10 max-w-md w-11/12 flex flex-col gap-6" style={{ color: '#a0d0a0' }}>
+      <div className="relative z-10 max-w-md w-11/12 flex flex-col gap-6" style={{ color: 'var(--os-terminal-accent)' }}>
         {/* ASCII-style header */}
         <div className="text-center">
           <pre className="text-[10px] sm:text-xs leading-tight opacity-60">{`
@@ -65,24 +65,24 @@ export default function BootSplash({ onFinish = () => {} }) {
 
         {/* Loading messages */}
         <div className="space-y-1 text-xs">
-          <p className="text-[#6a8a6a]">[  OK  ] Starting system services...</p>
-          <p className="text-[#6a8a6a]">[  OK  ] Loading desktop environment...</p>
-          <p style={{ color: percent >= 50 ? '#a0d0a0' : '#6a8a6a' }}>
+          <p style={{ color: 'var(--os-terminal-prompt)' }}>[  OK  ] Starting system services...</p>
+          <p style={{ color: 'var(--os-terminal-prompt)' }}>[  OK  ] Loading desktop environment...</p>
+          <p style={{ color: percent >= 50 ? 'var(--os-terminal-accent)' : 'var(--os-terminal-prompt)' }}>
             [ {percent >= 50 ? ' OK ' : '....'} ] {loadingText}
           </p>
         </div>
 
         {/* Progress bar */}
         <div>
-          <div className="w-full h-3 overflow-hidden" style={{ border: '1px solid #4a4a5a', background: '#0a0a1a' }}>
+          <div className="w-full h-3 overflow-hidden" style={{ border: '1px solid var(--os-terminal-muted)', background: 'var(--os-terminal-border)' }}>
             <div
               className="h-full transition-all duration-300 ease-out"
-              style={{ width: `${percent}%`, background: 'linear-gradient(90deg, #2a6a2a, #4a8a4a, #6aaa6a)' }}
+              style={{ width: `${percent}%`, background: 'var(--os-terminal-bar)' }}
             />
           </div>
           <div className="flex justify-between mt-1 text-[10px]">
-            <span style={{ color: '#6a8a6a' }}>{percent}%</span>
-            <span style={{ color: percent >= 100 ? '#a0d0a0' : '#4a6a4a' }}>
+            <span style={{ color: 'var(--os-terminal-prompt)' }}>{percent}%</span>
+            <span style={{ color: percent >= 100 ? 'var(--os-terminal-accent)' : 'var(--os-terminal-muted)' }}>
               {percent < 100 ? 'LOADING' : 'COMPLETE'}
             </span>
           </div>

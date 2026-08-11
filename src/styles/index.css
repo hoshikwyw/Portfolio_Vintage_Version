@@ -30,10 +30,27 @@
   --os-panel-bg: #e8e0d4;
   --os-scrollbar-track: #e8e0d4;
   --os-scrollbar-thumb: linear-gradient(180deg, #c0b8a8, #a0a090);
+  --os-danger: #8a3030;
+  /* Backdrop behind modal dialogs. */
+  --os-scrim: rgba(0,0,0,0.4);
+  /*
+   * Terminal palette. The shell had tokens for its background and body text
+   * only, so every *content* colour — prompt segments, paths, errors, the
+   * caret — was written literally in the components and stayed phosphor-green
+   * no matter the theme. All of it is tokenised here.
+   */
   --os-terminal-bg: #1a1a2a;
   --os-terminal-text: #c0c0c0;
   --os-terminal-accent: #a0d0a0;
   --os-terminal-prompt: #6a8a6a;
+  --os-terminal-plain: #e0d8c8;
+  --os-terminal-alert: #c07070;
+  --os-terminal-path: #6a6aaa;
+  --os-terminal-border: #3a3a4a;
+  --os-terminal-muted: #4a4a5a;
+  --os-terminal-scanline: rgba(0,255,0,0.03);
+  /* Boot-splash progress fill. */
+  --os-terminal-bar: linear-gradient(90deg, #2a6a2a, #4a8a4a, #6aaa6a);
   --os-desktop-icon-text: #e0d8c8;
   --os-desktop-icon-shadow: 0 1px 3px rgba(0,0,0,0.8);
   --os-window-shadow: 2px 2px 0 rgba(0,0,0,0.15), 4px 4px 12px rgba(0,0,0,0.25), inset 1px 1px 0 rgba(255,255,255,0.3);
@@ -106,10 +123,19 @@
   --os-panel-bg: rgba(18, 18, 35, 0.7);
   --os-scrollbar-track: rgba(255, 255, 255, 0.03);
   --os-scrollbar-thumb: linear-gradient(180deg, rgba(255,255,255,0.15), rgba(255,255,255,0.08));
+  --os-danger: #f87171;
+  --os-scrim: rgba(0,0,0,0.5);
   --os-terminal-bg: rgba(5, 5, 15, 0.85);
   --os-terminal-text: rgba(255, 255, 255, 0.8);
   --os-terminal-accent: #34d399;
   --os-terminal-prompt: rgba(52, 211, 153, 0.6);
+  --os-terminal-plain: rgba(255, 255, 255, 0.92);
+  --os-terminal-alert: #f87171;
+  --os-terminal-path: #7aa2f7;
+  --os-terminal-border: rgba(255, 255, 255, 0.12);
+  --os-terminal-muted: rgba(255, 255, 255, 0.3);
+  --os-terminal-scanline: transparent;
+  --os-terminal-bar: linear-gradient(90deg, #059669, #34d399);
   --os-desktop-icon-text: rgba(255, 255, 255, 0.9);
   --os-desktop-icon-shadow: 0 1px 4px rgba(0,0,0,0.5);
   --os-window-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.06);
@@ -172,11 +198,24 @@
   --os-panel-bg: #f6f5f1;
   --os-scrollbar-track: #eceae4;
   --os-scrollbar-thumb: linear-gradient(180deg, #cfcdc4, #b4b2a9);
-  /* A paper terminal: dark ink on off-white, keeping the green accent legible. */
+  --os-danger: #a32b2b;
+  --os-scrim: rgba(40,44,70,0.35);
+  /*
+   * A paper terminal: dark ink on off-white. The green survives as the accent,
+   * darkened until it clears 4.5:1 against the near-white background — the
+   * original phosphor green would be roughly 1.5:1 here.
+   */
   --os-terminal-bg: #f7f7f2;
   --os-terminal-text: #2f3140;
   --os-terminal-accent: #1f7a4d;
-  --os-terminal-prompt: #57845f;
+  --os-terminal-prompt: #456b4c;
+  --os-terminal-plain: #21232e;
+  --os-terminal-alert: #a32b2b;
+  --os-terminal-path: #4a3aad;
+  --os-terminal-border: #d8d6cd;
+  --os-terminal-muted: #9a9aa8;
+  --os-terminal-scanline: transparent;
+  --os-terminal-bar: linear-gradient(90deg, #1f7a4d, #2f9d63);
   /* Dark icon labels on a bright wallpaper, lifted by a white halo. */
   --os-desktop-icon-text: #21232e;
   --os-desktop-icon-shadow: 0 1px 2px rgba(255,255,255,0.9);
@@ -701,6 +740,22 @@ html, body {
 @media (prefers-reduced-motion: reduce) {
   .os-skeleton::after { animation: none; }
 }
+
+/*
+ * Terminal input placeholder. Lives here rather than inline because
+ * `::placeholder` is a pseudo-element and cannot be set from a style prop.
+ */
+.os-terminal-input::placeholder {
+  color: var(--os-terminal-muted);
+  opacity: 1;
+}
+
+/* Links printed by terminal commands (e.g. the `projects` listing). */
+.os-terminal-link {
+  color: var(--os-terminal-prompt);
+  transition: color var(--os-dur-fast) var(--os-ease);
+}
+.os-terminal-link:hover { color: var(--os-terminal-accent); }
 
 /* ============================
    MENU ROWS

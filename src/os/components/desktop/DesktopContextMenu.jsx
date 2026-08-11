@@ -3,7 +3,6 @@ import { useOS } from '@/os/hooks/useOS'
 import { Z_LAYERS } from '@/os/constants'
 import { profile } from '@/shared/config/profile'
 import { FONT_STACK } from '@/shared/constants/fonts'
-import { RETRO_PALETTE as palette } from '@/shared/constants/palette'
 
 const MENU_WIDTH = 180
 const MENU_HEIGHT = 160
@@ -59,12 +58,14 @@ const DesktopContextMenu = () => {
         left: x,
         top: y,
         zIndex: Z_LAYERS.contextMenu,
-        background: palette.panel,
-        border: `2px solid ${palette.borderDark}`,
-        borderTopColor: palette.borderLight,
-        borderLeftColor: palette.borderLight,
-        borderRadius: '2px',
-        boxShadow: '3px 3px 8px rgba(0,0,0,0.35)',
+        background: 'var(--os-window)',
+        border: '2px solid var(--os-border-dark)',
+        borderTopColor: 'var(--os-border-light)',
+        borderLeftColor: 'var(--os-border-light)',
+        borderRadius: 'var(--os-btn-radius)',
+        boxShadow: 'var(--os-window-shadow)',
+        backdropFilter: 'var(--os-glass-blur)',
+        WebkitBackdropFilter: 'var(--os-glass-blur)',
         fontFamily: FONT_STACK,
         minWidth: 170,
         padding: '3px 0',
@@ -75,13 +76,13 @@ const DesktopContextMenu = () => {
           <div
             key={`divider-${i}`}
             className="mx-2 my-1"
-            style={{ borderTop: `1px solid ${palette.borderDark}`, borderBottom: `1px solid ${palette.borderLight}` }}
+            style={{ borderTop: '1px solid var(--os-border-dark)', borderBottom: '1px solid var(--os-border-light)' }}
           />
         ) : (
           <button
             key={item.label}
             onClick={(e) => { e.stopPropagation(); item.action(); setPosition(null) }}
-            className="w-full text-left px-4 py-1 text-[11px] text-[#2b2b3d] hover:bg-[#4a3aad] hover:text-white transition-colors cursor-pointer"
+            className="start-menu-row text-[11px]"
           >
             {item.label}
           </button>

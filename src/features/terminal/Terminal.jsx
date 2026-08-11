@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useProjects } from '@/features/projects/hooks/useProjects'
 import { MONO_STACK } from '@/shared/constants/fonts'
+import { Cmd, Dim, Path, Plain } from './components/TerminalText'
 import { resolveCommand, unknownCommand, welcomeMessage } from './commands'
 
 /** Fake latency, so output doesn't appear instantly and break the illusion. */
@@ -8,9 +9,9 @@ const COMMAND_DELAY = 400
 
 const Prompt = () => (
   <>
-    <span className="text-[#a0d0a0] font-bold">kayv@os</span>
-    <span className="text-[#6a8a6a]">:</span>
-    <span className="text-[#6a6aaa]">~</span>
+    <Cmd>kayv@os</Cmd>
+    <Dim>:</Dim>
+    <Path>~</Path>
   </>
 )
 
@@ -60,7 +61,7 @@ const Terminal = () => {
     print(
       <div>
         <Prompt />
-        <span className="text-[#e0d8c8]">$ {input}</span>
+        <Plain>$ {input}</Plain>
       </div>,
     )
     const submitted = input
@@ -85,30 +86,33 @@ const Terminal = () => {
         {/* CRT scanline effect */}
         <div
           className="absolute inset-0 pointer-events-none opacity-[0.04]"
-          style={{ backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,255,0,0.03) 1px, rgba(0,255,0,0.03) 2px)' }}
+          style={{ backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 1px, var(--os-terminal-scanline) 1px, var(--os-terminal-scanline) 2px)' }}
         />
 
-        <div className="flex-1 overflow-y-auto pr-2 mb-2 relative z-10" style={{ scrollbarWidth: 'thin', scrollbarColor: '#3a3a4a #1a1a2a' }}>
+        <div
+          className="flex-1 overflow-y-auto pr-2 mb-2 relative z-10"
+          style={{ scrollbarWidth: 'thin', scrollbarColor: 'var(--os-terminal-border) var(--os-terminal-bg)' }}
+        >
           {history.map((line, idx) => (
             <div key={idx} className="whitespace-pre-wrap select-text leading-relaxed mb-0.5">{line}</div>
           ))}
           {isRunning && (
-            <div className="flex items-center text-[#6a8a6a] gap-0.5">
+            <div className="flex items-center gap-0.5" style={{ color: 'var(--os-terminal-prompt)' }}>
               <span className="dot">.</span><span className="dot">.</span><span className="dot">.</span>
             </div>
           )}
           <div ref={historyEndRef} />
         </div>
 
-        <form onSubmit={handleSubmit} className="flex items-center pt-2 relative z-10" style={{ borderTop: '1px solid #3a3a4a' }}>
+        <form onSubmit={handleSubmit} className="flex items-center pt-2 relative z-10" style={{ borderTop: '1px solid var(--os-terminal-border)' }}>
           <span className="mr-1"><Prompt /></span>
-          <span className="text-[#e0d8c8] mr-2">$</span>
+          <span className="mr-2" style={{ color: 'var(--os-terminal-plain)' }}>$</span>
           <input
             ref={inputRef}
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            className="flex-1 bg-transparent outline-none text-[#e0d8c8] placeholder-[#4a4a5a] font-semibold"
-            style={{ caretColor: '#a0d0a0' }}
+            className="os-terminal-input flex-1 bg-transparent outline-none font-semibold"
+            style={{ color: 'var(--os-terminal-plain)', caretColor: 'var(--os-terminal-accent)' }}
             placeholder={isRunning ? 'Processing...' : ''}
             aria-label="Terminal input"
             autoComplete="off"

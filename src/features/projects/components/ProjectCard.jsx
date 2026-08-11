@@ -38,8 +38,12 @@ const CardCover = ({ src, alt, isComingSoon }) => {
         />
       )}
       {isComingSoon && (
-        <div className="absolute inset-0 bg-[#2b2b3d]/80 flex items-center justify-center z-20">
-          <span className="text-[#e0d8c8] text-sm font-bold uppercase tracking-wider">Coming Soon</span>
+        <div
+          className="absolute inset-0 flex items-center justify-center z-20"
+          style={{ background: 'rgba(43,43,61,0.8)' }}
+        >
+          {/* Sits over the cover photo, so it stays a dark scrim in every theme. */}
+          <span className="text-sm font-bold uppercase tracking-wider" style={{ color: '#e0d8c8' }}>Coming Soon</span>
         </div>
       )}
     </div>
@@ -76,8 +80,8 @@ const ProjectCard = ({ project }) => {
       <div className="flex-grow flex flex-col gap-2 pt-2">
         {isComingSoon ? (
           <div className="flex justify-center items-center w-full h-full mt-auto gap-2">
-            <span className="text-[#5a5a7a] font-bold text-xs uppercase">Coming Soon</span>
-            <span className="text-[#2b2b3d] font-bold text-xs uppercase">{title}</span>
+            <span className="font-bold text-xs uppercase" style={{ color: 'var(--os-text-muted)' }}>Coming Soon</span>
+            <span className="font-bold text-xs uppercase" style={{ color: 'var(--os-text)' }}>{title}</span>
           </div>
         ) : (
           <>

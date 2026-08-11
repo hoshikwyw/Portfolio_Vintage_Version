@@ -10,7 +10,10 @@ const StatusMessage = ({ children, tone = 'info' }) => (
   <div className="w-full h-full flex items-center justify-center">
     <p
       className="text-[12px]"
-      style={{ color: tone === 'error' ? '#8a3030' : '#5a5a5a', fontFamily: FONT_STACK }}
+      style={{
+        color: tone === 'error' ? 'var(--os-danger)' : 'var(--os-text-secondary)',
+        fontFamily: FONT_STACK,
+      }}
     >
       {children}
     </p>
