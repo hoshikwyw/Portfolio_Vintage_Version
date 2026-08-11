@@ -1,5 +1,5 @@
 import Panel from '@/shared/components/ui/Panel'
-import { themes } from '@/shared/config/theme'
+import { SYSTEM_THEME, getTheme, themes } from '@/shared/config/theme'
 
 const CheckBadge = ({ className, size }) => (
   <div className={className} style={{ background: 'var(--os-accent)' }}>
@@ -9,32 +9,39 @@ const CheckBadge = ({ className, size }) => (
   </div>
 )
 
-/** Miniature window rendered inside each theme swatch. */
-const ThemePreview = ({ isGlass }) => (
+/**
+ * Miniature window rendered inside each theme swatch, drawn from the theme's
+ * own `previewChrome` so this component needs no per-theme branching.
+ */
+const ThemePreview = ({ chrome }) => (
   <div
     style={{
-      background: isGlass ? 'rgba(255,255,255,0.1)' : '#c0b8a8',
-      borderRadius: isGlass ? '6px' : '3px',
-      border: isGlass ? '1px solid rgba(255,255,255,0.15)' : '1px solid #8a8070',
+      background: chrome.background,
+      border: chrome.border,
+      borderRadius: chrome.radius,
       height: 28,
       marginBottom: 4,
+      overflow: 'hidden',
     }}
   >
-    <div
-      style={{
-        background: isGlass ? 'rgba(255,255,255,0.08)' : 'linear-gradient(180deg, #4a4a6a, #2b2b3d)',
-        height: 8,
-        borderRadius: isGlass ? '6px 6px 0 0' : '3px 3px 0 0',
-      }}
-    />
+    <div style={{ background: chrome.titlebar, height: 8 }} />
   </div>
 )
 
-const ThemePicker = ({ value, onChange }) => (
+/**
+ * Chrome theme selector.
+ *
+ * @param {string} value         The stored preference — may be `system`.
+ * @param {string} resolvedTheme What `system` currently resolves to, shown as a
+ *   hint on the System card so the choice is not a black box.
+ */
+const ThemePicker = ({ value, onChange, resolvedTheme }) => (
   <Panel title="Theme" style={{ padding: '12px 14px' }}>
     <div className="grid grid-cols-2 gap-3 mt-1">
       {themes.map((theme) => {
         const isSelected = value === theme.key
+        const isSystem = theme.key === SYSTEM_THEME
+        const resolvedLabel = isSystem ? getTheme(resolvedTheme)?.label : null
 
         return (
           <button
@@ -50,9 +57,14 @@ const ThemePicker = ({ value, onChange }) => (
               minHeight: 70,
             }}
           >
-            <ThemePreview isGlass={theme.key === 'glass'} />
-            <p className="text-[10px] font-bold text-white">{theme.label}</p>
-            <p className="text-[8px] text-white/50">{theme.desc}</p>
+            <ThemePreview chrome={theme.previewChrome} />
+            <p className="text-[10px] font-bold" style={{ color: theme.previewText }}>
+              {theme.label}
+            </p>
+            <p className="text-[8px]" style={{ color: theme.previewText, opacity: 0.6 }}>
+              {/* Once System is active, the resolution is more useful than the blurb. */}
+              {isSelected && resolvedLabel ? `Currently: ${resolvedLabel}` : theme.desc}
+            </p>
             {isSelected && (
               <CheckBadge
                 className="absolute top-1.5 right-1.5 w-4 h-4 rounded-full flex items-center justify-center"

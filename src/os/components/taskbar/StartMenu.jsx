@@ -100,7 +100,7 @@ const StartMenu = ({ onClose }) => {
               <MenuRow
                 key={app.id}
                 label={app.label}
-                icon={<img src={app.icon} alt="" className="w-5 h-5" style={{ filter: 'brightness(0)', opacity: 0.6 }} />}
+                icon={<img src={app.icon} alt="" className="w-5 h-5" />}
                 onClick={() => openApp(app.id)}
               />
             ))}

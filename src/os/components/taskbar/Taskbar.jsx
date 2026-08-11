@@ -31,7 +31,7 @@ const AppButton = ({ id, isMinimized, onClick }) => (
     {getApp(id)?.locked ? (
       <LockIcon size={16} variant="tray" />
     ) : (
-      <img src={getApp(id)?.icon} alt="" className="w-4 h-4" style={{ filter: 'brightness(0)', opacity: isMinimized ? 0.3 : 0.6 }} />
+      <img src={getApp(id)?.icon} alt="" className="w-4 h-4" style={{ filter: 'var(--os-icon-filter)', opacity: isMinimized ? 0.3 : 0.6 }} />
     )}
     <span className="text-[10px] font-semibold hidden sm:inline" style={{ color: isMinimized ? 'var(--os-text-muted)' : 'var(--os-text)' }}>
       {getAppLabel(id)}

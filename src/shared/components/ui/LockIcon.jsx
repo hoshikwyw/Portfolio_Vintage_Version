@@ -5,18 +5,21 @@
  */
 const LockIcon = ({ size = 14, variant = 'inline', className = '', style }) => {
   const variantStyles = {
-    // Inside a dark window title bar / taskbar app button.
+    // Inside a window title bar, which stays dark in every theme — so the
+    // glyph is forced white here rather than following the desktop token.
     inline: {
       className: 'inline-block mr-2 opacity-70',
       style: { verticalAlign: 'middle', filter: 'brightness(0) invert(1)' },
     },
     // On the taskbar tray / running-app row (inherits currentColor).
     tray: { className: 'flex-shrink-0', style: { opacity: 0.6 } },
-    // Large desktop shortcut icon.
+    // Large desktop shortcut icon. Tinted from the same token as the <img>
+    // shortcuts beside it, so it stays visible on a light wallpaper instead of
+    // being forced white.
     desktop: {
       className: '',
       style: {
-        filter: 'brightness(0) invert(1) drop-shadow(0 1px 2px rgba(0,0,0,0.4))',
+        filter: 'var(--os-desktop-icon-filter)',
         opacity: 0.85,
       },
     },

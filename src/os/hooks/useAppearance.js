@@ -1,10 +1,13 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { DEFAULT_THEME, DEFAULT_WALLPAPER } from '@/shared/config/theme'
+import { useCallback, useEffect, useMemo, useState, useSyncExternalStore } from 'react'
+import {
+  BASE_THEME,
+  DEFAULT_THEME,
+  DEFAULT_WALLPAPER,
+  STORAGE_KEYS,
+  resolveTheme,
+} from '@/shared/config/theme'
 
-const STORAGE_KEYS = {
-  wallpaper: 'kayv-wallpaper',
-  theme: 'kayv-theme',
-}
+const LIGHT_QUERY = '(prefers-color-scheme: light)'
 
 const readStored = (key, fallback) => {
   try {
@@ -23,11 +26,32 @@ const writeStored = (key, value) => {
   }
 }
 
+/*
+ * The OS colour-scheme preference, read through `useSyncExternalStore` rather
+ * than a state-plus-effect pair. The media query *is* the external store, so
+ * this stays correct if the user flips their OS theme mid-session, with no
+ * extra render on mount.
+ */
+const subscribePrefersLight = (onChange) => {
+  const query = window.matchMedia(LIGHT_QUERY)
+  query.addEventListener('change', onChange)
+  return () => query.removeEventListener('change', onChange)
+}
+
+const getPrefersLight = () => window.matchMedia(LIGHT_QUERY).matches
+
+/** No DOM during SSR/prerender; assume dark, matching `BASE_THEME`. */
+const getPrefersLightServer = () => false
+
 /**
  * The user's chrome theme and wallpaper, persisted to localStorage.
  *
  * Split out of the window manager because the two share nothing: appearance is
  * a persisted preference, windows are ephemeral session state.
+ *
+ * `theme` is the stored *preference* (may be `system`); `resolvedTheme` is what
+ * actually renders. Settings shows the former so "System" reads as selected,
+ * while anything that needs real colours reads the latter.
  */
 export const useAppearance = () => {
   const [wallpaper, setWallpaperState] = useState(() =>
@@ -37,14 +61,29 @@ export const useAppearance = () => {
     readStored(STORAGE_KEYS.theme, DEFAULT_THEME),
   )
 
-  // Reflect the chrome theme on <html> so global CSS can react to it.
+  const prefersLight = useSyncExternalStore(
+    subscribePrefersLight,
+    getPrefersLight,
+    getPrefersLightServer,
+  )
+
+  const resolvedTheme = resolveTheme(theme, prefersLight)
+
+  /*
+   * Reflect the resolved theme on <html> so global CSS can react to it.
+   *
+   * The inline boot script in `index.html` has already stamped this attribute
+   * before first paint; this effect only keeps it in sync when the preference
+   * or the OS setting changes afterwards.
+   */
   useEffect(() => {
-    if (theme === DEFAULT_THEME) {
-      document.documentElement.removeAttribute('data-theme')
+    const root = document.documentElement
+    if (resolvedTheme === BASE_THEME) {
+      root.removeAttribute('data-theme')
     } else {
-      document.documentElement.setAttribute('data-theme', theme)
+      root.setAttribute('data-theme', resolvedTheme)
     }
-  }, [theme])
+  }, [resolvedTheme])
 
   const setWallpaper = useCallback((key) => {
     setWallpaperState(key)
@@ -57,7 +96,7 @@ export const useAppearance = () => {
   }, [])
 
   return useMemo(
-    () => ({ wallpaper, setWallpaper, theme, setTheme }),
-    [wallpaper, setWallpaper, theme, setTheme],
+    () => ({ wallpaper, setWallpaper, theme, resolvedTheme, setTheme }),
+    [wallpaper, setWallpaper, theme, resolvedTheme, setTheme],
   )
 }

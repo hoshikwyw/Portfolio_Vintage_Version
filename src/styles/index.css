@@ -6,6 +6,7 @@
 
 :root {
   /* Classic Retro Theme (default) */
+  color-scheme: dark;
   --os-bg: #2a2a3e;
   --os-bg-image: linear-gradient(180deg, #1e1e32, #2a2a3e, #3a3a52);
   --os-window: #c0b8a8;
@@ -45,6 +46,32 @@
   --os-skeleton-bg: #d8d0c0;
   --os-skeleton-sheen: rgba(255, 255, 255, 0.55);
 
+  /*
+   * Monochrome icon tints. The shipped SVG icons are a single dark colour, so
+   * every theme re-tints them with `brightness(0)` (to black) optionally
+   * followed by `invert(1)` (to white). Previously these filters were written
+   * inline in the taskbar and start menu and overridden with `!important` for
+   * glass; as tokens each theme simply states which tint it wants.
+   *
+   * `--os-icon-filter` sits on chrome (taskbar, start menu) and follows the
+   * panel colour. `--os-desktop-icon-filter` sits on the wallpaper and follows
+   * the desktop instead — the two differ in the light theme, where chrome and
+   * desktop are both light but the drop shadows are tuned separately.
+   */
+  --os-icon-filter: brightness(0);
+  --os-desktop-icon-filter: brightness(0) invert(1) drop-shadow(0 1px 2px rgba(0,0,0,0.4));
+  --os-desktop-icon-filter-hover: brightness(0) invert(1) drop-shadow(0 2px 5px rgba(0,0,0,0.5));
+
+  /* Desktop texture — the CRT scanlines and film grain over the wallpaper. */
+  --os-scanline-color: rgba(0,0,0,0.06);
+  --os-noise-opacity: 0.03;
+
+  /* Desktop icon hover/selection wash, tinted against the wallpaper. */
+  --os-desktop-icon-hover-bg: rgba(255,255,255,0.06);
+  --os-desktop-icon-hover-border: rgba(255,255,255,0.1);
+  --os-desktop-icon-active-bg: rgba(106,90,205,0.15);
+  --os-desktop-icon-active-border: rgba(106,90,205,0.3);
+
   /* Motion — one scale for every hover, press and transition in the shell. */
   --os-ease: cubic-bezier(0.2, 0, 0, 1);
   --os-ease-back: cubic-bezier(0.34, 1.3, 0.64, 1);
@@ -55,6 +82,7 @@
 
 /* Glass / iOS Theme — opaque enough to work without backdrop-filter */
 [data-theme="glass"] {
+  color-scheme: dark;
   --os-bg: #0a0a1e;
   --os-bg-image: linear-gradient(135deg, #0a0a1e, #141428, #1e1e3a);
   --os-window: rgba(18, 18, 35, 0.88);
@@ -93,10 +121,98 @@
   --os-glass-border: 1px solid rgba(255, 255, 255, 0.12);
   --os-skeleton-bg: rgba(255, 255, 255, 0.06);
   --os-skeleton-sheen: rgba(255, 255, 255, 0.12);
+
+  /* Glass chrome is dark, so its icons invert to white like the desktop's. */
+  --os-icon-filter: brightness(0) invert(1);
+  --os-desktop-icon-filter: brightness(0) invert(1) drop-shadow(0 1px 3px rgba(0,0,0,0.45));
+  --os-desktop-icon-filter-hover: brightness(0) invert(1) drop-shadow(0 2px 6px rgba(0,0,0,0.55));
+
+  /* No CRT artefacts on glass — it is the modern half of the pair. */
+  --os-scanline-color: transparent;
+  --os-noise-opacity: 0;
+
+  --os-desktop-icon-hover-bg: rgba(255,255,255,0.1);
+  --os-desktop-icon-hover-border: rgba(255,255,255,0.15);
+  --os-desktop-icon-active-bg: rgba(0,122,255,0.15);
+  --os-desktop-icon-active-border: rgba(0,122,255,0.3);
 }
 
+/*
+ * Light Retro Theme — the same beveled Win95 chrome as `classic`, lit from a
+ * window instead of a CRT. Every value is the light counterpart of the `:root`
+ * token above it, so the two stay comparable line by line.
+ *
+ * Contrast was checked against WCAG AA for the text pairs that carry meaning:
+ * `--os-text` on content/panel ≈ 15:1, `--os-text-secondary` ≈ 7.3:1,
+ * `--os-text-muted` ≈ 4.6:1, and titlebar white on the gradient ≈ 4.8:1 at its
+ * lightest stop — window titles are 12px, so they need the full 4.5:1.
+ */
+[data-theme="light"] {
+  color-scheme: light;
+  --os-bg: #dfe3ee;
+  --os-bg-image: linear-gradient(180deg, #f2f4fb, #e4e8f4, #d2d8ea);
+  --os-window: #ecebe6;
+  --os-window-content: #ffffff;
+  --os-titlebar: linear-gradient(180deg, #6a6dab, #5b5e9e, #4e5192);
+  --os-titlebar-text: #ffffff;
+  --os-taskbar: linear-gradient(to bottom, #f4f3ef, #dedcd4);
+  --os-taskbar-border: #ffffff;
+  --os-accent: #4a3aad;
+  --os-accent-hover: #5f4fc7;
+  --os-text: #21232e;
+  --os-text-secondary: #55596b;
+  --os-text-muted: #767a8c;
+  --os-border-light: #ffffff;
+  --os-border-dark: #a9a79e;
+  --os-btn-bg: linear-gradient(180deg, #fbfaf7, #e4e2da);
+  --os-btn-border-top: #ffffff;
+  --os-btn-border-bottom: #9c9a92;
+  --os-input-bg: #ffffff;
+  --os-input-border: 2px inset #b8b6ad;
+  --os-panel-bg: #f6f5f1;
+  --os-scrollbar-track: #eceae4;
+  --os-scrollbar-thumb: linear-gradient(180deg, #cfcdc4, #b4b2a9);
+  /* A paper terminal: dark ink on off-white, keeping the green accent legible. */
+  --os-terminal-bg: #f7f7f2;
+  --os-terminal-text: #2f3140;
+  --os-terminal-accent: #1f7a4d;
+  --os-terminal-prompt: #57845f;
+  /* Dark icon labels on a bright wallpaper, lifted by a white halo. */
+  --os-desktop-icon-text: #21232e;
+  --os-desktop-icon-shadow: 0 1px 2px rgba(255,255,255,0.9);
+  --os-window-shadow: 2px 2px 0 rgba(40,44,70,0.06), 4px 6px 16px rgba(40,44,70,0.16), inset 1px 1px 0 rgba(255,255,255,0.9);
+  --os-window-radius: 6px;
+  --os-btn-radius: 3px;
+  --os-fieldset-border: 2px groove #dcdad2;
+  --os-glass-bg: none;
+  --os-glass-blur: none;
+  --os-glass-border: none;
+  --os-skeleton-bg: #e2e0d8;
+  --os-skeleton-sheen: rgba(255, 255, 255, 0.9);
+
+  /* Both chrome and desktop are light, so icons stay black in both places. */
+  --os-icon-filter: brightness(0);
+  --os-desktop-icon-filter: brightness(0) drop-shadow(0 1px 2px rgba(255,255,255,0.8));
+  --os-desktop-icon-filter-hover: brightness(0) drop-shadow(0 2px 4px rgba(40,44,70,0.25));
+
+  /* Scanlines survive at a third of their strength; the grain would read as dirt. */
+  --os-scanline-color: rgba(40,44,70,0.02);
+  --os-noise-opacity: 0.015;
+
+  /* Dark washes — a white hover would be invisible against a light wallpaper. */
+  --os-desktop-icon-hover-bg: rgba(40,44,70,0.07);
+  --os-desktop-icon-hover-border: rgba(40,44,70,0.12);
+  --os-desktop-icon-active-bg: rgba(74,58,173,0.14);
+  --os-desktop-icon-active-border: rgba(74,58,173,0.35);
+}
+
+/*
+ * Painted from the theme rather than a literal, so the page gutter and the
+ * overscroll area match the desktop. The boot script stamps `data-theme`
+ * before first paint, so the correct value is live on the very first frame.
+ */
 html, body {
-  background: #0a0a1e;
+  background: var(--os-bg);
 }
 
 /* ============================
@@ -113,36 +229,29 @@ html, body {
   overflow: hidden;
 }
 
-/* CRT scanline overlay — only on classic */
+/*
+ * CRT scanline overlay. Strength comes from `--os-scanline-color`, so a theme
+ * opts out by setting it to `transparent` instead of needing its own override.
+ */
 .mainBackground::before {
   content: '';
   position: absolute;
   inset: 0;
   background-image:
-    repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,0,0,0.06) 1px, rgba(0,0,0,0.06) 2px);
+    repeating-linear-gradient(0deg, transparent, transparent 1px, var(--os-scanline-color) 1px, var(--os-scanline-color) 2px);
   pointer-events: none;
   z-index: 1;
-  opacity: 1;
 }
 
-[data-theme="glass"] .mainBackground::before {
-  background-image: none;
-  opacity: 0;
-}
-
-/* Noise texture — only on classic */
+/* Film grain, likewise dialled per theme via `--os-noise-opacity`. */
 .mainBackground::after {
   content: '';
   position: absolute;
   inset: 0;
-  opacity: 0.03;
+  opacity: var(--os-noise-opacity);
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   pointer-events: none;
   z-index: 1;
-}
-
-[data-theme="glass"] .mainBackground::after {
-  opacity: 0;
 }
 
 .gradient-orb {
@@ -165,16 +274,40 @@ html, body {
 [data-theme="glass"] .gradient-orb-2 { background: radial-gradient(circle, rgba(175,82,222,0.18) 0%, transparent 70%); }
 [data-theme="glass"] .gradient-orb-3 { background: radial-gradient(circle, rgba(52,211,153,0.12) 0%, transparent 70%); }
 
+/*
+ * Light theme: the orbs are the only thing keeping a pale desktop from reading
+ * flat, but light-on-light disappears — so they tint *downward* into the
+ * wallpaper rather than glowing out of it.
+ */
+[data-theme="light"] .gradient-orb { opacity: 0.55; }
+[data-theme="light"] .gradient-orb-1 { background: radial-gradient(circle, rgba(74,58,173,0.14) 0%, transparent 70%); }
+[data-theme="light"] .gradient-orb-2 { background: radial-gradient(circle, rgba(196,160,53,0.16) 0%, transparent 70%); }
+[data-theme="light"] .gradient-orb-3 { background: radial-gradient(circle, rgba(64,120,180,0.12) 0%, transparent 70%); }
+
 @keyframes orb-float-1 { 0%, 100% { transform: translate(0,0); } 33% { transform: translate(60px,40px); } 66% { transform: translate(-30px,20px); } }
 @keyframes orb-float-2 { 0%, 100% { transform: translate(0,0); } 33% { transform: translate(-40px,-30px); } 66% { transform: translate(30px,-15px); } }
 @keyframes orb-float-3 { 0%, 100% { transform: translate(0,0); } 50% { transform: translate(-70px,-40px); } }
 
-/* Wallpaper variants (classic only) */
+/*
+ * Wallpaper variants. The `default` wallpaper is the theme's own
+ * `--os-bg-image`, so it needs no class — `Desktop` only adds one for the
+ * other five.
+ *
+ * Each has a dark and a light rendition; keep these in step with the
+ * `gradient` / `lightGradient` pairs in `@/shared/config/theme`, which the
+ * Settings swatches read from.
+ */
 .mainBackground.wallpaper-midnight { background-image: linear-gradient(180deg, #08081a, #0e0e2a, #1a1a3e); }
 .mainBackground.wallpaper-ocean { background-image: linear-gradient(180deg, #081020, #0e1e35, #1a3050); }
 .mainBackground.wallpaper-forest { background-image: linear-gradient(180deg, #081208, #0e1e0e, #1a301a); }
 .mainBackground.wallpaper-rose { background-image: linear-gradient(180deg, #18101a, #2a1a22, #3a2a32); }
 .mainBackground.wallpaper-ember { background-image: linear-gradient(180deg, #140e05, #2a1a08, #3a2a10); }
+
+[data-theme="light"] .mainBackground.wallpaper-midnight { background-image: linear-gradient(180deg, #eef1fa, #dde3f5, #c8d1ec); }
+[data-theme="light"] .mainBackground.wallpaper-ocean { background-image: linear-gradient(180deg, #eaf4fa, #d5e8f4, #bcd9ec); }
+[data-theme="light"] .mainBackground.wallpaper-forest { background-image: linear-gradient(180deg, #edf6ec, #dcecda, #c4e0c1); }
+[data-theme="light"] .mainBackground.wallpaper-rose { background-image: linear-gradient(180deg, #fbeef3, #f4dde7, #ecc9d8); }
+[data-theme="light"] .mainBackground.wallpaper-ember { background-image: linear-gradient(180deg, #fdf3e6, #f8e6cd, #f2d6ae); }
 
 /* ============================
    DESKTOP ICONS
@@ -201,14 +334,18 @@ html, body {
 }
 [data-theme="glass"] .desktop-icon { border-radius: 12px; }
 
-.desktop-icon:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.1); }
-.desktop-icon.selected { background: rgba(106,90,205,0.15); border-color: rgba(106,90,205,0.3); }
-[data-theme="glass"] .desktop-icon:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.15); }
-[data-theme="glass"] .desktop-icon.selected { background: rgba(0,122,255,0.15); border-color: rgba(0,122,255,0.3); }
+.desktop-icon:hover {
+  background: var(--os-desktop-icon-hover-bg);
+  border-color: var(--os-desktop-icon-hover-border);
+}
+.desktop-icon.selected {
+  background: var(--os-desktop-icon-active-bg);
+  border-color: var(--os-desktop-icon-active-border);
+}
 
 .desktop-icon img {
   width: 36px; height: 36px;
-  filter: brightness(0) invert(1) drop-shadow(0 1px 2px rgba(0,0,0,0.4));
+  filter: var(--os-desktop-icon-filter);
   opacity: 0.85;
   /*
    * No transform here — the button itself is scaled by Framer Motion on hover
@@ -221,7 +358,7 @@ html, body {
 }
 .desktop-icon:hover img {
   opacity: 1;
-  filter: brightness(0) invert(1) drop-shadow(0 2px 5px rgba(0,0,0,0.5));
+  filter: var(--os-desktop-icon-filter-hover);
 }
 
 .desktop-icon span {
@@ -465,11 +602,6 @@ html, body {
   display: none !important;
 }
 
-/* Glass theme: taskbar icon filters */
-[data-theme="glass"] .taskbar img {
-  filter: brightness(0) invert(1) !important;
-}
-
 /* Quick action buttons */
 .quick-action-btn {
   display: flex;
@@ -602,5 +734,17 @@ html, body {
 }
 
 .start-menu-row:active { background: var(--os-accent-hover); }
-.start-menu-row img { transition: filter var(--os-dur-fast) var(--os-ease); }
-.start-menu-row:hover img { filter: brightness(0) invert(1) !important; }
+
+/*
+ * The row's icon tint lives here rather than inline on the <img>, so the hover
+ * rule can simply override it. As an inline style it outranked this rule and
+ * needed `!important` to win.
+ */
+.start-menu-row img {
+  opacity: 0.6;
+  filter: var(--os-icon-filter);
+  transition: filter var(--os-dur-fast) var(--os-ease);
+}
+
+/* Hovered rows fill with the accent colour, so their icon goes white in every theme. */
+.start-menu-row:hover img { filter: brightness(0) invert(1); }
