@@ -23,7 +23,7 @@ Built with **React 19**, **Vite**, **Tailwind CSS v4**, **Framer Motion**, and
 | **Projects** | Swiper carousel of projects fetched from Supabase, with demo + source links |
 | **Gallery** | Masonry image grid with a lightbox (Esc to close, download, view project) |
 | **Terminal** | Fake CLI — `help`, `about`, `projects`, `skills`, `neofetch`, `whoami`, `cowsay`, and more |
-| **Settings** | 2 chrome themes + 6 wallpapers, persisted to `localStorage` |
+| **Settings** | 3 chrome themes (+ follow-the-OS) and 6 wallpapers, persisted to `localStorage` |
 | **Taskbar** | Start menu, running-app buttons, live weather widget, real-time clock |
 | **Dashboard** | Supabase-auth-gated admin panel to manage projects and gallery images |
 
@@ -37,7 +37,7 @@ Built with **React 19**, **Vite**, **Tailwind CSS v4**, **Framer Motion**, and
 | Styling | Tailwind CSS v4, CSS custom properties (theming) |
 | Animation | Framer Motion |
 | Data | Supabase (Postgres + Auth), TanStack React Query v5 |
-| UI | Lucide React, Ant Design Icons |
+| UI | Lucide React |
 | Carousel | Swiper |
 | Hosting | Vercel (+ Speed Insights, serverless keep-alive) |
 
@@ -63,8 +63,9 @@ src/
 │   ├── constants.js         #   sizes, cascade, Z_LAYERS stacking scale
 │   ├── config/apps.js       #   window registry (id, icon, label, flags)
 │   ├── context/             #   OSProvider — composes the hooks below
-│   ├── hooks/               #   useOS, useWindowManager, useAppearance,
-│   │                        #   useWindowLayout, useResizable, useViewportSize
+│   ├── hooks/               #   useOSActions/Windows/Appearance, useWindowManager,
+│   │                        #   useAppearance, useWindowLayout, useResizable,
+│   │                        #   useViewportSize
 │   ├── registry/            #   app id → lazily-loaded window component
 │   ├── services/weather.js
 │   └── components/
@@ -80,12 +81,16 @@ src/
 ├── shared/                  # feature-agnostic building blocks
 │   ├── config/              #   profile.js (all personal copy), theme.js
 │   ├── constants/           #   fonts.js, palette.js
-│   ├── lib/                 #   supabase, queryClient, browser side effects
+│   ├── lib/                 #   supabase, queryClient, browser side effects,
+│   │                        #   motionFeatures (lazy Framer Motion bundle)
 │   ├── hooks/               #   useClock, useOutsideClick
 │   └── components/          #   ui/ (Panel, LockIcon) · feedback/ (errors, 404)
 │
 └── styles/index.css         # global CSS + --os-* theme variables
 ```
+
+Repo tooling lives in [`scripts/`](scripts/) — currently
+`check-theme-tokens.mjs`, run by `npm run lint:theme`.
 
 ### Design notes
 
@@ -102,12 +107,36 @@ src/
 - **Code splitting.** Each window is `lazy()`-imported by the registry, so a
   feature's dependencies (Swiper, Supabase, the admin surface) stay out of the
   initial bundle and load when that window is first opened. Feature barrels
-  therefore export *only* the window, as the default.
+  therefore export *only* the window, as the default. On top of that,
+  `vite.config.js` splits React and React Query into long-lived vendor chunks
+  so an app change does not invalidate them, and Framer Motion's feature bundle
+  is loaded through `LazyMotion` *after* first paint — components use the
+  lightweight `m` rather than `motion`, which `strict` mode enforces.
 - **Layered data flow.** `api/` fetch raw data → `hooks/` wrap them in
   React Query → components consume hooks. Supabase/query details never leak into
   the view layer.
 - **Theming.** Chrome is driven by CSS custom properties (`--os-*`) in
-  `styles/index.css`; `useAppearance` toggles the `data-theme` attribute.
+  `styles/index.css`. Each theme is one `[data-theme="…"]` block that overrides
+  every token bare `:root` declares; `useAppearance` reflects the active theme
+  onto `<html>`. `classic` is what `:root` renders, so it carries no attribute.
+  The stored preference may be `system`, which resolves against
+  `prefers-color-scheme` and follows it live. A small inline script in
+  `index.html` stamps `data-theme` **before first paint** so the page never
+  flashes the wrong theme — it duplicates the storage key and theme names from
+  `shared/config/theme.js` on purpose, so change the two together.
+
+  A theme that forgets a token silently inherits the classic value rather than
+  failing, so `npm run lint:theme` diffs every theme block against `:root` and
+  exits non-zero on a gap or a typo. Run it after touching the token set.
+
+- **Re-render boundaries.** OS state is published as three contexts — actions,
+  windows, appearance (`os/context/osContext.js`) — read via
+  `useOSActions()` / `useOSWindows()` / `useOSAppearance()`. Take the narrowest
+  one a component actually needs: a single merged context meant every window
+  open, close and focus re-rendered the entire shell, including components that
+  only ever call `openWindow`. The actions value never changes identity.
+  `WindowContent` is memoized on `id` for the same reason, so focusing one
+  window does not re-render the body of every other open window.
 - **Resilience.** An `ErrorBoundary` wraps the app root (full-screen crash
   screen) and each window individually — a single broken window shows an inline
   error while the rest of the desktop keeps running. Unknown window ids render a
@@ -135,8 +164,10 @@ npm run dev
 npm run build
 npm run preview
 
-# Lint
+# Lint (ESLint, plus the theme-token parity check)
 npm run lint
+npm run lint:theme
+npm run check      # both
 ```
 
 ## Environment Variables
@@ -198,6 +229,21 @@ external cron (e.g. cron-job.org) at `/api/keep-alive` to keep the database warm
 
 Optional: set `CRON_SECRET` in your Vercel + cron provider to lock down the
 keep-alive endpoint.
+
+## Accessibility & Motion
+
+- **Reduced motion.** The looping background animations — the drifting gradient
+  orbs, the skeleton shimmer, the terminal's thinking dots — stop under
+  `prefers-reduced-motion: reduce`. Short hover and press transitions are
+  responses to direct input and are left alone.
+- **Contrast.** The light theme's text tokens were checked against WCAG AA for
+  the pairs that carry meaning: body text ≈15:1 on window content, secondary
+  ≈7.3:1, muted ≈4.6:1, and white window titles ≈4.8:1 at the lightest stop of
+  the title-bar gradient (they are 12px, so they need the full 4.5:1).
+- **Colour scheme.** Each theme declares `color-scheme`, so native scrollbars
+  and form controls follow the chosen theme rather than the OS default.
+
+---
 
 ## Deployment
 
