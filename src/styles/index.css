@@ -454,8 +454,14 @@ html, body {
   box-shadow: var(--os-window-shadow);
   overflow: hidden;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  min-width: 400px;
-  min-height: 300px;
+  /*
+   * A flat `min-width: 400px` is wider than a phone viewport (360–390px), so a
+   * window overflowed the screen it opened on and could not be narrowed to
+   * fit. These floors now yield to the viewport when it is the smaller of the
+   * two — matching the same clamp in `useResizable`.
+   */
+  min-width: min(400px, calc(100vw - 8px));
+  min-height: min(300px, calc(100vh - 8px));
   transition: box-shadow 0.2s ease;
 }
 
@@ -465,7 +471,19 @@ html, body {
   border: var(--os-glass-border);
 }
 
-.resize-handle { position: absolute; background: transparent; z-index: 1001; user-select: none; }
+/*
+ * `touch-action: none` is what makes resizing work with a finger at all.
+ * Without it the browser claims the gesture as a scroll and stops sending
+ * pointermove to the handle, so the drag dies after the first event.
+ */
+.resize-handle {
+  position: absolute;
+  background: transparent;
+  z-index: 1001;
+  user-select: none;
+  touch-action: none;
+}
+
 .resize-top { top: 0; left: 6px; right: 6px; height: 6px; cursor: ns-resize; }
 .resize-right { top: 6px; right: 0; bottom: 6px; width: 6px; cursor: ew-resize; }
 .resize-bottom { bottom: 0; left: 6px; right: 6px; height: 6px; cursor: ns-resize; }
@@ -474,6 +492,23 @@ html, body {
 .resize-top-right { top: 0; right: 0; width: 12px; height: 12px; cursor: nesw-resize; z-index: 1002; }
 .resize-bottom-left { bottom: 0; left: 0; width: 12px; height: 12px; cursor: nesw-resize; z-index: 1002; }
 .resize-bottom-right { bottom: 0; right: 0; width: 12px; height: 12px; cursor: nwse-resize; z-index: 1002; }
+
+/*
+ * A 6px target is a mouse affordance; a fingertip is closer to 40px. Enlarge
+ * the handles where the pointer is coarse — deliberately kept modest, because
+ * the top edge overlaps the title bar and the whole title bar needs to stay
+ * grabbable for dragging.
+ */
+@media (pointer: coarse) {
+  .resize-top { left: 14px; right: 14px; height: 10px; }
+  .resize-right { top: 14px; bottom: 14px; width: 10px; }
+  .resize-bottom { left: 14px; right: 14px; height: 10px; }
+  .resize-left { top: 14px; bottom: 14px; width: 10px; }
+  .resize-top-left,
+  .resize-top-right,
+  .resize-bottom-left,
+  .resize-bottom-right { width: 22px; height: 22px; }
+}
 
 /* ============================
    WINDOW HEADER

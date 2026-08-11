@@ -74,7 +74,7 @@ const DraggableWindow = ({
         <div
           key={direction}
           className={`resize-handle resize-${direction}`}
-          onMouseDown={(e) => startResize(direction, e)}
+          onPointerDown={(e) => startResize(direction, e)}
         />
       ))}
 

@@ -9,9 +9,9 @@ import StatusMessage from '@/shared/components/feedback/StatusMessage'
 import { useProjects } from './hooks/useProjects'
 import ProjectCard from './components/ProjectCard'
 import ProjectsSkeleton from './components/ProjectsSkeleton'
-import { AUTOPLAY_DELAY, SLIDE_HEIGHT, SLIDE_WIDTH } from './constants'
+import { AUTOPLAY_DELAY, SLIDE_HEIGHT, SLIDE_WIDTH_CSS } from './constants'
 
-const slideStyle = { width: `${SLIDE_WIDTH}px`, height: `${SLIDE_HEIGHT}px`, padding: '8px' }
+const slideStyle = { width: SLIDE_WIDTH_CSS, height: `${SLIDE_HEIGHT}px`, padding: '8px' }
 
 // Position and centring come from the stylesheet so the hover/press rules can
 // build on the transform instead of losing to an inline one.

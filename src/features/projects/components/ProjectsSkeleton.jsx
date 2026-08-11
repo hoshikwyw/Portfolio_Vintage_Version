@@ -1,5 +1,5 @@
 import Skeleton, { SkeletonText } from '@/shared/components/ui/Skeleton'
-import { SLIDE_HEIGHT, SLIDE_WIDTH } from '../constants'
+import { SLIDE_HEIGHT, SLIDE_WIDTH_CSS } from '../constants'
 
 const CARD_COUNT = 3
 
@@ -8,7 +8,9 @@ const CardSkeleton = () => (
   <div
     className="flex flex-col gap-2 flex-shrink-0"
     style={{
-      width: SLIDE_WIDTH - 16,
+      // Tracks the real slide width so the placeholder does not overflow a
+      // phone-width window while the cards it stands in for would fit.
+      width: `calc(${SLIDE_WIDTH_CSS} - 16px)`,
       height: SLIDE_HEIGHT - 16,
       background: 'var(--os-panel-bg)',
       border: '2px solid var(--os-border-dark)',
