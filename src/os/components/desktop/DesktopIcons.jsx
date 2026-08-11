@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { useOS } from '@/os/hooks/useOS'
 import { apps } from '@/os/config/apps'
 import { Z_LAYERS } from '@/os/constants'
@@ -19,7 +19,7 @@ const DesktopIcons = () => {
   const { openWindow } = useOS()
 
   return (
-    <motion.div
+    <m.div
       className="absolute top-5 left-5 grid grid-cols-2 sm:grid-cols-1 gap-1"
       style={{ zIndex: Z_LAYERS.desktopItem }}
       variants={containerVariants}
@@ -27,7 +27,7 @@ const DesktopIcons = () => {
       animate="visible"
     >
       {apps.map((app) => (
-        <motion.button
+        <m.button
           key={app.id}
           className="desktop-icon"
           variants={iconVariants}
@@ -37,9 +37,9 @@ const DesktopIcons = () => {
         >
           {app.locked ? <LockIcon size={36} variant="desktop" /> : <img src={app.icon} alt={app.label} draggable={false} />}
           <span>{app.label}</span>
-        </motion.button>
+        </m.button>
       ))}
-    </motion.div>
+    </m.div>
   )
 }
 

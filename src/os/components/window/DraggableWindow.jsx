@@ -1,4 +1,4 @@
-import { motion, useDragControls, useMotionValue } from 'framer-motion'
+import { m, useDragControls, useMotionValue } from 'framer-motion'
 import { RESIZE_DIRECTIONS, Z_LAYERS } from '@/os/constants'
 import { useResizable } from '@/os/hooks/useResizable'
 import WindowContent from '@/os/registry/windowRegistry'
@@ -38,7 +38,7 @@ const DraggableWindow = ({
   }
 
   return (
-    <motion.div
+    <m.div
       className="windowFrame resizable"
       // Only opacity and scale are animated: `y` is already bound to the
       // dragY motion value below, and animating it here would fight the drag.
@@ -89,7 +89,7 @@ const DraggableWindow = ({
       <div className="windowContent project-container" style={{ flex: 1, overflow: 'auto' }}>
         <WindowContent id={id} />
       </div>
-    </motion.div>
+    </m.div>
   )
 }
 

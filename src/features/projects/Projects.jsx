@@ -4,7 +4,7 @@ import { Navigation, Autoplay } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/autoplay'
-import { LeftOutlined, RightOutlined } from '@ant-design/icons'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import StatusMessage from '@/shared/components/feedback/StatusMessage'
 import { useProjects } from './hooks/useProjects'
 import ProjectCard from './components/ProjectCard'
@@ -64,8 +64,8 @@ const Projects = () => {
         <SwiperSlide style={slideStyle} />
       </Swiper>
 
-      <NavButton side="prev" innerRef={prevRef}><LeftOutlined style={{ fontSize: '14px' }} /></NavButton>
-      <NavButton side="next" innerRef={nextRef}><RightOutlined style={{ fontSize: '14px' }} /></NavButton>
+      <NavButton side="prev" innerRef={prevRef}><ChevronLeft size={16} /></NavButton>
+      <NavButton side="next" innerRef={nextRef}><ChevronRight size={16} /></NavButton>
     </div>
   )
 }

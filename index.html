@@ -63,6 +63,17 @@
     <meta name="twitter:description" content="Creative frontend developer from Myanmar. Building smooth UIs with React, Tailwind CSS, and Next.js." />
     <meta name="twitter:image" content="https://kayv-portfolio-vintage-version.vercel.app/myPf.png" />
 
+    <!--
+      Warm up the two third-party origins the desktop hits on load: Supabase
+      (projects + gallery) and OpenWeather (taskbar tray). Both are reached
+      from JS after hydration, so opening the TCP/TLS connection now removes a
+      round trip from the first request. `crossorigin` is required for the
+      preconnect to be reused by the CORS fetches that follow.
+    -->
+    <link rel="preconnect" href="%VITE_SUPABASE_URL%" crossorigin />
+    <link rel="preconnect" href="https://api.openweathermap.org" crossorigin />
+    <link rel="dns-prefetch" href="https://api.openweathermap.org" />
+
     <!-- Favicon & Manifest -->
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/favicon.png" />

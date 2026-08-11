@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { Mail, Download, Search } from 'lucide-react'
 import { useOS } from '@/os/hooks/useOS'
 import { startMenuApps } from '@/os/config/apps'
@@ -40,7 +40,7 @@ const StartMenu = ({ onClose }) => {
   ]
 
   return (
-    <motion.div
+    <m.div
       ref={ref}
       initial={{ opacity: 0, y: 20, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -121,7 +121,7 @@ const StartMenu = ({ onClose }) => {
           </div>
         </div>
       </div>
-    </motion.div>
+    </m.div>
   )
 }
 

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { m, AnimatePresence } from 'framer-motion'
 import { useOS } from '@/os/hooks/useOS'
 import { getApp, getAppLabel } from '@/os/config/apps'
 import { Z_LAYERS } from '@/os/constants'
@@ -11,7 +11,7 @@ import SystemTray from './SystemTray'
 
 /** A single running-app button in the taskbar. */
 const AppButton = ({ id, isMinimized, onClick }) => (
-  <motion.button
+  <m.button
     onClick={onClick}
     className="flex items-center gap-1.5 h-7 px-2 cursor-pointer flex-shrink-0"
     style={{
@@ -36,11 +36,11 @@ const AppButton = ({ id, isMinimized, onClick }) => (
     <span className="text-[10px] font-semibold hidden sm:inline" style={{ color: isMinimized ? 'var(--os-text-muted)' : 'var(--os-text)' }}>
       {getAppLabel(id)}
     </span>
-  </motion.button>
+  </m.button>
 )
 
 const StartButton = ({ isOpen, onToggle }) => (
-  <motion.button
+  <m.button
     onClick={onToggle}
     className="flex items-center gap-1.5 h-7 px-2.5 cursor-pointer"
     style={{
@@ -53,7 +53,7 @@ const StartButton = ({ isOpen, onToggle }) => (
     whileHover={{ filter: 'brightness(1.08)' }}
     whileTap={{ scale: 0.95 }}
   >
-    <motion.div
+    <m.div
       className="w-4 h-4 rounded-sm flex items-center justify-center"
       style={{ background: 'var(--os-accent)', borderRadius: 'var(--os-btn-radius)' }}
       // The logo tile leads the press, so the button feels physically pushed.
@@ -61,9 +61,9 @@ const StartButton = ({ isOpen, onToggle }) => (
       transition={{ type: 'spring', stiffness: 500, damping: 22 }}
     >
       <span className="text-white text-[8px] font-black">K</span>
-    </motion.div>
+    </m.div>
     <span className="text-[11px] font-bold hidden sm:inline" style={{ color: 'var(--os-text)' }}>{profile.alias}</span>
-  </motion.button>
+  </m.button>
 )
 
 /** Start button, running-app list and system tray. */

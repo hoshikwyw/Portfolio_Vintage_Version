@@ -1,11 +1,11 @@
-import { motion } from 'framer-motion'
+import { m } from 'framer-motion'
 import { Z_LAYERS } from '@/os/constants'
 import WindowContent from '@/os/registry/windowRegistry'
 import { WindowTitleBar } from './WindowChrome'
 
 /** A window expanded to fill the viewport — no dragging, no resize handles. */
 const FullscreenWindow = ({ id, onFocus, onClose, onFullscreen, onMinimize }) => (
-  <motion.div
+  <m.div
     className="windowFrame"
     initial={{ opacity: 0, scale: 1.015 }}
     animate={{ opacity: 1, scale: 1 }}
@@ -33,7 +33,7 @@ const FullscreenWindow = ({ id, onFocus, onClose, onFullscreen, onMinimize }) =>
     <div className="windowContent project-container" style={{ flex: 1, overflow: 'auto' }}>
       <WindowContent id={id} />
     </div>
-  </motion.div>
+  </m.div>
 )
 
 export default FullscreenWindow
