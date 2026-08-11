@@ -548,7 +548,12 @@ html, body {
 /* ============================
    SWIPER / PROJECT CARDS
    ============================ */
-.project-card { flex: 0 0 auto; width: clamp(350px,25%,450px); height: clamp(500px,30vh,450px); transition: transform 0.2s ease; }
+/*
+ * `.project-card` used to live here. Nothing rendered it — the slides size
+ * themselves from SLIDE_WIDTH/SLIDE_HEIGHT — and its `height:
+ * clamp(500px,30vh,450px)` was malformed anyway: with a minimum above the
+ * maximum, clamp() resolves to the minimum, so it claimed 500px regardless.
+ */
 .swiper { width: 100%; height: 100%; overflow: hidden; scrollbar-width: none; }
 .swiper-slide { display: flex; justify-content: center; align-items: center; }
 

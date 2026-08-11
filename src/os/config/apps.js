@@ -5,11 +5,30 @@
  * z-index focus — so it must stay stable. Icons, labels and behaviour flags
  * are declared once here and consumed by the desktop icons, taskbar, start
  * menu and window chrome, replacing four separate hand-maintained maps.
+ *
+ * `initialSize` is optional: windows without one open at a fraction of the
+ * desktop (see `WINDOW_INITIAL_*_RATIO`). Declare it for a window whose
+ * content has a fixed size that the default would clip.
  */
 
 export const apps = [
   { id: 'Home', icon: 'icons/home.svg', label: 'About Me', inStartMenu: true },
-  { id: 'Projects', icon: 'icons/openFolder.svg', label: 'Projects', inStartMenu: true },
+  {
+    id: 'Projects',
+    icon: 'icons/openFolder.svg',
+    label: 'Projects',
+    inStartMenu: true,
+    /*
+     * The carousel slide is a fixed 420px tall, so the default height ratio
+     * clipped the cards' action buttons on shorter viewports. 560 leaves
+     * ~500px of content area: the 420px slide, its 12px margins, and slack.
+     *
+     * A literal rather than an import from the projects slice — the window
+     * registry is meant to be the only place the shell reaches into a
+     * feature. Revisit alongside SLIDE_HEIGHT in `features/projects/constants`.
+     */
+    initialSize: { width: 860, height: 560 },
+  },
   { id: 'Gallery', icon: 'icons/gallery.svg', label: 'Gallery', inStartMenu: true },
   { id: 'Send-Message', icon: 'icons/terminal.svg', label: 'Terminal', inStartMenu: true },
   { id: 'Settings', icon: 'icons/settings.svg', label: 'Settings', inStartMenu: true },
