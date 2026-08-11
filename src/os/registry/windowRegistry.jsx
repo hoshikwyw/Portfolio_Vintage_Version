@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react'
+import { lazy, memo, Suspense } from 'react'
 import ErrorBoundary from '@/shared/components/feedback/ErrorBoundary'
 import NotFound from '@/shared/components/feedback/NotFound'
 import WindowSkeleton from '@/shared/components/feedback/WindowSkeleton'
@@ -27,8 +27,15 @@ const windowRegistry = {
  * Render the window body for a given app id. Unknown ids fall back to a 404,
  * and every window is wrapped in its own error boundary so one crashing app
  * shows an inline error instead of taking down the whole desktop.
+ *
+ * Memoized on `id`, which is the only thing it renders from.
+ *
+ * Without this, anything that re-rendered `WindowLayer` — focusing a window,
+ * dragging one, a resize event — re-rendered the *body* of every open window
+ * along with it. Clicking between two windows would re-run the Projects
+ * carousel and the Gallery grid each time, despite neither having changed.
  */
-const WindowContent = ({ id }) => {
+const WindowContent = memo(({ id }) => {
   const Window = windowRegistry[id]
   if (!Window) return <NotFound title={id} />
 
@@ -39,6 +46,8 @@ const WindowContent = ({ id }) => {
       </Suspense>
     </ErrorBoundary>
   )
-}
+})
+
+WindowContent.displayName = 'WindowContent'
 
 export default WindowContent

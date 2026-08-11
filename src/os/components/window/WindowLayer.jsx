@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { AnimatePresence } from 'framer-motion'
-import { useOS } from '@/os/hooks/useOS'
+import { useOSActions, useOSWindows } from '@/os/hooks/useOS'
 import { useViewportSize } from '@/os/hooks/useViewportSize'
 import { useWindowLayout } from '@/os/hooks/useWindowLayout'
 import { TASKBAR_HEIGHT, Z_LAYERS } from '@/os/constants'
@@ -12,10 +12,8 @@ import FullscreenWindow from './FullscreenWindow'
  * is the window manager) — only how they are laid out and stacked.
  */
 const WindowLayer = () => {
-  const {
-    openWindows, visibleWindows, focusedWindow,
-    closeWindow, minimizeWindow, focusWindow,
-  } = useOS()
+  const { openWindows, visibleWindows, focusedWindow } = useOSWindows()
+  const { closeWindow, minimizeWindow, focusWindow } = useOSActions()
 
   const viewport = useViewportSize()
   const {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useOS } from '@/os/hooks/useOS'
+import { useOSActions } from '@/os/hooks/useOS'
 import { Z_LAYERS } from '@/os/constants'
 import { system } from '@/shared/config/profile'
 import { FONT_STACK } from '@/shared/constants/fonts'
@@ -16,7 +16,7 @@ const links = [
 
 /** First-visit welcome dialog (shown once per session). */
 const WelcomeDialog = () => {
-  const { openWindow } = useOS()
+  const { openWindow } = useOSActions()
   const [show, setShow] = useState(false)
 
   useEffect(() => {

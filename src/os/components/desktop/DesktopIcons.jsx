@@ -1,5 +1,5 @@
 import { m } from 'framer-motion'
-import { useOS } from '@/os/hooks/useOS'
+import { useOSActions } from '@/os/hooks/useOS'
 import { apps } from '@/os/config/apps'
 import { Z_LAYERS } from '@/os/constants'
 import LockIcon from '@/shared/components/ui/LockIcon'
@@ -16,7 +16,7 @@ const iconVariants = {
 
 /** Desktop shortcuts, one per registered app. */
 const DesktopIcons = () => {
-  const { openWindow } = useOS()
+  const { openWindow } = useOSActions()
 
   return (
     <m.div

@@ -97,7 +97,7 @@ const Terminal = () => {
             <div key={idx} className="whitespace-pre-wrap select-text leading-relaxed mb-0.5">{line}</div>
           ))}
           {isRunning && (
-            <div className="flex items-center gap-0.5" style={{ color: 'var(--os-terminal-prompt)' }}>
+            <div className="os-terminal-dots flex items-center gap-0.5" style={{ color: 'var(--os-terminal-prompt)' }}>
               <span className="dot">.</span><span className="dot">.</span><span className="dot">.</span>
             </div>
           )}
@@ -122,19 +122,6 @@ const Terminal = () => {
           />
         </form>
 
-        <style>{`
-          .dot {
-            animation: blink-dot 1.4s infinite ease-in-out both;
-            font-size: 20px;
-            line-height: 1;
-          }
-          .dot:nth-child(1) { animation-delay: -0.32s; }
-          .dot:nth-child(2) { animation-delay: -0.16s; }
-          @keyframes blink-dot {
-            0%, 80%, 100% { opacity: 0.2; }
-            40% { opacity: 1; }
-          }
-        `}</style>
       </div>
     </div>
   )

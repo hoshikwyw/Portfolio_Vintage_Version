@@ -22,6 +22,9 @@ const ProfileSummary = () => (
             src={profile.avatar}
             alt={profile.alias}
             className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+            width={120}
+            height={120}
+            decoding="async"
           />
         </div>
         <h1 className="text-xl font-bold tracking-wider uppercase text-center" style={{ color: 'var(--os-text)' }}>

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { m, AnimatePresence } from 'framer-motion'
-import { useOS } from '@/os/hooks/useOS'
+import { useOSActions, useOSWindows } from '@/os/hooks/useOS'
 import { getApp, getAppLabel } from '@/os/config/apps'
 import { Z_LAYERS } from '@/os/constants'
 import { profile } from '@/shared/config/profile'
@@ -68,7 +68,8 @@ const StartButton = ({ isOpen, onToggle }) => (
 
 /** Start button, running-app list and system tray. */
 const Taskbar = () => {
-  const { openWindows, minimizedWindows, activateWindow } = useOS()
+  const { openWindows, minimizedWindows } = useOSWindows()
+  const { activateWindow } = useOSActions()
   const [startOpen, setStartOpen] = useState(false)
 
   return (

@@ -1,4 +1,4 @@
-import { useOS } from '@/os/hooks/useOS'
+import { useOSActions, useOSAppearance } from '@/os/hooks/useOS'
 import Panel from '@/shared/components/ui/Panel'
 import { FONT_STACK } from '@/shared/constants/fonts'
 import { profile, system } from '@/shared/config/profile'
@@ -14,7 +14,8 @@ const aboutRows = [
 
 /** Appearance preferences plus a read-only "about this system" panel. */
 const Settings = () => {
-  const { wallpaper, setWallpaper, theme, resolvedTheme, setTheme } = useOS()
+  const { wallpaper, theme, resolvedTheme } = useOSAppearance()
+  const { setWallpaper, setTheme } = useOSActions()
 
   return (
     <div className="w-full h-full overflow-y-auto p-4" style={{ fontFamily: FONT_STACK }}>

@@ -34,6 +34,9 @@ const CardCover = ({ src, alt, isComingSoon }) => {
           src={src}
           alt={alt}
           className="os-card-media w-full h-full object-cover relative z-10"
+          // Only the first slide or two are on screen when the window opens.
+          loading="lazy"
+          decoding="async"
           onLoad={() => setLoaded(true)}
         />
       )}

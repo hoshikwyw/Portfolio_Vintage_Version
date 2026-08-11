@@ -741,9 +741,54 @@ html, body {
   to { transform: translateX(100%); }
 }
 
-/* The sheen loops forever, so let it settle for anyone who asks for less motion. */
+/* ============================
+   TERMINAL "THINKING" DOTS
+   ============================ */
+
+/*
+ * Previously an inline <style> block inside Terminal.jsx, which React
+ * re-inserted into the document on every mount of that window.
+ */
+.os-terminal-dots .dot {
+  animation: blink-dot 1.4s infinite ease-in-out both;
+  font-size: 20px;
+  line-height: 1;
+}
+.os-terminal-dots .dot:nth-child(1) { animation-delay: -0.32s; }
+.os-terminal-dots .dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes blink-dot {
+  0%, 80%, 100% { opacity: 0.2; }
+  40% { opacity: 1; }
+}
+
+/* ============================
+   REDUCED MOTION
+   ============================ */
+
+/*
+ * Everything here loops forever with no user action behind it, which is
+ * exactly what `prefers-reduced-motion` is asking us to stop. Deliberately
+ * targeted rather than a blanket `* { animation: none }` — the hover and press
+ * transitions are short, intentional responses to input and stay.
+ */
 @media (prefers-reduced-motion: reduce) {
   .os-skeleton::after { animation: none; }
+
+  /*
+   * The three blurred orbs drift on a 25–35s loop. Dropping `will-change` as
+   * well as the animation matters: on its own it keeps three 400px layers
+   * promoted and composited for a drift that is no longer happening.
+   */
+  .gradient-orb {
+    animation: none;
+    will-change: auto;
+  }
+
+  .os-terminal-dots .dot {
+    animation: none;
+    opacity: 0.6;
+  }
 }
 
 /*

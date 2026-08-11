@@ -13,6 +13,11 @@ const GalleryTile = ({ image, onSelect }) => {
           src={image.image_url}
           alt={title || `Image ${image.id}`}
           className={`project-image ${loaded ? 'loaded' : ''}`}
+          // Off-screen tiles in the masonry wall should not compete with the
+          // visible ones for bandwidth, and decoding off the main thread keeps
+          // the grid scrollable while they arrive.
+          loading="lazy"
+          decoding="async"
           onLoad={() => setLoaded(true)}
         />
         <div className="image-label">

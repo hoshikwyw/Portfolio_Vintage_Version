@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useOS } from '@/os/hooks/useOS'
+import { useOSActions } from '@/os/hooks/useOS'
 import { Z_LAYERS } from '@/os/constants'
 import { profile } from '@/shared/config/profile'
 import { FONT_STACK } from '@/shared/constants/fonts'
@@ -12,9 +12,10 @@ const OPAQUE_TO_CONTEXT_MENU = ['.windowFrame', '.taskbar', '.desktop-icon', '[d
 
 /** Right-click menu for the desktop background. */
 const DesktopContextMenu = () => {
-  const { openWindow } = useOS()
+  const { openWindow } = useOSActions()
   const [position, setPosition] = useState(null)
 
+  // Opening the menu is the only thing that needs a permanent listener.
   useEffect(() => {
     const handleContext = (e) => {
       // Only trigger on the desktop background, not on windows/taskbar/icons.
@@ -23,17 +24,29 @@ const DesktopContextMenu = () => {
       setPosition({ x: e.clientX, y: e.clientY })
     }
 
+    document.addEventListener('contextmenu', handleContext)
+    return () => document.removeEventListener('contextmenu', handleContext)
+  }, [])
+
+  /*
+   * The dismiss listeners only exist while the menu is on screen. They used to
+   * be attached for the lifetime of the desktop, which meant every click and
+   * every scroll frame ran a handler that had nothing to close — and the
+   * scroll one was non-passive, so the browser had to wait on it before it
+   * could scroll.
+   */
+  useEffect(() => {
+    if (!position) return
+
     const close = () => setPosition(null)
 
-    document.addEventListener('contextmenu', handleContext)
     document.addEventListener('click', close)
-    document.addEventListener('scroll', close)
+    document.addEventListener('scroll', close, { passive: true, capture: true })
     return () => {
-      document.removeEventListener('contextmenu', handleContext)
       document.removeEventListener('click', close)
-      document.removeEventListener('scroll', close)
+      document.removeEventListener('scroll', close, { capture: true })
     }
-  }, [])
+  }, [position])
 
   const items = useMemo(() => [
     { label: 'Open About Me', action: () => openWindow('Home') },

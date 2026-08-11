@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { m } from 'framer-motion'
 import { Mail, Download, Search } from 'lucide-react'
-import { useOS } from '@/os/hooks/useOS'
+import { useOSActions } from '@/os/hooks/useOS'
 import { startMenuApps } from '@/os/config/apps'
 import { Z_LAYERS } from '@/os/constants'
 import { profile } from '@/shared/config/profile'
@@ -19,7 +19,7 @@ const MenuRow = ({ icon, label, onClick }) => (
 )
 
 const StartMenu = ({ onClose }) => {
-  const { openWindow } = useOS()
+  const { openWindow } = useOSActions()
   const [query, setQuery] = useState('')
   const ref = useOutsideClick(onClose)
   const inputRef = useRef(null)
