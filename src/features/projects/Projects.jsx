@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Autoplay } from 'swiper/modules'
 import 'swiper/css'
@@ -28,8 +28,24 @@ const NavButton = ({ side, innerRef, children }) => (
 /** Horizontally scrolling carousel of portfolio projects. */
 const Projects = () => {
   const { data: projects, isLoading, isError } = useProjects()
-  const prevRef = useRef(null)
-  const nextRef = useRef(null)
+
+  /*
+   * The nav buttons are held in state rather than refs, which is what makes
+   * them work at all.
+   *
+   * swiper/react calls `new Swiper()` during *render* (see the `initSwiper()`
+   * call in swiper-react.mjs), so `onBeforeInit` fires before React has
+   * attached a single ref — both would have been null there, and Navigation
+   * would bind to nothing.
+   *
+   * Swiper does re-bind if its `navigation` prop changes between renders, but
+   * assigning to a ref does not cause a render, so that never happened. A
+   * callback ref writing to state does: the buttons mount, state flips from
+   * null to the elements, and the re-render hands Swiper a changed
+   * `navigation` prop, which re-runs `navigation.init()`.
+   */
+  const [prevEl, setPrevEl] = useState(null)
+  const [nextEl, setNextEl] = useState(null)
 
   if (isLoading) return <ProjectsSkeleton />
   if (isError) return <StatusMessage tone="error">Error loading projects</StatusMessage>
@@ -43,13 +59,8 @@ const Projects = () => {
         spaceBetween={12}
         centeredSlides={false}
         speed={800}
-        navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
+        navigation={{ prevEl, nextEl }}
         autoplay={{ delay: AUTOPLAY_DELAY, disableOnInteraction: true }}
-        // The nav elements only exist after first paint, so bind them here.
-        onBeforeInit={(swiper) => {
-          swiper.params.navigation.prevEl = prevRef.current
-          swiper.params.navigation.nextEl = nextRef.current
-        }}
         style={{ width: '100%', height: '100%', margin: '12px' }}
       >
         {/* Already sorted by sort_order from the query. */}
@@ -64,8 +75,8 @@ const Projects = () => {
         <SwiperSlide style={slideStyle} />
       </Swiper>
 
-      <NavButton side="prev" innerRef={prevRef}><ChevronLeft size={16} /></NavButton>
-      <NavButton side="next" innerRef={nextRef}><ChevronRight size={16} /></NavButton>
+      <NavButton side="prev" innerRef={setPrevEl}><ChevronLeft size={16} /></NavButton>
+      <NavButton side="next" innerRef={setNextEl}><ChevronRight size={16} /></NavButton>
     </div>
   )
 }

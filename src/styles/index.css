@@ -661,6 +661,19 @@ html, body {
   box-shadow: none;
 }
 
+/*
+ * Swiper adds `swiper-button-disabled` at the ends of the carousel. Its own
+ * stylesheet dims it, but that rule has the same specificity as
+ * `.custom-nav-button` above and loses on source order — so state it here,
+ * where it sits after the base rule and reliably wins.
+ */
+.custom-nav-button.swiper-button-disabled {
+  opacity: 0.3;
+  cursor: default;
+  box-shadow: none;
+  pointer-events: none;
+}
+
 [data-theme="glass"] .custom-nav-button {
   background: rgba(255,255,255,0.1);
   backdrop-filter: blur(10px);
