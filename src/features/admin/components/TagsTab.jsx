@@ -12,7 +12,8 @@ const TagChip = ({ tag, onDelete }) => (
     <button
       onClick={onDelete}
       aria-label={`Delete tag ${tag.name}`}
-      className="text-[10px] text-[#8a4040] hover:text-[#c04040] cursor-pointer font-bold leading-none"
+      className="text-[10px] cursor-pointer font-bold leading-none hover:brightness-125"
+      style={{ color: 'var(--os-danger)' }}
       style={{ background: 'none', border: 'none' }}
     >
       ×
@@ -60,7 +61,7 @@ const TagsTab = ({ tags, flash, flashError }) => {
             placeholder="Tag name..."
             className="flex-1 text-[11px] px-1.5 py-1 outline-none"
             style={{
-              border: `2px inset ${adminColors.borderField}`,
+              border: 'var(--os-input-border)',
               background: adminColors.field,
               borderRadius: '1px',
               color: adminColors.text,

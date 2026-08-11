@@ -2,7 +2,22 @@ import { useEffect, useId, useRef, useState } from 'react'
 import { adminColors } from '@/features/admin/theme'
 
 const UploadGlyph = () => (
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke={adminColors.borderField} strokeWidth="1.5" className="mx-auto mb-1.5">
+  /*
+   * `stroke` is a presentation attribute, and `var()` does not resolve in one —
+   * now that adminColors are CSS variables, passing one here would silently
+   * fall back to black. `currentColor` picks the value up from the `color`
+   * style instead, which does resolve the token.
+   */
+  <svg
+    width="28"
+    height="28"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    className="mx-auto mb-1.5"
+    style={{ color: adminColors.borderField }}
+  >
     <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
     <polyline points="17 8 12 3 7 8" />
     <line x1="12" y1="3" x2="12" y2="15" />
@@ -40,7 +55,7 @@ const FilePreview = ({ file, onRemove }) => {
         aria-label={`Remove ${file.name}`}
         onClick={(e) => { e.stopPropagation(); onRemove() }}
         className="absolute -top-1 -right-1 w-4 h-4 rounded-full text-[9px] font-bold text-white flex items-center justify-center cursor-pointer"
-        style={{ background: adminColors.danger, border: '1px solid #6a2020', lineHeight: 1 }}
+        style={{ background: adminColors.danger, border: '1px solid var(--os-danger)', lineHeight: 1 }}
       >
         ×
       </button>
@@ -114,7 +129,7 @@ const ImageDropzone = ({ files, onChange }) => {
           <div>
             <UploadGlyph />
             <p className="text-[11px] font-semibold" style={{ color: adminColors.textMuted }}>Click or drag images here</p>
-            <p className="text-[9px] mt-0.5" style={{ color: '#8a8a8a' }}>PNG, JPG, WEBP</p>
+            <p className="text-[9px] mt-0.5" style={{ color: adminColors.textFaint }}>PNG, JPG, WEBP</p>
           </div>
         )}
       </div>

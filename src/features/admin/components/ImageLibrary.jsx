@@ -16,20 +16,20 @@ const ImageThumb = ({ image, onDelete }) => (
       className="w-full h-full object-cover"
       style={{
         border: `2px solid ${adminColors.borderField}`,
-        borderTopColor: '#d0c8b8',
-        borderLeftColor: '#d0c8b8',
-        borderRadius: '2px',
+        borderTopColor: adminColors.borderLight,
+        borderLeftColor: adminColors.borderLight,
+        borderRadius: 'var(--os-btn-radius)',
       }}
     />
     <div className="absolute bottom-0 left-0 right-0 flex gap-px">
       {image.is_cover && <Badge background={adminColors.accent}>Cover</Badge>}
       {image.show_in_gallery && <Badge background={adminColors.success}>Gallery</Badge>}
     </div>
-    <div className="absolute inset-0 bg-[#8a3030]/0 group-hover:bg-[#8a3030]/60 transition-colors flex items-center justify-center rounded-sm">
+    <div className="admin-delete-overlay absolute inset-0 flex items-center justify-center rounded-sm">
       <button
         onClick={onDelete}
         className="opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer px-2 py-0.5 text-[9px] font-bold text-white uppercase"
-        style={{ background: '#6a2020', border: '1px solid #4a1010', borderRadius: '2px' }}
+        style={{ background: 'var(--os-danger)', border: '1px solid var(--os-danger)', borderRadius: 'var(--os-btn-radius)' }}
       >
         Delete
       </button>
@@ -40,14 +40,14 @@ const ImageThumb = ({ image, onDelete }) => (
 const EmptySlot = () => (
   <div
     className="flex-shrink-0 flex items-center justify-center"
-    style={{ width: 90, height: 68, border: '2px dashed #b0a898', borderRadius: '2px', background: '#d8d0c0' }}
+    style={{ width: 90, height: 68, border: `2px dashed ${adminColors.borderField}`, borderRadius: 'var(--os-btn-radius)', background: 'var(--os-skeleton-bg)' }}
   >
     <span className="text-[18px]" style={{ color: adminColors.borderField }}>+</span>
   </div>
 )
 
 const ProjectImages = ({ project, images, onDelete }) => (
-  <div className="px-2 py-2" style={{ background: adminColors.window, border: `1px solid ${adminColors.borderField}`, borderRadius: '3px' }}>
+  <div className="px-2 py-2" style={{ background: adminColors.window, border: `1px solid ${adminColors.borderField}`, borderRadius: 'var(--os-btn-radius)' }}>
     <div className="flex items-center justify-between mb-2">
       <span className="text-[10px] font-bold uppercase tracking-wide" style={{ color: adminColors.text }}>
         {project.title}

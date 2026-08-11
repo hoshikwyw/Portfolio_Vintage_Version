@@ -60,12 +60,14 @@ export const Tab = ({ active, children, ...props }) => (
   <button
     className="px-3 py-1 text-[11px] font-bold uppercase tracking-wide cursor-pointer transition-[background,color,filter] duration-150 hover:brightness-105"
     style={{
-      background: active ? adminColors.panel : '#b0a898',
+      background: active ? adminColors.panel : 'var(--os-btn-bg)',
       border: `2px solid ${adminColors.borderDark}`,
-      borderTopColor: active ? adminColors.borderLight : '#d0c8b8',
-      borderLeftColor: active ? adminColors.borderLight : '#d0c8b8',
+      borderTopColor: adminColors.borderLight,
+      borderLeftColor: adminColors.borderLight,
       borderBottomColor: active ? adminColors.panel : adminColors.borderDark,
-      borderRadius: '3px 3px 0 0',
+      borderRadius: 'var(--os-btn-radius) var(--os-btn-radius) 0 0',
+      // Inactive tabs sit back rather than using a second hardcoded beige.
+      opacity: active ? 1 : 0.72,
       color: active ? adminColors.text : adminColors.textMuted,
       // Overlap the panel border so the active tab reads as connected to it.
       marginBottom: active ? '-2px' : 0,
@@ -88,10 +90,10 @@ export const Banner = ({ message }) => {
       role="status"
       className="mb-2 px-3 py-1.5 text-[11px] font-semibold"
       style={{
-        background: isError ? '#e8c8c8' : '#d8e8d8',
-        border: `1px solid ${isError ? '#c08080' : '#80a080'}`,
-        borderRadius: '2px',
-        color: isError ? '#8a2020' : '#2a4a2a',
+        background: isError ? 'var(--os-notice-error-bg)' : 'var(--os-notice-ok-bg)',
+        border: `1px solid ${isError ? 'var(--os-notice-error-border)' : 'var(--os-notice-ok-border)'}`,
+        borderRadius: 'var(--os-btn-radius)',
+        color: isError ? 'var(--os-notice-error-text)' : 'var(--os-notice-ok-text)',
       }}
     >
       {message.text}

@@ -25,7 +25,7 @@ Built with **React 19**, **Vite**, **Tailwind CSS v4**, **Framer Motion**, and
 | **Terminal** | Fake CLI — `help`, `about`, `projects`, `skills`, `neofetch`, `whoami`, `cowsay`, and more |
 | **Settings** | 3 chrome themes (+ follow-the-OS) and 6 wallpapers, persisted to `localStorage` |
 | **Taskbar** | Start menu, running-app buttons, live weather widget, real-time clock |
-| **Dashboard** | Supabase-auth-gated admin panel to manage projects and gallery images |
+| **Dashboard** | Supabase-auth-gated admin panel to manage projects and gallery images (follows the active theme like every other window) |
 
 ---
 

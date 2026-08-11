@@ -31,8 +31,22 @@
   --os-scrollbar-track: #e8e0d4;
   --os-scrollbar-thumb: linear-gradient(180deg, #c0b8a8, #a0a090);
   --os-danger: #8a3030;
+  --os-success: #4a8a4a;
+  --os-warning: #8a7030;
   /* Backdrop behind modal dialogs. */
   --os-scrim: rgba(0,0,0,0.4);
+  /* Wash over a thumbnail whose delete action is hovered. */
+  --os-danger-scrim: rgba(138,48,48,0.6);
+  /*
+   * Inline notices (the admin banners, login errors). Each tone needs its own
+   * fill, edge and text so it stays legible on a light *and* a dark panel.
+   */
+  --os-notice-ok-bg: #d8e8d8;
+  --os-notice-ok-border: #80a080;
+  --os-notice-ok-text: #2a4a2a;
+  --os-notice-error-bg: #e8c8c8;
+  --os-notice-error-border: #c08080;
+  --os-notice-error-text: #8a2020;
   /*
    * Terminal palette. The shell had tokens for its background and body text
    * only, so every *content* colour — prompt segments, paths, errors, the
@@ -124,7 +138,16 @@
   --os-scrollbar-track: rgba(255, 255, 255, 0.03);
   --os-scrollbar-thumb: linear-gradient(180deg, rgba(255,255,255,0.15), rgba(255,255,255,0.08));
   --os-danger: #f87171;
+  --os-success: #34d399;
+  --os-warning: #fbbf24;
   --os-scrim: rgba(0,0,0,0.5);
+  --os-danger-scrim: rgba(248,113,113,0.55);
+  --os-notice-ok-bg: rgba(52,211,153,0.14);
+  --os-notice-ok-border: rgba(52,211,153,0.35);
+  --os-notice-ok-text: #6ee7b7;
+  --os-notice-error-bg: rgba(248,113,113,0.14);
+  --os-notice-error-border: rgba(248,113,113,0.35);
+  --os-notice-error-text: #fca5a5;
   --os-terminal-bg: rgba(5, 5, 15, 0.85);
   --os-terminal-text: rgba(255, 255, 255, 0.8);
   --os-terminal-accent: #34d399;
@@ -199,7 +222,16 @@
   --os-scrollbar-track: #eceae4;
   --os-scrollbar-thumb: linear-gradient(180deg, #cfcdc4, #b4b2a9);
   --os-danger: #a32b2b;
+  --os-success: #1f7a4d;
+  --os-warning: #8a6a1f;
   --os-scrim: rgba(40,44,70,0.35);
+  --os-danger-scrim: rgba(163,43,43,0.6);
+  --os-notice-ok-bg: #e4f4e8;
+  --os-notice-ok-border: #9cc9a8;
+  --os-notice-ok-text: #1c5c33;
+  --os-notice-error-bg: #fbe6e6;
+  --os-notice-error-border: #d99a9a;
+  --os-notice-error-text: #8f2323;
   /*
    * A paper terminal: dark ink on off-white. The green survives as the accent,
    * darkened until it clears 4.5:1 against the near-white background — the
@@ -763,6 +795,37 @@ html, body {
 }
 
 /* ============================
+   ADMIN DASHBOARD
+   ============================ */
+
+/*
+ * Hover wash over an image thumbnail whose delete button is showing. Was a
+ * Tailwind `bg-[#8a3030]/60`, which cannot take a custom property for its
+ * colour — hence the class and the pre-mixed `--os-danger-scrim` token.
+ */
+.admin-delete-overlay {
+  background: transparent;
+  transition: background-color var(--os-dur-fast) var(--os-ease);
+}
+.group:hover .admin-delete-overlay {
+  background: var(--os-danger-scrim);
+}
+
+/*
+ * Rejected-credentials shake. Previously an inline <style> inside AdminLogin,
+ * which React re-inserted on every render of the login screen.
+ */
+@keyframes admin-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+.animate-shake { animation: admin-shake 0.4s var(--os-ease); }
+
+/* ============================
    REDUCED MOTION
    ============================ */
 
@@ -789,6 +852,13 @@ html, body {
     animation: none;
     opacity: 0.6;
   }
+
+  /*
+   * The login shake is feedback, not decoration, so the failure still needs to
+   * register — the error notice above the form carries that. Skipping the
+   * movement loses nothing.
+   */
+  .animate-shake { animation: none; }
 }
 
 /*

@@ -30,7 +30,7 @@ const CredentialField = ({ label, type, value, onChange, autoComplete, autoFocus
         value={value}
         onChange={(e) => onChange(e.target.value)}
         className="w-full text-[12px] outline-none px-2 py-1.5"
-        style={{ border: `2px inset ${adminColors.borderField}`, background: adminColors.field, borderRadius: '1px', color: adminColors.text }}
+        style={{ border: 'var(--os-input-border)', background: adminColors.field, borderRadius: 'var(--os-btn-radius)', color: adminColors.text }}
         autoComplete={autoComplete}
         autoFocus={autoFocus}
         required
@@ -79,12 +79,21 @@ const AdminLogin = () => {
           border: `2px solid ${adminColors.borderDark}`,
           borderTopColor: adminColors.borderLight,
           borderLeftColor: adminColors.borderLight,
-          borderRadius: '4px',
-          boxShadow: '3px 3px 8px rgba(0,0,0,0.2)',
+          borderRadius: 'var(--os-window-radius)',
+          boxShadow: 'var(--os-window-shadow)',
         }}
       >
-        <div className="px-2 py-1" style={{ background: 'linear-gradient(180deg, #4a4a6a, #2b2b3d)' }}>
-          <span className="text-[11px] font-bold text-[#e0d8c8] uppercase tracking-wide flex items-center gap-1.5">
+        <div
+          className="px-2 py-1"
+          style={{
+            background: 'var(--os-titlebar)',
+            borderRadius: 'calc(var(--os-window-radius) - 2px) calc(var(--os-window-radius) - 2px) 0 0',
+          }}
+        >
+          <span
+            className="text-[11px] font-bold uppercase tracking-wide flex items-center gap-1.5"
+            style={{ color: 'var(--os-titlebar-text)' }}
+          >
             <LockGlyph />
             Admin Login
           </span>
@@ -99,7 +108,12 @@ const AdminLogin = () => {
             <div
               role="alert"
               className="mb-3 px-2 py-1.5 text-[10px] font-semibold"
-              style={{ background: '#e8c8c8', border: '1px solid #c08080', borderRadius: '2px', color: '#8a2020' }}
+              style={{
+                background: 'var(--os-notice-error-bg)',
+                border: '1px solid var(--os-notice-error-border)',
+                borderRadius: 'var(--os-btn-radius)',
+                color: 'var(--os-notice-error-text)',
+              }}
             >
               {error}
             </div>
@@ -129,16 +143,6 @@ const AdminLogin = () => {
         </form>
       </div>
 
-      <style>{`
-        @keyframes shake {
-          0%, 100% { transform: translateX(0); }
-          20% { transform: translateX(-8px); }
-          40% { transform: translateX(8px); }
-          60% { transform: translateX(-4px); }
-          80% { transform: translateX(4px); }
-        }
-        .animate-shake { animation: shake 0.4s ease; }
-      `}</style>
     </div>
   )
 }

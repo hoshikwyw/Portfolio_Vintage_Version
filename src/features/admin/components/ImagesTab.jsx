@@ -20,7 +20,7 @@ const CapacityBar = ({ used }) => {
         <span className="text-[9px] font-bold uppercase" style={{ color: adminColors.label }}>Capacity</span>
         <span className="text-[9px] font-bold" style={{ color: adminColors.text }}>{used}/{MAX_IMAGES_PER_PROJECT}</span>
       </div>
-      <div className="w-full h-2 overflow-hidden" style={{ background: '#d0c8b8', border: `1px inset ${adminColors.borderField}` }}>
+      <div className="w-full h-2 overflow-hidden" style={{ background: 'var(--os-skeleton-bg)', border: `1px solid ${adminColors.borderField}` }}>
         <div
           className="h-full transition-all duration-300"
           style={{ width: `${(used / MAX_IMAGES_PER_PROJECT) * 100}%`, background: fillColor }}
