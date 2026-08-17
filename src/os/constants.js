@@ -35,6 +35,12 @@ export const Z_LAYERS = {
   focusedWindow: 1000,
   taskbar: 50,
   contextMenu: 9990,
+  /*
+   * The helper bot floats above windows so it stays reachable, but below the
+   * start menu and modal dialogs, which should be able to cover it. It is not
+   * a dialog itself, so it does not borrow that layer.
+   */
+  helperBot: 9995,
   dialog: 9998,
   startMenu: 9999,
   fullscreenWindow: 9999,

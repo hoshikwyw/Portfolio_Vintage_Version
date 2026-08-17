@@ -70,7 +70,7 @@ const HelperBot = () => {
   return (
     <div
       className="os-bot-dock"
-      style={{ zIndex: Z_LAYERS.dialog, fontFamily: FONT_STACK }}
+      style={{ zIndex: Z_LAYERS.helperBot, fontFamily: FONT_STACK }}
     >
       <AnimatePresence>
         {isOpen && (

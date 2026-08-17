@@ -32,6 +32,15 @@ export const apps = [
   { id: 'Gallery', icon: 'icons/gallery.svg', label: 'Gallery', inStartMenu: true },
   { id: 'Send-Message', icon: 'icons/terminal.svg', label: 'Terminal', inStartMenu: true },
   { id: 'Settings', icon: 'icons/settings.svg', label: 'Settings', inStartMenu: true },
+  {
+    id: 'Minesweeper',
+    icon: 'icons/mine.svg',
+    label: 'Minesweeper',
+    inStartMenu: true,
+    // Sized for the Medium board; Expert scrolls rather than forcing a window
+    // wider than most laptops.
+    initialSize: { width: 470, height: 600 },
+  },
   // Dashboard is an admin-only surface: reachable via desktop/taskbar but
   // intentionally kept out of the start menu, and rendered with a lock icon.
   { id: 'Dashboard', icon: null, label: 'Dashboard', locked: true },

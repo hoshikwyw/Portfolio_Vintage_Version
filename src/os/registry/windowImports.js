@@ -65,6 +65,7 @@ const rawImports = {
   Gallery: () => import('@/features/gallery'),
   'Send-Message': () => import('@/features/terminal'),
   Settings: () => import('@/features/settings'),
+  Minesweeper: () => import('@/features/minesweeper'),
   Dashboard: () => import('@/features/admin'),
 }
 

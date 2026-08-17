@@ -60,6 +60,20 @@
   --os-bot-eye: #a0d0a0;
   --os-bot-glow: #4a3aad;
   --os-bot-blush: rgba(198,112,112,0.45);
+
+  /*
+   * Minesweeper's numbers. The 1-blue / 2-green / 3-red set is iconic, but it
+   * was chosen for a light grey field — each theme restates it against its own
+   * revealed-cell colour rather than inheriting an unreadable original.
+   */
+  --os-ms-1: #1a1ad0;
+  --os-ms-2: #1a7a1a;
+  --os-ms-3: #d01a1a;
+  --os-ms-4: #10108a;
+  --os-ms-5: #8a1a1a;
+  --os-ms-6: #1a8a8a;
+  --os-ms-7: #2b2b3d;
+  --os-ms-8: #6a6a6a;
   /*
    * Terminal palette. The shell had tokens for its background and body text
    * only, so every *content* colour — prompt segments, paths, errors, the
@@ -169,6 +183,15 @@
   --os-bot-eye: #34d399;
   --os-bot-glow: #007aff;
   --os-bot-blush: rgba(255,120,170,0.35);
+
+  --os-ms-1: #6aa8ff;
+  --os-ms-2: #4ade80;
+  --os-ms-3: #ff7a7a;
+  --os-ms-4: #a78bfa;
+  --os-ms-5: #fbbf24;
+  --os-ms-6: #2dd4bf;
+  --os-ms-7: #e5e7eb;
+  --os-ms-8: #9ca3af;
   --os-terminal-bg: rgba(5, 5, 15, 0.85);
   --os-terminal-text: rgba(255, 255, 255, 0.8);
   --os-terminal-accent: #34d399;
@@ -261,6 +284,15 @@
   --os-bot-eye: #4ade80;
   --os-bot-glow: #4a3aad;
   --os-bot-blush: rgba(232,140,152,0.5);
+
+  --os-ms-1: #1d4ed8;
+  --os-ms-2: #15803d;
+  --os-ms-3: #b91c1c;
+  --os-ms-4: #4c1d95;
+  --os-ms-5: #9a3412;
+  --os-ms-6: #0f766e;
+  --os-ms-7: #21232e;
+  --os-ms-8: #6b7280;
   /*
    * A paper terminal: dark ink on off-white. The green survives as the accent,
    * darkened until it clears 4.5:1 against the near-white background — the
@@ -901,6 +933,187 @@ html, body {
 }
 
 .animate-shake { animation: admin-shake 0.4s var(--os-ease); }
+
+/* ============================
+   MINESWEEPER
+   ============================ */
+
+.ms-root {
+  --ms-cell: 24px;
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+  overflow: auto;
+}
+
+.ms-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: max-content;
+  margin: 0 auto;
+}
+
+.ms-toolbar { display: flex; gap: 4px; }
+
+.ms-difficulty {
+  flex: 1;
+  padding: 4px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  color: var(--os-text);
+  background: var(--os-btn-bg);
+  border: 2px solid var(--os-btn-border-bottom);
+  border-top-color: var(--os-btn-border-top);
+  border-left-color: var(--os-btn-border-top);
+  border-radius: var(--os-btn-radius);
+  transition: filter var(--os-dur-fast) var(--os-ease);
+}
+.ms-difficulty:hover { filter: brightness(1.08); }
+
+/* The active preset reads as pressed in, matching the window controls. */
+.ms-difficulty.is-active {
+  background: var(--os-accent);
+  color: #fff;
+  border-color: var(--os-accent);
+}
+
+/* Counter / face / timer, sunk into the panel like the original. */
+.ms-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 8px;
+  background: var(--os-panel-bg);
+  border: var(--os-input-border);
+  border-radius: var(--os-btn-radius);
+}
+
+.ms-readout {
+  min-width: 46px;
+  padding: 2px 6px;
+  font-family: ui-monospace, 'Cascadia Mono', Menlo, Consolas, monospace;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-align: center;
+  color: var(--os-terminal-accent);
+  background: var(--os-terminal-bg);
+  border: 1px solid var(--os-border-dark);
+  border-radius: 2px;
+}
+
+.ms-face {
+  width: 30px;
+  height: 30px;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+  background: var(--os-btn-bg);
+  border: 2px solid var(--os-btn-border-bottom);
+  border-top-color: var(--os-btn-border-top);
+  border-left-color: var(--os-btn-border-top);
+  border-radius: var(--os-btn-radius);
+  transition: transform var(--os-dur-press) var(--os-ease);
+}
+.ms-face:active { transform: scale(0.92); }
+
+.ms-board-scroll {
+  overflow: auto;
+  max-width: 100%;
+  padding: 4px;
+  background: var(--os-panel-bg);
+  border: var(--os-input-border);
+  border-radius: var(--os-btn-radius);
+}
+
+.ms-board {
+  display: grid;
+  gap: 1px;
+  width: max-content;
+}
+
+/* --- squares --- */
+
+.ms-cell {
+  width: var(--ms-cell);
+  height: var(--ms-cell);
+  padding: 0;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--os-text);
+  background: var(--os-btn-bg);
+  /* Raised bevel: light top-left, dark bottom-right. */
+  border: 2px solid var(--os-btn-border-bottom);
+  border-top-color: var(--os-btn-border-top);
+  border-left-color: var(--os-btn-border-top);
+  border-radius: 1px;
+  /* Right-click flags, so never let the browser treat this as a text target. */
+  user-select: none;
+}
+
+.ms-cell:hover:not(.is-revealed) { filter: brightness(1.1); }
+.ms-cell:active:not(.is-revealed) { filter: brightness(0.94); }
+
+/* Cleared squares drop flat into the field. */
+.ms-cell.is-revealed {
+  background: var(--os-window-content);
+  border: 1px solid var(--os-border-dark);
+  cursor: default;
+}
+
+.ms-cell.is-flagged { color: var(--os-danger); }
+
+.ms-cell.is-mine {
+  background: var(--os-danger);
+  color: #fff;
+}
+
+/* The iconic numbering, restated per theme above. */
+.ms-cell[data-adjacent='1'] { color: var(--os-ms-1); }
+.ms-cell[data-adjacent='2'] { color: var(--os-ms-2); }
+.ms-cell[data-adjacent='3'] { color: var(--os-ms-3); }
+.ms-cell[data-adjacent='4'] { color: var(--os-ms-4); }
+.ms-cell[data-adjacent='5'] { color: var(--os-ms-5); }
+.ms-cell[data-adjacent='6'] { color: var(--os-ms-6); }
+.ms-cell[data-adjacent='7'] { color: var(--os-ms-7); }
+.ms-cell[data-adjacent='8'] { color: var(--os-ms-8); }
+
+.ms-message {
+  font-size: 10px;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--os-text-secondary);
+}
+
+.ms-best { display: flex; gap: 12px; justify-content: space-between; }
+.ms-best > div { display: flex; flex-direction: column; gap: 2px; text-align: center; flex: 1; }
+
+.ms-best-label {
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--os-text-muted);
+}
+
+.ms-best-value { font-size: 12px; font-weight: 700; color: var(--os-text); }
+
+.ms-best-new {
+  margin-top: 6px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-align: center;
+  color: var(--os-accent);
+}
 
 /* ============================
    HELPER BOT

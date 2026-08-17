@@ -48,6 +48,11 @@ export const windowHints = [
     text: 'Three themes and six wallpapers. Light Retro is worth a look, and System follows your OS.',
     action: 'Open Settings',
   },
+  {
+    id: 'Minesweeper',
+    text: 'There is a real Minesweeper in here. Left click clears, right click flags — the first click is always safe.',
+    action: 'Play Minesweeper',
+  },
 ]
 
 /**
