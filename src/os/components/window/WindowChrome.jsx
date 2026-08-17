@@ -1,22 +1,10 @@
-import { getApp, getAppIcon, getAppLabel, windowTitleId } from '@/os/config/apps'
-import LockIcon from '@/shared/components/ui/LockIcon'
+import { getAppLabel, windowTitleId } from '@/os/config/apps'
+import AppIcon from '@/shared/components/icons/AppIcon'
 
-/** Title-bar icon: the padlock for locked apps, otherwise the app's SVG. */
-export const WindowIcon = ({ id }) => {
-  if (getApp(id)?.locked) return <LockIcon variant="inline" />
-
-  const icon = getAppIcon(id)
-  if (!icon) return null
-
-  return (
-    <img
-      src={icon}
-      alt=""
-      className="w-3.5 h-3.5 inline-block mr-2 filter brightness-0 invert opacity-70"
-      style={{ verticalAlign: 'middle' }}
-    />
-  )
-}
+/** Title-bar icon, inheriting the bar's own text colour. */
+export const WindowIcon = ({ id }) => (
+  <AppIcon id={id} size={14} className="inline-block mr-2 align-middle opacity-80" />
+)
 
 /** Minimize / fullscreen / close buttons shared by normal + fullscreen frames. */
 export const WindowControls = ({ id, onMinimize, onFullscreen, onClose }) => {

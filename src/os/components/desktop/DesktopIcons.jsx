@@ -2,7 +2,7 @@ import { m } from 'framer-motion'
 import { useOSActions } from '@/os/hooks/useOS'
 import { apps } from '@/os/config/apps'
 import { Z_LAYERS } from '@/os/constants'
-import LockIcon from '@/shared/components/ui/LockIcon'
+import AppIcon from '@/shared/components/icons/AppIcon'
 import { preloadWindow } from '@/os/registry/windowImports'
 
 const containerVariants = {
@@ -41,7 +41,7 @@ const DesktopIcons = () => {
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.92 }}
         >
-          {app.locked ? <LockIcon size={36} variant="desktop" /> : <img src={app.icon} alt={app.label} draggable={false} />}
+          <AppIcon id={app.id} size={36} />
           <span>{app.label}</span>
         </m.button>
       ))}

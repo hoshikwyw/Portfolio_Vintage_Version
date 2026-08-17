@@ -63,7 +63,8 @@ const Minesweeper = () => {
 
   return (
     <div className="ms-root" style={{ fontFamily: FONT_STACK }}>
-      <div className="ms-shell">
+      {/* --ms-cols drives the shell width; see .ms-shell in index.css. */}
+      <div className="ms-shell" style={{ '--ms-cols': cols }}>
         <div className="ms-toolbar">
           {DIFFICULTIES.map((option) => (
             <button

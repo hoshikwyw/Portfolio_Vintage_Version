@@ -1,6 +1,9 @@
 /**
  * Registry of every window ("app") the OS can open.
  *
+ * Icons are no longer listed here: each app's glyph lives in
+ * `@/shared/components/icons/AppIcon`, keyed by the same id.
+ *
  * The `id` is the runtime key used everywhere — context state, taskbar,
  * z-index focus — so it must stay stable. Icons, labels and behaviour flags
  * are declared once here and consumed by the desktop icons, taskbar, start
@@ -12,10 +15,9 @@
  */
 
 export const apps = [
-  { id: 'Home', icon: 'icons/home.svg', label: 'About Me', inStartMenu: true },
+  { id: 'Home', label: 'About Me', inStartMenu: true },
   {
     id: 'Projects',
-    icon: 'icons/openFolder.svg',
     label: 'Projects',
     inStartMenu: true,
     /*
@@ -29,12 +31,11 @@ export const apps = [
      */
     initialSize: { width: 860, height: 560 },
   },
-  { id: 'Gallery', icon: 'icons/gallery.svg', label: 'Gallery', inStartMenu: true },
-  { id: 'Send-Message', icon: 'icons/terminal.svg', label: 'Terminal', inStartMenu: true },
-  { id: 'Settings', icon: 'icons/settings.svg', label: 'Settings', inStartMenu: true },
+  { id: 'Gallery', label: 'Gallery', inStartMenu: true },
+  { id: 'Send-Message', label: 'Terminal', inStartMenu: true },
+  { id: 'Settings', label: 'Settings', inStartMenu: true },
   {
     id: 'Minesweeper',
-    icon: 'icons/mine.svg',
     label: 'Minesweeper',
     inStartMenu: true,
     // Sized for the Medium board; Expert scrolls rather than forcing a window
@@ -43,7 +44,7 @@ export const apps = [
   },
   // Dashboard is an admin-only surface: reachable via desktop/taskbar but
   // intentionally kept out of the start menu, and rendered with a lock icon.
-  { id: 'Dashboard', icon: null, label: 'Dashboard', locked: true },
+  { id: 'Dashboard', label: 'Dashboard', locked: true },
 ]
 
 /** Apps shown as start-menu entries. */
@@ -53,9 +54,6 @@ const appById = Object.fromEntries(apps.map((app) => [app.id, app]))
 
 /** Look up a single app definition by its id. */
 export const getApp = (id) => appById[id]
-
-/** Icon path for an app id (null when it uses a custom inline icon). */
-export const getAppIcon = (id) => appById[id]?.icon ?? null
 
 /** Human-friendly label for an app id, falling back to the id itself. */
 export const getAppLabel = (id) => appById[id]?.label ?? id

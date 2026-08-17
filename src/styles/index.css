@@ -105,20 +105,11 @@
   --os-skeleton-sheen: rgba(255, 255, 255, 0.55);
 
   /*
-   * Monochrome icon tints. The shipped SVG icons are a single dark colour, so
-   * every theme re-tints them with `brightness(0)` (to black) optionally
-   * followed by `invert(1)` (to white). Previously these filters were written
-   * inline in the taskbar and start menu and overridden with `!important` for
-   * glass; as tokens each theme simply states which tint it wants.
-   *
-   * `--os-icon-filter` sits on chrome (taskbar, start menu) and follows the
-   * panel colour. `--os-desktop-icon-filter` sits on the wallpaper and follows
-   * the desktop instead — the two differ in the light theme, where chrome and
-   * desktop are both light but the drop shadows are tuned separately.
+   * Shadow under the desktop icons, which sit on the wallpaper rather than on
+   * chrome. The icons themselves are inline SVG in `currentColor` now, so they
+   * need no tinting — they inherit `--os-desktop-icon-text` like their labels.
    */
-  --os-icon-filter: brightness(0);
-  --os-desktop-icon-filter: brightness(0) invert(1) drop-shadow(0 1px 2px rgba(0,0,0,0.4));
-  --os-desktop-icon-filter-hover: brightness(0) invert(1) drop-shadow(0 2px 5px rgba(0,0,0,0.5));
+  --os-desktop-icon-shade: drop-shadow(0 1px 2px rgba(0,0,0,0.45));
 
   /* Desktop texture — the CRT scanlines and film grain over the wallpaper. */
   --os-scanline-color: rgba(0,0,0,0.06);
@@ -215,10 +206,7 @@
   --os-skeleton-bg: rgba(255, 255, 255, 0.06);
   --os-skeleton-sheen: rgba(255, 255, 255, 0.12);
 
-  /* Glass chrome is dark, so its icons invert to white like the desktop's. */
-  --os-icon-filter: brightness(0) invert(1);
-  --os-desktop-icon-filter: brightness(0) invert(1) drop-shadow(0 1px 3px rgba(0,0,0,0.45));
-  --os-desktop-icon-filter-hover: brightness(0) invert(1) drop-shadow(0 2px 6px rgba(0,0,0,0.55));
+  --os-desktop-icon-shade: drop-shadow(0 1px 3px rgba(0,0,0,0.5));
 
   /* No CRT artefacts on glass — it is the modern half of the pair. */
   --os-scanline-color: transparent;
@@ -322,10 +310,8 @@
   --os-skeleton-bg: #e2e0d8;
   --os-skeleton-sheen: rgba(255, 255, 255, 0.9);
 
-  /* Both chrome and desktop are light, so icons stay black in both places. */
-  --os-icon-filter: brightness(0);
-  --os-desktop-icon-filter: brightness(0) drop-shadow(0 1px 2px rgba(255,255,255,0.8));
-  --os-desktop-icon-filter-hover: brightness(0) drop-shadow(0 2px 4px rgba(40,44,70,0.25));
+  /* A light wallpaper needs a light halo, not a dark shadow. */
+  --os-desktop-icon-shade: drop-shadow(0 1px 2px rgba(255,255,255,0.9));
 
   /* Scanlines survive at a third of their strength; the grain would read as dirt. */
   --os-scanline-color: rgba(40,44,70,0.02);
@@ -475,23 +461,19 @@ html, body {
   border-color: var(--os-desktop-icon-active-border);
 }
 
-.desktop-icon img {
-  width: 36px; height: 36px;
-  filter: var(--os-desktop-icon-filter);
-  opacity: 0.85;
+.desktop-icon .os-app-icon {
+  /* Inherits the label colour, so it is legible on any wallpaper. */
+  color: var(--os-desktop-icon-text);
+  filter: var(--os-desktop-icon-shade);
+  opacity: 0.9;
   /*
    * No transform here — the button itself is scaled by Framer Motion on hover
    * and press. Scaling the image too compounded the two (1.08 × 1.05) and the
    * inline transform Framer writes fought this transition.
    */
-  transition:
-    opacity var(--os-dur-fast) var(--os-ease),
-    filter var(--os-dur-fast) var(--os-ease);
+  transition: opacity var(--os-dur-fast) var(--os-ease);
 }
-.desktop-icon:hover img {
-  opacity: 1;
-  filter: var(--os-desktop-icon-filter-hover);
-}
+.desktop-icon:hover .os-app-icon { opacity: 1; }
 
 .desktop-icon span {
   font-size: 10px;
@@ -935,6 +917,21 @@ html, body {
 .animate-shake { animation: admin-shake 0.4s var(--os-ease); }
 
 /* ============================
+   APP ICONS
+   ============================ */
+
+/*
+ * The second tone in every app icon: the same `currentColor` at reduced
+ * opacity. Using the ink colour rather than a fixed grey means the two tones
+ * can never clash, whatever a theme does to the palette.
+ */
+.os-icon-soft { opacity: 0.45; }
+.os-icon-soft-stroke { opacity: 0.55; }
+
+/* Taskbar buttons dim their icon while the window is minimized. */
+.os-app-icon.is-dimmed { opacity: 0.45; }
+
+/* ============================
    MINESWEEPER
    ============================ */
 
@@ -950,8 +947,17 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-width: max-content;
   margin: 0 auto;
+  /*
+   * Width comes from the board: columns + the 1px gaps between them + the
+   * field's padding and border. Previously this was `max-width: max-content`,
+   * which sized the column to its *widest* child — the one-line help sentence
+   * — so every other row stretched past the grid and left a dead strip beside
+   * it. Expert overflows the window on purpose and the field scrolls.
+   */
+  width: min(100%, calc(
+    var(--ms-cols) * var(--ms-cell) + (var(--ms-cols) - 1) * 1px + 12px
+  ));
 }
 
 .ms-toolbar { display: flex; gap: 4px; }
@@ -1025,6 +1031,9 @@ html, body {
 .ms-board-scroll {
   overflow: auto;
   max-width: 100%;
+  /* Hugs the grid so a scrolled Expert board never leaves a gap either. */
+  width: fit-content;
+  margin: 0 auto;
   padding: 4px;
   background: var(--os-panel-bg);
   border: var(--os-input-border);
@@ -1089,6 +1098,7 @@ html, body {
   font-size: 10px;
   line-height: 1.5;
   text-align: center;
+  text-wrap: balance;
   color: var(--os-text-secondary);
 }
 
@@ -1646,15 +1656,13 @@ html, body {
 .start-menu-row:active { background: var(--os-accent-hover); }
 
 /*
- * The row's icon tint lives here rather than inline on the <img>, so the hover
- * rule can simply override it. As an inline style it outranked this rule and
- * needed `!important` to win.
+ * Row icons inherit the row's colour, so the hover state — which fills the row
+ * with the accent and flips the text white — carries the icon with it for
+ * free. This used to need a filter plus `!important` to beat an inline style.
  */
-.start-menu-row img {
-  opacity: 0.6;
-  filter: var(--os-icon-filter);
-  transition: filter var(--os-dur-fast) var(--os-ease);
+.start-menu-row .os-app-icon {
+  opacity: 0.7;
+  flex-shrink: 0;
+  transition: opacity var(--os-dur-fast) var(--os-ease);
 }
-
-/* Hovered rows fill with the accent colour, so their icon goes white in every theme. */
-.start-menu-row:hover img { filter: brightness(0) invert(1); }
+.start-menu-row:hover .os-app-icon { opacity: 1; }

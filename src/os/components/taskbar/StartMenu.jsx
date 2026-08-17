@@ -8,6 +8,7 @@ import { profile } from '@/shared/config/profile'
 import { FONT_STACK } from '@/shared/constants/fonts'
 import { downloadResume, openHireEmail, openGoogleSearch } from '@/shared/lib/browser'
 import { useOutsideClick } from '@/shared/hooks/useOutsideClick'
+import AppIcon from '@/shared/components/icons/AppIcon'
 import { preloadWindow } from '@/os/registry/windowImports'
 
 // Highlight lives in `.start-menu-row` (see styles/index.css) rather than in
@@ -140,7 +141,7 @@ const StartMenu = ({ onClose }) => {
               <MenuRow
                 key={app.id}
                 label={app.label}
-                icon={<img src={app.icon} alt="" className="w-5 h-5" />}
+                icon={<AppIcon id={app.id} size={18} />}
                 onClick={() => openApp(app.id)}
                 onPreload={() => preloadWindow(app.id)}
               />

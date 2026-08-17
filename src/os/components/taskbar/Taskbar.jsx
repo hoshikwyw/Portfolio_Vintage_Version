@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { m, AnimatePresence } from 'framer-motion'
 import { useOSActions, useOSWindows } from '@/os/hooks/useOS'
-import { getApp, getAppLabel } from '@/os/config/apps'
+import { getAppLabel } from '@/os/config/apps'
 import { Z_LAYERS } from '@/os/constants'
 import { profile } from '@/shared/config/profile'
 import { FONT_STACK } from '@/shared/constants/fonts'
-import LockIcon from '@/shared/components/ui/LockIcon'
+import AppIcon from '@/shared/components/icons/AppIcon'
 import { preloadWindow } from '@/os/registry/windowImports'
 import StartMenu from './StartMenu'
 import SystemTray from './SystemTray'
@@ -30,11 +30,7 @@ const AppButton = ({ id, isMinimized, onClick }) => (
     whileHover={{ y: -2, filter: 'brightness(1.08)' }}
     whileTap={{ y: 0, scale: 0.96 }}
   >
-    {getApp(id)?.locked ? (
-      <LockIcon size={16} variant="tray" />
-    ) : (
-      <img src={getApp(id)?.icon} alt="" className="w-4 h-4" style={{ filter: 'var(--os-icon-filter)', opacity: isMinimized ? 0.3 : 0.6 }} />
-    )}
+    <AppIcon id={id} size={16} className={isMinimized ? 'is-dimmed' : undefined} />
     <span className="text-[10px] font-semibold hidden sm:inline" style={{ color: isMinimized ? 'var(--os-text-muted)' : 'var(--os-text)' }}>
       {getAppLabel(id)}
     </span>
