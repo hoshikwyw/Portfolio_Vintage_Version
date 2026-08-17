@@ -874,6 +874,91 @@ html, body {
 .animate-shake { animation: admin-shake 0.4s var(--os-ease); }
 
 /* ============================
+   ABOUT WINDOW
+   ============================ */
+
+.os-hero-avatar {
+  width: 104px;
+  height: 104px;
+  object-fit: cover;
+  /* Colour arrives on hover, matching the project cards' cover treatment. */
+  filter: grayscale(1);
+  transition: filter 500ms var(--os-ease);
+}
+.os-hero:hover .os-hero-avatar { filter: grayscale(0); }
+
+/*
+ * Timeline rail. The line is drawn on the list and the nodes on each item, so
+ * entries can be added or removed without any per-item positioning.
+ */
+.os-timeline {
+  position: relative;
+  margin: 0;
+  padding: 2px 0 2px 18px;
+  list-style: none;
+}
+
+.os-timeline::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: var(--os-border-dark);
+}
+
+.os-timeline-item { position: relative; }
+.os-timeline-item + .os-timeline-item { margin-top: 12px; }
+
+.os-timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -18px;
+  top: 3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--os-accent);
+  /* Ring in the panel colour so the node punches a hole in the rail. */
+  box-shadow: 0 0 0 2px var(--os-window-content);
+}
+
+/*
+ * Segmented proficiency meter — a notched bar, the way a Win95 progress
+ * control actually looked, rather than one continuous fill.
+ */
+.os-meter {
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  border: var(--os-input-border);
+  background: var(--os-input-bg);
+  border-radius: var(--os-btn-radius);
+}
+
+.os-meter-cell {
+  flex: 1 1 0;
+  height: 9px;
+  background: var(--os-border-light);
+  opacity: 0.5;
+}
+
+.os-meter-cell.is-on {
+  background: var(--os-accent);
+  opacity: 1;
+}
+
+/* Contact rows are links now, so they need a hover affordance. */
+.os-contact-row {
+  padding: 2px 4px;
+  margin-left: -4px;
+  border-radius: var(--os-btn-radius);
+  transition: background-color var(--os-dur-fast) var(--os-ease);
+}
+.os-contact-row:hover { background: var(--os-panel-bg); }
+
+/* ============================
    FOCUS VISIBILITY
    ============================ */
 
