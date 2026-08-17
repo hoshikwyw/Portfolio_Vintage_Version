@@ -42,6 +42,9 @@ const AppButton = ({ id, isMinimized, onClick }) => (
 const StartButton = ({ isOpen, onToggle }) => (
   <m.button
     onClick={onToggle}
+    aria-haspopup="true"
+    aria-expanded={isOpen}
+    aria-label="Start menu"
     className="flex items-center gap-1.5 h-7 px-2.5 cursor-pointer"
     style={{
       background: isOpen ? 'var(--os-panel-bg)' : 'var(--os-btn-bg)',

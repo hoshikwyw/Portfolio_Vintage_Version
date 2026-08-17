@@ -26,6 +26,37 @@ const StartMenu = ({ onClose }) => {
 
   useEffect(() => { inputRef.current?.focus() }, [])
 
+  /*
+   * Arrow keys walk the rows, Escape dismisses. The rows are ordinary buttons,
+   * so Enter and Space already activate them and Tab still works — this only
+   * adds the vertical movement people expect from a menu.
+   *
+   * Deliberately not `role="menu"`: that pattern forbids a textbox among the
+   * items, and the search field is the first thing here.
+   */
+  const handleKeyDown = (e) => {
+    if (e.key === 'Escape') {
+      e.preventDefault()
+      onClose()
+      return
+    }
+    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return
+
+    const rows = [...(ref.current?.querySelectorAll('.start-menu-row') ?? [])]
+    if (!rows.length) return
+
+    e.preventDefault()
+    const delta = e.key === 'ArrowDown' ? 1 : -1
+    const current = rows.indexOf(document.activeElement)
+    // From the search field (index -1), ArrowDown enters the list at the top
+    // and ArrowUp wraps to the bottom.
+    const next = current === -1
+      ? (delta === 1 ? 0 : rows.length - 1)
+      : (current + delta + rows.length) % rows.length
+
+    rows[next].focus()
+  }
+
   const filtered = startMenuApps.filter((app) => app.label.toLowerCase().includes(query.toLowerCase()))
 
   /** Run an action then dismiss the menu. */
@@ -46,6 +77,8 @@ const StartMenu = ({ onClose }) => {
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, y: 20, scale: 0.95 }}
       transition={{ duration: 0.15 }}
+      onKeyDown={handleKeyDown}
+      aria-label="Start menu"
       className="absolute bottom-full left-0 mb-1 w-64 overflow-hidden start-menu-panel"
       style={{
         zIndex: Z_LAYERS.startMenu,
@@ -88,6 +121,7 @@ const StartMenu = ({ onClose }) => {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search..."
+                aria-label="Search apps and the web"
                 className="flex-1 bg-transparent outline-none text-[11px]"
                 style={{ color: 'var(--os-text)' }}
               />

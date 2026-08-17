@@ -6,7 +6,12 @@ const GalleryTile = ({ image, onSelect }) => {
   const title = image.projects?.title
 
   return (
-    <div className="masonry-item" onClick={() => onSelect(image)}>
+    /*
+     * A <button>, not a <div onClick>. As a div the tiles were unreachable by
+     * keyboard entirely — there was no way to open an image without a mouse —
+     * and nothing to hand focus back to when the lightbox closed.
+     */
+    <button type="button" className="masonry-item" onClick={() => onSelect(image)}>
       <div className="image-card">
         {!loaded && <div className="image-skeleton os-skeleton" />}
         <img
@@ -24,7 +29,7 @@ const GalleryTile = ({ image, onSelect }) => {
           <span>{title}</span>
         </div>
       </div>
-    </div>
+    </button>
   )
 }
 

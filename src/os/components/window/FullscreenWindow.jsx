@@ -1,11 +1,22 @@
 import { m } from 'framer-motion'
 import { Z_LAYERS } from '@/os/constants'
+import { windowTitleId } from '@/os/config/apps'
+import { useWindowA11y } from '@/os/hooks/useWindowA11y'
 import WindowContent from '@/os/registry/windowRegistry'
 import { WindowTitleBar } from './WindowChrome'
 
 /** A window expanded to fill the viewport — no dragging, no resize handles. */
-const FullscreenWindow = ({ id, onFocus, onClose, onFullscreen, onMinimize }) => (
+const FullscreenWindow = ({ id, onFocus, onClose, onFullscreen, onMinimize }) => {
+  const { frameRef, handleKeyDown, handleFocus } = useWindowA11y({ id, onClose, onFocus })
+
+  return (
   <m.div
+    ref={frameRef}
+    role="dialog"
+    aria-labelledby={windowTitleId(id)}
+    tabIndex={-1}
+    onKeyDown={handleKeyDown}
+    onFocus={handleFocus}
     className="windowFrame"
     initial={{ opacity: 0, scale: 1.015 }}
     animate={{ opacity: 1, scale: 1 }}
@@ -34,6 +45,7 @@ const FullscreenWindow = ({ id, onFocus, onClose, onFullscreen, onMinimize }) =>
       <WindowContent id={id} />
     </div>
   </m.div>
-)
+  )
+}
 
 export default FullscreenWindow

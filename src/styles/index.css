@@ -874,6 +874,49 @@ html, body {
 .animate-shake { animation: admin-shake 0.4s var(--os-ease); }
 
 /* ============================
+   FOCUS VISIBILITY
+   ============================ */
+
+/*
+ * There was no focus indicator anywhere in the shell, and five inputs (the
+ * terminal prompt, start-menu search, admin fields) additionally cleared the
+ * browser's own with `outline-none` — so a keyboard user had no way to tell
+ * where they were.
+ *
+ * `:focus-visible` rather than `:focus`, so a mouse click on a button does not
+ * leave a ring behind, and the outline sits *outside* the element so it never
+ * shifts a beveled border or reflows a row.
+ */
+:where(a, button, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--os-accent);
+  outline-offset: 2px;
+  border-radius: var(--os-btn-radius);
+}
+
+/*
+ * The window frame takes focus programmatically when it opens (see
+ * `useWindowA11y`). It is a container, not a control, so a ring around the
+ * whole thing would be noise — the title bar brightening is enough to say
+ * "this window is where your keys are going".
+ */
+.windowFrame:focus-visible {
+  outline: none;
+}
+.windowFrame:focus-visible > .windowHeader {
+  box-shadow: inset 0 0 0 2px var(--os-accent);
+}
+
+/*
+ * Over a wallpaper the accent can be low-contrast, so desktop icons get a ring
+ * plus the same wash as hover.
+ */
+.desktop-icon:focus-visible {
+  outline: 2px solid var(--os-desktop-icon-text);
+  outline-offset: 1px;
+  background: var(--os-desktop-icon-hover-bg);
+}
+
+/* ============================
    REDUCED MOTION
    ============================ */
 

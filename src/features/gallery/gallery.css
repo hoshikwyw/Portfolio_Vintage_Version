@@ -22,7 +22,18 @@
   .masonry-grid { column-count: 5; }
 }
 
+/*
+ * The tile is a <button> so it is keyboard-operable; these four lines strip the
+ * default button chrome so the masonry column layout is exactly as it was.
+ */
 .masonry-item {
+  display: block;
+  width: 100%;
+  padding: 0;
+  background: none;
+  border: none;
+  font: inherit;
+  text-align: left;
   break-inside: avoid;
   margin-bottom: 8px;
   cursor: pointer;

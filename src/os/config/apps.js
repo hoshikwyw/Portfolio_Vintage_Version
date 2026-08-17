@@ -50,3 +50,10 @@ export const getAppIcon = (id) => appById[id]?.icon ?? null
 
 /** Human-friendly label for an app id, falling back to the id itself. */
 export const getAppLabel = (id) => appById[id]?.label ?? id
+
+/**
+ * DOM id of a window's title element, referenced by the frame's
+ * `aria-labelledby`. Lives here with the other id-derived helpers rather than
+ * in the chrome component, where a non-component export breaks Fast Refresh.
+ */
+export const windowTitleId = (id) => `window-title-${id}`
