@@ -5,6 +5,7 @@ import { useResizable } from '@/os/hooks/useResizable'
 import { useWindowA11y } from '@/os/hooks/useWindowA11y'
 import WindowContent from '@/os/registry/windowRegistry'
 import { WindowTitleBar } from './WindowChrome'
+import { floatingWindowMotion } from './windowMotion'
 
 /**
  * A floating, draggable and resizable window.
@@ -53,14 +54,9 @@ const DraggableWindow = ({
       onKeyDown={handleKeyDown}
       onFocus={handleFocus}
       className="windowFrame resizable"
-      // Only opacity and scale are animated: `y` is already bound to the
-      // dragY motion value below, and animating it here would fight the drag.
-      // Opening eases out over 0.22s; closing is quicker so dismissing feels
-      // immediate.
-      initial={{ opacity: 0, scale: 0.96 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.97, transition: { duration: 0.1, ease: 'easeIn' } }}
-      transition={{ duration: 0.22, ease: [0.2, 0, 0, 1] }}
+      // Shared with the fullscreen frame; see ./windowMotion for why only
+      // opacity and scale move.
+      {...floatingWindowMotion}
       drag
       dragControls={dragControls}
       dragListener={false}

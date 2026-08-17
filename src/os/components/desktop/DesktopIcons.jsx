@@ -3,6 +3,7 @@ import { useOSActions } from '@/os/hooks/useOS'
 import { apps } from '@/os/config/apps'
 import { Z_LAYERS } from '@/os/constants'
 import LockIcon from '@/shared/components/ui/LockIcon'
+import { preloadWindow } from '@/os/registry/windowImports'
 
 const containerVariants = {
   hidden: {},
@@ -32,6 +33,11 @@ const DesktopIcons = () => {
           className="desktop-icon"
           variants={iconVariants}
           onClick={() => openWindow(app.id)}
+          // Fetch the window's chunk on intent, so its module is already
+          // parsed when the click lands and the open animation has the main
+          // thread to itself.
+          onPointerEnter={() => preloadWindow(app.id)}
+          onFocus={() => preloadWindow(app.id)}
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.92 }}
         >

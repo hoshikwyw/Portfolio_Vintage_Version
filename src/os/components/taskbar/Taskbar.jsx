@@ -6,6 +6,7 @@ import { Z_LAYERS } from '@/os/constants'
 import { profile } from '@/shared/config/profile'
 import { FONT_STACK } from '@/shared/constants/fonts'
 import LockIcon from '@/shared/components/ui/LockIcon'
+import { preloadWindow } from '@/os/registry/windowImports'
 import StartMenu from './StartMenu'
 import SystemTray from './SystemTray'
 
@@ -13,6 +14,7 @@ import SystemTray from './SystemTray'
 const AppButton = ({ id, isMinimized, onClick }) => (
   <m.button
     onClick={onClick}
+    onPointerEnter={() => preloadWindow(id)}
     className="flex items-center gap-1.5 h-7 px-2 cursor-pointer flex-shrink-0"
     style={{
       background: isMinimized ? 'var(--os-btn-bg)' : 'var(--os-panel-bg)',
