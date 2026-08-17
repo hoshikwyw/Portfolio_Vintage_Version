@@ -53,7 +53,7 @@ const DraggableWindow = ({
       tabIndex={-1}
       onKeyDown={handleKeyDown}
       onFocus={handleFocus}
-      className="windowFrame resizable"
+      className="windowFrame"
       // Shared with the fullscreen frame; see ./windowMotion for why only
       // opacity and scale move.
       {...floatingWindowMotion}
