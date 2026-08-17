@@ -874,6 +874,272 @@ html, body {
 .animate-shake { animation: admin-shake 0.4s var(--os-ease); }
 
 /* ============================
+   HELPER BOT
+   ============================ */
+
+/*
+ * Right-edge utility column: the bot sits just above the taskbar, and
+ * QuickActions stacks above it (see QuickActions' own offset).
+ */
+.os-bot-dock {
+  position: absolute;
+  right: 16px;
+  bottom: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.os-bot-ball {
+  width: 60px;
+  height: 60px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* --- the head: a real CSS cube, three faces visible --- */
+
+.os-bot-stage {
+  display: block;
+  width: 46px;
+  height: 46px;
+  /* Shallow perspective keeps the faces chunky rather than dramatically raked. */
+  perspective: 260px;
+}
+
+.os-bot-head {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: rotateX(6deg) rotateY(-18deg);
+  transition: transform var(--os-dur-base) var(--os-ease-back);
+}
+
+.os-bot-ball:hover .os-bot-head,
+.os-bot-ball:focus-visible .os-bot-head {
+  transform: rotateX(2deg) rotateY(14deg) scale(1.06);
+}
+
+.os-bot-head[data-awake] {
+  transform: rotateX(0deg) rotateY(0deg) scale(1.04);
+}
+
+.os-bot-face,
+.os-bot-cheek,
+.os-bot-crown {
+  position: absolute;
+  background: var(--os-btn-bg);
+  border: 2px solid var(--os-border-dark);
+}
+
+/*
+ * Each face is pushed out along its own axis by half the cube (23px), which is
+ * what turns three flat panels into something with actual volume.
+ */
+.os-bot-face {
+  inset: 0;
+  border-top-color: var(--os-border-light);
+  border-left-color: var(--os-border-light);
+  border-radius: 8px;
+  transform: translateZ(11px);
+  display: grid;
+  place-content: center;
+  gap: 5px;
+}
+
+.os-bot-cheek {
+  top: 0;
+  left: 50%;
+  width: 22px;
+  height: 100%;
+  margin-left: -11px;
+  border-radius: 4px;
+  transform: rotateY(90deg) translateZ(23px);
+  filter: brightness(0.82);
+}
+
+.os-bot-crown {
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 22px;
+  margin-top: -11px;
+  border-radius: 4px;
+  transform: rotateX(90deg) translateZ(23px);
+  filter: brightness(1.12);
+}
+
+/* --- antenna --- */
+
+.os-bot-antenna {
+  position: absolute;
+  left: 50%;
+  top: -13px;
+  width: 2px;
+  height: 12px;
+  margin-left: -1px;
+  background: var(--os-border-dark);
+  transform: translateZ(11px);
+}
+
+.os-bot-led {
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  margin-left: -3.5px;
+  border-radius: 50%;
+  background: var(--os-accent);
+  animation: os-bot-blink 2.6s var(--os-ease) infinite;
+}
+
+.os-bot-head[data-awake] .os-bot-led {
+  animation: none;
+  box-shadow: 0 0 7px var(--os-accent);
+}
+
+@keyframes os-bot-blink {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+
+/* --- face features --- */
+
+.os-bot-eyes {
+  display: flex;
+  gap: 9px;
+  justify-content: center;
+}
+
+.os-bot-pupil {
+  width: 7px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--os-text);
+  /* Written directly by RobotHead's rAF loop as the cursor moves. */
+  transition: transform 90ms linear;
+}
+
+/* The lids close over the eyes rather than the pupils shrinking. */
+.os-bot-head::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  top: 13px;
+  height: 9px;
+  background: var(--os-btn-bg);
+  transform: translateZ(12px) scaleY(0);
+  transform-origin: top center;
+  animation: os-bot-eyelid 5.4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes os-bot-eyelid {
+  0%, 92%, 100% { transform: translateZ(12px) scaleY(0); }
+  95% { transform: translateZ(12px) scaleY(1); }
+}
+
+.os-bot-mouth {
+  width: 18px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--os-accent);
+  margin: 0 auto;
+  opacity: 0.75;
+}
+
+/* --- speech panel --- */
+
+.os-bot-panel {
+  width: 254px;
+  background: var(--os-window);
+  border: 2px solid var(--os-border-dark);
+  border-top-color: var(--os-border-light);
+  border-left-color: var(--os-border-light);
+  border-radius: var(--os-window-radius);
+  box-shadow: var(--os-window-shadow);
+  backdrop-filter: var(--os-glass-blur);
+  -webkit-backdrop-filter: var(--os-glass-blur);
+  overflow: hidden;
+}
+
+.os-bot-panel-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 6px 4px 10px;
+  background: var(--os-titlebar);
+}
+
+.os-bot-panel-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--os-titlebar-text);
+}
+
+.os-bot-panel-close {
+  width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: var(--os-titlebar-text);
+  background: var(--os-btn-bg);
+  border: 1px solid var(--os-btn-border-bottom);
+  border-top-color: var(--os-btn-border-top);
+  border-left-color: var(--os-btn-border-top);
+  border-radius: var(--os-btn-radius);
+}
+.os-bot-panel-close:hover { filter: brightness(1.15); }
+
+.os-bot-panel-body { padding: 10px 12px 12px; }
+
+.os-bot-intro {
+  font-size: 10px;
+  line-height: 1.5;
+  color: var(--os-text-secondary);
+  margin-bottom: 8px;
+}
+
+.os-bot-nudge {
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--os-text);
+  padding: 8px 10px;
+  background: var(--os-window-content);
+  border: 1px solid var(--os-border-dark);
+  border-radius: var(--os-btn-radius);
+}
+
+.os-bot-panel-actions {
+  display: flex;
+  gap: 6px;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.os-bot-progress {
+  margin-top: 8px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--os-text-muted);
+}
+
+/* ============================
    ABOUT WINDOW
    ============================ */
 

@@ -3,10 +3,9 @@ import Taskbar from '@/os/components/taskbar/Taskbar'
 import WindowLayer from '@/os/components/window/WindowLayer'
 import { DEFAULT_WALLPAPER } from '@/shared/config/theme'
 import DesktopIcons from './DesktopIcons'
-import StickyNote from './StickyNote'
 import QuickActions from './QuickActions'
 import DesktopContextMenu from './DesktopContextMenu'
-import WelcomeDialog from './WelcomeDialog'
+import HelperBot from './HelperBot'
 
 /**
  * The desktop environment: wallpaper background plus every shell surface
@@ -29,13 +28,12 @@ const Desktop = () => {
       <div className="gradient-orb gradient-orb-3" />
 
       <DesktopIcons />
-      <StickyNote />
       <QuickActions />
       <WindowLayer />
       <Taskbar />
 
       <DesktopContextMenu />
-      <WelcomeDialog />
+      <HelperBot />
     </div>
   )
 }
