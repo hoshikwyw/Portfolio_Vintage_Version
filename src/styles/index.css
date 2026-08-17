@@ -47,6 +47,19 @@
   --os-notice-error-bg: #e8c8c8;
   --os-notice-error-border: #c08080;
   --os-notice-error-text: #8a2020;
+
+  /*
+   * Helper bot. Given its own palette rather than borrowing the button and
+   * text tokens: the bot is a character, not chrome, and reusing `--os-btn-bg`
+   * made it read as another beveled control instead of something alive.
+   */
+  --os-bot-shell: #d8d0c0;
+  --os-bot-shell-dark: #a8a090;
+  --os-bot-shell-light: #ece5d9;
+  --os-bot-visor: #2b2b3d;
+  --os-bot-eye: #a0d0a0;
+  --os-bot-glow: #4a3aad;
+  --os-bot-blush: rgba(198,112,112,0.45);
   /*
    * Terminal palette. The shell had tokens for its background and body text
    * only, so every *content* colour — prompt segments, paths, errors, the
@@ -148,6 +161,14 @@
   --os-notice-error-bg: rgba(248,113,113,0.14);
   --os-notice-error-border: rgba(248,113,113,0.35);
   --os-notice-error-text: #fca5a5;
+
+  --os-bot-shell: rgba(62,62,96,0.92);
+  --os-bot-shell-dark: rgba(38,38,64,0.92);
+  --os-bot-shell-light: rgba(84,84,124,0.92);
+  --os-bot-visor: rgba(8,8,20,0.95);
+  --os-bot-eye: #34d399;
+  --os-bot-glow: #007aff;
+  --os-bot-blush: rgba(255,120,170,0.35);
   --os-terminal-bg: rgba(5, 5, 15, 0.85);
   --os-terminal-text: rgba(255, 255, 255, 0.8);
   --os-terminal-accent: #34d399;
@@ -232,6 +253,14 @@
   --os-notice-error-bg: #fbe6e6;
   --os-notice-error-border: #d99a9a;
   --os-notice-error-text: #8f2323;
+
+  --os-bot-shell: #ffffff;
+  --os-bot-shell-dark: #dcdae2;
+  --os-bot-shell-light: #ffffff;
+  --os-bot-visor: #3a3d52;
+  --os-bot-eye: #4ade80;
+  --os-bot-glow: #4a3aad;
+  --os-bot-blush: rgba(232,140,152,0.5);
   /*
    * A paper terminal: dark ink on off-white. The green survives as the accent,
    * darkened until it clears 4.5:1 against the near-white background — the
@@ -892,8 +921,8 @@ html, body {
 }
 
 .os-bot-ball {
-  width: 60px;
-  height: 60px;
+  width: 64px;
+  height: 68px;
   display: grid;
   place-items: center;
   cursor: pointer;
@@ -902,14 +931,45 @@ html, body {
   padding: 0;
 }
 
-/* --- the head: a real CSS cube, three faces visible --- */
+/* --- the head: a rounded CSS cube, three faces visible --- */
 
 .os-bot-stage {
+  position: relative;
   display: block;
-  width: 46px;
-  height: 46px;
-  /* Shallow perspective keeps the faces chunky rather than dramatically raked. */
-  perspective: 260px;
+  width: 52px;
+  height: 60px;
+  perspective: 300px;
+}
+
+/* Gentle hover — this is the "floating" part; the shadow below sells it. */
+.os-bot-float {
+  display: block;
+  width: 52px;
+  height: 52px;
+  animation: os-bot-bob 3.8s ease-in-out infinite;
+}
+
+@keyframes os-bot-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Contact shadow. Shrinking as the bot rises is what reads as height. */
+.os-bot-shadow {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 34px;
+  height: 7px;
+  margin-left: -17px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(0,0,0,0.45), transparent 70%);
+  animation: os-bot-shadow 3.8s ease-in-out infinite;
+}
+
+@keyframes os-bot-shadow {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(0.78); opacity: 0.26; }
 }
 
 .os-bot-head {
@@ -918,144 +978,164 @@ html, body {
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  transform: rotateX(6deg) rotateY(-18deg);
+  transform: rotateX(6deg) rotateY(-16deg);
   transition: transform var(--os-dur-base) var(--os-ease-back);
 }
 
 .os-bot-ball:hover .os-bot-head,
 .os-bot-ball:focus-visible .os-bot-head {
-  transform: rotateX(2deg) rotateY(14deg) scale(1.06);
+  transform: rotateX(2deg) rotateY(13deg) scale(1.07);
 }
 
 .os-bot-head[data-awake] {
-  transform: rotateX(0deg) rotateY(0deg) scale(1.04);
+  transform: rotateX(0deg) rotateY(0deg) scale(1.05);
 }
 
 .os-bot-face,
 .os-bot-cheek,
 .os-bot-crown {
   position: absolute;
-  background: var(--os-btn-bg);
-  border: 2px solid var(--os-border-dark);
+  background: var(--os-bot-shell);
 }
 
 /*
- * Each face is pushed out along its own axis by half the cube (23px), which is
- * what turns three flat panels into something with actual volume.
+ * Each face is pushed out along its own axis by half the cube (26px), which is
+ * what turns three flat panels into something with volume. Generous radii —
+ * the rounder the head, the cuter it reads.
  */
 .os-bot-face {
   inset: 0;
-  border-top-color: var(--os-border-light);
-  border-left-color: var(--os-border-light);
-  border-radius: 8px;
-  transform: translateZ(11px);
-  display: grid;
-  place-content: center;
-  gap: 5px;
+  border-radius: 16px;
+  transform: translateZ(13px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 -3px 6px rgba(0,0,0,0.12), inset 0 2px 3px rgba(255,255,255,0.5);
 }
 
 .os-bot-cheek {
-  top: 0;
+  top: 4px;
   left: 50%;
-  width: 22px;
-  height: 100%;
-  margin-left: -11px;
-  border-radius: 4px;
-  transform: rotateY(90deg) translateZ(23px);
-  filter: brightness(0.82);
+  width: 26px;
+  height: calc(100% - 8px);
+  margin-left: -13px;
+  border-radius: 12px;
+  background: var(--os-bot-shell-dark);
+  transform: rotateY(90deg) translateZ(26px);
 }
 
 .os-bot-crown {
   top: 50%;
-  left: 0;
-  width: 100%;
-  height: 22px;
-  margin-top: -11px;
-  border-radius: 4px;
-  transform: rotateX(90deg) translateZ(23px);
-  filter: brightness(1.12);
+  left: 4px;
+  width: calc(100% - 8px);
+  height: 26px;
+  margin-top: -13px;
+  border-radius: 12px;
+  background: var(--os-bot-shell-light);
+  transform: rotateX(90deg) translateZ(26px);
 }
+
+/* Side knobs, so the silhouette is not a plain box. */
+.os-bot-ear {
+  position: absolute;
+  top: 50%;
+  width: 7px;
+  height: 15px;
+  margin-top: -7px;
+  border-radius: 3px;
+  background: var(--os-bot-shell-dark);
+  transform: translateZ(6px);
+}
+.os-bot-ear-left { left: -4px; }
+.os-bot-ear-right { right: -4px; }
 
 /* --- antenna --- */
 
 .os-bot-antenna {
   position: absolute;
   left: 50%;
-  top: -13px;
+  top: -14px;
   width: 2px;
-  height: 12px;
+  height: 13px;
   margin-left: -1px;
-  background: var(--os-border-dark);
-  transform: translateZ(11px);
+  background: var(--os-bot-shell-dark);
+  transform: translateZ(13px);
 }
 
 .os-bot-led {
   position: absolute;
-  top: -5px;
+  top: -7px;
   left: 50%;
-  width: 7px;
-  height: 7px;
-  margin-left: -3.5px;
+  width: 9px;
+  height: 9px;
+  margin-left: -4.5px;
   border-radius: 50%;
-  background: var(--os-accent);
-  animation: os-bot-blink 2.6s var(--os-ease) infinite;
+  background: var(--os-bot-glow);
+  box-shadow: 0 0 6px var(--os-bot-glow);
+  animation: os-bot-pulse 2.6s var(--os-ease) infinite;
 }
 
 .os-bot-head[data-awake] .os-bot-led {
   animation: none;
-  box-shadow: 0 0 7px var(--os-accent);
+  box-shadow: 0 0 12px var(--os-bot-glow);
 }
 
-@keyframes os-bot-blink {
-  0%, 100% { opacity: 0.35; }
-  50% { opacity: 1; }
+@keyframes os-bot-pulse {
+  0%, 100% { opacity: 0.45; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1); }
 }
 
 /* --- face features --- */
 
-.os-bot-eyes {
-  display: flex;
-  gap: 9px;
-  justify-content: center;
+/* The dark screen the eyes sit in — the strongest "cute robot" cue. */
+.os-bot-visor {
+  width: 36px;
+  height: 22px;
+  border-radius: 11px;
+  background: var(--os-bot-visor);
+  display: grid;
+  place-items: center;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.45);
 }
 
+.os-bot-eyes {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Written by RobotHead's rAF loop as the cursor moves. */
 .os-bot-pupil {
-  width: 7px;
-  height: 8px;
-  border-radius: 2px;
-  background: var(--os-text);
-  /* Written directly by RobotHead's rAF loop as the cursor moves. */
   transition: transform 90ms linear;
 }
 
-/* The lids close over the eyes rather than the pupils shrinking. */
-.os-bot-head::after {
-  content: '';
+/* Big rounded eyes, and the blink lives here so it never fights the tracking. */
+.os-bot-pupil i {
+  display: block;
+  width: 9px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--os-bot-eye);
+  box-shadow: 0 0 6px var(--os-bot-eye);
+  animation: os-bot-blink 5.4s ease-in-out infinite;
+}
+
+@keyframes os-bot-blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.12); }
+}
+
+.os-bot-blush {
   position: absolute;
-  left: 6px;
-  right: 6px;
-  top: 13px;
-  height: 9px;
-  background: var(--os-btn-bg);
-  transform: translateZ(12px) scaleY(0);
-  transform-origin: top center;
-  animation: os-bot-eyelid 5.4s ease-in-out infinite;
-  pointer-events: none;
+  top: 33px;
+  width: 8px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--os-bot-blush);
 }
-
-@keyframes os-bot-eyelid {
-  0%, 92%, 100% { transform: translateZ(12px) scaleY(0); }
-  95% { transform: translateZ(12px) scaleY(1); }
-}
-
-.os-bot-mouth {
-  width: 18px;
-  height: 3px;
-  border-radius: 2px;
-  background: var(--os-accent);
-  margin: 0 auto;
-  opacity: 0.75;
-}
+.os-bot-blush-left { left: 7px; }
+.os-bot-blush-right { right: 7px; }
 
 /* --- speech panel --- */
 
