@@ -15,4 +15,10 @@ export const EMPTY_PROJECT = {
   repo_url: '',
   status: true,
   sort_order: 0,
+  // Case study. All optional — a project with none of them simply shows no
+  // "Read case study" button, so these can be filled in one project at a time.
+  year: '',
+  role: '',
+  problem: '',
+  outcome: '',
 }

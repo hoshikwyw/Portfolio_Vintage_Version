@@ -917,6 +917,131 @@ html, body {
 .animate-shake { animation: admin-shake 0.4s var(--os-ease); }
 
 /* ============================
+   PROJECT CASE STUDY
+   ============================ */
+
+/* Covers the carousel rather than opening a second window. */
+.case-study {
+  position: absolute;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  background: var(--os-window-content);
+  border-radius: var(--os-btn-radius);
+  animation: case-study-in var(--os-dur-base) var(--os-ease) both;
+}
+
+@keyframes case-study-in {
+  from { opacity: 0; transform: scale(0.99); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .case-study { animation: none; }
+}
+
+.case-study-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 8px 6px 12px;
+  background: var(--os-titlebar);
+  flex-shrink: 0;
+}
+
+.case-study-heading { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
+
+.case-study-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--os-titlebar-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.case-study-year {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--os-titlebar-text);
+  opacity: 0.65;
+  flex-shrink: 0;
+}
+
+.case-study-close {
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  color: var(--os-titlebar-text);
+  background: var(--os-btn-bg);
+  border: 1px solid var(--os-btn-border-bottom);
+  border-top-color: var(--os-btn-border-top);
+  border-left-color: var(--os-btn-border-top);
+  border-radius: var(--os-btn-radius);
+}
+.case-study-close:hover { filter: brightness(1.15); }
+
+.case-study-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  max-width: 620px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.case-study-label {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--os-accent);
+  margin-bottom: 4px;
+}
+
+.case-study-text {
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: var(--os-text);
+  /* Keeps paragraph breaks typed into the admin textarea, without needing a
+     markdown renderer in the bundle. */
+  white-space: pre-line;
+}
+
+.case-study-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+
+.case-study-tag {
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 8px;
+  color: var(--os-text);
+  background: var(--os-panel-bg);
+  border: 1px solid var(--os-border-dark);
+  border-radius: var(--os-btn-radius);
+}
+
+.case-study-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 2px;
+  padding-top: 14px;
+  border-top: 1px solid var(--os-border-dark);
+}
+
+/* ============================
    APP ICONS
    ============================ */
 

@@ -57,6 +57,51 @@ const ProjectForm = ({
           <Field label="Repo URL" value={values.repo_url} onChange={setField('repo_url')} />
         </div>
 
+        {/*
+          Case study — all optional. A project with none of these shows no
+          "Read case study" button on the card, so they can be written up one
+          at a time rather than all or nothing.
+        */}
+        <Fieldset title="Case Study (optional)">
+          <div className="space-y-2">
+            <div className="grid grid-cols-2 gap-2">
+              <Field
+                label="Year"
+                type="number"
+                placeholder="2024"
+                value={values.year}
+                onChange={setField('year')}
+              />
+              <Field
+                label="Role"
+                placeholder="Solo developer"
+                value={values.role}
+                onChange={setField('role')}
+              />
+            </div>
+
+            <Field
+              label="Problem"
+              as="textarea"
+              rows={3}
+              className="resize-none"
+              placeholder="What needed solving, and why it mattered."
+              value={values.problem}
+              onChange={setField('problem')}
+            />
+
+            <Field
+              label="Outcome"
+              as="textarea"
+              rows={3}
+              className="resize-none"
+              placeholder="What you built and what came of it."
+              value={values.outcome}
+              onChange={setField('outcome')}
+            />
+          </div>
+        </Fieldset>
+
         <Checkbox
           label="Live (uncheck = Coming Soon)"
           checked={values.status}

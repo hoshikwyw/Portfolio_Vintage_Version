@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { FONT_STACK } from '@/shared/constants/fonts'
+import { hasCaseStudy } from '../caseStudy'
 
 const linkStyle = {
   background: 'var(--os-btn-bg)',
@@ -59,9 +60,10 @@ const CardCover = ({ src, alt, isComingSoon }) => {
  * `status === false` means the project is not live yet: the card dims, drops
  * its links and shows a "Coming Soon" overlay instead.
  */
-const ProjectCard = ({ project }) => {
-  const { title, description, cover_image: coverImage, demo_url: demoUrl, repo_url: repoUrl, tags, status } = project
+const ProjectCard = ({ project, onOpenCaseStudy }) => {
+  const { title, description, cover_image: coverImage, demo_url: demoUrl, repo_url: repoUrl, tags, status, year } = project
   const isComingSoon = status === false
+  const showCaseStudy = hasCaseStudy(project)
 
   return (
     <div
@@ -88,7 +90,14 @@ const ProjectCard = ({ project }) => {
           </div>
         ) : (
           <>
-            <h3 className="text-sm font-bold uppercase tracking-wide" style={{ color: 'var(--os-text)' }}>{title}</h3>
+            <div className="flex items-baseline justify-between gap-2">
+              <h3 className="text-sm font-bold uppercase tracking-wide" style={{ color: 'var(--os-text)' }}>{title}</h3>
+              {year && (
+                <span className="text-[10px] font-bold flex-shrink-0" style={{ color: 'var(--os-text-muted)' }}>
+                  {year}
+                </span>
+              )}
+            </div>
             <p className="text-[11px] flex-grow leading-relaxed" style={{ color: 'var(--os-text-secondary)' }}>{description}</p>
 
             <div className="flex flex-wrap gap-1 mb-2">
@@ -103,9 +112,24 @@ const ProjectCard = ({ project }) => {
               ))}
             </div>
 
-            <div className="flex justify-between mt-auto gap-2">
-              <CardLink href={demoUrl}>Live Demo</CardLink>
-              <CardLink href={repoUrl}>View Code</CardLink>
+            <div className="flex flex-col gap-2 mt-auto">
+              {/*
+                When there is a write-up it becomes the primary action: the
+                links send people away, the case study keeps them here.
+              */}
+              {showCaseStudy && (
+                <button
+                  type="button"
+                  onClick={() => onOpenCaseStudy(project)}
+                  className="quick-action-btn quick-action-primary justify-center"
+                >
+                  Read case study
+                </button>
+              )}
+              <div className="flex justify-between gap-2">
+                <CardLink href={demoUrl}>Live Demo</CardLink>
+                <CardLink href={repoUrl}>View Code</CardLink>
+              </div>
             </div>
           </>
         )}

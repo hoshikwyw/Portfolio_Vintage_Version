@@ -9,6 +9,7 @@ import StatusMessage from '@/shared/components/feedback/StatusMessage'
 import { useProjects } from './hooks/useProjects'
 import ProjectCard from './components/ProjectCard'
 import ProjectsSkeleton from './components/ProjectsSkeleton'
+import CaseStudyPanel from './components/CaseStudyPanel'
 import { AUTOPLAY_DELAY, SLIDE_HEIGHT, SLIDE_WIDTH_CSS } from './constants'
 
 const slideStyle = { width: SLIDE_WIDTH_CSS, height: `${SLIDE_HEIGHT}px`, padding: '8px' }
@@ -46,6 +47,7 @@ const Projects = () => {
    */
   const [prevEl, setPrevEl] = useState(null)
   const [nextEl, setNextEl] = useState(null)
+  const [caseStudy, setCaseStudy] = useState(null)
 
   if (isLoading) return <ProjectsSkeleton />
   if (isError) return <StatusMessage tone="error">Error loading projects</StatusMessage>
@@ -67,7 +69,7 @@ const Projects = () => {
         {projects.map((project) => (
           <SwiperSlide key={project.id} style={{ ...slideStyle, transition: 'transform 0.8s ease' }}>
             <div className="w-full h-full">
-              <ProjectCard project={project} />
+              <ProjectCard project={project} onOpenCaseStudy={setCaseStudy} />
             </div>
           </SwiperSlide>
         ))}
@@ -77,6 +79,8 @@ const Projects = () => {
 
       <NavButton side="prev" innerRef={setPrevEl}><ChevronLeft size={16} /></NavButton>
       <NavButton side="next" innerRef={setNextEl}><ChevronRight size={16} /></NavButton>
+
+      {caseStudy && <CaseStudyPanel project={caseStudy} onClose={() => setCaseStudy(null)} />}
     </div>
   )
 }

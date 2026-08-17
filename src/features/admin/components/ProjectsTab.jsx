@@ -48,6 +48,10 @@ const ProjectsTab = ({ projects, tags, flash, flashError }) => {
       repo_url: project.repo_url || '',
       status: project.status,
       sort_order: project.sort_order,
+      year: project.year ?? '',
+      role: project.role || '',
+      problem: project.problem || '',
+      outcome: project.outcome || '',
     })
 
     try {
