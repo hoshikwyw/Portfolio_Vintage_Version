@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { FONT_STACK } from '@/shared/constants/fonts'
 
+/** A list of hints to show in the sticky note. */
 const notes = [
+  'Learning AI Engineering on weekends',
   'Currently exploring Three.js & WebGL',
-  'Learning Rust on weekends',
   'Open to freelance work!',
   'This whole site is a fake OS btw',
   'Try right-clicking the desktop ;)',
