@@ -1,24 +1,30 @@
+/*
+ * The gallery measures itself, not the screen. These were viewport media
+ * queries, so a 700px window on a 1280px screen got the desktop's five
+ * columns of postage-stamp tiles. Breakpoints are now window widths.
+ */
 .project-images-container {
+  container-type: inline-size;
   padding: 8px;
   background: transparent;
 }
 
-/* Pinterest-style masonry grid */
+/* Pinterest-style masonry grid: two columns at the narrowest, one per ~280px after. */
 .masonry-grid {
-  column-count: 3;
+  column-count: 2;
   column-gap: 8px;
   width: 100%;
 }
 
-@media (max-width: 600px) {
-  .masonry-grid { column-count: 2; }
+@container (min-width: 560px) {
+  .masonry-grid { column-count: 3; }
 }
 
-@media (min-width: 900px) {
+@container (min-width: 860px) {
   .masonry-grid { column-count: 4; }
 }
 
-@media (min-width: 1200px) {
+@container (min-width: 1160px) {
   .masonry-grid { column-count: 5; }
 }
 

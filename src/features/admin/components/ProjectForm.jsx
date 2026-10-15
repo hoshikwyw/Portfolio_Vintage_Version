@@ -1,3 +1,4 @@
+import { useId } from 'react'
 import { adminColors } from '@/features/admin/theme'
 import { Button, Checkbox, Field, Fieldset, Label } from './ui'
 
@@ -29,6 +30,7 @@ const ProjectForm = ({
   onSubmit, onCancel, isSaving,
 }) => {
   const setField = (name) => (e) => onChange({ ...values, [name]: e.target.value })
+  const tagsLabelId = useId()
 
   return (
     <Fieldset title={editId ? 'Edit Project' : 'New Project'}>
@@ -109,8 +111,10 @@ const ProjectForm = ({
         />
 
         <div>
-          <Label>Tags</Label>
-          <div className="flex flex-wrap gap-1">
+          {/* Names a set of toggle buttons rather than one input, so it labels
+              the group instead of pointing `htmlFor` at a single control. */}
+          <Label id={tagsLabelId}>Tags</Label>
+          <div className="flex flex-wrap gap-1" role="group" aria-labelledby={tagsLabelId}>
             {tags.map((tag) => (
               <TagToggle
                 key={tag.id}

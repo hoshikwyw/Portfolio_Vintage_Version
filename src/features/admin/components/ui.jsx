@@ -1,3 +1,4 @@
+import { useId } from 'react'
 import { adminColors, adminStyles } from '@/features/admin/theme'
 
 /** Beveled fieldset with an uppercase legend. */
@@ -11,19 +12,31 @@ export const Fieldset = ({ title, children, className = '' }) => (
 )
 
 /** Small uppercase field label. */
-export const Label = ({ children }) => (
-  <label className="block text-[9px] font-bold uppercase mb-0.5" style={{ color: adminColors.label }}>
+export const Label = ({ children, ...props }) => (
+  <label className="block text-[9px] font-bold uppercase mb-0.5" style={{ color: adminColors.label }} {...props}>
     {children}
   </label>
 )
 
-/** Labeled text/number input. */
-export const Field = ({ label, as: As = 'input', className = '', ...props }) => (
-  <div>
-    {label && <Label>{label}</Label>}
-    <As className={`w-full text-[11px] px-1.5 py-1 outline-none ${className}`} style={adminStyles.input} {...props} />
-  </div>
-)
+/**
+ * Labeled text/number input. The label is tied to the control by id — it used
+ * to sit beside it unconnected, so every admin field had no accessible name.
+ */
+export const Field = ({ label, as: As = 'input', className = '', ...props }) => {
+  const id = useId()
+
+  return (
+    <div>
+      {label && <Label htmlFor={id}>{label}</Label>}
+      <As
+        id={id}
+        className={`w-full text-[11px] px-1.5 py-1 outline-none ${className}`}
+        style={adminStyles.input}
+        {...props}
+      />
+    </div>
+  )
+}
 
 /** Checkbox with an inline caption. */
 export const Checkbox = ({ label, accent = adminColors.accent, ...props }) => (

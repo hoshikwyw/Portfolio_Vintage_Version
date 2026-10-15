@@ -11,12 +11,19 @@ const GalleryTile = ({ image, onSelect }) => {
      * keyboard entirely — there was no way to open an image without a mouse —
      * and nothing to hand focus back to when the lightbox closed.
      */
-    <button type="button" className="masonry-item" onClick={() => onSelect(image)}>
+    <button
+      type="button"
+      className="masonry-item"
+      onClick={() => onSelect(image)}
+      aria-label={`View ${title || 'image'} full size`}
+    >
       <div className="image-card">
         {!loaded && <div className="image-skeleton os-skeleton" />}
         <img
           src={image.image_url}
-          alt={title || `Image ${image.id}`}
+          // Decorative here: the button names the tile, and the caption below
+          // shows the same title, so a screen reader heard it twice.
+          alt=""
           className={`project-image ${loaded ? 'loaded' : ''}`}
           // Off-screen tiles in the masonry wall should not compete with the
           // visible ones for bandwidth, and decoding off the main thread keeps
