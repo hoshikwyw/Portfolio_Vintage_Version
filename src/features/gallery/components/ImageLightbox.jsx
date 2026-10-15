@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { useRestoreFocus } from '@/shared/hooks/useRestoreFocus'
 import { downloadFile } from '@/shared/lib/browser'
 
 const ExternalIcon = () => (
@@ -21,7 +22,17 @@ const DownloadIcon = () => (
 const ImageLightbox = ({ image, onClose }) => {
   const closeRef = useRef(null)
 
-  // Close on Escape and lock body scroll while open.
+  // This is a genuinely modal overlay, so focus moves into it, and returns to
+  // the tile that opened it on close.
+  useRestoreFocus(closeRef)
+
+  // Lock body scroll while open, restoring whatever was there before.
+  useEffect(() => {
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = previous }
+  }, [])
+
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key !== 'Escape') return
@@ -39,20 +50,7 @@ const ImageLightbox = ({ image, onClose }) => {
     }
 
     document.addEventListener('keydown', handleEscape, true)
-    document.body.style.overflow = 'hidden'
-
-    // This is a genuinely modal overlay, so focus moves into it. The Gallery
-    // restores focus to the tile that opened it when this unmounts.
-    const opener = document.activeElement
-    closeRef.current?.focus({ preventScroll: true })
-
-    return () => {
-      document.removeEventListener('keydown', handleEscape, true)
-      document.body.style.overflow = 'unset'
-      if (opener instanceof HTMLElement && document.contains(opener)) {
-        opener.focus({ preventScroll: true })
-      }
-    }
+    return () => document.removeEventListener('keydown', handleEscape, true)
   }, [onClose])
 
   const title = image.projects?.title

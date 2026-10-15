@@ -11,7 +11,7 @@ import { useOutsideClick } from '@/shared/hooks/useOutsideClick'
 import AppIcon from '@/shared/components/icons/AppIcon'
 import { preloadWindow } from '@/os/registry/windowImports'
 
-// Highlight lives in `.start-menu-row` (see styles/index.css) rather than in
+// Highlight lives in `.start-menu-row` (see styles/desktop.css) rather than in
 // JS mouse handlers, so it can ease instead of snapping.
 const MenuRow = ({ icon, label, onClick, onPreload }) => (
   <button
@@ -86,17 +86,10 @@ const StartMenu = ({ onClose }) => {
       transition={{ duration: 0.15 }}
       onKeyDown={handleKeyDown}
       aria-label="Start menu"
-      className="absolute bottom-full left-0 mb-1 w-64 overflow-hidden start-menu-panel"
+      className="os-popup absolute bottom-full left-0 mb-1 w-64 overflow-hidden start-menu-panel"
       style={{
         zIndex: Z_LAYERS.startMenu,
-        background: 'var(--os-window)',
-        border: '2px solid var(--os-border-dark)',
-        borderTopColor: 'var(--os-border-light)',
-        borderLeftColor: 'var(--os-border-light)',
         borderRadius: 'var(--os-window-radius)',
-        boxShadow: 'var(--os-window-shadow)',
-        backdropFilter: 'var(--os-glass-blur)',
-        WebkitBackdropFilter: 'var(--os-glass-blur)',
         fontFamily: FONT_STACK,
       }}
     >

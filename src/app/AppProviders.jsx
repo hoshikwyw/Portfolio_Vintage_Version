@@ -25,7 +25,7 @@ const loadMotionFeatures = () => import('@/shared/lib/motionFeatures').then((mod
  * OS "reduce motion" setting without each component checking for itself.
  * Transforms and opacity are skipped while state still lands where it should,
  * so windows open and close instantly rather than not at all. The CSS side of
- * this lives in the reduced-motion block in `styles/index.css`.
+ * this lives in the reduced-motion block in `styles/a11y.css`.
  */
 const AppProviders = ({ children }) => (
   <ErrorBoundary variant="fullscreen">

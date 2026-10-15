@@ -15,6 +15,9 @@ const AppButton = ({ id, isMinimized, onClick }) => (
   <m.button
     onClick={onClick}
     onPointerEnter={() => preloadWindow(id)}
+    // The visible label is hidden on narrow screens and the icon is
+    // decorative, so the name has to be stated here.
+    aria-label={isMinimized ? `${getAppLabel(id)} (minimized)` : getAppLabel(id)}
     className="flex items-center gap-1.5 h-7 px-2 cursor-pointer flex-shrink-0"
     style={{
       background: isMinimized ? 'var(--os-btn-bg)' : 'var(--os-panel-bg)',

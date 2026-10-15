@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useRef } from 'react'
+import { useRestoreFocus } from '@/shared/hooks/useRestoreFocus'
 
 /**
  * Focus and keyboard behaviour shared by the floating and fullscreen frames.
@@ -8,36 +9,24 @@ import { useCallback, useEffect, useRef } from 'react'
  * would strand a keyboard user inside whichever one opened last. The frame
  * simply takes focus once, and Tab continues to move through the page.
  *
- * @param {string}   id      App id, passed back to `onClose`.
+ * @param {string}   id      App id, passed back to `onClose` and `onFocus`.
  * @param {Function} onClose Close handler for this window.
+ * @param {Function} [onFocus] Raises this window when focus moves into it.
  * @returns {{frameRef: object, handleKeyDown: Function, handleFocus: Function}}
  */
 export const useWindowA11y = ({ id, onClose, onFocus }) => {
   const frameRef = useRef(null)
 
-  useEffect(() => {
-    const opener = document.activeElement
-
-    /*
-     * Move focus into the window so a keyboard user lands in what they just
-     * opened, and so Escape has somewhere to be heard. `preventScroll` because
-     * the frame is positioned absolutely — without it the browser scrolls the
-     * desktop trying to bring it into view.
-     *
-     * A window whose content autofocuses something (the terminal's prompt, the
-     * start-menu search) takes focus from here a moment later: those live in a
-     * lazily-loaded child, so their effect runs after this one.
-     */
-    frameRef.current?.focus({ preventScroll: true })
-
-    return () => {
-      // Hand focus back to whatever opened the window — the desktop icon,
-      // start-menu row or taskbar button — as long as it is still on the page.
-      if (opener instanceof HTMLElement && document.contains(opener)) {
-        opener.focus({ preventScroll: true })
-      }
-    }
-  }, [])
+  /*
+   * Move focus into the window so a keyboard user lands in what they just
+   * opened, and so Escape has somewhere to be heard; on close, hand it back to
+   * the desktop icon, start-menu row or taskbar button that opened it.
+   *
+   * A window whose content autofocuses something (the terminal's prompt, the
+   * start-menu search) takes focus from here a moment later: those live in a
+   * lazily-loaded child, so their effect runs after this one.
+   */
+  useRestoreFocus(frameRef)
 
   const handleKeyDown = useCallback(
     (event) => {

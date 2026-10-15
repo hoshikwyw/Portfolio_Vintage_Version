@@ -66,19 +66,12 @@ const DesktopContextMenu = () => {
 
   return (
     <div
-      className="fixed"
+      className="os-popup fixed"
       style={{
         left: x,
         top: y,
         zIndex: Z_LAYERS.contextMenu,
-        background: 'var(--os-window)',
-        border: '2px solid var(--os-border-dark)',
-        borderTopColor: 'var(--os-border-light)',
-        borderLeftColor: 'var(--os-border-light)',
         borderRadius: 'var(--os-btn-radius)',
-        boxShadow: 'var(--os-window-shadow)',
-        backdropFilter: 'var(--os-glass-blur)',
-        WebkitBackdropFilter: 'var(--os-glass-blur)',
         fontFamily: FONT_STACK,
         minWidth: 170,
         padding: '3px 0',

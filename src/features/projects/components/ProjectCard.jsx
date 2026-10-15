@@ -126,10 +126,13 @@ const ProjectCard = ({ project, onOpenCaseStudy }) => {
                   Read case study
                 </button>
               )}
-              <div className="flex justify-between gap-2">
-                <CardLink href={demoUrl}>Live Demo</CardLink>
-                <CardLink href={repoUrl}>View Code</CardLink>
-              </div>
+              {/* Both URLs are optional; a missing one would be a dead button. */}
+              {(demoUrl || repoUrl) && (
+                <div className="flex justify-between gap-2">
+                  {demoUrl && <CardLink href={demoUrl}>Live Demo</CardLink>}
+                  {repoUrl && <CardLink href={repoUrl}>View Code</CardLink>}
+                </div>
+              )}
             </div>
           </>
         )}

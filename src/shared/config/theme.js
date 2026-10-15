@@ -3,7 +3,7 @@
  *
  * These are user-facing *choices* (persisted by key in Settings), not fixed
  * constants — hence `config/` rather than `constants/`. The actual colours for
- * each theme live in `src/styles/index.css` behind `[data-theme]`.
+ * each theme live in `src/styles/tokens.css` behind `[data-theme]`.
  */
 
 /**

@@ -7,26 +7,16 @@
  * the registry component to reach it.
  */
 
+import { readStorage, writeStorage } from '@/shared/lib/storage'
+
 /** Marks that we have already reloaded once, so a real failure cannot loop. */
 const RELOAD_FLAG = 'kayv-chunk-reload'
 
-const readFlag = () => {
-  try {
-    return sessionStorage.getItem(RELOAD_FLAG)
-  } catch {
-    // Blocked storage — treat as "already tried" so we never loop.
-    return '1'
-  }
-}
+// Blocked storage reads as "already tried", so the guard fails closed and a
+// broken chunk can never reload-loop.
+const readFlag = () => readStorage(RELOAD_FLAG, { session: true, blocked: '1' })
 
-const writeFlag = (value) => {
-  try {
-    if (value === null) sessionStorage.removeItem(RELOAD_FLAG)
-    else sessionStorage.setItem(RELOAD_FLAG, value)
-  } catch {
-    // Best effort; the guard above fails closed.
-  }
-}
+const writeFlag = (value) => writeStorage(RELOAD_FLAG, value, { session: true })
 
 /**
  * Load a window chunk, recovering from the stale-deploy case.

@@ -1,27 +1,16 @@
 import { useEffect, useMemo, useState } from 'react'
 import Panel from '@/shared/components/ui/Panel'
 import { FONT_STACK } from '@/shared/constants/fonts'
+import { readStorageJSON, writeStorage } from '@/shared/lib/storage'
 import { BEST_TIMES_KEY, DEFAULT_DIFFICULTY, DIFFICULTIES } from './constants'
 import { useMinesweeper } from './hooks/useMinesweeper'
 import Board from './components/Board'
 import StatusBar from './components/StatusBar'
 import './minesweeper.css'
 
-const readBestTimes = () => {
-  try {
-    return JSON.parse(localStorage.getItem(BEST_TIMES_KEY) ?? '{}')
-  } catch {
-    return {}
-  }
-}
+const readBestTimes = () => readStorageJSON(BEST_TIMES_KEY, {})
 
-const writeBestTimes = (times) => {
-  try {
-    localStorage.setItem(BEST_TIMES_KEY, JSON.stringify(times))
-  } catch {
-    // Best times are a nicety; the game plays fine without them.
-  }
-}
+const writeBestTimes = (times) => writeStorage(BEST_TIMES_KEY, JSON.stringify(times))
 
 const MESSAGES = {
   idle: 'Left click to clear a square. Right click — or F — to flag one.',
@@ -64,7 +53,7 @@ const Minesweeper = () => {
 
   return (
     <div className="ms-root" style={{ fontFamily: FONT_STACK }}>
-      {/* --ms-cols drives the shell width; see .ms-shell in index.css. */}
+      {/* --ms-cols drives the shell width; see .ms-shell in minesweeper.css. */}
       <div className="ms-shell" style={{ '--ms-cols': cols }}>
         <div className="ms-toolbar">
           {DIFFICULTIES.map((option) => (

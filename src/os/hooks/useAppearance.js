@@ -6,25 +6,9 @@ import {
   STORAGE_KEYS,
   resolveTheme,
 } from '@/shared/config/theme'
+import { readStorage, writeStorage } from '@/shared/lib/storage'
 
 const LIGHT_QUERY = '(prefers-color-scheme: light)'
-
-const readStored = (key, fallback) => {
-  try {
-    return localStorage.getItem(key) || fallback
-  } catch {
-    // Private-mode / blocked storage — fall back to the default silently.
-    return fallback
-  }
-}
-
-const writeStored = (key, value) => {
-  try {
-    localStorage.setItem(key, value)
-  } catch {
-    // Persisting the preference is best-effort; the session still works.
-  }
-}
 
 /*
  * The OS colour-scheme preference, read through `useSyncExternalStore` rather
@@ -55,10 +39,10 @@ const getPrefersLightServer = () => false
  */
 export const useAppearance = () => {
   const [wallpaper, setWallpaperState] = useState(() =>
-    readStored(STORAGE_KEYS.wallpaper, DEFAULT_WALLPAPER),
+    readStorage(STORAGE_KEYS.wallpaper) || DEFAULT_WALLPAPER,
   )
   const [theme, setThemeState] = useState(() =>
-    readStored(STORAGE_KEYS.theme, DEFAULT_THEME),
+    readStorage(STORAGE_KEYS.theme) || DEFAULT_THEME,
   )
 
   const prefersLight = useSyncExternalStore(
@@ -87,12 +71,12 @@ export const useAppearance = () => {
 
   const setWallpaper = useCallback((key) => {
     setWallpaperState(key)
-    writeStored(STORAGE_KEYS.wallpaper, key)
+    writeStorage(STORAGE_KEYS.wallpaper, key)
   }, [])
 
   const setTheme = useCallback((key) => {
     setThemeState(key)
-    writeStored(STORAGE_KEYS.theme, key)
+    writeStorage(STORAGE_KEYS.theme, key)
   }, [])
 
   return useMemo(

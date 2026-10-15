@@ -6,39 +6,17 @@ import {
   idleHints,
   windowHints,
 } from '@/shared/config/guide'
+import { readStorage, readStorageJSON, writeStorage } from '@/shared/lib/storage'
 
-const readVisited = () => {
-  try {
-    return new Set(JSON.parse(sessionStorage.getItem(GUIDE_VISITED_KEY) ?? '[]'))
-  } catch {
-    return new Set()
-  }
-}
+const readVisited = () => new Set(readStorageJSON(GUIDE_VISITED_KEY, [], { session: true }))
 
-const writeVisited = (visited) => {
-  try {
-    sessionStorage.setItem(GUIDE_VISITED_KEY, JSON.stringify([...visited]))
-  } catch {
-    // Best effort — the guide still works, it just forgets on reload.
-  }
-}
+const writeVisited = (visited) =>
+  writeStorage(GUIDE_VISITED_KEY, JSON.stringify([...visited]), { session: true })
 
-const readSeen = () => {
-  try {
-    return Boolean(localStorage.getItem(GUIDE_SEEN_KEY))
-  } catch {
-    // Treat blocked storage as "seen", so we never auto-open on every load.
-    return true
-  }
-}
+// Blocked storage counts as "seen", so the panel never auto-opens on every load.
+const readSeen = () => Boolean(readStorage(GUIDE_SEEN_KEY, { blocked: '1' }))
 
-const markSeen = () => {
-  try {
-    localStorage.setItem(GUIDE_SEEN_KEY, '1')
-  } catch {
-    // Ignored; worst case the panel greets a returning visitor once more.
-  }
-}
+const markSeen = () => writeStorage(GUIDE_SEEN_KEY, '1')
 
 /**
  * Decides what the helper bot should say right now.

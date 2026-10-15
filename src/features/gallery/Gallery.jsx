@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import StatusMessage from '@/shared/components/feedback/StatusMessage'
 import { useProjectImages } from './hooks/useProjectImages'
 import GalleryGrid from './components/GalleryGrid'
@@ -10,6 +10,8 @@ import './gallery.css'
 const Gallery = () => {
   const { data: images, isLoading, isError } = useProjectImages()
   const [selectedImage, setSelectedImage] = useState(null)
+  // Stable, so the lightbox's Escape listener is bound once per opening.
+  const closeLightbox = useCallback(() => setSelectedImage(null), [])
 
   if (isLoading) return <GallerySkeleton />
   if (isError) return <StatusMessage tone="error">Error loading images</StatusMessage>
@@ -19,7 +21,7 @@ const Gallery = () => {
     <>
       <GalleryGrid images={images} onSelect={setSelectedImage} />
       {selectedImage && (
-        <ImageLightbox image={selectedImage} onClose={() => setSelectedImage(null)} />
+        <ImageLightbox image={selectedImage} onClose={closeLightbox} />
       )}
     </>
   )

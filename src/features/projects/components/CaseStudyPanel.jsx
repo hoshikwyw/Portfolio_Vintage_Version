@@ -1,5 +1,6 @@
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import { X } from 'lucide-react'
+import { useRestoreFocus } from '@/shared/hooks/useRestoreFocus'
 import { caseStudyRows } from '../caseStudy'
 
 /**
@@ -16,16 +17,7 @@ const CaseStudyPanel = ({ project, onClose }) => {
   const panelRef = useRef(null)
   const rows = caseStudyRows(project)
 
-  useEffect(() => {
-    const opener = document.activeElement
-    panelRef.current?.focus({ preventScroll: true })
-
-    return () => {
-      if (opener instanceof HTMLElement && document.contains(opener)) {
-        opener.focus({ preventScroll: true })
-      }
-    }
-  }, [])
+  useRestoreFocus(panelRef)
 
   const handleKeyDown = (event) => {
     if (event.key !== 'Escape') return
