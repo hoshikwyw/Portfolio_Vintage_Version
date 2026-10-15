@@ -32,10 +32,14 @@ const Chip = ({ children }) => (
  * the left column ran far longer than the right. Now the history (experience,
  * education) sits on the left and the skill set on the right, and on a narrow
  * window they stack in that order — the most useful facts first.
+ *
+ * The page stops growing at ~1040px and centres. Fullscreen on a wide monitor
+ * otherwise stretched every meter half a metre long and opened a dead gap
+ * between the bio and the contact card.
  */
 const About = () => (
   <div className="@container w-full p-4">
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 max-w-[1040px] mx-auto">
       <ProfileHero />
 
       <div className="grid grid-cols-1 @2xl:grid-cols-2 gap-4 items-start">
@@ -48,17 +52,14 @@ const About = () => (
           <SkillBars />
 
           <Panel title="Languages">
-            <div className="space-y-1.5">
-              {languages.map((language) => (
-                <div key={language} className="flex items-center gap-2">
-                  <span
-                    className="w-1.5 h-1.5 rounded-full flex-shrink-0"
-                    style={{ background: 'var(--os-accent)' }}
-                  />
-                  <span className="text-[11px]" style={{ color: 'var(--os-text)' }}>{language}</span>
-                </div>
+            <ul className="os-language-list">
+              {languages.map(({ name, level }) => (
+                <li key={name} className="os-language-row">
+                  <span className="os-language-name">{name}</span>
+                  <span className="os-language-level">{level}</span>
+                </li>
               ))}
-            </div>
+            </ul>
           </Panel>
 
           <Panel title="Interests">

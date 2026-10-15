@@ -51,7 +51,10 @@ export const experience = [
   { title: 'Freelance Projects', detail: 'Portfolio, Booking App, AI Assistant UI' },
 ]
 
-export const languages = ['English — Intermediate', 'Burmese — Native']
+export const languages = [
+  { name: 'English', level: 'Intermediate' },
+  { name: 'Burmese', level: 'Native' },
+]
 
 export const interests = ['Design', 'Animation', 'AI', 'Vintage UI', '2D Games']
 

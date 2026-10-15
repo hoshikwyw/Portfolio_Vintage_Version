@@ -58,7 +58,7 @@ const SeoContent = () => (
     <p>{interests.join(', ')}</p>
 
     <h2>Languages</h2>
-    <p>{languages.join(', ')}</p>
+    <p>{languages.map(({ name, level }) => `${name} (${level})`).join(', ')}</p>
   </div>
 )
 

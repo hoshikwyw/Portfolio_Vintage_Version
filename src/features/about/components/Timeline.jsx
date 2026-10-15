@@ -15,7 +15,7 @@ const Timeline = ({ title, items }) => (
           <p className="font-bold text-[12px] leading-snug" style={{ color: 'var(--os-text)' }}>
             {item.title}
           </p>
-          <p className="text-[11px] font-semibold leading-snug" style={{ color: 'var(--os-accent)' }}>
+          <p className="text-[11px] leading-snug mt-0.5" style={{ color: 'var(--os-text-secondary)' }}>
             {item.detail}
           </p>
         </li>
