@@ -1,4 +1,4 @@
-import { profile, system, terminalSkills } from '@/shared/config/profile'
+import { profile, system, terminalSkills, tools } from '@/shared/config/profile'
 import { Alert, Cmd, Dim, Green, Path, Plain } from '@/features/terminal/components/TerminalText'
 
 const NEOFETCH_LOGO = `  ╔══════╗
@@ -101,6 +101,18 @@ const commands = {
         <Green>My skills:</Green><br />
         {terminalSkills.map((skill, i) => (
           <span key={skill}>{i > 0 && ' · '}<Green>{skill}</Green></span>
+        ))}
+      </>
+    ),
+  },
+
+  tools: {
+    help: 'Tools and services I use',
+    run: () => (
+      <>
+        <Green>Tools & services:</Green><br />
+        {tools.map(({ name, tag }) => (
+          <span key={name}>{'  '}<Cmd>{name}</Cmd> — {tag}<br /></span>
         ))}
       </>
     ),

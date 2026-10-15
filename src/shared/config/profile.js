@@ -60,6 +60,17 @@ export const platforms = [
   { name: 'Native mobile apps', tag: 'React Native · Expo' },
 ]
 
+/**
+ * Tools and services, grouped by what they are for — the "Tools" panel in
+ * About Me and the terminal `tools` command.
+ */
+export const tools = [
+  { name: 'Version control', tag: 'Git · GitHub' },
+  { name: 'Backend & databases', tag: 'Supabase · DBeaver' },
+  { name: 'Cloud & DevOps', tag: 'AWS · Docker' },
+  { name: 'APIs', tag: 'Google Vision · Maps' },
+]
+
 export const education = [
   { title: 'Computer Science', detail: 'University of the People (UoPeople) — in progress' },
   { title: 'Frontend Web Developer', detail: 'MMS-IT' },

@@ -1,5 +1,5 @@
 import Panel from '@/shared/components/ui/Panel'
-import { currently, education, experience, interests, languages, platforms } from '@/shared/config/profile'
+import { currently, education, experience, interests, languages, platforms, tools } from '@/shared/config/profile'
 import ProfileHero from './components/ProfileHero'
 import Timeline from './components/Timeline'
 import SkillBars from './components/SkillBars'
@@ -44,27 +44,31 @@ const About = () => (
     <div className="flex flex-col gap-4 max-w-[1040px] mx-auto">
       <ProfileHero />
 
+      {/*
+        Left: the work — jobs, what gets built, education, languages.
+        Right: the toolkit — what is current, skills, tools, interests.
+        Grouped so related panels sit together *and* the columns end level.
+      */}
       <div className="grid grid-cols-1 @2xl:grid-cols-2 gap-4 items-start">
         <div className="flex flex-col gap-4">
           <Timeline title="Experience" items={experience} />
-          {/* Next to the job history, which is where what gets built belongs. */}
           <Panel title="Builds">
             <DetailList items={platforms} />
           </Panel>
           <Timeline title="Education" items={education} />
+          <Panel title="Languages">
+            <DetailList items={languages.map(({ name, level }) => ({ name, tag: level }))} />
+          </Panel>
         </div>
 
         <div className="flex flex-col gap-4">
           <Panel title="Currently">
             <DetailList items={currently} />
           </Panel>
-
           <SkillBars />
-
-          <Panel title="Languages">
-            <DetailList items={languages.map(({ name, level }) => ({ name, tag: level }))} />
+          <Panel title="Tools">
+            <DetailList items={tools} />
           </Panel>
-
           <Panel title="Interests">
             <div className="flex flex-wrap gap-1.5">
               {interests.map((interest) => (
