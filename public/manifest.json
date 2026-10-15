@@ -1,7 +1,7 @@
 {
   "name": "Khaing Wut Yi Win — Portfolio",
   "short_name": "Kayv Portfolio",
-  "description": "Frontend Developer portfolio of Khaing Wut Yi Win. React, Tailwind CSS, Next.js.",
+  "description": "Full Stack Developer portfolio of Khaing Wut Yi Win. React, Next.js, Tailwind CSS.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#1a1008",

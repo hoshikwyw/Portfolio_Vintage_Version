@@ -71,7 +71,7 @@ src/
 │       ├── OSRoot, BootSplash
 │       ├── desktop/         #   Desktop, icons, context menu, sticky note…
 │       ├── taskbar/         #   Taskbar, StartMenu, SystemTray
-│       └── window/          #   WindowLayer, Draggable/Fullscreen, chrome
+│       └── window/          #   WindowLayer, WindowFrame (floating + fullscreen), chrome
 │
 ├── features/                # vertical slices — one per window
 │   ├── about/  projects/  gallery/  terminal/  settings/  minesweeper/  admin/  seo/
@@ -258,7 +258,7 @@ security headers above.
 
 ## Author
 
-**Khaing Wut Yi Win (Kayv)** — Creative Frontend Developer based in Yangon, Myanmar
+**Khaing Wut Yi Win (Kayv)** — Full Stack Developer based in Yangon, Myanmar, studying Computer Science at the University of the People
 
 - Portfolio: https://kayv-portfolio-vintage-version.vercel.app/
 - GitHub: https://github.com/hoshikwyw

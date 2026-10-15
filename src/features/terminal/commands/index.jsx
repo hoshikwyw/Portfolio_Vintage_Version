@@ -46,11 +46,11 @@ const commands = {
     help: 'Learn about me',
     run: () => (
       <>
-        <Green>Hello! I'm a front-end developer specializing in:</Green><br />
-        {'  '}- React.js development<br />
+        <Green>Hello! I'm a full stack developer. I work on:</Green><br />
+        {'  '}- React front ends that feel smooth and responsive<br />
+        {'  '}- The APIs and data behind them<br />
         {'  '}- Interactive animations with GSAP<br />
-        {'  '}- User-friendly responsive web apps<br />
-        <Green>I love building engaging web experiences!</Green>
+        <Green>Studying CS at UoPeople, learning Python, building with Claude.</Green>
       </>
     ),
   },
@@ -117,7 +117,10 @@ const commands = {
         {'  '}Theme: Vintage Retro<br />
         {'  '}Resolution: {window.innerWidth}x{window.innerHeight}<br />
         {'  '}Uptime: since you opened this tab<br />
-        {'  '}Developer: {profile.name}
+        {'  '}Developer: {profile.name}<br />
+        {'  '}Studying: Computer Science @ UoPeople<br />
+        {'  '}Learning: Python<br />
+        {'  '}Pair programmer: Claude
       </>
     ),
   },
@@ -173,9 +176,10 @@ const commands = {
     aliases: ['cat readme.md'],
     run: () => (
       <Plain>
-        Hi! I'm {profile.alias}, a frontend developer from {profile.location.split(',')[0]}. I build
-        interactive web experiences with React, Tailwind, and a love for vintage aesthetics. This
-        entire portfolio is a fake desktop OS — how cool is that?
+        Hi! I'm {profile.alias}, a {profile.role.toLowerCase()} from {profile.location.split(',')[0]}. I
+        build web apps end to end with React, Tailwind, and a love for vintage aesthetics — and I'm
+        studying Computer Science at UoPeople while learning Python. This entire portfolio is a fake
+        desktop OS — how cool is that?
       </Plain>
     ),
   },

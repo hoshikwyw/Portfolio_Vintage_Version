@@ -1,8 +1,9 @@
 import Panel from '@/shared/components/ui/Panel'
-import { education, experience, interests, languages } from '@/shared/config/profile'
+import { currently, education, experience, interests, languages } from '@/shared/config/profile'
 import ProfileHero from './components/ProfileHero'
 import Timeline from './components/Timeline'
 import SkillBars from './components/SkillBars'
+import DetailList from './components/DetailList'
 import './about.css'
 
 const Chip = ({ children }) => (
@@ -49,17 +50,14 @@ const About = () => (
         </div>
 
         <div className="flex flex-col gap-4">
+          <Panel title="Currently">
+            <DetailList items={currently} />
+          </Panel>
+
           <SkillBars />
 
           <Panel title="Languages">
-            <ul className="os-language-list">
-              {languages.map(({ name, level }) => (
-                <li key={name} className="os-language-row">
-                  <span className="os-language-name">{name}</span>
-                  <span className="os-language-level">{level}</span>
-                </li>
-              ))}
-            </ul>
+            <DetailList items={languages.map(({ name, level }) => ({ name, tag: level }))} />
           </Panel>
 
           <Panel title="Interests">

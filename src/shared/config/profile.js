@@ -9,7 +9,7 @@
 export const profile = {
   name: 'Khaing Wut Yi Win',
   alias: 'Kayv',
-  role: 'Frontend Developer',
+  role: 'Full Stack Developer',
   location: 'Yangon, Myanmar',
 
   email: 'khaingwutyiwin1712@gmail.com',
@@ -20,7 +20,7 @@ export const profile = {
   github: 'https://github.com/hoshikwyw',
 
   about:
-    "Hi! I'm Kayv — a creative frontend developer who loves crafting smooth UIs with React and Tailwind. I'm always excited to learn something new.",
+    "Hi! I'm Kayv — a full stack developer who builds web apps end to end, from smooth React interfaces to the APIs and data behind them. I'm studying Computer Science at the University of the People, learning Python, and building with Claude as my AI pair programmer.",
 
   /** Status shown beside the role in About Me. Set to null to hide it. */
   availability: 'Open to freelance work',
@@ -38,7 +38,19 @@ export const skills = [
 /** Short skill list surfaced by the terminal `skills` command. */
 export const terminalSkills = ['React', 'Tailwind', 'GSAP', 'Node']
 
+/**
+ * What Kayv is working on right now, shown as the "Currently" panel in About
+ * Me. Kept apart from `skills`: those carry a self-rated level, and something
+ * still being learned should not have to pretend to one.
+ */
+export const currently = [
+  { name: 'Computer Science', tag: 'Studying · UoPeople' },
+  { name: 'Python', tag: 'Learning' },
+  { name: 'Claude', tag: 'AI pair programmer' },
+]
+
 export const education = [
+  { title: 'Computer Science', detail: 'University of the People (UoPeople) — in progress' },
   { title: 'Frontend Web Developer', detail: 'MMS-IT' },
   {
     title: 'Self-taught Frontend Development',

@@ -4,8 +4,7 @@ import { useOSActions, useOSWindows } from '@/os/hooks/useOS'
 import { useViewportSize } from '@/os/hooks/useViewportSize'
 import { useWindowLayout } from '@/os/hooks/useWindowLayout'
 import { TASKBAR_HEIGHT, Z_LAYERS } from '@/os/constants'
-import DraggableWindow from './DraggableWindow'
-import FullscreenWindow from './FullscreenWindow'
+import WindowFrame from './WindowFrame'
 
 /**
  * Renders every visible window. Owns nothing about *which* windows exist (that
@@ -31,8 +30,10 @@ const WindowLayer = () => {
     exitFullscreen(id)
   }, [minimizeWindow, exitFullscreen])
 
-  const floating = visibleWindows.filter((id) => !fullscreen[id] && geometries[id])
-  const maximized = visibleWindows.filter((id) => fullscreen[id])
+  // Geometry is assigned in an effect, so a just-opened window waits a frame.
+  const placed = visibleWindows.filter((id) => geometries[id])
+  // Stacking order among the floating windows only; fullscreen sits above them.
+  const floatingOrder = placed.filter((id) => !fullscreen[id])
 
   return (
     <div
@@ -47,16 +48,23 @@ const WindowLayer = () => {
         overflow: 'hidden',
       }}
     >
+      {/*
+        One list for floating and fullscreen windows alike, so a window keeps
+        its key — and the app inside keeps its state — when it changes mode.
+        A fullscreen frame is `position: fixed`, which escapes this box's
+        clipping because no ancestor sets a transform.
+      */}
       <div style={{ width: '100%', height: '100%', position: 'relative', pointerEvents: 'none', overflow: 'hidden' }}>
         <AnimatePresence>
-          {floating.map((id, index) => (
-            <DraggableWindow
+          {placed.map((id) => (
+            <WindowFrame
               key={id}
               id={id}
-              index={index}
+              index={floatingOrder.indexOf(id)}
               geometry={geometries[id]}
               viewport={viewport}
               isFocused={focusedWindow === id}
+              isFullscreen={Boolean(fullscreen[id])}
               onFocus={focusWindow}
               onClose={handleClose}
               onFullscreen={toggleFullscreen}
@@ -66,19 +74,6 @@ const WindowLayer = () => {
           ))}
         </AnimatePresence>
       </div>
-
-      <AnimatePresence>
-        {maximized.map((id) => (
-          <FullscreenWindow
-            key={`fs-${id}`}
-            id={id}
-            onFocus={focusWindow}
-            onClose={handleClose}
-            onFullscreen={toggleFullscreen}
-            onMinimize={handleMinimize}
-          />
-        ))}
-      </AnimatePresence>
     </div>
   )
 }

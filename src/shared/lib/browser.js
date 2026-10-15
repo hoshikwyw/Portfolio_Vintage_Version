@@ -32,7 +32,7 @@ export const downloadResume = () =>
 
 /** Open a pre-filled Gmail compose window addressed to Kayv. */
 export const openHireEmail = ({
-  subject = 'Hire Request - Frontend Developer',
+  subject = `Hire Request - ${profile.role}`,
   body = `Hello ${profile.name},\n\nI am interested in discussing a potential opportunity.\n\nBest regards,`,
 } = {}) => {
   const url =

@@ -7,7 +7,7 @@
  * *after* first paint. The shell keeps only the lightweight `m` component and
  * `AnimatePresence`.
  *
- * `domMax` rather than `domAnimation` because `DraggableWindow` uses `drag` —
+ * `domMax` rather than `domAnimation` because `WindowFrame` uses `drag` —
  * dragging is not part of the smaller bundle, and windows would silently stop
  * moving with `domAnimation`.
  */

@@ -63,6 +63,8 @@ export const idleHints = [
   { text: "That is everything opened. Try right-clicking the desktop — there is a menu hiding there." },
   { text: 'Windows drag by their title bar and resize from any edge or corner. Escape closes the focused one.' },
   { text: 'Learning AI Engineering on weekends.' },
+  { text: 'Studying Computer Science at the University of the People, and learning Python alongside it.' },
+  { text: 'Much of this OS was built with Claude as a pair programmer.' },
   { text: 'Currently exploring Three.js & WebGL.' },
   { text: 'This whole site is a fake OS, built with React and a lot of CSS variables.' },
   { text: 'Open to freelance work — the Hire Me button is in About Me and the start menu.', action: 'Open About Me', id: 'Home' },

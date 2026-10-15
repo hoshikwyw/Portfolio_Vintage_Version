@@ -5,7 +5,7 @@
  * own near-identical literals and had already diverged on exit duration.
  *
  * Only `opacity` and `scale` are animated. `x`/`y` are deliberately left
- * alone: `DraggableWindow` binds them to the drag motion values, and
+ * alone: `WindowFrame` binds them to the drag motion values, and
  * animating them here would fight a drag in progress.
  */
 

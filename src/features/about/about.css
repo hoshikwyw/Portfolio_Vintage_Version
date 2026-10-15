@@ -207,27 +207,27 @@
 }
 
 /*
- * Languages: name on the left, level as a quiet tag on the right, with a rule
- * between rows. These were "English — Intermediate" strings with a bullet.
+ * DetailList (Languages, Currently): name on the left, a quiet tag on the
+ * right, a rule between rows.
  */
-.os-language-list { margin: 0; padding: 0; list-style: none; }
+.os-detail-list { margin: 0; padding: 0; list-style: none; }
 
-.os-language-row {
+.os-detail-row {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 12px;
   padding: 5px 0;
 }
-.os-language-row + .os-language-row { border-top: 1px dashed var(--os-border-dark); }
+.os-detail-row + .os-detail-row { border-top: 1px dashed var(--os-border-dark); }
 
-.os-language-name {
+.os-detail-name {
   font-size: 11.5px;
   font-weight: 700;
   color: var(--os-text);
 }
 
-.os-language-level {
+.os-detail-tag {
   font-size: 9px;
   font-weight: 700;
   text-transform: uppercase;
