@@ -1,11 +1,8 @@
-import { supabase } from '@/shared/lib/supabase'
+import { supabase, unwrap } from '@/shared/lib/supabase'
 
 /** Every project, including unpublished ones, in curated order. */
-export const listProjects = async () => {
-  const { data, error } = await supabase.from('projects').select('*').order('sort_order')
-  if (error) throw new Error(error.message)
-  return data ?? []
-}
+export const listProjects = async () =>
+  unwrap(await supabase.from('projects').select('*').order('sort_order')) ?? []
 
 /** Text columns an empty form field should clear rather than blank out. */
 const NULLABLE_TEXT = ['description', 'demo_url', 'repo_url', 'role', 'problem', 'outcome']
@@ -35,34 +32,28 @@ const normalizeFields = (fields) => {
   return next
 }
 
-export const createProject = async (fields) => {
-  const { data, error } = await supabase.from('projects').insert(normalizeFields(fields)).select().single()
-  if (error) throw new Error(error.message)
-  return data
-}
+export const createProject = async (fields) =>
+  unwrap(await supabase.from('projects').insert(normalizeFields(fields)).select().single())
 
-export const updateProject = async (id, fields) => {
-  const { data, error } = await supabase
-    .from('projects')
-    .update(normalizeFields(fields))
-    .eq('id', id)
-    .select()
-    .single()
-  if (error) throw new Error(error.message)
-  return data
-}
+export const updateProject = async (id, fields) =>
+  unwrap(
+    await supabase
+      .from('projects')
+      .update(normalizeFields(fields))
+      .eq('id', id)
+      .select()
+      .single(),
+  )
 
 /** Deletes the project row; `project_images` and `project_tags` cascade. */
 export const deleteProject = async (id) => {
-  const { error } = await supabase.from('projects').delete().eq('id', id)
-  if (error) throw new Error(error.message)
+  unwrap(await supabase.from('projects').delete().eq('id', id))
 }
 
 /** Tag ids currently attached to a project. */
 export const getProjectTagIds = async (projectId) => {
-  const { data, error } = await supabase.from('project_tags').select('tag_id').eq('project_id', projectId)
-  if (error) throw new Error(error.message)
-  return data?.map((row) => row.tag_id) ?? []
+  const rows = unwrap(await supabase.from('project_tags').select('tag_id').eq('project_id', projectId))
+  return rows?.map((row) => row.tag_id) ?? []
 }
 
 /**
@@ -72,13 +63,13 @@ export const getProjectTagIds = async (projectId) => {
  * cleared and re-inserted.
  */
 export const setProjectTags = async (projectId, tagIds) => {
-  const { error: deleteError } = await supabase.from('project_tags').delete().eq('project_id', projectId)
-  if (deleteError) throw new Error(deleteError.message)
+  unwrap(await supabase.from('project_tags').delete().eq('project_id', projectId))
 
   if (!tagIds.length) return
 
-  const { error: insertError } = await supabase
-    .from('project_tags')
-    .insert(tagIds.map((tagId) => ({ project_id: projectId, tag_id: tagId })))
-  if (insertError) throw new Error(insertError.message)
+  unwrap(
+    await supabase
+      .from('project_tags')
+      .insert(tagIds.map((tagId) => ({ project_id: projectId, tag_id: tagId }))),
+  )
 }

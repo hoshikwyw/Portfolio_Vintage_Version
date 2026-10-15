@@ -37,6 +37,10 @@ export const beveledPanel = {
   boxShadow: 'var(--os-window-shadow, 3px 3px 12px rgba(0,0,0,0.4))',
 }
 
+/** Type and press feedback for `beveledButton`; pair the two. */
+export const beveledButtonClass =
+  'font-bold cursor-pointer hover:brightness-105 active:brightness-95 uppercase tracking-wide'
+
 /** Beveled push-button used by the standalone dialogs. */
 export const beveledButton = {
   color: RETRO_PALETTE.text,

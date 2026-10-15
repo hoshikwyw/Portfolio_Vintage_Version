@@ -3,6 +3,7 @@ import { signOut } from './api/auth'
 import { useSession } from './hooks/useSession'
 import AdminLogin from './components/AdminLogin'
 import AdminDashboard from './components/AdminDashboard'
+import './admin.css'
 
 /**
  * Admin surface gate: shows the login form until a Supabase session exists,

@@ -1,0 +1,522 @@
+/* ============================
+   DESKTOP BACKGROUND
+   ============================ */
+.mainBackground {
+  background: var(--os-bg);
+  background-image: var(--os-bg-image);
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+/*
+ * CRT scanline overlay. Strength comes from `--os-scanline-color`, so a theme
+ * opts out by setting it to `transparent` instead of needing its own override.
+ */
+.mainBackground::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 1px, var(--os-scanline-color) 1px, var(--os-scanline-color) 2px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Film grain, likewise dialled per theme via `--os-noise-opacity`. */
+.mainBackground::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: var(--os-noise-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+.gradient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  pointer-events: none;
+  z-index: 0;
+  will-change: transform;
+  opacity: 0.5;
+}
+
+.gradient-orb-1 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(106,90,205,0.12) 0%, transparent 70%); top: -10%; left: -5%; animation: orb-float-1 30s ease-in-out infinite; }
+.gradient-orb-2 { width: 350px; height: 350px; background: radial-gradient(circle, rgba(196,160,53,0.08) 0%, transparent 70%); bottom: -10%; right: -5%; animation: orb-float-2 25s ease-in-out infinite; }
+.gradient-orb-3 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(90,90,130,0.1) 0%, transparent 70%); top: 40%; left: 50%; animation: orb-float-3 35s ease-in-out infinite; }
+
+/* Glass theme: vibrant orbs */
+[data-theme="glass"] .gradient-orb { opacity: 0.7; filter: blur(120px); }
+[data-theme="glass"] .gradient-orb-1 { background: radial-gradient(circle, rgba(0,122,255,0.2) 0%, transparent 70%); }
+[data-theme="glass"] .gradient-orb-2 { background: radial-gradient(circle, rgba(175,82,222,0.18) 0%, transparent 70%); }
+[data-theme="glass"] .gradient-orb-3 { background: radial-gradient(circle, rgba(52,211,153,0.12) 0%, transparent 70%); }
+
+/*
+ * Light theme: the orbs are the only thing keeping a pale desktop from reading
+ * flat, but light-on-light disappears — so they tint *downward* into the
+ * wallpaper rather than glowing out of it.
+ */
+[data-theme="light"] .gradient-orb { opacity: 0.55; }
+[data-theme="light"] .gradient-orb-1 { background: radial-gradient(circle, rgba(74,58,173,0.14) 0%, transparent 70%); }
+[data-theme="light"] .gradient-orb-2 { background: radial-gradient(circle, rgba(196,160,53,0.16) 0%, transparent 70%); }
+[data-theme="light"] .gradient-orb-3 { background: radial-gradient(circle, rgba(64,120,180,0.12) 0%, transparent 70%); }
+
+@keyframes orb-float-1 { 0%, 100% { transform: translate(0,0); } 33% { transform: translate(60px,40px); } 66% { transform: translate(-30px,20px); } }
+@keyframes orb-float-2 { 0%, 100% { transform: translate(0,0); } 33% { transform: translate(-40px,-30px); } 66% { transform: translate(30px,-15px); } }
+@keyframes orb-float-3 { 0%, 100% { transform: translate(0,0); } 50% { transform: translate(-70px,-40px); } }
+
+/*
+ * Wallpaper variants. The `default` wallpaper is the theme's own
+ * `--os-bg-image`, so it needs no class — `Desktop` only adds one for the
+ * other five.
+ *
+ * Each has a dark and a light rendition; keep these in step with the
+ * `gradient` / `lightGradient` pairs in `@/shared/config/theme`, which the
+ * Settings swatches read from.
+ */
+.mainBackground.wallpaper-midnight { background-image: linear-gradient(180deg, #08081a, #0e0e2a, #1a1a3e); }
+.mainBackground.wallpaper-ocean { background-image: linear-gradient(180deg, #081020, #0e1e35, #1a3050); }
+.mainBackground.wallpaper-forest { background-image: linear-gradient(180deg, #081208, #0e1e0e, #1a301a); }
+.mainBackground.wallpaper-rose { background-image: linear-gradient(180deg, #18101a, #2a1a22, #3a2a32); }
+.mainBackground.wallpaper-ember { background-image: linear-gradient(180deg, #140e05, #2a1a08, #3a2a10); }
+
+[data-theme="light"] .mainBackground.wallpaper-midnight { background-image: linear-gradient(180deg, #eef1fa, #dde3f5, #c8d1ec); }
+[data-theme="light"] .mainBackground.wallpaper-ocean { background-image: linear-gradient(180deg, #eaf4fa, #d5e8f4, #bcd9ec); }
+[data-theme="light"] .mainBackground.wallpaper-forest { background-image: linear-gradient(180deg, #edf6ec, #dcecda, #c4e0c1); }
+[data-theme="light"] .mainBackground.wallpaper-rose { background-image: linear-gradient(180deg, #fbeef3, #f4dde7, #ecc9d8); }
+[data-theme="light"] .mainBackground.wallpaper-ember { background-image: linear-gradient(180deg, #fdf3e6, #f8e6cd, #f2d6ae); }
+
+/* ============================
+   DESKTOP ICONS
+   ============================ */
+.desktop-icon {
+  width: 72px;
+  padding: 8px 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  /*
+   * Deliberately not `transition: all` — Framer Motion writes this element's
+   * transform inline every frame, and transitioning transform made CSS
+   * interpolate between those frames, so the hover lagged behind the cursor.
+   */
+  transition:
+    background-color var(--os-dur-fast) var(--os-ease),
+    border-color var(--os-dur-fast) var(--os-ease);
+  user-select: none;
+}
+[data-theme="glass"] .desktop-icon { border-radius: 12px; }
+
+.desktop-icon:hover {
+  background: var(--os-desktop-icon-hover-bg);
+  border-color: var(--os-desktop-icon-hover-border);
+}
+.desktop-icon.selected {
+  background: var(--os-desktop-icon-active-bg);
+  border-color: var(--os-desktop-icon-active-border);
+}
+
+.desktop-icon .os-app-icon {
+  /* Inherits the label colour, so it is legible on any wallpaper. */
+  color: var(--os-desktop-icon-text);
+  filter: var(--os-desktop-icon-shade);
+  opacity: 0.9;
+  /*
+   * No transform here — the button itself is scaled by Framer Motion on hover
+   * and press. Scaling the image too compounded the two (1.08 × 1.05) and the
+   * inline transform Framer writes fought this transition.
+   */
+  transition: opacity var(--os-dur-fast) var(--os-ease);
+}
+.desktop-icon:hover .os-app-icon { opacity: 1; }
+
+.desktop-icon span {
+  font-size: 10px;
+  color: var(--os-desktop-icon-text);
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.2;
+  text-shadow: var(--os-desktop-icon-shadow);
+  letter-spacing: 0.3px;
+}
+
+/* Start menu glass override */
+[data-theme="glass"] .start-menu-panel {
+  background: rgba(14, 14, 30, 0.92) !important;
+  border: 1px solid rgba(255,255,255,0.12) !important;
+}
+[data-theme="glass"] .start-menu-sidebar {
+  display: none !important;
+}
+
+/* ============================
+   HELPER BOT
+   ============================ */
+
+/*
+ * Right-edge utility column: the bot sits just above the taskbar, and
+ * QuickActions stacks above it (see QuickActions' own offset).
+ */
+.os-bot-dock {
+  position: absolute;
+  right: 16px;
+  bottom: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+.os-bot-ball {
+  width: 64px;
+  height: 68px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+/* --- the head: a rounded CSS cube, three faces visible --- */
+
+.os-bot-stage {
+  position: relative;
+  display: block;
+  width: 52px;
+  height: 60px;
+  perspective: 300px;
+}
+
+/* Gentle hover — this is the "floating" part; the shadow below sells it. */
+.os-bot-float {
+  display: block;
+  width: 52px;
+  height: 52px;
+  animation: os-bot-bob 3.8s ease-in-out infinite;
+}
+
+@keyframes os-bot-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Contact shadow. Shrinking as the bot rises is what reads as height. */
+.os-bot-shadow {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 34px;
+  height: 7px;
+  margin-left: -17px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(0,0,0,0.45), transparent 70%);
+  animation: os-bot-shadow 3.8s ease-in-out infinite;
+}
+
+@keyframes os-bot-shadow {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(0.78); opacity: 0.26; }
+}
+
+.os-bot-head {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: rotateX(6deg) rotateY(-16deg);
+  transition: transform var(--os-dur-base) var(--os-ease-back);
+}
+
+.os-bot-ball:hover .os-bot-head,
+.os-bot-ball:focus-visible .os-bot-head {
+  transform: rotateX(2deg) rotateY(13deg) scale(1.07);
+}
+
+.os-bot-head[data-awake] {
+  transform: rotateX(0deg) rotateY(0deg) scale(1.05);
+}
+
+.os-bot-face,
+.os-bot-cheek,
+.os-bot-crown {
+  position: absolute;
+  background: var(--os-bot-shell);
+}
+
+/*
+ * Each face is pushed out along its own axis by half the cube (26px), which is
+ * what turns three flat panels into something with volume. Generous radii —
+ * the rounder the head, the cuter it reads.
+ */
+.os-bot-face {
+  inset: 0;
+  border-radius: 16px;
+  transform: translateZ(13px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 -3px 6px rgba(0,0,0,0.12), inset 0 2px 3px rgba(255,255,255,0.5);
+}
+
+.os-bot-cheek {
+  top: 4px;
+  left: 50%;
+  width: 26px;
+  height: calc(100% - 8px);
+  margin-left: -13px;
+  border-radius: 12px;
+  background: var(--os-bot-shell-dark);
+  transform: rotateY(90deg) translateZ(26px);
+}
+
+.os-bot-crown {
+  top: 50%;
+  left: 4px;
+  width: calc(100% - 8px);
+  height: 26px;
+  margin-top: -13px;
+  border-radius: 12px;
+  background: var(--os-bot-shell-light);
+  transform: rotateX(90deg) translateZ(26px);
+}
+
+/* Side knobs, so the silhouette is not a plain box. */
+.os-bot-ear {
+  position: absolute;
+  top: 50%;
+  width: 7px;
+  height: 15px;
+  margin-top: -7px;
+  border-radius: 3px;
+  background: var(--os-bot-shell-dark);
+  transform: translateZ(6px);
+}
+.os-bot-ear-left { left: -4px; }
+.os-bot-ear-right { right: -4px; }
+
+/* --- antenna --- */
+
+.os-bot-antenna {
+  position: absolute;
+  left: 50%;
+  top: -14px;
+  width: 2px;
+  height: 13px;
+  margin-left: -1px;
+  background: var(--os-bot-shell-dark);
+  transform: translateZ(13px);
+}
+
+.os-bot-led {
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  margin-left: -4.5px;
+  border-radius: 50%;
+  background: var(--os-bot-glow);
+  box-shadow: 0 0 6px var(--os-bot-glow);
+  animation: os-bot-pulse 2.6s var(--os-ease) infinite;
+}
+
+.os-bot-head[data-awake] .os-bot-led {
+  animation: none;
+  box-shadow: 0 0 12px var(--os-bot-glow);
+}
+
+@keyframes os-bot-pulse {
+  0%, 100% { opacity: 0.45; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+/* --- face features --- */
+
+/* The dark screen the eyes sit in — the strongest "cute robot" cue. */
+.os-bot-visor {
+  width: 36px;
+  height: 22px;
+  border-radius: 11px;
+  background: var(--os-bot-visor);
+  display: grid;
+  place-items: center;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.45);
+}
+
+.os-bot-eyes {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Written by RobotHead's rAF loop as the cursor moves. */
+.os-bot-pupil {
+  transition: transform 90ms linear;
+}
+
+/* Big rounded eyes, and the blink lives here so it never fights the tracking. */
+.os-bot-pupil i {
+  display: block;
+  width: 9px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--os-bot-eye);
+  box-shadow: 0 0 6px var(--os-bot-eye);
+  animation: os-bot-blink 5.4s ease-in-out infinite;
+}
+
+@keyframes os-bot-blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.12); }
+}
+
+.os-bot-blush {
+  position: absolute;
+  top: 33px;
+  width: 8px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--os-bot-blush);
+}
+.os-bot-blush-left { left: 7px; }
+.os-bot-blush-right { right: 7px; }
+
+/* --- speech panel --- */
+
+.os-bot-panel {
+  width: 254px;
+  background: var(--os-window);
+  border: 2px solid var(--os-border-dark);
+  border-top-color: var(--os-border-light);
+  border-left-color: var(--os-border-light);
+  border-radius: var(--os-window-radius);
+  box-shadow: var(--os-window-shadow);
+  backdrop-filter: var(--os-glass-blur);
+  -webkit-backdrop-filter: var(--os-glass-blur);
+  overflow: hidden;
+}
+
+.os-bot-panel-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 6px 4px 10px;
+  background: var(--os-titlebar);
+}
+
+.os-bot-panel-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--os-titlebar-text);
+}
+
+.os-bot-panel-close {
+  width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: var(--os-titlebar-text);
+  background: var(--os-btn-bg);
+  border: 1px solid var(--os-btn-border-bottom);
+  border-top-color: var(--os-btn-border-top);
+  border-left-color: var(--os-btn-border-top);
+  border-radius: var(--os-btn-radius);
+}
+.os-bot-panel-close:hover { filter: brightness(1.15); }
+
+.os-bot-panel-body { padding: 10px 12px 12px; }
+
+.os-bot-intro {
+  font-size: 10px;
+  line-height: 1.5;
+  color: var(--os-text-secondary);
+  margin-bottom: 8px;
+}
+
+.os-bot-nudge {
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--os-text);
+  padding: 8px 10px;
+  background: var(--os-window-content);
+  border: 1px solid var(--os-border-dark);
+  border-radius: var(--os-btn-radius);
+}
+
+.os-bot-panel-actions {
+  display: flex;
+  gap: 6px;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.os-bot-progress {
+  margin-top: 8px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--os-text-muted);
+}
+
+/* ============================
+   MENU ROWS
+   ============================ */
+
+/*
+ * Start-menu rows. Previously highlighted by swapping inline styles from JS
+ * `onMouseEnter`/`onMouseLeave`, which could not transition; as CSS they ease
+ * in and cost nothing per render.
+ */
+.start-menu-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 6px 12px;
+  text-align: left;
+  color: var(--os-text);
+  cursor: pointer;
+  transition:
+    background-color var(--os-dur-fast) var(--os-ease),
+    color var(--os-dur-fast) var(--os-ease),
+    padding-left var(--os-dur-fast) var(--os-ease);
+}
+
+.start-menu-row:hover {
+  background: var(--os-accent);
+  color: #fff;
+  /* A couple of pixels of travel makes the highlight feel responsive. */
+  padding-left: 15px;
+}
+
+.start-menu-row:active { background: var(--os-accent-hover); }
+
+/*
+ * Row icons inherit the row's colour, so the hover state — which fills the row
+ * with the accent and flips the text white — carries the icon with it for
+ * free. This used to need a filter plus `!important` to beat an inline style.
+ */
+.start-menu-row .os-app-icon {
+  opacity: 0.7;
+  flex-shrink: 0;
+  transition: opacity var(--os-dur-fast) var(--os-ease);
+}
+.start-menu-row:hover .os-app-icon { opacity: 1; }

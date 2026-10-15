@@ -1,4 +1,5 @@
 import { MONO_STACK } from '@/shared/constants/fonts'
+import NotFoundArt from './NotFoundArt'
 
 /**
  * Retro terminal-style 404, rendered inside a window frame when an unknown
@@ -12,10 +13,7 @@ const NotFound = ({ title, message = 'The requested window could not be found.' 
     className="w-full h-full flex flex-col items-center justify-center gap-3 p-6 text-center"
     style={{ background: 'var(--os-terminal-bg)', fontFamily: MONO_STACK }}
   >
-    <pre className="text-xs leading-tight select-none" style={{ color: 'var(--os-terminal-path)' }}>{`  ┌───────────┐
-  │  4 0 4    │
-  │  ¯\\_(ツ)_/¯ │
-  └───────────┘`}</pre>
+    <NotFoundArt color="var(--os-terminal-path)" />
 
     <p
       className="text-sm font-bold uppercase tracking-widest"

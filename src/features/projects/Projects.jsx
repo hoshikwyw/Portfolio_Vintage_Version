@@ -11,6 +11,7 @@ import ProjectCard from './components/ProjectCard'
 import ProjectsSkeleton from './components/ProjectsSkeleton'
 import CaseStudyPanel from './components/CaseStudyPanel'
 import { AUTOPLAY_DELAY, SLIDE_HEIGHT, SLIDE_WIDTH_CSS } from './constants'
+import './projects.css'
 
 const slideStyle = { width: SLIDE_WIDTH_CSS, height: `${SLIDE_HEIGHT}px`, padding: '8px' }
 

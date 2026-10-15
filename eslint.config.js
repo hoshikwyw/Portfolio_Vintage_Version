@@ -43,6 +43,8 @@ export default [
 
       // A missing key silently breaks reconciliation rather than erroring.
       'react/jsx-key': 'error',
+      // A repeated prop silently replaces the earlier one (e.g. two `style`s).
+      'react/jsx-no-duplicate-props': 'error',
       /*
        * A component declared inside another component's body is a new type on
        * every render, so React unmounts and remounts its whole subtree —

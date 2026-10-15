@@ -1,0 +1,39 @@
+/* ============================
+   ADMIN DASHBOARD
+   ============================ */
+
+/*
+ * Hover wash over an image thumbnail whose delete button is showing. Was a
+ * Tailwind `bg-[#8a3030]/60`, which cannot take a custom property for its
+ * colour — hence the class and the pre-mixed `--os-danger-scrim` token.
+ */
+.admin-delete-overlay {
+  background: transparent;
+  transition: background-color var(--os-dur-fast) var(--os-ease);
+}
+.group:hover .admin-delete-overlay {
+  background: var(--os-danger-scrim);
+}
+
+/*
+ * Rejected-credentials shake. Previously an inline <style> inside AdminLogin,
+ * which React re-inserted on every render of the login screen.
+ */
+@keyframes admin-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-8px); }
+  40% { transform: translateX(8px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+.animate-shake { animation: admin-shake 0.4s var(--os-ease); }
+
+@media (prefers-reduced-motion: reduce) {
+  /*
+   * The login shake is feedback, not decoration, so the failure still needs to
+   * register — the error notice above the form carries that. Skipping the
+   * movement loses nothing.
+   */
+  .animate-shake { animation: none; }
+}

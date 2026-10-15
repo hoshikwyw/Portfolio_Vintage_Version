@@ -1,0 +1,8 @@
+/*
+ * Painted from the theme rather than a literal, so the page gutter and the
+ * overscroll area match the desktop. The boot script stamps `data-theme`
+ * before first paint, so the correct value is live on the very first frame.
+ */
+html, body {
+  background: var(--os-bg);
+}

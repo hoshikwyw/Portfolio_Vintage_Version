@@ -1,0 +1,109 @@
+/* Quick action buttons */
+.quick-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition:
+    transform var(--os-dur-fast) var(--os-ease-back),
+    filter var(--os-dur-fast) var(--os-ease),
+    box-shadow var(--os-dur-fast) var(--os-ease);
+  background: var(--os-btn-bg);
+  color: var(--os-text);
+  border: 2px solid var(--os-border-dark);
+  border-top-color: var(--os-border-light);
+  border-left-color: var(--os-border-light);
+  border-radius: var(--os-btn-radius);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.quick-action-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.22);
+}
+
+.quick-action-btn:active {
+  filter: brightness(0.95);
+  transform: translateY(0) scale(0.97);
+  box-shadow: none;
+  transition-duration: var(--os-dur-press);
+}
+
+.quick-action-btn svg {
+  transition: transform var(--os-dur-base) var(--os-ease-back);
+}
+.quick-action-btn:hover svg { transform: translateY(-1px) scale(1.1); }
+
+.quick-action-primary {
+  background: var(--os-accent) !important;
+  color: #fff !important;
+  border-color: var(--os-accent) !important;
+}
+
+[data-theme="glass"] .quick-action-btn {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  color: rgba(255,255,255,0.85);
+}
+
+[data-theme="glass"] .quick-action-primary {
+  background: var(--os-accent) !important;
+  border-color: var(--os-accent) !important;
+}
+
+.custom-link { text-decoration-line: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+
+/* ============================
+   LOADING SKELETONS
+   ============================ */
+
+/*
+ * Shimmering placeholder block. The sheen is a pseudo-element sweeping across
+ * the box, so the skeleton itself keeps whatever size and radius the caller
+ * gives it.
+ */
+.os-skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--os-skeleton-bg);
+  border-radius: var(--os-btn-radius);
+}
+
+.os-skeleton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, var(--os-skeleton-sheen), transparent);
+  animation: os-shimmer 1.5s var(--os-ease) infinite;
+}
+
+@keyframes os-shimmer {
+  to { transform: translateX(100%); }
+}
+
+/* ============================
+   APP ICONS
+   ============================ */
+
+/*
+ * The second tone in every app icon: the same `currentColor` at reduced
+ * opacity. Using the ink colour rather than a fixed grey means the two tones
+ * can never clash, whatever a theme does to the palette.
+ */
+.os-icon-soft { opacity: 0.45; }
+.os-icon-soft-stroke { opacity: 0.55; }
+
+/* Taskbar buttons dim their icon while the window is minimized. */
+.os-app-icon.is-dimmed { opacity: 0.45; }

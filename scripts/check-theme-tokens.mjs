@@ -2,7 +2,7 @@
 /**
  * Verify that every theme defines the full set of `--os-*` tokens.
  *
- * The themes in `src/styles/index.css` work by overriding, on a `[data-theme]`
+ * The themes in `src/styles/tokens.css` work by overriding, on a `[data-theme]`
  * selector, every custom property that bare `:root` declares. A token that a
  * theme forgets does not fail loudly — it silently inherits the classic
  * theme's value, so a light theme quietly renders one dark colour and nobody
@@ -18,7 +18,7 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 
-const CSS_PATH = join(dirname(fileURLToPath(import.meta.url)), '..', 'src', 'styles', 'index.css')
+const CSS_PATH = join(dirname(fileURLToPath(import.meta.url)), '..', 'src', 'styles', 'tokens.css')
 
 /**
  * Tokens deliberately shared by every theme rather than overridden.

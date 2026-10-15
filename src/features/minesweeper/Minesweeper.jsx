@@ -5,6 +5,7 @@ import { BEST_TIMES_KEY, DEFAULT_DIFFICULTY, DIFFICULTIES } from './constants'
 import { useMinesweeper } from './hooks/useMinesweeper'
 import Board from './components/Board'
 import StatusBar from './components/StatusBar'
+import './minesweeper.css'
 
 const readBestTimes = () => {
   try {

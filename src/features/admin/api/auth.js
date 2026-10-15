@@ -1,29 +1,18 @@
-import { supabase } from '@/shared/lib/supabase'
+import { supabase, unwrap } from '@/shared/lib/supabase'
 import { ADMIN_EMAIL_DOMAIN } from '@/features/admin/constants'
 
 /** Supabase Auth requires an email; bare usernames get the admin domain. */
 const toEmail = (username) =>
   username.includes('@') ? username : `${username}@${ADMIN_EMAIL_DOMAIN}`
 
-export const signIn = async ({ username, password }) => {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email: toEmail(username),
-    password,
-  })
-  if (error) throw new Error(error.message)
-  return data.session
-}
+export const signIn = async ({ username, password }) =>
+  unwrap(await supabase.auth.signInWithPassword({ email: toEmail(username), password })).session
 
 export const signOut = async () => {
-  const { error } = await supabase.auth.signOut()
-  if (error) throw new Error(error.message)
+  unwrap(await supabase.auth.signOut())
 }
 
-export const getSession = async () => {
-  const { data, error } = await supabase.auth.getSession()
-  if (error) throw new Error(error.message)
-  return data.session
-}
+export const getSession = async () => unwrap(await supabase.auth.getSession()).session
 
 /**
  * Subscribe to sign-in / sign-out events.

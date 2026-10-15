@@ -3,6 +3,7 @@ import { useProjects } from '@/features/projects/hooks/useProjects'
 import { MONO_STACK } from '@/shared/constants/fonts'
 import { Cmd, Dim, Path, Plain } from './components/TerminalText'
 import { resolveCommand, unknownCommand, welcomeMessage } from './commands'
+import './terminal.css'
 
 /** Fake latency, so output doesn't appear instantly and break the illusion. */
 const COMMAND_DELAY = 400

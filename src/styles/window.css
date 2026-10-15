@@ -1,0 +1,167 @@
+/* ============================
+   WINDOW FRAME
+   ============================ */
+.windowFrame {
+  background: var(--os-window);
+  border: 2px solid var(--os-border-dark);
+  border-top-color: var(--os-border-light);
+  border-left-color: var(--os-border-light);
+  border-radius: var(--os-window-radius);
+  box-shadow: var(--os-window-shadow);
+  overflow: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  /*
+   * A flat `min-width: 400px` is wider than a phone viewport (360–390px), so a
+   * window overflowed the screen it opened on and could not be narrowed to
+   * fit. These floors now yield to the viewport when it is the smaller of the
+   * two — matching the same clamp in `useResizable`.
+   */
+  min-width: min(400px, calc(100vw - 8px));
+  min-height: min(300px, calc(100vh - 8px));
+  transition: box-shadow 0.2s ease;
+}
+
+[data-theme="glass"] .windowFrame {
+  backdrop-filter: var(--os-glass-blur);
+  -webkit-backdrop-filter: var(--os-glass-blur);
+  border: var(--os-glass-border);
+}
+
+/*
+ * `touch-action: none` is what makes resizing work with a finger at all.
+ * Without it the browser claims the gesture as a scroll and stops sending
+ * pointermove to the handle, so the drag dies after the first event.
+ */
+.resize-handle {
+  position: absolute;
+  background: transparent;
+  z-index: 1001;
+  user-select: none;
+  touch-action: none;
+}
+
+.resize-top { top: 0; left: 6px; right: 6px; height: 6px; cursor: ns-resize; }
+.resize-right { top: 6px; right: 0; bottom: 6px; width: 6px; cursor: ew-resize; }
+.resize-bottom { bottom: 0; left: 6px; right: 6px; height: 6px; cursor: ns-resize; }
+.resize-left { top: 6px; left: 0; bottom: 6px; width: 6px; cursor: ew-resize; }
+.resize-top-left { top: 0; left: 0; width: 12px; height: 12px; cursor: nwse-resize; z-index: 1002; }
+.resize-top-right { top: 0; right: 0; width: 12px; height: 12px; cursor: nesw-resize; z-index: 1002; }
+.resize-bottom-left { bottom: 0; left: 0; width: 12px; height: 12px; cursor: nesw-resize; z-index: 1002; }
+.resize-bottom-right { bottom: 0; right: 0; width: 12px; height: 12px; cursor: nwse-resize; z-index: 1002; }
+
+/*
+ * A 6px target is a mouse affordance; a fingertip is closer to 40px. Enlarge
+ * the handles where the pointer is coarse — deliberately kept modest, because
+ * the top edge overlaps the title bar and the whole title bar needs to stay
+ * grabbable for dragging.
+ */
+@media (pointer: coarse) {
+  .resize-top { left: 14px; right: 14px; height: 10px; }
+  .resize-right { top: 14px; bottom: 14px; width: 10px; }
+  .resize-bottom { left: 14px; right: 14px; height: 10px; }
+  .resize-left { top: 14px; bottom: 14px; width: 10px; }
+  .resize-top-left,
+  .resize-top-right,
+  .resize-bottom-left,
+  .resize-bottom-right { width: 22px; height: 22px; }
+}
+
+/* ============================
+   WINDOW HEADER
+   ============================ */
+.windowHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--os-titlebar);
+  color: var(--os-titlebar-text);
+  padding: 6px 10px;
+  cursor: grab;
+  border-bottom: 1px solid var(--os-border-dark);
+  position: relative;
+  touch-action: none;
+  user-select: none;
+}
+.windowHeader:active { cursor: grabbing; }
+.windowHeader::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: rgba(255,255,255,0.15);
+}
+
+[data-theme="glass"] .windowHeader {
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+[data-theme="glass"] .windowHeader::after { background: rgba(255,255,255,0.08); }
+
+.windowTitle {
+  font-size: 12px; font-weight: 600;
+  color: var(--os-titlebar-text);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
+[data-theme="glass"] .windowTitle { text-transform: none; letter-spacing: 0; font-weight: 500; text-shadow: none; }
+
+.windowControls { display: flex; gap: 2px; }
+
+.windowControls button {
+  width: 20px; height: 20px;
+  background: var(--os-btn-bg);
+  border: 1px solid var(--os-btn-border-bottom);
+  border-top-color: var(--os-btn-border-top);
+  border-left-color: var(--os-btn-border-top);
+  border-radius: var(--os-btn-radius);
+  color: var(--os-titlebar-text);
+  font-size: 14px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0; margin-left: 3px;
+}
+.windowControls button {
+  transition:
+    filter var(--os-dur-fast) var(--os-ease),
+    transform var(--os-dur-press) var(--os-ease);
+}
+.windowControls button:hover { filter: brightness(1.15); }
+.windowControls button:active { filter: brightness(0.9); transform: scale(0.86); }
+
+[data-theme="glass"] .windowControls button {
+  border: none; margin-left: 6px;
+}
+[data-theme="glass"] .windowControls button:nth-child(1) { background: #febc2e; } /* minimize - yellow */
+[data-theme="glass"] .windowControls button:nth-child(2) { background: #28c840; } /* maximize - green */
+[data-theme="glass"] .windowControls button:nth-child(3) { background: #ff5f57; } /* close - red */
+[data-theme="glass"] .windowControls button svg { opacity: 0; }
+[data-theme="glass"] .windowControls button:hover svg { opacity: 1; }
+[data-theme="glass"] .windowControls button { width: 12px; height: 12px; border-radius: 50%; }
+
+.minimizeBtn, .fullscreenBtn, .closeBtn { margin: 0 !important; padding: 0 !important; }
+.closeBtn img { width: 10px; height: 10px; filter: brightness(0) invert(0.9); }
+
+/* ============================
+   WINDOW CONTENT
+   ============================ */
+.windowContent {
+  margin: 0; padding: 8px;
+  color: var(--os-text);
+  overflow: auto;
+  background: var(--os-window-content);
+  border: 1px solid var(--os-border-dark);
+  border-top: none;
+  margin: 4px;
+  border-radius: 0 0 3px 3px;
+}
+[data-theme="glass"] .windowContent {
+  background: var(--os-window-content);
+  border: 1px solid rgba(255,255,255,0.05);
+  border-radius: 0 0 10px 10px;
+}
+
+.windowContent::-webkit-scrollbar { width: 10px; }
+.windowContent::-webkit-scrollbar-track { background: var(--os-scrollbar-track); }
+.windowContent::-webkit-scrollbar-thumb { background: var(--os-scrollbar-thumb); border-radius: 5px; }
+[data-theme="glass"] .windowContent::-webkit-scrollbar { width: 6px; }
+[data-theme="glass"] .windowContent::-webkit-scrollbar-thumb { border-radius: 3px; }
+
+/* Window bodies scroll without a visible bar. */
+.project-container { scrollbar-width: none; }
+.project-container::-webkit-scrollbar { display: none; }

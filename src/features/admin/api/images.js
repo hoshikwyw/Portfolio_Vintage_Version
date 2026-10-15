@@ -1,15 +1,9 @@
-import { supabase } from '@/shared/lib/supabase'
+import { supabase, unwrap } from '@/shared/lib/supabase'
 import { IMAGE_BUCKET } from '@/features/admin/constants'
 
 /** Every uploaded image, with its parent project's title for grouping. */
-export const listImages = async () => {
-  const { data, error } = await supabase
-    .from('project_images')
-    .select('*, projects(title)')
-    .order('sort_order')
-  if (error) throw new Error(error.message)
-  return data ?? []
-}
+export const listImages = async () =>
+  unwrap(await supabase.from('project_images').select('*, projects(title)').order('sort_order')) ?? []
 
 /** Storage key for a new upload, namespaced per project and unique per file. */
 const storagePath = (projectId, file, index, now) => {
@@ -64,6 +58,5 @@ export const deleteProjectImage = async (image) => {
   const path = storagePathFromUrl(image.image_url)
   if (path) await supabase.storage.from(IMAGE_BUCKET).remove([path])
 
-  const { error } = await supabase.from('project_images').delete().eq('id', image.id)
-  if (error) throw new Error(error.message)
+  unwrap(await supabase.from('project_images').delete().eq('id', image.id))
 }

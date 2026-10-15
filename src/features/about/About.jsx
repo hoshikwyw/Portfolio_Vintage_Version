@@ -5,6 +5,7 @@ import ProfileHero from './components/ProfileHero'
 import ProfileSummary from './components/ProfileSummary'
 import Timeline from './components/Timeline'
 import SkillBars from './components/SkillBars'
+import './about.css'
 
 const Chip = ({ children }) => (
   <span

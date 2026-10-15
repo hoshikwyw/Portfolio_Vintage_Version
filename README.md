@@ -65,7 +65,7 @@ src/
 │   ├── context/             #   OSProvider — composes the hooks below
 │   ├── hooks/               #   useOSActions/Windows/Appearance, useWindowManager,
 │   │                        #   useAppearance, useWindowLayout, useResizable,
-│   │                        #   useViewportSize
+│   │                        #   useViewportSize, useWindowA11y, useGuide, useWeather
 │   ├── registry/            #   app id → lazily-loaded window component
 │   ├── services/weather.js
 │   └── components/
@@ -75,18 +75,21 @@ src/
 │       └── window/          #   WindowLayer, Draggable/Fullscreen, chrome
 │
 ├── features/                # vertical slices — one per window
-│   ├── about/  projects/  gallery/  terminal/  settings/  admin/  seo/
-│   └── …each with: api/ · hooks/ · components/ · index.js (window entry)
+│   ├── about/  projects/  gallery/  terminal/  settings/  minesweeper/  admin/  seo/
+│   └── …each with: api/ · hooks/ · components/ · <feature>.css · index.js (window entry)
 │
 ├── shared/                  # feature-agnostic building blocks
 │   ├── config/              #   profile.js (all personal copy), theme.js
 │   ├── constants/           #   fonts.js, palette.js
-│   ├── lib/                 #   supabase, queryClient, browser side effects,
+│   ├── lib/                 #   supabase (+ unwrap), queryClient, browser side effects,
 │   │                        #   motionFeatures (lazy Framer Motion bundle)
 │   ├── hooks/               #   useClock, useOutsideClick
-│   └── components/          #   ui/ (Panel, LockIcon) · feedback/ (errors, 404)
+│   └── components/          #   ui/ (Panel, Skeleton) · icons/ · feedback/ (errors, 404)
 │
-└── styles/index.css         # global CSS + --os-* theme variables
+└── styles/                  # global CSS, imported in cascade order by index.css
+    ├── tokens.css           #   --os-* theme variables (:root + [data-theme])
+    ├── base.css · desktop.css · window.css · components.css
+    └── a11y.css             #   focus rings + reduced motion (last, wins ties)
 ```
 
 Repo tooling lives in [`scripts/`](scripts/) — currently
@@ -116,7 +119,7 @@ Repo tooling lives in [`scripts/`](scripts/) — currently
   React Query → components consume hooks. Supabase/query details never leak into
   the view layer.
 - **Theming.** Chrome is driven by CSS custom properties (`--os-*`) in
-  `styles/index.css`. Each theme is one `[data-theme="…"]` block that overrides
+  `styles/tokens.css`. Each theme is one `[data-theme="…"]` block that overrides
   every token bare `:root` declares; `useAppearance` reflects the active theme
   onto `<html>`. `classic` is what `:root` renders, so it carries no attribute.
   The stored preference may be `system`, which resolves against

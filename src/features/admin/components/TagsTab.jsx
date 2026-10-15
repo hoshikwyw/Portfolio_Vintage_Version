@@ -13,8 +13,7 @@ const TagChip = ({ tag, onDelete }) => (
       onClick={onDelete}
       aria-label={`Delete tag ${tag.name}`}
       className="text-[10px] cursor-pointer font-bold leading-none hover:brightness-125"
-      style={{ color: 'var(--os-danger)' }}
-      style={{ background: 'none', border: 'none' }}
+      style={{ color: adminColors.danger, background: 'none', border: 'none' }}
     >
       ×
     </button>
