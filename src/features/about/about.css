@@ -2,7 +2,36 @@
    ABOUT WINDOW
    ============================ */
 
+/*
+ * Profile card body. Breakpoints match Tailwind's container sizes used in the
+ * markup (`@md` = 28rem, `@3xl` = 48rem), measured on the About window rather
+ * than the screen.
+ */
+.os-hero-body {
+  display: grid;
+  gap: 16px;
+  padding: 16px;
+  justify-items: center;
+}
+
+@container (min-width: 28rem) {
+  .os-hero-body {
+    grid-template-columns: auto minmax(0, 1fr);
+    justify-items: stretch;
+    align-items: start;
+  }
+  /* Portrait beside the text; contact spans the full width underneath. */
+  .os-contact-card { grid-column: 1 / -1; }
+}
+
+@container (min-width: 48rem) {
+  .os-hero-body { grid-template-columns: auto minmax(0, 1fr) minmax(210px, 250px); }
+  /* Wide enough for a third column: contact moves up beside the bio. */
+  .os-contact-card { grid-column: auto; align-self: stretch; }
+}
+
 .os-hero-avatar {
+  flex-shrink: 0;
   width: 104px;
   height: 104px;
   object-fit: cover;
@@ -64,7 +93,7 @@
 
 .os-meter-cell {
   flex: 1 1 0;
-  height: 9px;
+  height: 8px;
   background: var(--os-border-light);
   opacity: 0.5;
 }
@@ -74,11 +103,109 @@
   opacity: 1;
 }
 
-/* Contact rows are links now, so they need a hover affordance. */
+/* "Open to …" status beside the location. */
+.os-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 9px 2px 7px;
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  /* Text stays in the body colour; a small green label failed contrast in the
+     classic theme, so the colour lives in the dot alone. */
+  color: var(--os-text);
+  background: var(--os-window-content);
+  border: 1px solid var(--os-border-dark);
+  border-radius: 999px;
+}
+
+.os-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--os-success);
+  animation: os-status-pulse 2.4s var(--os-ease) infinite;
+}
+
+/* A soft ring radiating from the dot — "live", without blinking. */
+@keyframes os-status-pulse {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--os-success) 55%, transparent); }
+  70%, 100% { box-shadow: 0 0 0 6px transparent; }
+}
+
+/* Contact, set into the profile card as an inset panel. */
+.os-contact-card {
+  justify-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px;
+  background: var(--os-window-content);
+  border: 1px solid var(--os-border-dark);
+  border-radius: var(--os-btn-radius);
+}
+
+.os-contact-heading {
+  margin-bottom: 4px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--os-text-secondary);
+}
+
+/* Contact rows are links, so they need a hover affordance. */
 .os-contact-row {
-  padding: 2px 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 3px 4px;
   margin-left: -4px;
+  font-size: 11px;
+  color: var(--os-text);
   border-radius: var(--os-btn-radius);
   transition: background-color var(--os-dur-fast) var(--os-ease);
 }
 .os-contact-row:hover { background: var(--os-panel-bg); }
+
+/*
+ * One line per skill — name, meter, percentage. The label sat on its own row
+ * above a full-width meter before, which doubled the panel's height for no
+ * extra information.
+ *
+ * The list is the grid and each row is `display: contents`, so the name
+ * column is as wide as the longest name and every meter starts at the same x.
+ */
+.os-skill-list {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr) 32px;
+  align-items: center;
+  gap: 10px 12px;
+}
+
+.os-skill-row { display: contents; }
+
+.os-skill-name {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--os-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.os-skill-level {
+  font-size: 10px;
+  font-weight: 700;
+  text-align: right;
+  color: var(--os-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .os-status-dot { animation: none; }
+}

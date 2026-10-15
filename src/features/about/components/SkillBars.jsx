@@ -5,7 +5,7 @@ import { skills } from '@/shared/config/profile'
 const SEGMENTS = 20
 
 /**
- * Labelled proficiency meters.
+ * Labelled proficiency meters, one compact row each.
  *
  * Segmented rather than a single filled rectangle — a notched bar is what a
  * Win95-era progress control actually looked like, and discrete cells read as
@@ -14,23 +14,13 @@ const SEGMENTS = 20
  */
 const SkillBars = () => (
   <Panel title="Skills">
-    <div className="flex flex-col gap-2.5">
+    <div className="os-skill-list">
       {skills.map((skill) => {
         const filled = Math.round((skill.level / 100) * SEGMENTS)
 
         return (
-          <div key={skill.name}>
-            <div className="flex justify-between items-baseline mb-1">
-              <span
-                className="font-bold uppercase text-[11px] tracking-wide"
-                style={{ color: 'var(--os-text)' }}
-              >
-                {skill.name}
-              </span>
-              <span className="font-bold text-[10px]" style={{ color: 'var(--os-accent)' }}>
-                {skill.level}%
-              </span>
-            </div>
+          <div key={skill.name} className="os-skill-row">
+            <span className="os-skill-name" title={skill.name}>{skill.name}</span>
 
             <div
               className="os-meter"
@@ -45,6 +35,8 @@ const SkillBars = () => (
                 <span key={i} className={`os-meter-cell${i < filled ? ' is-on' : ''}`} aria-hidden="true" />
               ))}
             </div>
+
+            <span className="os-skill-level" aria-hidden="true">{skill.level}%</span>
           </div>
         )
       })}

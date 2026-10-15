@@ -1,14 +1,18 @@
-import { Download, Github, Mail, MapPin } from 'lucide-react'
+import { Download, Mail, MapPin } from 'lucide-react'
 import { profile } from '@/shared/config/profile'
 import { downloadResume, openHireEmail } from '@/shared/lib/browser'
+import ContactCard from './ContactCard'
 
 /**
  * Identity card at the top of the About window.
  *
- * The window previously opened onto six near-identical beveled panels, so
- * nothing read as the starting point. This gives the page one focal element —
- * portrait, name, and the two actions a visitor actually came for — before the
- * detail panels below it.
+ * Gives the page one focal element — portrait, name, and the actions a visitor
+ * actually came for — before the detail panels below it.
+ *
+ * Three zones that reflow with the *window* (container queries), not the
+ * screen: stacked and centred when narrow, portrait beside the text from
+ * `@md`, and from `@3xl` the contact details take the right-hand column that a
+ * wide window used to leave empty.
  */
 const ProfileHero = () => (
   <section
@@ -20,18 +24,18 @@ const ProfileHero = () => (
       <span className="text-[10px] font-bold uppercase tracking-widest">Profile</span>
     </div>
 
-    <div className="flex flex-col @md:flex-row items-center @md:items-start gap-4 p-4">
+    <div className="os-hero-body">
       <img
         src={profile.avatar}
         alt={profile.alias}
         width={104}
         height={104}
         decoding="async"
-        className="os-hero-avatar flex-shrink-0"
+        className="os-hero-avatar"
         style={{ border: 'var(--os-input-border)', background: 'var(--os-input-bg)' }}
       />
 
-      <div className="flex-1 min-w-0 text-center @md:text-left">
+      <div className="min-w-0 text-center @md:text-left">
         <h1
           className="text-lg @md:text-xl font-bold tracking-wide uppercase leading-tight"
           style={{ color: 'var(--os-text)' }}
@@ -46,23 +50,35 @@ const ProfileHero = () => (
           {profile.role}
         </p>
 
-        <p
-          className="flex items-center justify-center @md:justify-start gap-1 text-[10px] font-semibold tracking-wider mt-1"
-          style={{ color: 'var(--os-text-secondary)' }}
-        >
-          <MapPin size={11} aria-hidden="true" />
-          {profile.location.toUpperCase()}
-        </p>
+        <div className="flex flex-wrap items-center justify-center @md:justify-start gap-x-3 gap-y-1.5 mt-1.5">
+          <span
+            className="flex items-center gap-1 text-[10px] font-semibold tracking-wider"
+            style={{ color: 'var(--os-text-secondary)' }}
+          >
+            <MapPin size={11} aria-hidden="true" />
+            {profile.location.toUpperCase()}
+          </span>
 
+          {profile.availability && (
+            <span className="os-status-pill">
+              <span className="os-status-dot" aria-hidden="true" />
+              {profile.availability}
+            </span>
+          )}
+        </div>
+
+        {/* Capped near 60 characters: on a wide window the bio otherwise ran
+            the full width of the card as one hard-to-follow line. */}
         <p
-          className="text-[12px] leading-relaxed mt-2.5"
+          className="text-[12px] leading-relaxed mt-2.5 max-w-[60ch] mx-auto @md:mx-0"
           style={{ color: 'var(--os-text)' }}
         >
           {profile.about}
         </p>
 
         {/* Reuses the desktop quick-action styling, so these press like every
-            other button in the OS rather than inventing a third button look. */}
+            other button in the OS rather than inventing a third button look.
+            GitHub lives in the contact card: it is a link, not an action. */}
         <div className="flex flex-wrap justify-center @md:justify-start gap-2 mt-3">
           <button
             type="button"
@@ -77,18 +93,10 @@ const ProfileHero = () => (
             <Download size={12} aria-hidden="true" />
             Resume
           </button>
-
-          <a
-            href={profile.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="quick-action-btn custom-link"
-          >
-            <Github size={12} aria-hidden="true" />
-            GitHub
-          </a>
         </div>
       </div>
+
+      <ContactCard />
     </div>
   </section>
 )

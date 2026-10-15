@@ -21,6 +21,9 @@ export const profile = {
 
   about:
     "Hi! I'm Kayv — a creative frontend developer who loves crafting smooth UIs with React and Tailwind. I'm always excited to learn something new.",
+
+  /** Status shown beside the role in About Me. Set to null to hide it. */
+  availability: 'Open to freelance work',
 }
 
 /** Skills rendered as progress bars in the About window. */
