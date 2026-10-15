@@ -125,12 +125,12 @@
   color: var(--os-text);
 }
 
-/* Three lines at most, so one long write-up cannot stretch a whole row. */
+/*
+ * Shown in full. A line clamp hid the rest of a longer description with no
+ * way to read it — and the actions are pinned to the card's foot anyway, so
+ * a taller neighbour no longer leaves the buttons misaligned.
+ */
 .os-project-desc {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
   font-size: 11.5px;
   line-height: 1.55;
   color: var(--os-text-secondary);
@@ -272,10 +272,14 @@
   margin: 0 auto;
 }
 
+/*
+ * The whole screenshot, letterboxed if need be. A cropped banner cut a third
+ * off the height of a typical 16:9 capture — often the part worth seeing.
+ */
 .case-study-cover {
   width: 100%;
-  aspect-ratio: 16 / 7;
-  object-fit: cover;
+  max-height: 280px;
+  object-fit: contain;
   border: 2px solid var(--os-border-dark);
   border-radius: var(--os-btn-radius);
   background: var(--os-window);

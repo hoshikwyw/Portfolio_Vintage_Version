@@ -65,18 +65,28 @@ const commands = {
       return (
         <>
           <Green>My projects:</Green>
-          {live.map((project, i) => (
-            <div key={project.id}>
-              <a
-                href={project.demo_url}
-                target="_blank"
-                rel="noreferrer"
-                className="os-terminal-link underline decoration-dotted"
-              >
-                {i + 1}. {project.title} — {project.description || 'Check it out!'}
-              </a>
-            </div>
-          ))}
+          {live.map((project, i) => {
+            const line = `${i + 1}. ${project.title}${project.description ? ` — ${project.description}` : ''}`
+
+            // The demo URL is optional; without one this is a line, not a
+            // link that goes nowhere.
+            return (
+              <div key={project.id}>
+                {project.demo_url ? (
+                  <a
+                    href={project.demo_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="os-terminal-link underline decoration-dotted"
+                  >
+                    {line}
+                  </a>
+                ) : (
+                  <Dim>{line}</Dim>
+                )}
+              </div>
+            )
+          })}
         </>
       )
     },
