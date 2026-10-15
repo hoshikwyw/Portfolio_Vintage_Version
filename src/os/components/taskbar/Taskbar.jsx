@@ -20,6 +20,9 @@ const AppButton = ({ id, isMinimized, onClick }) => (
     aria-label={isMinimized ? `${getAppLabel(id)} (minimized)` : getAppLabel(id)}
     className="flex items-center gap-1.5 h-7 px-2 cursor-pointer flex-shrink-0"
     style={{
+      // The icon inherits this; without it the button took the page's light
+      // text colour and the icon washed out against the classic taskbar.
+      color: 'var(--os-text)',
       background: isMinimized ? 'var(--os-btn-bg)' : 'var(--os-panel-bg)',
       border: '1px solid var(--os-border-dark)',
       borderTopColor: isMinimized ? 'var(--os-border-light)' : 'var(--os-border-dark)',

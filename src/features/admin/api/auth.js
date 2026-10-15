@@ -1,4 +1,4 @@
-import { supabase, unwrap } from '@/shared/lib/supabase'
+import { isSupabaseConfigured, supabase, unwrap } from '@/shared/lib/supabase'
 import { ADMIN_EMAIL_DOMAIN } from '@/features/admin/constants'
 
 /** Supabase Auth requires an email; bare usernames get the admin domain. */
@@ -21,6 +21,10 @@ export const getSession = async () => unwrap(await supabase.auth.getSession()).s
  * @returns {() => void} Unsubscribe.
  */
 export const onAuthStateChange = (onChange) => {
+  // Called synchronously from an effect, so it cannot lean on the rejected-
+  // promise path the other calls use when Supabase is not configured.
+  if (!isSupabaseConfigured) return () => {}
+
   const { data } = supabase.auth.onAuthStateChange((_event, session) => onChange(session))
   return () => data.subscription.unsubscribe()
 }

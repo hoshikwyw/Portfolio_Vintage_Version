@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { getApp } from '@/os/config/apps'
 import {
+  MIN_WINDOW_HEIGHT,
+  MIN_WINDOW_WIDTH,
   TASKBAR_HEIGHT,
   WINDOW_CASCADE_STEP,
   WINDOW_CASCADE_WRAP,
@@ -33,9 +35,15 @@ const cascadedGeometry = (step, preferred) => {
   const wantedW = preferred?.width ?? Math.min(areaW * WINDOW_INITIAL_WIDTH_RATIO, WINDOW_MAX_INITIAL_WIDTH)
   const wantedH = preferred?.height ?? Math.min(areaH * WINDOW_INITIAL_HEIGHT_RATIO, WINDOW_MAX_INITIAL_HEIGHT)
 
-  // Either way, never open larger than the desktop itself.
-  const width = Math.min(wantedW, areaW)
-  const height = Math.min(wantedH, areaH)
+  /*
+   * Either way, never open larger than the desktop itself — nor smaller than
+   * the frame's CSS `min-width`/`min-height`. On a phone the ratio default
+   * (~214px) is below that floor, so the browser rendered the frame wider than
+   * the width used to clamp `x` below, and the window spilled off the right
+   * edge with its controls out of reach.
+   */
+  const width = Math.min(Math.max(wantedW, Math.min(MIN_WINDOW_WIDTH, areaW)), areaW)
+  const height = Math.min(Math.max(wantedH, Math.min(MIN_WINDOW_HEIGHT, areaH)), areaH)
 
   return {
     width,

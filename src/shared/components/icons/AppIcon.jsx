@@ -76,23 +76,18 @@ const Settings = () => (
   </>
 )
 
-const SPIKES = [0, 45, 90, 135]
-
+/*
+ * A flag planted on a tile. This used to be a spiked mine, which at desktop
+ * size was a ring of rays around a disc — the same silhouette as the Settings
+ * gear beside it. The flag is just as much the game's symbol and cannot be
+ * mistaken for anything else on the desktop.
+ */
 const Minesweeper = () => (
   <>
-    {SPIKES.map((angle) => (
-      <rect
-        key={angle}
-        x="11.2"
-        y="2.4"
-        width="1.6"
-        height="19.2"
-        rx="0.8"
-        className="os-icon-soft"
-        transform={`rotate(${angle} 12 12)`}
-      />
-    ))}
-    <circle cx="12" cy="12" r="6.4" />
+    <rect x="2.5" y="2.5" width="19" height="19" rx="2.5" className="os-icon-soft" />
+    <rect x="10.2" y="5.4" width="1.8" height="11.6" rx="0.9" />
+    <path d="M12 5.4 18.2 8.6 12 11.8z" />
+    <rect x="7" y="16.2" width="9.6" height="2.4" rx="1.2" />
   </>
 )
 

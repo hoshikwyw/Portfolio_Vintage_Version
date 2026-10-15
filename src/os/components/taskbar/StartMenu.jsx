@@ -113,7 +113,7 @@ const StartMenu = ({ onClose }) => {
 
           {/* Search */}
           <div className="px-3 py-2" style={{ borderBottom: '1px solid var(--os-border-dark)' }}>
-            <form onSubmit={handleSearch} className="flex items-center gap-2 px-2 py-1" style={{ border: 'var(--os-input-border)', background: 'var(--os-input-bg)', borderRadius: 'var(--os-btn-radius)' }}>
+            <form onSubmit={handleSearch} className="start-menu-search flex items-center gap-2 px-2 py-1" style={{ border: 'var(--os-input-border)', background: 'var(--os-input-bg)', borderRadius: 'var(--os-btn-radius)' }}>
               <Search size={12} style={{ color: 'var(--os-text-muted)' }} />
               <input
                 ref={inputRef}

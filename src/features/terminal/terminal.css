@@ -41,3 +41,10 @@
     opacity: 0.6;
   }
 }
+
+/*
+ * The prompt is focused the whole time the window is, so the global focus
+ * ring drew a permanent purple box inside the CRT screen. The accent-coloured
+ * caret blinking on the prompt line is the focus indicator a terminal uses.
+ */
+.os-terminal-input:focus-visible { outline: none; }

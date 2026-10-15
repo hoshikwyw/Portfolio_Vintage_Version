@@ -64,3 +64,14 @@
     will-change: auto;
   }
 }
+
+/*
+ * The start-menu search draws its own bordered field, so the global ring on
+ * the bare input landed as a second box inside it. Ring the whole field
+ * instead, while its input has keyboard focus.
+ */
+.start-menu-search:has(input:focus-visible) {
+  outline: 2px solid var(--os-accent);
+  outline-offset: 1px;
+}
+.start-menu-search input:focus-visible { outline: none; }
