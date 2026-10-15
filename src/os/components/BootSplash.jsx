@@ -2,6 +2,27 @@ import { useEffect, useState } from 'react'
 import { MONO_STACK } from '@/shared/constants/fonts'
 import { system } from '@/shared/config/profile'
 
+/** Inner width of the ASCII header box, in characters. */
+const BANNER_WIDTH = 31
+
+/** Centre `text` between the box's side walls, padding with spaces. */
+const bannerLine = (text) => {
+  const left = Math.floor((BANNER_WIDTH - text.length) / 2)
+  return `║${' '.repeat(left)}${text}${' '.repeat(BANNER_WIDTH - text.length - left)}║`
+}
+
+/*
+ * Built rather than typed, so the walls line up whatever `system.version`
+ * says. The hand-padded version was one column short on both lines, leaving
+ * the right wall adrift of its corners.
+ */
+const BANNER = [
+  `╔${'═'.repeat(BANNER_WIDTH)}╗`,
+  bannerLine(`${system.name}  v${system.version}`),
+  bannerLine('Vintage Desktop System'),
+  `╚${'═'.repeat(BANNER_WIDTH)}╝`,
+].join('\n')
+
 const LOADING_MESSAGES = [
   'Initializing system...',
   'Loading modules...',
@@ -55,11 +76,8 @@ export default function BootSplash({ onFinish = () => {} }) {
       <div className="relative z-10 max-w-md w-11/12 flex flex-col gap-6" style={{ color: 'var(--os-terminal-accent)' }}>
         {/* ASCII-style header */}
         <div className="text-center">
-          <pre className="text-[10px] sm:text-xs leading-tight opacity-60">{`
-  ╔═══════════════════════════════╗
-  ║       ${system.name}  v${system.version}        ║
-  ║    Vintage Desktop System    ║
-  ╚═══════════════════════════════╝`}
+          <pre role="img" className="inline-block text-left text-[10px] sm:text-xs leading-tight opacity-60" aria-label={`${system.name} v${system.version}`}>
+            {BANNER}
           </pre>
         </div>
 
@@ -89,7 +107,7 @@ export default function BootSplash({ onFinish = () => {} }) {
         </div>
 
         {/* Footer */}
-        <p className="text-center text-[9px] opacity-40 mt-4">(c) 2024 Kayv Development — All rights reserved</p>
+        <p className="text-center text-[9px] opacity-40 mt-4">(c) {new Date().getFullYear()} Kayv Development — All rights reserved</p>
       </div>
     </div>
   )

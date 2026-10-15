@@ -12,9 +12,9 @@ const Timeline = ({ title, items }) => (
     <ol className="os-timeline">
       {items.map((item) => (
         <li key={item.title} className="os-timeline-item">
-          <h4 className="font-bold text-[12px] leading-snug" style={{ color: 'var(--os-text)' }}>
+          <p className="font-bold text-[12px] leading-snug" style={{ color: 'var(--os-text)' }}>
             {item.title}
-          </h4>
+          </p>
           <p className="text-[11px] font-semibold leading-snug" style={{ color: 'var(--os-accent)' }}>
             {item.detail}
           </p>

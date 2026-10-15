@@ -18,8 +18,12 @@ const RetroDialog = ({ title, icon, width = 360, variant = 'fullscreen', childre
     ? { position: 'fixed', inset: 0, zIndex: 99999 }
     : { width: '100%', height: '100%' }
 
+  // Covering the viewport, the dialog *is* the page, so it is its main
+  // landmark; inside a window it is just part of that window.
+  const Wrapper = variant === 'fullscreen' ? 'main' : 'div'
+
   return (
-    <div
+    <Wrapper
       className="flex items-center justify-center p-4"
       style={{ ...wrapperStyle, background: palette.desktop, fontFamily: FONT_STACK }}
     >
@@ -32,7 +36,7 @@ const RetroDialog = ({ title, icon, width = 360, variant = 'fullscreen', childre
         </div>
         {children}
       </div>
-    </div>
+    </Wrapper>
   )
 }
 

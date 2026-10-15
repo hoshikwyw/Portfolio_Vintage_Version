@@ -18,7 +18,8 @@ const NotFoundPage = () => {
   return (
     <RetroDialog title="Kayv OS — Page Not Found" width={380}>
       <div className="p-5 flex flex-col items-center text-center gap-3">
-        <NotFoundArt color={palette.muted} />
+        {/* Full text colour: `muted` measured 3.5:1 on the dialog panel. */}
+        <NotFoundArt color={palette.text} />
 
         <p className="text-[13px] font-bold" style={{ color: palette.text }}>
           This page could not be found.

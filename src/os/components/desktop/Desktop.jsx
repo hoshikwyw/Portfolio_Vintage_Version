@@ -22,7 +22,7 @@ const Desktop = () => {
   const wallpaperClass = wallpaper !== DEFAULT_WALLPAPER ? `wallpaper-${wallpaper}` : ''
 
   return (
-    <div className={`mainBackground ${wallpaperClass}`}>
+    <main className={`mainBackground ${wallpaperClass}`} aria-label="Desktop">
       <div className="gradient-orb gradient-orb-1" />
       <div className="gradient-orb gradient-orb-2" />
       <div className="gradient-orb gradient-orb-3" />
@@ -34,7 +34,7 @@ const Desktop = () => {
 
       <DesktopContextMenu />
       <HelperBot />
-    </div>
+    </main>
   )
 }
 

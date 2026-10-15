@@ -10,7 +10,7 @@ import { memo } from 'react'
  * Enter or Space reveals, and `F` flags (there is no right-click on a
  * keyboard, and Shift+F10 is not something anyone will guess).
  */
-const Cell = memo(({ index, cell, isLost, onReveal, onFlag }) => {
+const Cell = memo(({ index, cols, cell, isLost, onReveal, onFlag }) => {
   const { revealed, flagged, mine, adjacent } = cell
 
   const handleContextMenu = (event) => {
@@ -36,6 +36,8 @@ const Cell = memo(({ index, cell, isLost, onReveal, onFlag }) => {
   else if (mine) label = 'Mine'
   else if (adjacent) label = `${adjacent}`
   else label = 'Empty'
+  // Position, so a screen reader can tell one "Hidden" square from the next.
+  label += `, row ${Math.floor(index / cols) + 1}, column ${(index % cols) + 1}`
 
   return (
     <button
