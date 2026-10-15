@@ -174,7 +174,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  gap: 10px;
+  gap: 16px;
 }
 
 .os-bot-ball {
@@ -186,6 +186,21 @@
   background: none;
   border: none;
   padding: 0;
+  /* Rounds the global focus ring to the character rather than a box. */
+  border-radius: 18px;
+  /* Pops in once the desktop has landed, rather than being there from frame one. */
+  /* `backwards`, not `both`: holding the end state would pin `transform` and
+     swallow the press squish below. */
+  animation: os-bot-enter 520ms var(--os-ease-back) 900ms backwards;
+  transition: transform var(--os-dur-press) var(--os-ease);
+}
+
+/* A quick squish on press, so a tap feels like it landed on something soft. */
+.os-bot-ball:active { transform: scale(0.92); }
+
+@keyframes os-bot-enter {
+  from { opacity: 0; transform: translateY(14px) scale(0.6); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 /* --- the head: a rounded CSS cube, three faces visible --- */
@@ -390,14 +405,27 @@
   height: 4px;
   border-radius: 50%;
   background: var(--os-bot-blush);
+  opacity: 0.7;
+  transition: opacity var(--os-dur-base) var(--os-ease), transform var(--os-dur-base) var(--os-ease-back);
 }
 .os-bot-blush-left { left: 7px; }
 .os-bot-blush-right { right: 7px; }
 
+/* It is pleased to be noticed. */
+.os-bot-ball:hover .os-bot-blush,
+.os-bot-head[data-awake] .os-bot-blush {
+  opacity: 1;
+  transform: scale(1.25);
+}
+
 /* --- speech panel --- */
 
 .os-bot-panel {
+  position: relative;
   width: 254px;
+  max-width: calc(100vw - 32px);
+  /* The bubble grows out of the robot, not out of its own middle. */
+  transform-origin: calc(100% - 52px) 100%;
   background: var(--os-window);
   border: 2px solid var(--os-border-dark);
   border-top-color: var(--os-border-light);
@@ -406,7 +434,27 @@
   box-shadow: var(--os-window-shadow);
   backdrop-filter: var(--os-glass-blur);
   -webkit-backdrop-filter: var(--os-glass-blur);
-  overflow: hidden;
+}
+
+/*
+ * Speech-bubble tail, pointing down at the robot so the panel reads as
+ * something it is saying rather than a stray dialog. A rotated square with
+ * only its lower two edges bordered, continuing the panel's dark bevel.
+ * Set left of the robot's centre line so it points at the head beside the
+ * antenna rather than straight into its LED.
+ */
+.os-bot-panel::after {
+  content: '';
+  position: absolute;
+  right: 46px;
+  bottom: -7px;
+  width: 12px;
+  height: 12px;
+  background: var(--os-window);
+  border-right: 2px solid var(--os-border-dark);
+  border-bottom: 2px solid var(--os-border-dark);
+  border-bottom-right-radius: 3px;
+  transform: rotate(45deg);
 }
 
 .os-bot-panel-bar {
@@ -415,6 +463,8 @@
   justify-content: space-between;
   padding: 4px 6px 4px 10px;
   background: var(--os-titlebar);
+  /* Rounded here rather than clipping the panel, which would cut off the tail. */
+  border-radius: calc(var(--os-window-radius) - 2px) calc(var(--os-window-radius) - 2px) 0 0;
 }
 
 .os-bot-panel-title {
@@ -437,8 +487,10 @@
   border-top-color: var(--os-btn-border-top);
   border-left-color: var(--os-btn-border-top);
   border-radius: var(--os-btn-radius);
+  transition: filter var(--os-dur-fast) var(--os-ease), transform var(--os-dur-press) var(--os-ease);
 }
 .os-bot-panel-close:hover { filter: brightness(1.15); }
+.os-bot-panel-close:active { transform: scale(0.9); }
 
 .os-bot-panel-body { padding: 10px 12px 12px; }
 
@@ -459,6 +511,17 @@
   border-radius: var(--os-btn-radius);
 }
 
+/* Each new tip fades up into place instead of snapping in. */
+.os-bot-nudge-text {
+  display: block;
+  animation: os-bot-tip-in var(--os-dur-base) var(--os-ease) both;
+}
+
+@keyframes os-bot-tip-in {
+  from { opacity: 0; transform: translateY(3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 .os-bot-panel-actions {
   display: flex;
   gap: 6px;
@@ -468,12 +531,48 @@
 }
 
 .os-bot-progress {
-  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
   font-size: 9px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--os-text-muted);
+}
+
+/* One pip per window on the tour, lit as each is opened. */
+.os-bot-pips { display: flex; gap: 3px; flex-shrink: 0; }
+
+.os-bot-pip {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--os-skeleton-bg);
+  border: 1px solid var(--os-border-dark);
+  transition: background-color var(--os-dur-base) var(--os-ease);
+}
+.os-bot-pip.is-on {
+  background: var(--os-accent);
+  border-color: var(--os-accent);
+}
+
+/*
+ * Reduced motion: the bob, the breathing shadow, the LED pulse and the blink
+ * all loop forever with nothing prompting them, so they stop. The cursor
+ * tracking already opts out in RobotHead itself, and the entrance and tip
+ * fade collapse to their end state.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .os-bot-ball,
+  .os-bot-float,
+  .os-bot-shadow,
+  .os-bot-led,
+  .os-bot-pupil i,
+  .os-bot-nudge-text {
+    animation: none;
+  }
 }
 
 /* ============================

@@ -100,8 +100,14 @@ const HelperBot = () => {
             <div className="os-bot-panel-body">
               <p className="os-bot-intro">{guideIntro.text}</p>
 
-              {/* Announced politely so the suggestion is not missed by a screen reader. */}
-              <p className="os-bot-nudge" aria-live="polite">{nudge.text}</p>
+              {/*
+                Announced politely so the suggestion is not missed by a screen
+                reader. The live region stays mounted; only the keyed span inside
+                remounts, which replays its fade-in for each new tip.
+              */}
+              <p className="os-bot-nudge" aria-live="polite">
+                <span key={nudge.text} className="os-bot-nudge-text">{nudge.text}</span>
+              </p>
 
               <div className="os-bot-panel-actions">
                 {nudge.action && nudge.id ? (
@@ -124,11 +130,19 @@ const HelperBot = () => {
                 )}
               </div>
 
-              <p className="os-bot-progress">
-                {isTouring
-                  ? `${exploredCount} of ${totalCount} windows explored`
-                  : 'All windows explored — nice.'}
-              </p>
+              <div className="os-bot-progress">
+                {/* Decorative: the sentence beside it carries the same count. */}
+                <span className="os-bot-pips" aria-hidden="true">
+                  {Array.from({ length: totalCount }, (_, i) => (
+                    <span key={i} className={`os-bot-pip${i < exploredCount ? ' is-on' : ''}`} />
+                  ))}
+                </span>
+                <span>
+                  {isTouring
+                    ? `${exploredCount} of ${totalCount} explored`
+                    : 'All windows explored — nice.'}
+                </span>
+              </div>
             </div>
           </m.div>
         )}
