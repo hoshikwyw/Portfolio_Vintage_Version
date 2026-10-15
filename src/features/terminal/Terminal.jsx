@@ -91,8 +91,7 @@ const Terminal = () => {
         />
 
         <div
-          className="flex-1 overflow-y-auto pr-2 mb-2 relative z-10"
-          style={{ scrollbarWidth: 'thin', scrollbarColor: 'var(--os-terminal-border) var(--os-terminal-bg)' }}
+          className="os-terminal-scroll flex-1 overflow-y-auto pr-2 mb-2 relative z-10"
         >
           {history.map((line, idx) => (
             <div key={idx} className="whitespace-pre-wrap select-text leading-relaxed mb-0.5">{line}</div>

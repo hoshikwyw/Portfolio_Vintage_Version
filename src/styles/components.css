@@ -122,3 +122,67 @@
   backdrop-filter: var(--os-glass-blur);
   -webkit-backdrop-filter: var(--os-glass-blur);
 }
+
+/* ============================
+   SCROLLBARS
+   ============================ */
+
+/*
+ * One themed scrollbar for every scroll area — window bodies, the gallery
+ * grid, admin lists, the case study, the helper panel. Window bodies used to
+ * hide theirs outright (so a long About page gave no hint it scrolled) while
+ * every inner panel fell back to the browser's grey default.
+ *
+ * The thumb is inset from the track by a transparent border, which reads as a
+ * rounded rod sitting in a groove; on hover the border narrows so the thumb
+ * swells into an easier target. Colours come from the `--os-scrollbar-*`
+ * tokens, so a surface can re-skin its own bar by redefining them (the
+ * terminal does).
+ */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--os-scrollbar-track);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb {
+  min-height: 36px;
+  background: var(--os-scrollbar-thumb);
+  background-clip: padding-box;
+  border: 3px solid transparent;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--os-scrollbar-thumb-hover);
+  background-clip: padding-box;
+  border-width: 2px;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: var(--os-scrollbar-thumb-hover);
+  background-clip: padding-box;
+  border-width: 2px;
+}
+
+::-webkit-scrollbar-corner { background: transparent; }
+
+/* Glass: a slimmer translucent pill on an invisible track, iOS-style. */
+[data-theme="glass"] ::-webkit-scrollbar { width: 10px; height: 10px; }
+[data-theme="glass"] ::-webkit-scrollbar-track { background: transparent; }
+
+/*
+ * Firefox has no `::-webkit-scrollbar`, only the standard properties. They are
+ * gated behind this check because Chromium supports them too, and setting
+ * them there switches off every rule above.
+ */
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--os-scrollbar-thumb-solid) transparent;
+  }
+}

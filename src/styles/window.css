@@ -156,12 +156,4 @@
   border-radius: 0 0 10px 10px;
 }
 
-.windowContent::-webkit-scrollbar { width: 10px; }
-.windowContent::-webkit-scrollbar-track { background: var(--os-scrollbar-track); }
-.windowContent::-webkit-scrollbar-thumb { background: var(--os-scrollbar-thumb); border-radius: 5px; }
-[data-theme="glass"] .windowContent::-webkit-scrollbar { width: 6px; }
-[data-theme="glass"] .windowContent::-webkit-scrollbar-thumb { border-radius: 3px; }
-
-/* Window bodies scroll without a visible bar. */
-.project-container { scrollbar-width: none; }
-.project-container::-webkit-scrollbar { display: none; }
+/* Scrollbars are styled app-wide; see SCROLLBARS in components.css. */

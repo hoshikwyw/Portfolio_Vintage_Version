@@ -95,7 +95,7 @@ const DraggableWindow = ({
         onClose={onClose}
       />
 
-      <div className="windowContent project-container" style={{ flex: 1, overflow: 'auto' }}>
+      <div className="windowContent" style={{ flex: 1, overflow: 'auto' }}>
         <WindowContent id={id} />
       </div>
     </m.div>

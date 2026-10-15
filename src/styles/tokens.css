@@ -27,7 +27,9 @@
   --os-input-border: 2px inset #a0a090;
   --os-panel-bg: #e8e0d4;
   --os-scrollbar-track: #e8e0d4;
-  --os-scrollbar-thumb: linear-gradient(180deg, #c0b8a8, #a0a090);
+  --os-scrollbar-thumb: linear-gradient(90deg, #bdb5a5, #a29a8a);
+  --os-scrollbar-thumb-hover: linear-gradient(90deg, #a8a090, #8a8070);
+  --os-scrollbar-thumb-solid: #a8a090;
   --os-danger: #8a3030;
   --os-success: #4a8a4a;
   --os-warning: #8a7030;
@@ -152,7 +154,9 @@
   --os-input-border: 1px solid rgba(255, 255, 255, 0.12);
   --os-panel-bg: rgba(18, 18, 35, 0.7);
   --os-scrollbar-track: rgba(255, 255, 255, 0.03);
-  --os-scrollbar-thumb: linear-gradient(180deg, rgba(255,255,255,0.15), rgba(255,255,255,0.08));
+  --os-scrollbar-thumb: rgba(255,255,255,0.16);
+  --os-scrollbar-thumb-hover: rgba(255,255,255,0.32);
+  --os-scrollbar-thumb-solid: rgba(255,255,255,0.22);
   --os-danger: #f87171;
   --os-success: #34d399;
   --os-warning: #fbbf24;
@@ -250,7 +254,9 @@
   --os-input-border: 2px inset #b8b6ad;
   --os-panel-bg: #f6f5f1;
   --os-scrollbar-track: #eceae4;
-  --os-scrollbar-thumb: linear-gradient(180deg, #cfcdc4, #b4b2a9);
+  --os-scrollbar-thumb: linear-gradient(90deg, #cfcdc4, #bab8af);
+  --os-scrollbar-thumb-hover: linear-gradient(90deg, #b2b0a7, #9a988f);
+  --os-scrollbar-thumb-solid: #c2c0b7;
   --os-danger: #a32b2b;
   --os-success: #1f7a4d;
   --os-warning: #8a6a1f;

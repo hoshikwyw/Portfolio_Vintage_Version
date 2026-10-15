@@ -55,7 +55,12 @@ const Projects = () => {
   if (!projects?.length) return <StatusMessage>No projects yet</StatusMessage>
 
   return (
-    <div className="w-full h-full flex flex-col items-center project-container relative" style={{ maxWidth: '100vw' }}>
+    /*
+     * `overflow-hidden`: the Swiper's 12px margin pushes it past this box, and
+     * the window body used to hide its scrollbar to cover for that. Clipping
+     * here keeps the carousel exactly as it looked, without a stray bar.
+     */
+    <div className="w-full h-full flex flex-col items-center relative overflow-hidden" style={{ maxWidth: '100vw' }}>
       <Swiper
         modules={[Navigation, Autoplay]}
         slidesPerView="auto"

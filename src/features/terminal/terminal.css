@@ -48,3 +48,14 @@
  * caret blinking on the prompt line is the focus indicator a terminal uses.
  */
 .os-terminal-input:focus-visible { outline: none; }
+
+/*
+ * Re-skins the app-wide scrollbar (components.css) in phosphor colours rather
+ * than the window chrome's, by redefining the tokens it reads.
+ */
+.os-terminal-scroll {
+  --os-scrollbar-track: transparent;
+  --os-scrollbar-thumb: var(--os-terminal-border);
+  --os-scrollbar-thumb-hover: var(--os-terminal-muted);
+  --os-scrollbar-thumb-solid: var(--os-terminal-border);
+}
