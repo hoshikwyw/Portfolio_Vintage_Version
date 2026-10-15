@@ -46,9 +46,10 @@ const commands = {
     help: 'Learn about me',
     run: () => (
       <>
-        <Green>Hello! I'm a full stack developer. I work on:</Green><br />
-        {'  '}- React front ends that feel smooth and responsive<br />
-        {'  '}- The APIs and data behind them<br />
+        <Green>Hello! I'm a mid-level full stack developer at IT-Wizard. I build:</Green><br />
+        {'  '}- Web apps with React and Next.js, and the APIs and data behind them<br />
+        {'  '}- PWAs and hybrid apps with Capacitor<br />
+        {'  '}- Native mobile apps with React Native and Expo<br />
         {'  '}- Interactive animations with GSAP<br />
         <Green>Studying CS at UoPeople, learning Python, building with Claude.</Green>
       </>
@@ -177,7 +178,8 @@ const commands = {
     run: () => (
       <Plain>
         Hi! I'm {profile.alias}, a {profile.role.toLowerCase()} from {profile.location.split(',')[0]}. I
-        build web apps end to end with React, Tailwind, and a love for vintage aesthetics — and I'm
+        build web and mobile apps end to end — React and Next.js, Capacitor PWAs, React Native with
+        Expo — with a love for vintage aesthetics. I'm
         studying Computer Science at UoPeople while learning Python. This entire portfolio is a fake
         desktop OS — how cool is that?
       </Plain>

@@ -20,7 +20,7 @@ export const profile = {
   github: 'https://github.com/hoshikwyw',
 
   about:
-    "Hi! I'm Kayv — a full stack developer who builds web apps end to end, from smooth React interfaces to the APIs and data behind them. I'm studying Computer Science at the University of the People, learning Python, and building with Claude as my AI pair programmer.",
+    "Hi! I'm Kayv — a mid-level full stack developer at IT-Wizard, building web and mobile apps end to end: React and Next.js on the web, PWAs with Capacitor, and native apps with React Native and Expo. I'm studying Computer Science at the University of the People, learning Python, and building with Claude as my AI pair programmer.",
 
   /** Status shown beside the role in About Me. Set to null to hide it. */
   availability: 'Open to freelance work',
@@ -49,6 +49,17 @@ export const currently = [
   { name: 'Claude', tag: 'AI pair programmer' },
 ]
 
+/**
+ * The kinds of app Kayv ships, shown as the "Builds" panel in About Me.
+ * Platforms rather than skill bars: they describe what gets made, not a
+ * self-rated level.
+ */
+export const platforms = [
+  { name: 'Web apps', tag: 'React · Next.js' },
+  { name: 'PWAs & hybrid apps', tag: 'Capacitor' },
+  { name: 'Native mobile apps', tag: 'React Native · Expo' },
+]
+
 export const education = [
   { title: 'Computer Science', detail: 'University of the People (UoPeople) — in progress' },
   { title: 'Frontend Web Developer', detail: 'MMS-IT' },
@@ -58,8 +69,10 @@ export const education = [
   },
 ]
 
+/** Newest first. The junior role stays as history — the promotion is the story. */
 export const experience = [
-  { title: 'Junior Frontend Developer', detail: 'IT-Wizard since 2024 November' },
+  { title: 'Mid-level Full Stack Developer', detail: 'IT-Wizard · since August 2026' },
+  { title: 'Junior Frontend Developer', detail: 'IT-Wizard · November 2024 – August 2026' },
   { title: 'Freelance Projects', detail: 'Portfolio, Booking App, AI Assistant UI' },
 ]
 

@@ -1,4 +1,4 @@
-import { currently, education, experience, interests, languages, profile, skills } from '@/shared/config/profile'
+import { currently, education, experience, interests, languages, platforms, profile, skills } from '@/shared/config/profile'
 
 // Visually hidden but crawlable copy — gives search engines real text to
 // index, since the desktop UI itself is mostly canvas/absolute layers.
@@ -44,6 +44,13 @@ const SeoContent = () => (
     <h2>Currently</h2>
     <ul>
       {currently.map(({ name, tag }) => (
+        <li key={name}>{name} — {tag}</li>
+      ))}
+    </ul>
+
+    <h2>Builds</h2>
+    <ul>
+      {platforms.map(({ name, tag }) => (
         <li key={name}>{name} — {tag}</li>
       ))}
     </ul>
