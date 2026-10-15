@@ -1,5 +1,4 @@
 import Panel from '@/shared/components/ui/Panel'
-import { FONT_STACK } from '@/shared/constants/fonts'
 import { education, experience, interests, languages } from '@/shared/config/profile'
 import ProfileHero from './components/ProfileHero'
 import ProfileSummary from './components/ProfileSummary'
@@ -32,7 +31,7 @@ const Chip = ({ children }) => (
  * actually constrains this content.
  */
 const About = () => (
-  <div className="@container w-full p-4" style={{ fontFamily: FONT_STACK }}>
+  <div className="@container w-full p-4">
     <div className="flex flex-col gap-4">
       <ProfileHero />
 

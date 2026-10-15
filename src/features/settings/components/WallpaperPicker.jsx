@@ -1,6 +1,6 @@
 import Panel from '@/shared/components/ui/Panel'
 import { gradientFor, isLightTheme, wallpapers } from '@/shared/config/theme'
-import { CheckBadge } from './ThemePicker'
+import CheckBadge from './CheckBadge'
 
 /**
  * @param {string} resolvedTheme Decides which rendition of each wallpaper the

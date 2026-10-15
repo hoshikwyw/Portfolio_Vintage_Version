@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { FONT_STACK } from '@/shared/constants/fonts'
 import StatusMessage from '@/shared/components/feedback/StatusMessage'
 import WindowSkeleton from '@/shared/components/feedback/WindowSkeleton'
 import { adminColors } from '@/features/admin/theme'
@@ -49,7 +48,7 @@ const AdminDashboard = ({ onLogout, userEmail }) => {
   const { Panel } = TABS.find((tab) => tab.key === activeTab)
 
   return (
-    <div className="w-full h-full overflow-y-auto p-3" style={{ background: adminColors.panel, fontFamily: FONT_STACK }}>
+    <div className="w-full h-full overflow-y-auto p-3" style={{ background: adminColors.panel }}>
       <AdminHeader email={userEmail} onLogout={onLogout} />
 
       <Banner message={message} />
@@ -63,10 +62,8 @@ const AdminDashboard = ({ onLogout, userEmail }) => {
       </div>
 
       <div
+        className="os-raised"
         style={{
-          border: `2px solid ${adminColors.borderDark}`,
-          borderTopColor: adminColors.borderLight,
-          borderLeftColor: adminColors.borderLight,
           borderRadius: '0 4px 4px 4px',
           background: adminColors.panel,
           padding: '12px',

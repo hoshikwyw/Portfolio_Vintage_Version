@@ -1,13 +1,9 @@
 import { useState } from 'react'
-import { FONT_STACK } from '@/shared/constants/fonts'
 import { hasCaseStudy } from '../caseStudy'
 
 const linkStyle = {
   background: 'var(--os-btn-bg)',
   color: 'var(--os-text)',
-  border: '2px solid var(--os-border-dark)',
-  borderTopColor: 'var(--os-border-light)',
-  borderLeftColor: 'var(--os-border-light)',
   borderRadius: 'var(--os-btn-radius)',
 }
 
@@ -16,7 +12,7 @@ const CardLink = ({ href, children }) => (
     href={href}
     target="_blank"
     rel="noopener noreferrer"
-    className="no-underline text-[11px] font-bold uppercase tracking-wide px-3 py-1.5 text-center flex-1 cursor-pointer hover:brightness-110"
+    className="os-raised no-underline text-[11px] font-bold uppercase tracking-wide px-3 py-1.5 text-center flex-1 cursor-pointer hover:brightness-110"
     style={linkStyle}
   >
     {children}
@@ -67,14 +63,10 @@ const ProjectCard = ({ project, onOpenCaseStudy }) => {
 
   return (
     <div
-      className={`os-card-lift h-full w-full flex flex-col overflow-hidden ${isComingSoon ? 'opacity-60 pointer-events-none' : ''}`}
+      className={`os-card-lift os-raised h-full w-full flex flex-col overflow-hidden ${isComingSoon ? 'opacity-60 pointer-events-none' : ''}`}
       style={{
         background: 'var(--os-panel-bg)',
-        border: '2px solid var(--os-border-dark)',
-        borderTopColor: 'var(--os-border-light)',
-        borderLeftColor: 'var(--os-border-light)',
         borderRadius: 'var(--os-window-radius)',
-        fontFamily: FONT_STACK,
         padding: '8px',
         backdropFilter: 'var(--os-glass-blur)',
         WebkitBackdropFilter: 'var(--os-glass-blur)',

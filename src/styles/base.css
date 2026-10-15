@@ -6,3 +6,15 @@
 html, body {
   background: var(--os-bg);
 }
+
+/*
+ * The OS chrome's typeface, set once so every surface inherits it. Components
+ * used to repeat it inline (a dozen `fontFamily: FONT_STACK` props) because
+ * nothing set it at the root, and Tailwind's preflight default showed through
+ * wherever one was forgotten. Keep in step with `FONT_STACK` in
+ * `shared/constants/fonts.js`, which the crash screens still set inline in
+ * case they render before this stylesheet.
+ */
+html {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

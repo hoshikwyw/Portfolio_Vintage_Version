@@ -1,10 +1,8 @@
 import { m, useDragControls, useMotionValue } from 'framer-motion'
 import { RESIZE_DIRECTIONS, Z_LAYERS } from '@/os/constants'
-import { windowTitleId } from '@/os/config/apps'
 import { useResizable } from '@/os/hooks/useResizable'
 import { useWindowA11y } from '@/os/hooks/useWindowA11y'
-import WindowContent from '@/os/registry/windowRegistry'
-import { WindowTitleBar } from './WindowChrome'
+import { WindowBody, WindowTitleBar } from './WindowChrome'
 import { floatingWindowMotion } from './windowMotion'
 
 /**
@@ -18,7 +16,7 @@ const DraggableWindow = ({
   id, index, geometry, viewport, isFocused,
   onFocus, onClose, onFullscreen, onMinimize, onGeometryChange,
 }) => {
-  const { frameRef, handleKeyDown, handleFocus } = useWindowA11y({ id, onClose, onFocus })
+  const frameProps = useWindowA11y({ id, onClose, onFocus })
   const dragControls = useDragControls()
   const dragX = useMotionValue(0)
   const dragY = useMotionValue(0)
@@ -43,16 +41,7 @@ const DraggableWindow = ({
 
   return (
     <m.div
-      ref={frameRef}
-      /*
-       * Non-modal by design: several windows coexist and the desktop stays
-       * usable behind them, so there is no `aria-modal` and no focus trap.
-       */
-      role="dialog"
-      aria-labelledby={windowTitleId(id)}
-      tabIndex={-1}
-      onKeyDown={handleKeyDown}
-      onFocus={handleFocus}
+      {...frameProps}
       className="windowFrame"
       // Shared with the fullscreen frame; see ./windowMotion for why only
       // opacity and scale move.
@@ -95,9 +84,7 @@ const DraggableWindow = ({
         onClose={onClose}
       />
 
-      <div className="windowContent" style={{ flex: 1, overflow: 'auto' }}>
-        <WindowContent id={id} />
-      </div>
+      <WindowBody id={id} />
     </m.div>
   )
 }

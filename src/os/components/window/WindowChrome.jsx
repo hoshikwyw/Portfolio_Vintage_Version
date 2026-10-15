@@ -1,13 +1,14 @@
 import { getAppLabel, windowTitleId } from '@/os/config/apps'
+import WindowContent from '@/os/registry/windowRegistry'
 import AppIcon from '@/shared/components/icons/AppIcon'
 
 /** Title-bar icon, inheriting the bar's own text colour. */
-export const WindowIcon = ({ id }) => (
+const WindowIcon = ({ id }) => (
   <AppIcon id={id} size={14} className="inline-block mr-2 align-middle opacity-80" />
 )
 
 /** Minimize / fullscreen / close buttons shared by normal + fullscreen frames. */
-export const WindowControls = ({ id, onMinimize, onFullscreen, onClose }) => {
+const WindowControls = ({ id, onMinimize, onFullscreen, onClose }) => {
   const handle = (action) => (e) => {
     e.stopPropagation()
     action(id)
@@ -43,5 +44,12 @@ export const WindowTitleBar = ({ id, onDragStart, onMinimize, onFullscreen, onCl
       {getAppLabel(id)}
     </div>
     <WindowControls id={id} onMinimize={onMinimize} onFullscreen={onFullscreen} onClose={onClose} />
+  </div>
+)
+
+/** The scrolling area under the title bar, holding the app itself. */
+export const WindowBody = ({ id }) => (
+  <div className="windowContent" style={{ flex: 1, overflow: 'auto' }}>
+    <WindowContent id={id} />
   </div>
 )

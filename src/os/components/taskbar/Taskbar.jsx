@@ -4,7 +4,6 @@ import { useOSActions, useOSWindows } from '@/os/hooks/useOS'
 import { getAppLabel } from '@/os/config/apps'
 import { Z_LAYERS } from '@/os/constants'
 import { profile } from '@/shared/config/profile'
-import { FONT_STACK } from '@/shared/constants/fonts'
 import AppIcon from '@/shared/components/icons/AppIcon'
 import { preloadWindow } from '@/os/registry/windowImports'
 import StartMenu from './StartMenu'
@@ -89,7 +88,6 @@ const Taskbar = () => {
           boxShadow: '0 -2px 8px rgba(0,0,0,0.15)',
           backdropFilter: 'var(--os-glass-blur)',
           WebkitBackdropFilter: 'var(--os-glass-blur)',
-          fontFamily: FONT_STACK,
         }}
       >
         <div className="relative flex-shrink-0">

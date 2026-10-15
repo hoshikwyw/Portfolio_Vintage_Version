@@ -1,6 +1,5 @@
 import { useOSActions, useOSAppearance } from '@/os/hooks/useOS'
 import Panel from '@/shared/components/ui/Panel'
-import { FONT_STACK } from '@/shared/constants/fonts'
 import { profile, system } from '@/shared/config/profile'
 import ThemePicker from './components/ThemePicker'
 import WallpaperPicker from './components/WallpaperPicker'
@@ -18,7 +17,7 @@ const Settings = () => {
   const { setWallpaper, setTheme } = useOSActions()
 
   return (
-    <div className="w-full h-full overflow-y-auto p-4" style={{ fontFamily: FONT_STACK }}>
+    <div className="w-full h-full overflow-y-auto p-4">
       <div className="max-w-md mx-auto space-y-4">
         {/*
           The picker shows the stored preference (so "System" reads as selected)

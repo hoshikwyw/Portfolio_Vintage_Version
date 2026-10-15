@@ -5,7 +5,6 @@ import { useOSActions } from '@/os/hooks/useOS'
 import { useGuide } from '@/os/hooks/useGuide'
 import { preloadWindow } from '@/os/registry/windowImports'
 import { Z_LAYERS } from '@/os/constants'
-import { FONT_STACK } from '@/shared/constants/fonts'
 import { guideIntro } from '@/shared/config/guide'
 import RobotHead from './RobotHead'
 
@@ -70,7 +69,7 @@ const HelperBot = () => {
   return (
     <div
       className="os-bot-dock"
-      style={{ zIndex: Z_LAYERS.helperBot, fontFamily: FONT_STACK }}
+      style={{ zIndex: Z_LAYERS.helperBot }}
     >
       <AnimatePresence>
         {isOpen && (

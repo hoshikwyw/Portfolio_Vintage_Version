@@ -1,17 +1,10 @@
 import { useId, useState } from 'react'
-import { FONT_STACK } from '@/shared/constants/fonts'
+import { Lock } from 'lucide-react'
 import { signIn } from '@/features/admin/api/auth'
 import { adminColors } from '@/features/admin/theme'
 import { Button } from './ui'
 
 const SHAKE_DURATION = 500
-
-const LockGlyph = () => (
-  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-    <path d="M7 11V7a5 5 0 0110 0v4" />
-  </svg>
-)
 
 const CredentialField = ({ label, type, value, onChange, autoComplete, autoFocus }) => {
   // A unique, stable name keeps password managers from auto-filling the form.
@@ -70,31 +63,19 @@ const AdminLogin = () => {
   }
 
   return (
-    <div className="w-full h-full flex items-center justify-center" style={{ background: adminColors.window, fontFamily: FONT_STACK }}>
+    <div className="w-full h-full flex items-center justify-center" style={{ background: adminColors.window }}>
       <div
-        className={shake ? 'animate-shake' : ''}
+        className={`os-raised${shake ? ' animate-shake' : ''}`}
         style={{
           width: 300,
           background: adminColors.panel,
-          border: `2px solid ${adminColors.borderDark}`,
-          borderTopColor: adminColors.borderLight,
-          borderLeftColor: adminColors.borderLight,
           borderRadius: 'var(--os-window-radius)',
           boxShadow: 'var(--os-window-shadow)',
         }}
       >
-        <div
-          className="px-2 py-1"
-          style={{
-            background: 'var(--os-titlebar)',
-            borderRadius: 'calc(var(--os-window-radius) - 2px) calc(var(--os-window-radius) - 2px) 0 0',
-          }}
-        >
-          <span
-            className="text-[11px] font-bold uppercase tracking-wide flex items-center gap-1.5"
-            style={{ color: 'var(--os-titlebar-text)' }}
-          >
-            <LockGlyph />
+        <div className="os-titlebar-strip px-2 py-1">
+          <span className="text-[11px] font-bold uppercase tracking-wide flex items-center gap-1.5">
+            <Lock size={12} aria-hidden="true" />
             Admin Login
           </span>
         </div>

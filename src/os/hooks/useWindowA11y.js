@@ -1,4 +1,5 @@
 import { useCallback, useRef } from 'react'
+import { windowTitleId } from '@/os/config/apps'
 import { useRestoreFocus } from '@/shared/hooks/useRestoreFocus'
 
 /**
@@ -12,7 +13,7 @@ import { useRestoreFocus } from '@/shared/hooks/useRestoreFocus'
  * @param {string}   id      App id, passed back to `onClose` and `onFocus`.
  * @param {Function} onClose Close handler for this window.
  * @param {Function} [onFocus] Raises this window when focus moves into it.
- * @returns {{frameRef: object, handleKeyDown: Function, handleFocus: Function}}
+ * @returns {object} Props to spread onto the frame element.
  */
 export const useWindowA11y = ({ id, onClose, onFocus }) => {
   const frameRef = useRef(null)
@@ -48,5 +49,17 @@ export const useWindowA11y = ({ id, onClose, onFocus }) => {
   // `onFocus` bubbles in React, so this covers focus landing on any descendant.
   const handleFocus = useCallback(() => onFocus?.(id), [id, onFocus])
 
-  return { frameRef, handleKeyDown, handleFocus }
+  /*
+   * Everything the frame element needs, ready to spread. Non-modal by design:
+   * several windows coexist and the desktop stays usable behind them, so there
+   * is no `aria-modal` and no focus trap.
+   */
+  return {
+    ref: frameRef,
+    role: 'dialog',
+    'aria-labelledby': windowTitleId(id),
+    tabIndex: -1,
+    onKeyDown: handleKeyDown,
+    onFocus: handleFocus,
+  }
 }

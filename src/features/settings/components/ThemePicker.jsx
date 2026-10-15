@@ -1,13 +1,6 @@
 import Panel from '@/shared/components/ui/Panel'
 import { SYSTEM_THEME, getTheme, themes } from '@/shared/config/theme'
-
-const CheckBadge = ({ className, size }) => (
-  <div className={className} style={{ background: 'var(--os-accent)' }}>
-    <svg className={size} fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: '#fff' }}>
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-    </svg>
-  </div>
-)
+import CheckBadge from './CheckBadge'
 
 /**
  * Miniature window rendered inside each theme swatch, drawn from the theme's
@@ -78,5 +71,4 @@ const ThemePicker = ({ value, onChange, resolvedTheme }) => (
   </Panel>
 )
 
-export { CheckBadge }
 export default ThemePicker

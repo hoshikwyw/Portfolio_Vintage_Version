@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
 import Panel from '@/shared/components/ui/Panel'
-import { FONT_STACK } from '@/shared/constants/fonts'
 import { readStorageJSON, writeStorage } from '@/shared/lib/storage'
 import { BEST_TIMES_KEY, DEFAULT_DIFFICULTY, DIFFICULTIES } from './constants'
 import { useMinesweeper } from './hooks/useMinesweeper'
@@ -52,7 +51,7 @@ const Minesweeper = () => {
   const best = bestTimes[difficultyKey]
 
   return (
-    <div className="ms-root" style={{ fontFamily: FONT_STACK }}>
+    <div className="ms-root">
       {/* --ms-cols drives the shell width; see .ms-shell in minesweeper.css. */}
       <div className="ms-shell" style={{ '--ms-cols': cols }}>
         <div className="ms-toolbar">

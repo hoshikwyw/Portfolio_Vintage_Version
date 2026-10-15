@@ -12,29 +12,12 @@ import { downloadResume, openHireEmail } from '@/shared/lib/browser'
  */
 const ProfileHero = () => (
   <section
-    className="os-hero"
-    style={{
-      background: 'var(--os-panel-bg)',
-      border: '2px solid var(--os-border-dark)',
-      borderTopColor: 'var(--os-border-light)',
-      borderLeftColor: 'var(--os-border-light)',
-      borderRadius: 'var(--os-window-radius)',
-    }}
+    className="os-hero os-raised"
+    style={{ background: 'var(--os-panel-bg)', borderRadius: 'var(--os-window-radius)' }}
   >
     {/* Title strip, echoing a window's own chrome so the card reads as OS-native. */}
-    <div
-      className="px-3 py-1"
-      style={{
-        background: 'var(--os-titlebar)',
-        borderRadius: 'calc(var(--os-window-radius) - 2px) calc(var(--os-window-radius) - 2px) 0 0',
-      }}
-    >
-      <span
-        className="text-[10px] font-bold uppercase tracking-widest"
-        style={{ color: 'var(--os-titlebar-text)' }}
-      >
-        Profile
-      </span>
+    <div className="os-titlebar-strip px-3 py-1">
+      <span className="text-[10px] font-bold uppercase tracking-widest">Profile</span>
     </div>
 
     <div className="flex flex-col @md:flex-row items-center @md:items-start gap-4 p-4">

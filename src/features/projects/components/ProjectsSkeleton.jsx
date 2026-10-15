@@ -6,16 +6,13 @@ const CARD_COUNT = 3
 /** One placeholder shaped like a <ProjectCard>: cover, title, body, tags, buttons. */
 const CardSkeleton = () => (
   <div
-    className="flex flex-col gap-2 flex-shrink-0"
+    className="os-raised flex flex-col gap-2 flex-shrink-0"
     style={{
       // Tracks the real slide width so the placeholder does not overflow a
       // phone-width window while the cards it stands in for would fit.
       width: `calc(${SLIDE_WIDTH_CSS} - 16px)`,
       height: SLIDE_HEIGHT - 16,
       background: 'var(--os-panel-bg)',
-      border: '2px solid var(--os-border-dark)',
-      borderTopColor: 'var(--os-border-light)',
-      borderLeftColor: 'var(--os-border-light)',
       borderRadius: 'var(--os-window-radius)',
       padding: 8,
     }}

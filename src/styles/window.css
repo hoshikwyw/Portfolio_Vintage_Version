@@ -9,7 +9,6 @@
   border-radius: var(--os-window-radius);
   box-shadow: var(--os-window-shadow);
   overflow: hidden;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   /*
    * A flat `min-width: 400px` is wider than a phone viewport (360–390px), so a
    * window overflowed the screen it opened on and could not be narrowed to

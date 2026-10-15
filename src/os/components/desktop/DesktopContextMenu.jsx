@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from 'react'
 import { useOSActions } from '@/os/hooks/useOS'
 import { Z_LAYERS } from '@/os/constants'
 import { profile } from '@/shared/config/profile'
-import { FONT_STACK } from '@/shared/constants/fonts'
 
 const MENU_WIDTH = 180
 const MENU_HEIGHT = 160
@@ -66,13 +65,12 @@ const DesktopContextMenu = () => {
 
   return (
     <div
-      className="os-popup fixed"
+      className="os-popup os-raised fixed"
       style={{
         left: x,
         top: y,
         zIndex: Z_LAYERS.contextMenu,
         borderRadius: 'var(--os-btn-radius)',
-        fontFamily: FONT_STACK,
         minWidth: 170,
         padding: '3px 0',
       }}

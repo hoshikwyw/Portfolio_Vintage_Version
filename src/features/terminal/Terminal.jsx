@@ -85,10 +85,7 @@ const Terminal = () => {
         onClick={() => inputRef.current?.focus()}
       >
         {/* CRT scanline effect */}
-        <div
-          className="absolute inset-0 pointer-events-none opacity-[0.04]"
-          style={{ backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 1px, var(--os-terminal-scanline) 1px, var(--os-terminal-scanline) 2px)' }}
-        />
+        <div className="os-scanlines opacity-[0.04]" />
 
         <div
           className="os-terminal-scroll flex-1 overflow-y-auto pr-2 mb-2 relative z-10"

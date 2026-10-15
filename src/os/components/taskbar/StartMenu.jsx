@@ -5,7 +5,6 @@ import { useOSActions } from '@/os/hooks/useOS'
 import { startMenuApps } from '@/os/config/apps'
 import { Z_LAYERS } from '@/os/constants'
 import { profile } from '@/shared/config/profile'
-import { FONT_STACK } from '@/shared/constants/fonts'
 import { downloadResume, openHireEmail, openGoogleSearch } from '@/shared/lib/browser'
 import { useOutsideClick } from '@/shared/hooks/useOutsideClick'
 import AppIcon from '@/shared/components/icons/AppIcon'
@@ -86,11 +85,10 @@ const StartMenu = ({ onClose }) => {
       transition={{ duration: 0.15 }}
       onKeyDown={handleKeyDown}
       aria-label="Start menu"
-      className="os-popup absolute bottom-full left-0 mb-1 w-64 overflow-hidden start-menu-panel"
+      className="os-popup os-raised absolute bottom-full left-0 mb-1 w-64 overflow-hidden start-menu-panel"
       style={{
         zIndex: Z_LAYERS.startMenu,
         borderRadius: 'var(--os-window-radius)',
-        fontFamily: FONT_STACK,
       }}
     >
       <div className="flex">

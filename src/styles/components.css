@@ -19,7 +19,6 @@
   border-top-color: var(--os-border-light);
   border-left-color: var(--os-border-light);
   border-radius: var(--os-btn-radius);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .quick-action-btn:hover {
@@ -112,12 +111,9 @@
    POPUP MENUS
    ============================ */
 
-/* Raised, blurred panel shared by the start menu and the desktop context menu. */
+/* Blurred panel behind the start menu and the desktop context menu; pair with .os-raised. */
 .os-popup {
   background: var(--os-window);
-  border: 2px solid var(--os-border-dark);
-  border-top-color: var(--os-border-light);
-  border-left-color: var(--os-border-light);
   box-shadow: var(--os-window-shadow);
   backdrop-filter: var(--os-glass-blur);
   -webkit-backdrop-filter: var(--os-glass-blur);
@@ -185,4 +181,46 @@
     scrollbar-width: thin;
     scrollbar-color: var(--os-scrollbar-thumb-solid) transparent;
   }
+}
+
+/* ============================
+   SHARED SURFACES
+   ============================ */
+
+/*
+ * The raised bevel — light on the top and left edges, dark on the bottom and
+ * right, as if lit from above. Cards, popups and login panels all used to
+ * spell these three declarations out inline.
+ */
+.os-raised {
+  border: 2px solid var(--os-border-dark);
+  border-top-color: var(--os-border-light);
+  border-left-color: var(--os-border-light);
+}
+
+/*
+ * A window-style title bar across the top of a raised card. Inset 2px from the
+ * card's own radius so it sits inside the bevel rather than over it.
+ */
+.os-titlebar-strip {
+  background: var(--os-titlebar);
+  color: var(--os-titlebar-text);
+  border-radius: calc(var(--os-window-radius) - 2px) calc(var(--os-window-radius) - 2px) 0 0;
+}
+
+/*
+ * CRT scanlines laid over a terminal-coloured surface. Strength is the
+ * caller's `opacity`, since the terminal and boot screen want different amounts.
+ */
+.os-scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 1px,
+    var(--os-terminal-scanline) 1px,
+    var(--os-terminal-scanline) 2px
+  );
 }

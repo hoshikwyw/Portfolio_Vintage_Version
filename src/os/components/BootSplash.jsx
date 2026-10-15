@@ -34,13 +34,14 @@ const LOADING_MESSAGES = [
  * Fake OS boot sequence shown before the desktop mounts. Advances a progress
  * bar in random increments and calls `onFinish` once it reaches 100%.
  */
-export default function BootSplash({ onFinish = () => {} }) {
+const BootSplash = ({ onFinish = () => {} }) => {
   const [percent, setPercent] = useState(0)
   const [loadingText, setLoadingText] = useState(LOADING_MESSAGES[0])
 
   useEffect(() => {
     let current = 0
     let messageIndex = 0
+    let finishTimer = null
 
     const timer = setInterval(() => {
       current += Math.floor(Math.random() * 15) + 5
@@ -48,7 +49,7 @@ export default function BootSplash({ onFinish = () => {} }) {
         current = 100
         clearInterval(timer)
         setLoadingText('System ready.')
-        setTimeout(onFinish, 600)
+        finishTimer = setTimeout(onFinish, 600)
       } else {
         const newIndex = Math.floor((current / 100) * LOADING_MESSAGES.length)
         if (newIndex < LOADING_MESSAGES.length && newIndex !== messageIndex) {
@@ -59,7 +60,12 @@ export default function BootSplash({ onFinish = () => {} }) {
       setPercent(current)
     }, 300)
 
-    return () => clearInterval(timer)
+    // The finish timer too: unmounting in that last 600ms (StrictMode's
+    // double-mount, or a route change) must not fire `onFinish` afterwards.
+    return () => {
+      clearInterval(timer)
+      clearTimeout(finishTimer)
+    }
   }, [onFinish])
 
   return (
@@ -68,10 +74,7 @@ export default function BootSplash({ onFinish = () => {} }) {
       style={{ background: 'var(--os-terminal-bg)', fontFamily: MONO_STACK }}
     >
       {/* CRT scanlines */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.05]"
-        style={{ backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 1px, var(--os-terminal-scanline) 1px, var(--os-terminal-scanline) 2px)' }}
-      />
+      <div className="os-scanlines opacity-[0.05]" />
 
       <div className="relative z-10 max-w-md w-11/12 flex flex-col gap-6" style={{ color: 'var(--os-terminal-accent)' }}>
         {/* ASCII-style header */}
@@ -112,3 +115,5 @@ export default function BootSplash({ onFinish = () => {} }) {
     </div>
   )
 }
+
+export default BootSplash

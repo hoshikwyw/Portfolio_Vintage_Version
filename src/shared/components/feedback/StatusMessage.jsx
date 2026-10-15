@@ -1,4 +1,3 @@
-import { FONT_STACK } from '@/shared/constants/fonts'
 
 /**
  * Centered single-line message filling its container — the loading, error and
@@ -12,7 +11,6 @@ const StatusMessage = ({ children, tone = 'info' }) => (
       className="text-[12px]"
       style={{
         color: tone === 'error' ? 'var(--os-danger)' : 'var(--os-text-secondary)',
-        fontFamily: FONT_STACK,
       }}
     >
       {children}
