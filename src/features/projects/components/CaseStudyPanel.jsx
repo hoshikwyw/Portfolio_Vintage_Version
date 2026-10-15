@@ -46,6 +46,11 @@ const CaseStudyPanel = ({ project, onClose }) => {
       </header>
 
       <div className="case-study-body">
+        {/* The same screenshot as the card, so the panel visibly belongs to it. */}
+        {project.cover_image && (
+          <img src={project.cover_image} alt="" className="case-study-cover" decoding="async" />
+        )}
+
         {rows.map(({ key, label, value }) => (
           <section key={key} className="case-study-row">
             <h4 className="case-study-label">{label}</h4>

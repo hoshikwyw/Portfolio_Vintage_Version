@@ -21,13 +21,8 @@ export const apps = [
     label: 'Projects',
     inStartMenu: true,
     /*
-     * The carousel slide is a fixed 420px tall, so the default height ratio
-     * clipped the cards' action buttons on shorter viewports. 560 leaves
-     * ~500px of content area: the 420px slide, its 12px margins, and slack.
-     *
-     * A literal rather than an import from the projects slice — the window
-     * registry is meant to be the only place the shell reaches into a
-     * feature. Revisit alongside SLIDE_HEIGHT in `features/projects/constants`.
+     * Wide enough for three ~250px cards across the showcase grid, and tall
+     * enough for a full row of them. The ratio default fits only two.
      */
     initialSize: { width: 860, height: 560 },
   },

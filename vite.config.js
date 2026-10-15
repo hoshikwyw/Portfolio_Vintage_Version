@@ -28,9 +28,9 @@ export default defineConfig(({ command }) => ({
          * `node_modules/<pkg>/` anchor is what makes this work under pnpm,
          * whose real paths look like `node_modules/.pnpm/react-dom@19/…`.
          *
-         * Deliberately *not* split: lucide-react and swiper. Both are already
-         * tree-shaken and reached only from lazily-imported windows, so naming
-         * them here would pull them into the initial download instead.
+         * Deliberately *not* split: lucide-react. It is tree-shaken per icon,
+         * and naming it here would pull every icon the app uses into one
+         * eagerly-loaded chunk instead.
          */
         manualChunks(id) {
           if (!id.includes('node_modules')) return undefined

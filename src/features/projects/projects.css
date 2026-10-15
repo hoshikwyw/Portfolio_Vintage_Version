@@ -1,103 +1,191 @@
 /* ============================
-   SWIPER / PROJECT CARDS
+   PROJECT SHOWCASE
    ============================ */
 
 /*
- * Imported after Swiper's own stylesheets in `Projects.jsx`, so equal-
- * specificity overrides here (e.g. the disabled nav button) win on order.
+ * The window body. The grid scrolls in its own box so the case-study overlay
+ * (absolutely positioned on .os-projects) always covers what is on screen,
+ * however far the grid has been scrolled.
  */
-.swiper { width: 100%; height: 100%; overflow: hidden; scrollbar-width: none; }
-.swiper-slide { display: flex; justify-content: center; align-items: center; }
+.os-projects { position: relative; height: 100%; }
+.os-projects-scroll { height: 100%; overflow-y: auto; }
 
 /*
- * The lift lives on the card, not the slide. Scaling the whole slide grew its
- * padding box too, so neighbouring cards visibly shifted on hover.
+ * As many ~250px columns as fit, stretched to fill the row. `min()` lets a
+ * single column shrink below 250px in a phone-width window instead of
+ * overflowing it.
  */
-.os-card-lift {
+.os-projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(250px, 100%), 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 14px;
+  list-style: none;
+}
+
+/* Cards in a row stretch to the tallest, so their action rows line up. */
+.os-projects-grid > li { display: flex; }
+
+.os-project-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: hidden;
+  background: var(--os-panel-bg);
+  border-radius: var(--os-window-radius);
   transition:
     transform var(--os-dur-base) var(--os-ease),
     box-shadow var(--os-dur-base) var(--os-ease);
 }
-.os-card-lift:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 22px rgba(0,0,0,0.22);
+
+/* Lift on hover, and when a keyboard user tabs into one of its actions. */
+.os-project-card:hover,
+.os-project-card:focus-within {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
 }
-/*
- * Cover art desaturates until its card is hovered. Driven from the card rather
- * than the image's own :hover so the colour returns the moment the pointer
- * enters the card, not only once it reaches the image.
- */
-.os-card-media {
-  filter: grayscale(1);
+
+/* --- cover --- */
+
+.os-project-cover {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--os-window);
+  border-bottom: 2px solid var(--os-border-dark);
+}
+
+.os-project-cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
   transition:
-    filter 500ms var(--os-ease),
+    opacity 300ms var(--os-ease),
     transform var(--os-dur-base) var(--os-ease);
 }
-.os-card-lift:hover .os-card-media {
-  filter: grayscale(0);
-  transform: scale(1.04);
-}
-.swiper::-webkit-scrollbar { display: none; }
+.os-project-cover-img.is-loaded { opacity: 1; }
+.os-project-card:hover .os-project-cover-img { transform: scale(1.04); }
 
-.custom-nav-button {
-  position: absolute; z-index: 1000;
-  background: var(--os-btn-bg);
-  color: var(--os-text);
-  border: 2px solid var(--os-border-dark);
-  border-top-color: var(--os-border-light);
-  border-left-color: var(--os-border-light);
-  border-radius: var(--os-btn-radius);
-  width: 36px; height: 36px;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  /*
-   * Vertical centring lives here rather than in an inline style, so the hover
-   * and press rules below can add to the transform instead of being
-   * outranked by it.
-   */
-  top: 50%;
-  transform: translateY(-50%) scale(1);
-  opacity: 0.85;
-  transition:
-    transform var(--os-dur-fast) var(--os-ease-back),
-    filter var(--os-dur-fast) var(--os-ease),
-    opacity var(--os-dur-fast) var(--os-ease),
-    box-shadow var(--os-dur-fast) var(--os-ease);
-}
-.custom-nav-prev { left: 12px; }
-.custom-nav-next { right: 12px; }
+/* Not live yet: the screenshot sits back. */
+.os-project-card[data-coming-soon] .os-project-cover-img { filter: saturate(0.35) brightness(0.85); }
 
-.custom-nav-button:hover {
-  filter: brightness(1.1);
-  opacity: 1;
-  transform: translateY(-50%) scale(1.1);
-  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
-}
-.custom-nav-button:active {
-  transform: translateY(-50%) scale(0.94);
-  filter: brightness(0.95);
-  box-shadow: none;
+/* No screenshot: diagonal hatching behind the Projects glyph. */
+.os-project-cover-empty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--os-text-muted);
+  background: repeating-linear-gradient(
+    45deg,
+    transparent 0 8px,
+    color-mix(in srgb, var(--os-skeleton-bg) 55%, transparent) 8px 16px
+  );
 }
 
 /*
- * Swiper adds `swiper-button-disabled` at the ends of the carousel. Its own
- * stylesheet dims it, but that rule has the same specificity as
- * `.custom-nav-button` above and loses on source order — so state it here,
- * where it sits after the base rule and reliably wins.
+ * Badges sit on the screenshot itself, so they carry their own dark scrim and
+ * white text in every theme rather than following the chrome palette.
  */
-.custom-nav-button.swiper-button-disabled {
-  opacity: 0.3;
-  cursor: default;
-  box-shadow: none;
-  pointer-events: none;
+.os-project-badge {
+  position: absolute;
+  top: 8px;
+  padding: 2px 7px;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(18, 18, 30, 0.74);
+  border-radius: var(--os-btn-radius);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.os-project-year { right: 8px; }
+.os-project-soon { left: 8px; }
+
+/* --- body --- */
+
+.os-project-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
 }
 
-[data-theme="glass"] .custom-nav-button {
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 50%;
-  color: rgba(255,255,255,0.8);
+.os-project-title {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--os-text);
+}
+
+/* Three lines at most, so one long write-up cannot stretch a whole row. */
+.os-project-desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-size: 11.5px;
+  line-height: 1.55;
+  color: var(--os-text-secondary);
+}
+
+.os-project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.os-project-tags li {
+  padding: 2px 7px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--os-text);
+  background: var(--os-window);
+  border: 1px solid var(--os-border-dark);
+  border-radius: var(--os-btn-radius);
+}
+
+/* "Read the case study" — a text link in the accent, not a third button. */
+.os-project-case {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--os-accent);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.os-project-case:hover { text-decoration: underline; text-underline-offset: 3px; }
+.os-project-case-arrow { transition: transform var(--os-dur-fast) var(--os-ease); }
+.os-project-case:hover .os-project-case-arrow { transform: translateX(3px); }
+
+/* Pushed to the bottom, so actions align across a row of uneven cards. */
+.os-project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 4px;
+}
+.os-project-actions .quick-action-btn {
+  flex: 1 1 auto;
+  justify-content: center;
 }
 
 /* ============================
@@ -182,6 +270,16 @@
   max-width: 620px;
   width: 100%;
   margin: 0 auto;
+}
+
+.case-study-cover {
+  width: 100%;
+  aspect-ratio: 16 / 7;
+  object-fit: cover;
+  border: 2px solid var(--os-border-dark);
+  border-radius: var(--os-btn-radius);
+  background: var(--os-window);
+  flex-shrink: 0;
 }
 
 .case-study-label {

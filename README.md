@@ -20,7 +20,7 @@ Built with **React 19**, **Vite**, **Tailwind CSS v4**, **Framer Motion**, and
 | **Desktop** | Wallpaper, animated gradient orbs, desktop shortcuts, sticky note, quick actions |
 | **Windows** | Draggable + 8-direction resizable, minimize / fullscreen / close, cascading spawn, z-index focus |
 | **About** | Profile, contact, education & experience timeline, skill bars |
-| **Projects** | Swiper carousel of projects fetched from Supabase, with demo + source links |
+| **Projects** | Responsive grid of project cards from Supabase — demo, source and case-study links |
 | **Gallery** | Masonry image grid with a lightbox (Esc to close, download, view project) |
 | **Terminal** | Fake CLI — `help`, `about`, `projects`, `skills`, `neofetch`, `whoami`, `cowsay`, and more |
 | **Settings** | 3 chrome themes (+ follow-the-OS) and 6 wallpapers, persisted to `localStorage` |
@@ -38,7 +38,6 @@ Built with **React 19**, **Vite**, **Tailwind CSS v4**, **Framer Motion**, and
 | Animation | Framer Motion |
 | Data | Supabase (Postgres + Auth), TanStack React Query v5 |
 | UI | Lucide React |
-| Carousel | Swiper |
 | Hosting | Vercel (+ Speed Insights, serverless keep-alive) |
 
 ---
@@ -108,7 +107,7 @@ Repo tooling lives in [`scripts/`](scripts/) — currently
   `os/registry/windowRegistry.jsx` maps each app `id` to its component. Adding a
   window = one entry in each file.
 - **Code splitting.** Each window is `lazy()`-imported by the registry, so a
-  feature's dependencies (Swiper, Supabase, the admin surface) stay out of the
+  feature's dependencies (Supabase, the admin surface) stay out of the
   initial bundle and load when that window is first opened. Feature barrels
   therefore export *only* the window, as the default. On top of that,
   `vite.config.js` splits React and React Query into long-lived vendor chunks

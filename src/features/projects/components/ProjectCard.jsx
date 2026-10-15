@@ -1,135 +1,123 @@
 import { useState } from 'react'
+import { ArrowRight, BookOpen, Code2, ExternalLink } from 'lucide-react'
+import AppIcon from '@/shared/components/icons/AppIcon'
 import { hasCaseStudy } from '../caseStudy'
 
-const linkStyle = {
-  background: 'var(--os-btn-bg)',
-  color: 'var(--os-text)',
-  borderRadius: 'var(--os-btn-radius)',
-}
-
-const CardLink = ({ href, children }) => (
-  <a
-    href={href}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="os-raised no-underline text-[11px] font-bold uppercase tracking-wide px-3 py-1.5 text-center flex-1 cursor-pointer hover:brightness-110"
-    style={linkStyle}
-  >
-    {children}
-  </a>
-)
-
-/** Cover image with a skeleton that fades out once the image decodes. */
-const CardCover = ({ src, alt, isComingSoon }) => {
+/**
+ * Cover image, fading in once decoded, with the year and any "coming soon"
+ * flag laid over it.
+ *
+ * Covers are in full colour now. They used to stay greyscale until the card
+ * was hovered — which on a phone, with no hover, meant never.
+ */
+const CardCover = ({ src, year, isComingSoon }) => {
   const [loaded, setLoaded] = useState(false)
 
   return (
-    <div className="h-48 overflow-hidden relative" style={{ border: 'var(--os-input-border)', background: 'var(--os-window)' }}>
-      {!loaded && <div className="os-skeleton absolute inset-0" style={{ borderRadius: 0 }} />}
-      {src && (
-        <img
-          src={src}
-          alt={alt}
-          className="os-card-media w-full h-full object-cover relative z-10"
-          // Only the first slide or two are on screen when the window opens.
-          loading="lazy"
-          decoding="async"
-          onLoad={() => setLoaded(true)}
-        />
-      )}
-      {isComingSoon && (
-        <div
-          className="absolute inset-0 flex items-center justify-center z-20"
-          style={{ background: 'rgba(43,43,61,0.8)' }}
-        >
-          {/* Sits over the cover photo, so it stays a dark scrim in every theme. */}
-          <span className="text-sm font-bold uppercase tracking-wider" style={{ color: '#e0d8c8' }}>Coming Soon</span>
+    <div className="os-project-cover">
+      {src ? (
+        <>
+          {!loaded && <div className="os-skeleton absolute inset-0" style={{ borderRadius: 0 }} />}
+          <img
+            src={src}
+            // Decorative: the title right below names the project.
+            alt=""
+            className={`os-project-cover-img${loaded ? ' is-loaded' : ''}`}
+            loading="lazy"
+            decoding="async"
+            onLoad={() => setLoaded(true)}
+          />
+        </>
+      ) : (
+        // No screenshot yet: a patterned tile with the Projects glyph, rather
+        // than the empty beige box this used to be.
+        <div className="os-project-cover-empty" aria-hidden="true">
+          <AppIcon id="Projects" size={36} />
         </div>
       )}
+
+      {year && <span className="os-project-badge os-project-year">{year}</span>}
+      {isComingSoon && <span className="os-project-badge os-project-soon">Coming soon</span>}
     </div>
   )
 }
 
 /**
- * A single project in the carousel.
+ * One project in the showcase grid.
  *
- * `status === false` means the project is not live yet: the card dims, drops
- * its links and shows a "Coming Soon" overlay instead.
+ * `status === false` means the project is not live yet: it keeps its title,
+ * description and tags, flags itself "coming soon", and offers no links.
+ *
+ * The links share one compact row at the foot of the card. A case study, when
+ * there is one, is a "read more" link under the description instead — as a
+ * third button it wrapped onto a row of its own in every card narrower than
+ * ~300px, rebuilding the stacked-button look this card was meant to lose.
+ * Each link names its project, so a screen reader hears "Booking App live
+ * demo" rather than a column of identical "Live demo"s.
  */
 const ProjectCard = ({ project, onOpenCaseStudy }) => {
   const { title, description, cover_image: coverImage, demo_url: demoUrl, repo_url: repoUrl, tags, status, year } = project
   const isComingSoon = status === false
-  const showCaseStudy = hasCaseStudy(project)
+  const showCaseStudy = !isComingSoon && hasCaseStudy(project)
+  const hasLinks = !isComingSoon && (demoUrl || repoUrl)
 
   return (
-    <div
-      className={`os-card-lift os-raised h-full w-full flex flex-col overflow-hidden ${isComingSoon ? 'opacity-60 pointer-events-none' : ''}`}
-      style={{
-        background: 'var(--os-panel-bg)',
-        borderRadius: 'var(--os-window-radius)',
-        padding: '8px',
-        backdropFilter: 'var(--os-glass-blur)',
-        WebkitBackdropFilter: 'var(--os-glass-blur)',
-      }}
-    >
-      <CardCover src={coverImage} alt={title} isComingSoon={isComingSoon} />
+    <article className="os-project-card os-raised" data-coming-soon={isComingSoon || undefined}>
+      <CardCover src={coverImage} year={year} isComingSoon={isComingSoon} />
 
-      <div className="flex-grow flex flex-col gap-2 pt-2">
-        {isComingSoon ? (
-          <div className="flex justify-center items-center w-full h-full mt-auto gap-2">
-            <span className="font-bold text-xs uppercase" style={{ color: 'var(--os-text-muted)' }}>Coming Soon</span>
-            <span className="font-bold text-xs uppercase" style={{ color: 'var(--os-text)' }}>{title}</span>
+      <div className="os-project-body">
+        <h2 className="os-project-title">{title}</h2>
+        {description && <p className="os-project-desc">{description}</p>}
+
+        {showCaseStudy && (
+          <button
+            type="button"
+            className="os-project-case"
+            onClick={() => onOpenCaseStudy(project)}
+            aria-label={`Read the ${title} case study`}
+          >
+            <BookOpen size={12} aria-hidden="true" />
+            Read the case study
+            <ArrowRight size={12} className="os-project-case-arrow" aria-hidden="true" />
+          </button>
+        )}
+
+        {tags?.length > 0 && (
+          <ul className="os-project-tags" aria-label="Built with">
+            {tags.map((tag) => <li key={tag}>{tag}</li>)}
+          </ul>
+        )}
+
+        {hasLinks && (
+          <div className="os-project-actions">
+            {demoUrl && (
+              <a
+                href={demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="quick-action-btn quick-action-primary custom-link"
+                aria-label={`${title} live demo`}
+              >
+                <ExternalLink size={12} aria-hidden="true" />
+                Live demo
+              </a>
+            )}
+            {repoUrl && (
+              <a
+                href={repoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="quick-action-btn custom-link"
+                aria-label={`${title} source code`}
+              >
+                <Code2 size={12} aria-hidden="true" />
+                Code
+              </a>
+            )}
           </div>
-        ) : (
-          <>
-            <div className="flex items-baseline justify-between gap-2">
-              <h3 className="text-sm font-bold uppercase tracking-wide" style={{ color: 'var(--os-text)' }}>{title}</h3>
-              {year && (
-                <span className="text-[10px] font-bold flex-shrink-0" style={{ color: 'var(--os-text-muted)' }}>
-                  {year}
-                </span>
-              )}
-            </div>
-            <p className="text-[11px] flex-grow leading-relaxed" style={{ color: 'var(--os-text-secondary)' }}>{description}</p>
-
-            <div className="flex flex-wrap gap-1 mb-2">
-              {tags?.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-[9px] font-bold uppercase tracking-wide px-2 py-0.5"
-                  style={{ border: '1px solid var(--os-border-dark)', background: 'var(--os-window)', color: 'var(--os-text)', borderRadius: 'var(--os-btn-radius)' }}
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-            <div className="flex flex-col gap-2 mt-auto">
-              {/*
-                When there is a write-up it becomes the primary action: the
-                links send people away, the case study keeps them here.
-              */}
-              {showCaseStudy && (
-                <button
-                  type="button"
-                  onClick={() => onOpenCaseStudy(project)}
-                  className="quick-action-btn quick-action-primary justify-center"
-                >
-                  Read case study
-                </button>
-              )}
-              {/* Both URLs are optional; a missing one would be a dead button. */}
-              {(demoUrl || repoUrl) && (
-                <div className="flex justify-between gap-2">
-                  {demoUrl && <CardLink href={demoUrl}>Live Demo</CardLink>}
-                  {repoUrl && <CardLink href={repoUrl}>View Code</CardLink>}
-                </div>
-              )}
-            </div>
-          </>
         )}
       </div>
-    </div>
+    </article>
   )
 }
 

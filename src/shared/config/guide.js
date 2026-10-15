@@ -30,7 +30,7 @@ export const windowHints = [
   },
   {
     id: 'Projects',
-    text: 'The things I have shipped. Use the arrows, or drag the cards sideways.',
+    text: 'The things I have shipped. A few have a case study — the story of how they came together.',
     action: 'Open Projects',
   },
   {

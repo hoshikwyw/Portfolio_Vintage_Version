@@ -12,8 +12,8 @@ import { windowImports } from './windowImports'
  * This is the single seam between the OS shell and the feature slices — no
  * other shell module imports a feature.
  *
- * Each window is lazily imported so its dependencies (Swiper for Projects, the
- * Supabase admin surface for Dashboard) leave the initial bundle and load only
+ * Each window is lazily imported so its dependencies (the Supabase
+ * admin surface for Dashboard, for one) leave the initial bundle and load only
  * when that window is first opened — or when `preloadWindow` warms it on hover.
  */
 const windowRegistry = Object.fromEntries(
