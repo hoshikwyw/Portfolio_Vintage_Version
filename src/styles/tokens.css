@@ -90,6 +90,8 @@
   --os-terminal-border: #3a3a4a;
   --os-terminal-muted: #4a4a5a;
   --os-terminal-scanline: rgba(0,255,0,0.03);
+  /* Phosphor bloom on terminal text; `none` where the screen is paper. */
+  --os-terminal-glow: 0 0 6px rgba(160, 208, 160, 0.28);
   /* Boot-splash progress fill. */
   --os-terminal-bar: linear-gradient(90deg, #2a6a2a, #4a8a4a, #6aaa6a);
   --os-desktop-icon-text: #e0d8c8;
@@ -196,6 +198,7 @@
   --os-terminal-muted: rgba(255, 255, 255, 0.3);
   --os-terminal-scanline: transparent;
   --os-terminal-bar: linear-gradient(90deg, #059669, #34d399);
+  --os-terminal-glow: 0 0 8px rgba(52, 211, 153, 0.22);
   --os-desktop-icon-text: rgba(255, 255, 255, 0.9);
   --os-desktop-icon-shadow: 0 1px 4px rgba(0,0,0,0.5);
   --os-window-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08), inset 0 1px 0 rgba(255,255,255,0.06);
@@ -301,6 +304,7 @@
   --os-terminal-muted: #9a9aa8;
   --os-terminal-scanline: transparent;
   --os-terminal-bar: linear-gradient(90deg, #1f7a4d, #2f9d63);
+  --os-terminal-glow: none;
   /* Dark icon labels on a bright wallpaper, lifted by a white halo. */
   --os-desktop-icon-text: #21232e;
   --os-desktop-icon-shadow: 0 1px 2px rgba(255,255,255,0.9);

@@ -1,6 +1,116 @@
 /* ============================
-   TERMINAL "THINKING" DOTS
+   TERMINAL
    ============================ */
+
+/*
+ * The shell fills the window body edge to edge. It used to sit inset in a
+ * beige frame with its own border — a screen inside a window inside a screen.
+ * `--os-terminal-glow` is a faint phosphor bloom on dark themes, `none` on
+ * the light one.
+ */
+.os-term {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--os-terminal-text);
+  background: var(--os-terminal-bg);
+  text-shadow: var(--os-terminal-glow);
+}
+
+.os-term-scroll {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 16px 18px;
+}
+
+/* --- welcome banner --- */
+
+.os-term-welcome {
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed var(--os-terminal-border);
+}
+
+.os-term-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0 8px;
+}
+
+/* One-click commands. Bracketed like a key, in the shell's own colours. */
+.os-term-chip {
+  padding: 1px 10px;
+  font: inherit;
+  font-size: 12px;
+  color: var(--os-terminal-accent);
+  background: transparent;
+  border: 1px solid var(--os-terminal-border);
+  border-radius: 3px;
+  cursor: pointer;
+  text-shadow: inherit;
+  transition:
+    background-color var(--os-dur-fast) var(--os-ease),
+    border-color var(--os-dur-fast) var(--os-ease);
+}
+.os-term-chip::before { content: '$ '; color: var(--os-terminal-muted); }
+.os-term-chip:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--os-terminal-accent) 14%, transparent);
+  border-color: var(--os-terminal-accent);
+}
+.os-term-chip:disabled { opacity: 0.5; cursor: default; }
+
+.os-term-tip { font-size: 11px; }
+
+/* --- command blocks --- */
+
+.os-term-block + .os-term-block { margin-top: 12px; }
+.os-term-block:last-child { margin-bottom: 12px; }
+
+/* Prompt, then what was typed (or the live input) on the same line. */
+.os-term-line {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.os-term-prompt { flex-shrink: 0; white-space: nowrap; }
+
+.os-term-echo {
+  min-width: 0;
+  font-weight: 600;
+  color: var(--os-terminal-plain);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.os-term-output {
+  margin-top: 2px;
+  white-space: pre-wrap;
+  user-select: text;
+}
+
+.os-term-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  font: inherit;
+  font-weight: 600;
+  color: var(--os-terminal-plain);
+  background: transparent;
+  border: none;
+  outline: none;
+  caret-color: var(--os-terminal-accent);
+  text-shadow: inherit;
+}
+
+/* --- "thinking" dots --- */
 
 /*
  * Previously an inline <style> block inside Terminal.jsx, which React

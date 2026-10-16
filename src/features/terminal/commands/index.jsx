@@ -239,10 +239,7 @@ export const unknownCommand = (input) => (
   </>
 )
 
-export const welcomeMessage = (
-  <Dim>
-    Type '<Cmd>help</Cmd>' to see available commands
-  </Dim>
-)
+/** Names advertised by `help`, for Tab completion and the welcome chips. */
+export const commandNames = listedCommands().map(([name]) => name)
 
 export default commands
