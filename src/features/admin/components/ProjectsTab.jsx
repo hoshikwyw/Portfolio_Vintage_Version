@@ -16,12 +16,12 @@ import ProjectForm from './ProjectForm'
  * screen-reader users no way to change the order.
  */
 const ProjectRow = ({
-  project, isSelected, isFirst, isLast, dragState,
+  project, isSelected, isFirst, isLast, dragState, isLocked,
   onEdit, onDelete, onMove, dragHandlers,
 }) => (
   <li
     className={`admin-row${isSelected ? ' is-selected' : ''}${dragState ? ` is-${dragState}` : ''}`}
-    draggable
+    draggable={!isLocked}
     {...dragHandlers}
   >
     <span className="admin-row-grip" aria-hidden="true"><GripVertical size={13} /></span>
@@ -49,7 +49,7 @@ const ProjectRow = ({
       <button
         type="button"
         onClick={() => onMove(-1)}
-        disabled={isFirst}
+        disabled={isFirst || isLocked}
         aria-label={`Move ${project.title} up`}
       >
         <ChevronUp size={12} aria-hidden="true" />
@@ -57,7 +57,7 @@ const ProjectRow = ({
       <button
         type="button"
         onClick={() => onMove(1)}
-        disabled={isLast}
+        disabled={isLast || isLocked}
         aria-label={`Move ${project.title} down`}
       >
         <ChevronDown size={12} aria-hidden="true" />
@@ -100,6 +100,13 @@ const ProjectsTab = ({ projects, tags, images, flash, flashError, onPreview }) =
   const [dragging, setDragging] = useState(null)
   const [dropTarget, setDropTarget] = useState(null)
   const listed = pendingOrder ?? projects
+  /*
+   * One reorder at a time. Mid-save, the listed rows still carry their old
+   * sort_order, so a second move would diff against stale numbers — skipping
+   * rows that need writing — and the first save's cleanup would reset the
+   * list under it. Moves wait until the save lands (a fraction of a second).
+   */
+  const isReordering = reorderProjects.isPending
 
   /** Persist `list` as the display order: position n becomes sort_order n. */
   const saveOrder = async (list) => {
@@ -123,6 +130,7 @@ const ProjectsTab = ({ projects, tags, images, flash, flashError, onPreview }) =
   }
 
   const move = (from, to) => {
+    if (isReordering) return
     if (to < 0 || to >= listed.length || from === to) return
     const list = [...listed]
     const [item] = list.splice(from, 1)
@@ -245,6 +253,7 @@ const ProjectsTab = ({ projects, tags, images, flash, flashError, onPreview }) =
                 isSelected={editId === project.id}
                 isFirst={index === 0}
                 isLast={index === listed.length - 1}
+                isLocked={isReordering}
                 dragState={dragging === index ? 'dragging' : dropTarget === index && dragging !== null ? 'drop-target' : null}
                 onEdit={() => startEditing(project)}
                 onDelete={() => handleDelete(project)}

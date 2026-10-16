@@ -16,16 +16,19 @@ Built with **React 19**, **Vite**, **Tailwind CSS v4**, **Framer Motion**, and
 
 | Window / Surface | What it does |
 |---|---|
-| **Boot Splash** | Animated OS startup sequence before the desktop mounts |
-| **Desktop** | Wallpaper, animated gradient orbs, desktop shortcuts, sticky note, quick actions |
-| **Windows** | Draggable + 8-direction resizable, minimize / fullscreen / close, cascading spawn, z-index focus |
-| **About** | Profile, contact, education & experience timeline, skill bars |
+| **Boot Splash** | Animated OS startup on a first visit; any key or click skips it, and returning visitors and deep links go straight to the desktop |
+| **Desktop** | Wallpaper, animated gradient orbs, desktop shortcuts, Resume / Hire Me quick actions, right-click menu |
+| **Helper bot** | A guide that suggests windows to explore and tracks progress; steps aside over fullscreen windows |
+| **Windows** | Drag, 8-direction resize, minimize / fullscreen / close; snap to screen halves or maximize at the top edge; double-click a title bar to maximize; Alt+` switches windows |
+| **About** | Profile card with contact, status pill, experience / education timelines, what I build, skills, tools, languages |
 | **Projects** | Responsive grid of project cards from Supabase — demo, source and case-study links |
 | **Gallery** | Masonry image grid with a lightbox (Esc to close, download, view project) |
-| **Terminal** | Fake CLI — `help`, `about`, `projects`, `skills`, `neofetch`, `whoami`, `cowsay`, and more |
+| **Terminal** | Shell with inline prompt, quick-command chips, ↑/↓ history, Tab completion — `help`, `about`, `projects`, `skills`, `tools`, `neofetch`, and more |
+| **Minesweeper** | Three difficulties, first click always safe, best times saved |
 | **Settings** | 3 chrome themes (+ follow-the-OS) and 6 wallpapers, persisted to `localStorage` |
-| **Taskbar** | Start menu, running-app buttons, live weather widget, real-time clock |
-| **Dashboard** | Supabase-auth-gated admin panel to manage projects and gallery images (follows the active theme like every other window) |
+| **Taskbar** | Start menu with search, running-app buttons, live weather widget, real-time clock |
+| **Dashboard** | Supabase-auth-gated admin: summary tiles, project list + editor with drag reorder, case-study preview, image uploads with cover picker, tags |
+| **Résumé** (`/resume`) | Printable one-page résumé generated from `profile.js`, with Save as PDF |
 
 ---
 
@@ -69,12 +72,12 @@ src/
 │   ├── services/weather.js
 │   └── components/
 │       ├── OSRoot, BootSplash
-│       ├── desktop/         #   Desktop, icons, context menu, sticky note…
+│       ├── desktop/         #   Desktop, icons, context menu, helper bot…
 │       ├── taskbar/         #   Taskbar, StartMenu, SystemTray
 │       └── window/          #   WindowLayer, WindowFrame (floating + fullscreen), chrome
 │
 ├── features/                # vertical slices — one per window
-│   ├── about/  projects/  gallery/  terminal/  settings/  minesweeper/  admin/  seo/
+│   ├── about/  projects/  gallery/  terminal/  settings/  minesweeper/  admin/  seo/  resume/
 │   └── …each with: api/ · hooks/ · components/ · <feature>.css · index.js (window entry)
 │
 ├── shared/                  # feature-agnostic building blocks
