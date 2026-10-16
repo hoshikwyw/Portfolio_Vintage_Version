@@ -5,6 +5,7 @@
   background: var(--os-bg);
   background-image: var(--os-bg-image);
   height: 100vh;
+  height: 100dvh; /* the visible area on phones, where 100vh runs under the browser toolbar */
   width: 100vw;
   position: fixed;
   top: 0;

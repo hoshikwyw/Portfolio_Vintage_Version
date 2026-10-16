@@ -1,16 +1,27 @@
 import { m, useDragControls, useMotionValue } from 'framer-motion'
-import { RESIZE_DIRECTIONS, Z_LAYERS } from '@/os/constants'
+import { RESIZE_DIRECTIONS, TASKBAR_HEIGHT, Z_LAYERS } from '@/os/constants'
 import { useResizable } from '@/os/hooks/useResizable'
 import { useWindowA11y } from '@/os/hooks/useWindowA11y'
 import { WindowBody, WindowTitleBar } from './WindowChrome'
 import { floatingWindowMotion, fullscreenWindowMotion } from './windowMotion'
 
-/** Style for a window filling the viewport. */
+/**
+ * A fullscreen window fills the desktop *above* the taskbar, like maximizing.
+ *
+ * It used to be a full `100vh`, but it lives in the window layer, which
+ * stacks below the taskbar — so the taskbar covered its bottom 42px, and the
+ * end of any scrolling content (the terminal's prompt, the last rows of a
+ * list) sat out of sight and out of reach.
+ *
+ * `dvh` rather than `vh`: on a phone, `100vh` counts the area under the
+ * browser's own toolbar, which would hide the bottom of the window there too.
+ */
 const FULLSCREEN_STYLE = {
   position: 'fixed',
-  inset: 0,
-  width: '100vw',
-  height: '100vh',
+  top: 0,
+  left: 0,
+  right: 0,
+  height: `calc(100dvh - ${TASKBAR_HEIGHT}px)`,
   zIndex: Z_LAYERS.fullscreenWindow,
   borderRadius: 0,
 }

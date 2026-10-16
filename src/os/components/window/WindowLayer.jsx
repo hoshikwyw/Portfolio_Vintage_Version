@@ -42,7 +42,8 @@ const WindowLayer = () => {
         top: 0,
         left: 0,
         width: '100vw',
-        height: `calc(100vh - ${TASKBAR_HEIGHT}px)`,
+        // dvh: the area a phone actually shows, excluding its browser toolbar.
+        height: `calc(100dvh - ${TASKBAR_HEIGHT}px)`,
         zIndex: Z_LAYERS.windowLayer,
         pointerEvents: 'none',
         overflow: 'hidden',
