@@ -30,7 +30,7 @@ export const Field = ({ label, as: As = 'input', className = '', ...props }) => 
       {label && <Label htmlFor={id}>{label}</Label>}
       <As
         id={id}
-        className={`w-full text-[11px] px-1.5 py-1 outline-none ${className}`}
+        className={`admin-input w-full text-[11px] px-1.5 py-1 outline-none ${className}`}
         style={adminStyles.input}
         {...props}
       />

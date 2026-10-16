@@ -73,7 +73,7 @@ const ImageLibrary = ({ projects, images, onDelete }) => {
 
   return (
     <Fieldset title={`All Images (${images.length})`}>
-      <div className="space-y-3 max-h-64 overflow-y-auto">
+      <div className="space-y-3">
         {withImages.map((project) => (
           <ProjectImages
             key={project.id}

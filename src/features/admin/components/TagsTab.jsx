@@ -58,7 +58,8 @@ const TagsTab = ({ tags, flash, flashError }) => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Tag name..."
-            className="flex-1 text-[11px] px-1.5 py-1 outline-none"
+            aria-label="New tag name"
+            className="admin-input flex-1 text-[11px] px-1.5 py-1 outline-none"
             style={{
               border: 'var(--os-input-border)',
               background: adminColors.field,

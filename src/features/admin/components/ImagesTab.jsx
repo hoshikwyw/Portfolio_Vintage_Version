@@ -98,8 +98,9 @@ const ImagesTab = ({ projects, images, flash, flashError }) => {
   }
 
   return (
-    <div className="space-y-3">
-      <Fieldset title="Upload Images">
+    // Upload beside the library on a wide window, above it on a narrow one.
+    <div className="admin-split admin-split-upload">
+      <Fieldset title="Upload images">
         <form onSubmit={handleUpload} className="space-y-3">
           <Field
             label="Project *"

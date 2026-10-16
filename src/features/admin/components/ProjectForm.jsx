@@ -26,14 +26,14 @@ const TagToggle = ({ tag, isSelected, onToggle }) => (
  * being set is what flips it from create to update mode.
  */
 const ProjectForm = ({
-  editId, values, onChange, tags, selectedTagIds, onToggleTag,
+  editId, editingTitle, values, onChange, tags, selectedTagIds, onToggleTag,
   onSubmit, onCancel, isSaving,
 }) => {
   const setField = (name) => (e) => onChange({ ...values, [name]: e.target.value })
   const tagsLabelId = useId()
 
   return (
-    <Fieldset title={editId ? 'Edit Project' : 'New Project'}>
+    <Fieldset title={editId ? `Editing · ${editingTitle ?? 'project'}` : 'New project'}>
       <form onSubmit={onSubmit} className="space-y-2">
         <div className="grid grid-cols-2 gap-2">
           <Field label="Title *" value={values.title} onChange={setField('title')} required />
@@ -127,8 +127,8 @@ const ProjectForm = ({
         </div>
 
         <div className="flex gap-2 pt-1">
-          <Button type="submit" disabled={isSaving} className="px-4 py-1 text-[10px]">
-            {editId ? 'Update' : 'Create'}
+          <Button type="submit" variant="primary" disabled={isSaving} className="px-4 py-1 text-[10px]">
+            {isSaving ? 'Saving…' : editId ? 'Save changes' : 'Create project'}
           </Button>
           {editId && (
             <Button type="button" onClick={onCancel} className="px-4 py-1 text-[10px]">
