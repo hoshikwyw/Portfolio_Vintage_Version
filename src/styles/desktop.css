@@ -176,6 +176,25 @@
   flex-direction: column;
   align-items: flex-end;
   gap: 16px;
+  transition: opacity var(--os-dur-base) var(--os-ease), visibility var(--os-dur-base);
+}
+
+/*
+ * The bot floats above windows so it stays reachable — which also put it on
+ * top of their content. It steps aside while a window is fullscreen, and on a
+ * phone whenever any window is open, since windows fill the screen there.
+ * It returns as soon as the desktop is visible again.
+ */
+.mainBackground:has(.os-window-layer[data-fullscreen]) .os-bot-dock {
+  opacity: 0;
+  visibility: hidden;
+}
+
+@media (max-width: 640px) {
+  .mainBackground:has(.os-window-layer[data-has-windows]) .os-bot-dock {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 .os-bot-ball {

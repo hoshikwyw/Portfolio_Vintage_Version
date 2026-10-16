@@ -73,3 +73,16 @@ export const setProjectTags = async (projectId, tagIds) => {
       .insert(tagIds.map((tagId) => ({ project_id: projectId, tag_id: tagId }))),
   )
 }
+
+/**
+ * Persist a new display order. Each `{ id, sort_order }` is written on its
+ * own and touches only that column — `updateProject` normalizes the whole
+ * field set, and handed just a sort order it would null the year.
+ */
+export const setProjectOrder = async (orders) => {
+  await Promise.all(
+    orders.map(async ({ id, sort_order: sortOrder }) => {
+      unwrap(await supabase.from('projects').update({ sort_order: sortOrder }).eq('id', id))
+    }),
+  )
+}

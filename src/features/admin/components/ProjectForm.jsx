@@ -1,4 +1,5 @@
 import { useId } from 'react'
+import { Eye } from 'lucide-react'
 import { adminColors } from '@/features/admin/theme'
 import { Button, Checkbox, Field, Fieldset, Label } from './ui'
 
@@ -27,7 +28,7 @@ const TagToggle = ({ tag, isSelected, onToggle }) => (
  */
 const ProjectForm = ({
   editId, editingTitle, values, onChange, tags, selectedTagIds, onToggleTag,
-  onSubmit, onCancel, isSaving,
+  onSubmit, onCancel, isSaving, onPreview, canPreview,
 }) => {
   const setField = (name) => (e) => onChange({ ...values, [name]: e.target.value })
   const tagsLabelId = useId()
@@ -135,6 +136,17 @@ const ProjectForm = ({
               Cancel
             </Button>
           )}
+          {/* Shows the case study exactly as visitors will, before it is saved. */}
+          <Button
+            type="button"
+            onClick={onPreview}
+            disabled={!canPreview}
+            title={canPreview ? 'Preview the case study' : 'Write a role, problem or outcome to preview'}
+            className="flex items-center gap-1.5 px-4 py-1 text-[10px] ml-auto"
+          >
+            <Eye size={12} aria-hidden="true" />
+            Preview case study
+          </Button>
         </div>
       </form>
     </Fieldset>

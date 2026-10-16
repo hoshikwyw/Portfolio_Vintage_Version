@@ -60,3 +60,12 @@ export const deleteProjectImage = async (image) => {
 
   unwrap(await supabase.from('project_images').delete().eq('id', image.id))
 }
+
+/**
+ * Make one image its project's cover. The others are cleared first, so a
+ * project never ends up with two covers competing for the card.
+ */
+export const setCoverImage = async ({ projectId, imageId }) => {
+  unwrap(await supabase.from('project_images').update({ is_cover: false }).eq('project_id', projectId))
+  unwrap(await supabase.from('project_images').update({ is_cover: true }).eq('id', imageId))
+}

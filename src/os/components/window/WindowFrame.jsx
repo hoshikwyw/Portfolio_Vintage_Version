@@ -1,9 +1,11 @@
+import { useRef } from 'react'
 import { m, useDragControls, useMotionValue } from 'framer-motion'
 import { RESIZE_DIRECTIONS, TASKBAR_HEIGHT, Z_LAYERS } from '@/os/constants'
 import { useResizable } from '@/os/hooks/useResizable'
 import { useWindowA11y } from '@/os/hooks/useWindowA11y'
 import { WindowBody, WindowTitleBar } from './WindowChrome'
 import { floatingWindowMotion, fullscreenWindowMotion } from './windowMotion'
+import { snapZoneAt } from './snap'
 
 /**
  * A fullscreen window fills the desktop *above* the taskbar, like maximizing.
@@ -40,16 +42,22 @@ const FULLSCREEN_STYLE = {
  * and reset to zero on drop — otherwise the re-render would double-count the
  * movement. Fullscreen, it fills the viewport with no drag and no handles,
  * and its floating geometry is kept for when it is restored.
+ *
+ * Dragged to a screen edge, a floating window snaps: left or right half, or
+ * fullscreen at the top. The zone is reported to the layer while dragging
+ * (`onSnapPreview`), which draws the preview — it cannot live in this frame,
+ * whose drag transform would carry the preview along with the window.
  */
 const WindowFrame = ({
   id, index, geometry, viewport, isFocused, isFullscreen,
-  onFocus, onClose, onFullscreen, onMinimize, onGeometryChange,
+  onFocus, onClose, onFullscreen, onMinimize, onGeometryChange, onSnapPreview, onSnap,
 }) => {
   const frameProps = useWindowA11y({ id, onClose, onFocus })
   const dragControls = useDragControls()
   const dragX = useMotionValue(0)
   const dragY = useMotionValue(0)
   const { x, y, width, height } = geometry
+  const snapZone = useRef(null)
 
   const focus = () => onFocus(id)
 
@@ -60,7 +68,24 @@ const WindowFrame = ({
     onResize: (next) => onGeometryChange(id, next),
   })
 
+  const handleDrag = (_event, info) => {
+    const zone = snapZoneAt(info.point, viewport)
+    if (zone === snapZone.current) return
+    snapZone.current = zone
+    onSnapPreview?.(zone)
+  }
+
   const handleDragEnd = () => {
+    const zone = snapZone.current
+    snapZone.current = null
+    onSnapPreview?.(null)
+    if (zone) {
+      dragX.jump(0)
+      dragY.jump(0)
+      onSnap?.(id, zone)
+      return
+    }
+
     const nextX = Math.max(0, Math.min(x + dragX.get(), viewport.width - width))
     const nextY = Math.max(0, Math.min(y + dragY.get(), viewport.height - height))
     dragX.jump(0)
@@ -93,6 +118,7 @@ const WindowFrame = ({
       dragMomentum={false}
       dragElastic={0}
       onDragStart={focus}
+      onDrag={handleDrag}
       onDragEnd={handleDragEnd}
       onClick={focus}
       style={{

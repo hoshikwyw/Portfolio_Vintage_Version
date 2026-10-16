@@ -8,6 +8,13 @@
  * the screen size. Content stops at ~1100px so fields never stretch a whole
  * fullscreen monitor wide.
  */
+/* Does not scroll, so the case-study preview can cover the visible area. */
+.admin-shell {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+}
+
 .admin-root {
   container-type: inline-size;
   height: 100%;
@@ -138,6 +145,12 @@
   margin-bottom: 8px;
 }
 
+.admin-pane-hint {
+  flex: 1;
+  font-size: 9.5px;
+  color: var(--os-text-secondary);
+}
+
 .admin-pane-title {
   font-size: 10px;
   font-weight: 700;
@@ -169,6 +182,38 @@
   border-color: var(--os-accent);
   box-shadow: inset 3px 0 0 var(--os-accent);
 }
+
+/* Reordering: the row being dragged fades, the row it would land on is marked. */
+.admin-row { cursor: grab; }
+.admin-row.is-dragging { opacity: 0.45; }
+.admin-row.is-drop-target { border-color: var(--os-accent); box-shadow: inset 0 2px 0 var(--os-accent); }
+
+.admin-row-grip {
+  display: grid;
+  place-items: center;
+  padding-left: 4px;
+  color: var(--os-text-muted);
+}
+
+/* ▲/▼ — the keyboard way to reorder. */
+.admin-row-move {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 1px solid var(--os-border-dark);
+}
+.admin-row-move button {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  flex: 1;
+  color: var(--os-text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.admin-row-move button:hover:not(:disabled) { color: var(--os-accent); background: var(--os-panel-bg); }
+.admin-row-move button:disabled { opacity: 0.3; cursor: default; }
 
 .admin-row-main {
   flex: 1;
@@ -236,16 +281,34 @@
 }
 
 /*
- * Hover wash over an image thumbnail whose delete button is showing. Was a
- * Tailwind `bg-[#8a3030]/60`, which cannot take a custom property for its
- * colour — hence the class and the pre-mixed `--os-danger-scrim` token.
+ * Image thumbnail actions: hidden until the thumbnail is hovered or one of its
+ * buttons has keyboard focus. The wash is neutral now that it reveals "Set
+ * cover" as well as Delete — red would have made both look destructive.
  */
-.admin-delete-overlay {
+.admin-thumb-overlay {
   background: transparent;
   transition: background-color var(--os-dur-fast) var(--os-ease);
 }
-.group:hover .admin-delete-overlay {
-  background: var(--os-danger-scrim);
+.group:hover .admin-thumb-overlay,
+.admin-thumb-overlay:focus-within {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.admin-thumb-action {
+  padding: 1px 8px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fff;
+  border: 1px solid;
+  border-radius: var(--os-btn-radius);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--os-dur-fast) var(--os-ease);
+}
+.group:hover .admin-thumb-action,
+.admin-thumb-overlay:focus-within .admin-thumb-action {
+  opacity: 1;
 }
 
 /*
@@ -269,4 +332,23 @@
    * movement loses nothing.
    */
   .animate-shake { animation: none; }
+}
+
+/* Labels a case study opened from the editor as a preview, not the live page. */
+.admin-preview-badge {
+  position: absolute;
+  z-index: 1300;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 3px 12px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--os-accent);
+  border-radius: 999px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
 }

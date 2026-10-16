@@ -115,3 +115,22 @@ export const useDeleteImage = () => {
     onSuccess: () => invalidate([ADMIN_KEYS.images]),
   })
 }
+
+/** Save a new project order, given the ids that changed and their new positions. */
+export const useReorderProjects = () => {
+  const invalidate = useInvalidateAfterEdit()
+
+  return useMutation({
+    mutationFn: projectsApi.setProjectOrder,
+    onSuccess: () => invalidate([ADMIN_KEYS.projects]),
+  })
+}
+
+export const useSetCoverImage = () => {
+  const invalidate = useInvalidateAfterEdit()
+
+  return useMutation({
+    mutationFn: imagesApi.setCoverImage,
+    onSuccess: () => invalidate([ADMIN_KEYS.images]),
+  })
+}

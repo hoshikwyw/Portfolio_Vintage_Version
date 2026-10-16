@@ -2,9 +2,10 @@ import { useRef } from 'react'
 import { X } from 'lucide-react'
 import { useRestoreFocus } from '@/shared/hooks/useRestoreFocus'
 import { caseStudyRows } from '../caseStudy'
+import './caseStudy.css'
 
 /**
- * Full case study for one project, laid over the carousel.
+ * Full case study for one project, laid over the showcase grid.
  *
  * Covers the window rather than opening a separate one: the reader is already
  * looking at the project, and pushing them into new window chrome to read two

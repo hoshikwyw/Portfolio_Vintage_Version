@@ -36,7 +36,6 @@
   /* Backdrop behind modal dialogs. */
   --os-scrim: rgba(0,0,0,0.4);
   /* Wash over a thumbnail whose delete action is hovered. */
-  --os-danger-scrim: rgba(138,48,48,0.6);
   /*
    * Inline notices (the admin banners, login errors). Each tone needs its own
    * fill, edge and text so it stays legible on a light *and* a dark panel.
@@ -163,7 +162,6 @@
   --os-success: #34d399;
   --os-warning: #fbbf24;
   --os-scrim: rgba(0,0,0,0.5);
-  --os-danger-scrim: rgba(248,113,113,0.55);
   --os-notice-ok-bg: rgba(52,211,153,0.14);
   --os-notice-ok-border: rgba(52,211,153,0.35);
   --os-notice-ok-text: #6ee7b7;
@@ -264,7 +262,6 @@
   --os-success: #1f7a4d;
   --os-warning: #8a6a1f;
   --os-scrim: rgba(40,44,70,0.35);
-  --os-danger-scrim: rgba(163,43,43,0.6);
   --os-notice-ok-bg: #e4f4e8;
   --os-notice-ok-border: #9cc9a8;
   --os-notice-ok-text: #1c5c33;

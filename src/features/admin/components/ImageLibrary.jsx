@@ -8,7 +8,12 @@ const Badge = ({ background, children }) => (
   </span>
 )
 
-const ImageThumb = ({ image, onDelete }) => (
+/**
+ * One uploaded image, with its actions revealed on hover — and on keyboard
+ * focus, which the hover-only reveal used to miss, leaving tabbed-to buttons
+ * invisible.
+ */
+const ImageThumb = ({ image, projectTitle, onDelete, onSetCover }) => (
   <div className="relative group flex-shrink-0" style={{ width: 90, height: 68 }}>
     <img
       src={image.image_url}
@@ -25,11 +30,24 @@ const ImageThumb = ({ image, onDelete }) => (
       {image.is_cover && <Badge background={adminColors.accent}>Cover</Badge>}
       {image.show_in_gallery && <Badge background={adminColors.success}>Gallery</Badge>}
     </div>
-    <div className="admin-delete-overlay absolute inset-0 flex items-center justify-center rounded-sm">
+    <div className="admin-thumb-overlay absolute inset-0 flex flex-col items-center justify-center gap-1 rounded-sm">
+      {!image.is_cover && (
+        <button
+          type="button"
+          onClick={onSetCover}
+          className="admin-thumb-action"
+          style={{ background: 'var(--os-accent)', borderColor: 'var(--os-accent)' }}
+          aria-label={`Make this the cover for ${projectTitle}`}
+        >
+          Set cover
+        </button>
+      )}
       <button
+        type="button"
         onClick={onDelete}
-        className="opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer px-2 py-0.5 text-[9px] font-bold text-white uppercase"
-        style={{ background: 'var(--os-danger)', border: '1px solid var(--os-danger)', borderRadius: 'var(--os-btn-radius)' }}
+        className="admin-thumb-action"
+        style={{ background: 'var(--os-danger)', borderColor: 'var(--os-danger)' }}
+        aria-label={`Delete this image from ${projectTitle}`}
       >
         Delete
       </button>
@@ -46,7 +64,7 @@ const EmptySlot = () => (
   </div>
 )
 
-const ProjectImages = ({ project, images, onDelete }) => (
+const ProjectImages = ({ project, images, onDelete, onSetCover }) => (
   <div className="px-2 py-2" style={{ background: adminColors.window, border: `1px solid ${adminColors.borderField}`, borderRadius: 'var(--os-btn-radius)' }}>
     <div className="flex items-center justify-between mb-2">
       <span className="text-[10px] font-bold uppercase tracking-wide" style={{ color: adminColors.text }}>
@@ -58,7 +76,13 @@ const ProjectImages = ({ project, images, onDelete }) => (
     </div>
     <div className="flex gap-2">
       {images.map((image) => (
-        <ImageThumb key={image.id} image={image} onDelete={() => onDelete(image)} />
+        <ImageThumb
+          key={image.id}
+          image={image}
+          projectTitle={project.title}
+          onDelete={() => onDelete(image)}
+          onSetCover={() => onSetCover(image)}
+        />
       ))}
       {Array.from({ length: Math.max(0, MAX_IMAGES_PER_PROJECT - images.length) }).map((_, i) => (
         <EmptySlot key={`empty-${i}`} />
@@ -68,7 +92,7 @@ const ProjectImages = ({ project, images, onDelete }) => (
 )
 
 /** All uploaded images, grouped under the project they belong to. */
-const ImageLibrary = ({ projects, images, onDelete }) => {
+const ImageLibrary = ({ projects, images, onDelete, onSetCover }) => {
   const withImages = projects.filter((project) => images.some((image) => image.project_id === project.id))
 
   return (
@@ -80,6 +104,7 @@ const ImageLibrary = ({ projects, images, onDelete }) => {
             project={project}
             images={images.filter((image) => image.project_id === project.id)}
             onDelete={onDelete}
+            onSetCover={onSetCover}
           />
         ))}
         {!images.length && <EmptyState>No images yet. Select a project and upload above.</EmptyState>}

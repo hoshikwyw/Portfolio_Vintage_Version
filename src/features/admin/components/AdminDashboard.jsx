@@ -3,6 +3,7 @@ import { LogOut } from 'lucide-react'
 import StatusMessage from '@/shared/components/feedback/StatusMessage'
 import WindowSkeleton from '@/shared/components/feedback/WindowSkeleton'
 import { hasCaseStudy } from '@/features/projects/caseStudy'
+import CaseStudyPanel from '@/features/projects/components/CaseStudyPanel'
 import { useAdminImages, useAdminProjects, useAdminTags } from '@/features/admin/hooks/useAdminData'
 import { useFlash } from '@/features/admin/hooks/useFlash'
 import { Banner, Button, Tab } from './ui'
@@ -70,6 +71,8 @@ const AdminDashboard = ({ onLogout, userEmail }) => {
   const [activeTab, setActiveTab] = useState(TABS[0].key)
   const { message, flash, flashError } = useFlash()
   const baseId = useId()
+  // A case study being previewed from the editor, laid over the dashboard.
+  const [preview, setPreview] = useState(null)
   const tabRefs = useRef({})
 
   const projectsQuery = useAdminProjects()
@@ -98,47 +101,60 @@ const AdminDashboard = ({ onLogout, userEmail }) => {
   }
 
   return (
-    <div className="admin-root">
-      <div className="admin-page">
-        <AdminHeader email={userEmail} onLogout={onLogout} />
+    // The shell does not scroll, so the preview can cover what is on screen
+    // however far the dashboard has been scrolled.
+    <div className="admin-shell">
+      <div className="admin-root" inert={preview ? true : undefined}>
+        <div className="admin-page">
+          <AdminHeader email={userEmail} onLogout={onLogout} />
 
-        {!isLoading && !error && <Stats {...data} />}
+          {!isLoading && !error && <Stats {...data} />}
 
-        <Banner message={message} />
+          <Banner message={message} />
 
-        <div className="flex gap-0.5" role="tablist" aria-label="Content" onKeyDown={handleTabKeys}>
-          {TABS.map((tab) => {
-            const isActive = activeTab === tab.key
-            return (
-              <Tab
-                key={tab.key}
-                ref={(el) => { tabRefs.current[tab.key] = el }}
-                role="tab"
-                id={`${baseId}-tab-${tab.key}`}
-                aria-selected={isActive}
-                aria-controls={`${baseId}-panel`}
-                tabIndex={isActive ? 0 : -1}
-                active={isActive}
-                onClick={() => setActiveTab(tab.key)}
-              >
-                {tab.label}
-                {!isLoading && <span className="admin-tab-count">{data[tab.key].length}</span>}
-              </Tab>
-            )
-          })}
-        </div>
+          <div className="flex gap-0.5" role="tablist" aria-label="Content" onKeyDown={handleTabKeys}>
+            {TABS.map((tab) => {
+              const isActive = activeTab === tab.key
+              return (
+                <Tab
+                  key={tab.key}
+                  ref={(el) => { tabRefs.current[tab.key] = el }}
+                  role="tab"
+                  id={`${baseId}-tab-${tab.key}`}
+                  aria-selected={isActive}
+                  aria-controls={`${baseId}-panel`}
+                  tabIndex={isActive ? 0 : -1}
+                  active={isActive}
+                  onClick={() => setActiveTab(tab.key)}
+                >
+                  {tab.label}
+                  {!isLoading && <span className="admin-tab-count">{data[tab.key].length}</span>}
+                </Tab>
+              )
+            })}
+          </div>
 
-        <div
-          className="admin-tabpanel os-raised"
-          role="tabpanel"
-          id={`${baseId}-panel`}
-          aria-labelledby={`${baseId}-tab-${activeTab}`}
-        >
-          {isLoading && <WindowSkeleton label="Loading dashboard" />}
-          {!isLoading && error && <StatusMessage tone="error">{error.message}</StatusMessage>}
-          {!isLoading && !error && <Panel {...data} flash={flash} flashError={flashError} />}
+          <div
+            className="admin-tabpanel os-raised"
+            role="tabpanel"
+            id={`${baseId}-panel`}
+            aria-labelledby={`${baseId}-tab-${activeTab}`}
+          >
+            {isLoading && <WindowSkeleton label="Loading dashboard" />}
+            {!isLoading && error && <StatusMessage tone="error">{error.message}</StatusMessage>}
+            {!isLoading && !error && (
+              <Panel {...data} flash={flash} flashError={flashError} onPreview={setPreview} />
+            )}
+          </div>
         </div>
       </div>
+
+      {preview && (
+        <>
+          <CaseStudyPanel project={preview} onClose={() => setPreview(null)} />
+          <p className="admin-preview-badge" aria-hidden="true">Preview · not saved</p>
+        </>
+      )}
     </div>
   )
 }

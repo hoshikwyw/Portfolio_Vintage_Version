@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { adminColors } from '@/features/admin/theme'
 import { MAX_IMAGES_PER_PROJECT } from '@/features/admin/constants'
-import { useDeleteImage, useUploadImages } from '@/features/admin/hooks/useAdminData'
+import { useDeleteImage, useSetCoverImage, useUploadImages } from '@/features/admin/hooks/useAdminData'
 import { Button, Checkbox, Field, Fieldset } from './ui'
 import ImageDropzone from './ImageDropzone'
 import ImageLibrary from './ImageLibrary'
@@ -44,6 +44,7 @@ const ImagesTab = ({ projects, images, flash, flashError }) => {
 
   const uploadImages = useUploadImages()
   const deleteImage = useDeleteImage()
+  const setCover = useSetCoverImage()
 
   const countFor = (id) => images.filter((image) => image.project_id === Number(id)).length
   const selectedCount = projectId ? countFor(projectId) : 0
@@ -82,6 +83,15 @@ const ImagesTab = ({ projects, images, flash, flashError }) => {
       })
       flash(`${uploaded} image(s) uploaded!`)
       resetForm()
+    } catch (error) {
+      flashError(error)
+    }
+  }
+
+  const handleSetCover = async (image) => {
+    try {
+      await setCover.mutateAsync({ projectId: image.project_id, imageId: image.id })
+      flash('Cover updated.')
     } catch (error) {
       flashError(error)
     }
@@ -149,7 +159,7 @@ const ImagesTab = ({ projects, images, flash, flashError }) => {
         </form>
       </Fieldset>
 
-      <ImageLibrary projects={projects} images={images} onDelete={handleDelete} />
+      <ImageLibrary projects={projects} images={images} onDelete={handleDelete} onSetCover={handleSetCover} />
     </div>
   )
 }

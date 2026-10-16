@@ -62,6 +62,7 @@ export const windowHints = [
 export const idleHints = [
   { text: "That is everything opened. Try right-clicking the desktop — there is a menu hiding there." },
   { text: 'Windows drag by their title bar and resize from any edge or corner. Escape closes the focused one.' },
+  { text: 'Drag a window to the left or right edge to fill half the screen, or to the top to maximize. Double-clicking a title bar does the same, and Alt+` switches windows.' },
   { text: 'Learning AI Engineering on weekends.' },
   { text: 'Studying Computer Science at the University of the People, and learning Python alongside it.' },
   { text: 'Much of this OS was built with Claude as a pair programmer.' },

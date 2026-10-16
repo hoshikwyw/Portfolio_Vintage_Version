@@ -38,6 +38,10 @@ export const WindowTitleBar = ({ id, onDragStart, onMinimize, onFullscreen, onCl
       // Let the control buttons handle their own clicks.
       if (onDragStart && !e.target.closest('button')) onDragStart(e)
     }}
+    // Double-clicking a title bar maximizes or restores, as on a desktop OS.
+    onDoubleClick={(e) => {
+      if (!e.target.closest('button')) onFullscreen(id)
+    }}
   >
     <div className="windowTitle" id={windowTitleId(id)}>
       <WindowIcon id={id} />
