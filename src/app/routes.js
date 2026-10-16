@@ -6,6 +6,7 @@
  */
 export const ROUTES = {
   desktop: '/',
+  resume: '/resume',
   window: '/window/:appId',
   windowFor: (appId) => `/window/${appId}`,
 }

@@ -26,19 +26,26 @@ export const downloadFile = (url, filename) => {
   document.body.removeChild(link)
 }
 
-/** Trigger a download of the résumé PDF from /public. */
-export const downloadResume = () =>
-  downloadFile(profile.resume, profile.resume.replace(/^\//, ''))
+/**
+ * Open the résumé in a new tab. It is a page generated from `profile`
+ * (`/resume`), not a static PDF, so it can never fall out of step with the
+ * site — the page offers its own "Save as PDF".
+ */
+export const openResume = () => window.open(profile.resume, '_blank', 'noopener')
 
-/** Open a pre-filled Gmail compose window addressed to Kayv. */
+/**
+ * Start an email to Kayv in the visitor's own mail app.
+ *
+ * A `mailto:` link rather than Gmail's web composer: that sent anyone not
+ * signed in to Gmail — Outlook users, recruiters on a work account, phones
+ * with another mail app — to a Google login page instead of an email.
+ */
 export const openHireEmail = ({
   subject = `Hire Request - ${profile.role}`,
   body = `Hello ${profile.name},\n\nI am interested in discussing a potential opportunity.\n\nBest regards,`,
 } = {}) => {
-  const url =
-    `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(profile.email)}` +
-    `&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-  window.open(url, '_blank', 'noopener')
+  window.location.href =
+    `mailto:${profile.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 }
 
 /** Open a Google search for the given query in a new tab. */

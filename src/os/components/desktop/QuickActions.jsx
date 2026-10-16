@@ -1,6 +1,6 @@
 import { Mail, Download } from 'lucide-react'
 import { Z_LAYERS } from '@/os/constants'
-import { downloadResume, openHireEmail } from '@/shared/lib/browser'
+import { openHireEmail, openResume } from '@/shared/lib/browser'
 
 /**
  * Floating résumé + hire shortcuts.
@@ -13,7 +13,7 @@ import { downloadResume, openHireEmail } from '@/shared/lib/browser'
  */
 const QuickActions = () => (
   <div className="absolute top-5 right-5 flex flex-col items-end gap-1.5" style={{ zIndex: Z_LAYERS.desktopItem }}>
-    <button onClick={downloadResume} className="quick-action-btn group" title="Download Resume">
+    <button onClick={openResume} className="quick-action-btn group" title="View Resume">
       <Download size={14} className="flex-shrink-0" />
       <span>Resume</span>
     </button>

@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { m } from 'framer-motion'
-import { Mail, Download, Search } from 'lucide-react'
+import { FileText, Mail, Search } from 'lucide-react'
 import { useOSActions } from '@/os/hooks/useOS'
 import { startMenuApps } from '@/os/config/apps'
 import { Z_LAYERS } from '@/os/constants'
 import { profile } from '@/shared/config/profile'
-import { downloadResume, openHireEmail, openGoogleSearch } from '@/shared/lib/browser'
+import { openGoogleSearch, openHireEmail, openResume } from '@/shared/lib/browser'
 import { useOutsideClick } from '@/shared/hooks/useOutsideClick'
 import AppIcon from '@/shared/components/icons/AppIcon'
 import { preloadWindow } from '@/os/registry/windowImports'
@@ -72,8 +72,8 @@ const StartMenu = ({ onClose }) => {
   const handleSearch = andClose((e) => { e.preventDefault(); openGoogleSearch(query); setQuery('') })
 
   const actions = [
-    { label: 'Download Resume', icon: <Download size={14} />, onClick: andClose(downloadResume) },
-    { label: 'Hire Me', icon: <Mail size={14} />, onClick: andClose(() => openHireEmail({ subject: 'Hire Request' })) },
+    { label: 'View Resume', icon: <FileText size={14} />, onClick: andClose(openResume) },
+    { label: 'Hire Me', icon: <Mail size={14} />, onClick: andClose(() => openHireEmail()) },
   ]
 
   return (

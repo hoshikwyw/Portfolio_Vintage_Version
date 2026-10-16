@@ -62,9 +62,16 @@ const BootSplash = ({ onFinish = () => {} }) => {
 
     // The finish timer too: unmounting in that last 600ms (StrictMode's
     // double-mount, or a route change) must not fire `onFinish` afterwards.
+    // Any key or click skips straight to the desktop.
+    const skip = () => onFinish()
+    window.addEventListener('keydown', skip)
+    window.addEventListener('pointerdown', skip)
+
     return () => {
       clearInterval(timer)
       clearTimeout(finishTimer)
+      window.removeEventListener('keydown', skip)
+      window.removeEventListener('pointerdown', skip)
     }
   }, [onFinish])
 
@@ -110,7 +117,10 @@ const BootSplash = ({ onFinish = () => {} }) => {
         </div>
 
         {/* Footer */}
-        <p className="text-center text-[9px] opacity-40 mt-4">(c) {new Date().getFullYear()} Kayv Development — All rights reserved</p>
+        <p className="text-center text-[10px]" style={{ color: 'var(--os-terminal-prompt)' }}>
+          Press any key or click to skip
+        </p>
+        <p className="text-center text-[9px] opacity-40">(c) {new Date().getFullYear()} Kayv Development — All rights reserved</p>
       </div>
     </div>
   )

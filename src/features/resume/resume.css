@@ -1,0 +1,148 @@
+/* ============================
+   RÉSUMÉ PAGE
+   ============================ */
+
+/*
+ * A sheet of paper on a neutral desk, in fixed colours rather than the OS
+ * theme tokens: this page is printed and read by applicant systems, so it
+ * looks the same whatever theme the visitor last picked.
+ */
+.resume-root {
+  min-height: 100vh;
+  padding: 24px 16px 48px;
+  background: #e9e7e1;
+  color: #1f2128;
+  overflow-y: auto;
+  position: fixed;
+  inset: 0;
+}
+
+.resume-toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  max-width: 794px;
+  margin: 0 auto 14px;
+}
+
+.resume-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1f2128;
+  text-decoration: none;
+  background: #fff;
+  border: 1px solid #c9c6bc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.resume-btn:hover { background: #f4f2ec; }
+.resume-btn-primary { color: #fff; background: #4a3aad; border-color: #4a3aad; }
+.resume-btn-primary:hover { background: #3d2f94; }
+
+/* A4 proportions on screen, so what you see is what prints. */
+.resume-sheet {
+  max-width: 794px;
+  margin: 0 auto;
+  padding: 48px 56px;
+  background: #fff;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+.resume-header {
+  padding-bottom: 14px;
+  margin-bottom: 18px;
+  border-bottom: 2px solid #4a3aad;
+}
+
+.resume-name {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+}
+
+.resume-role {
+  margin-top: 2px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #4a3aad;
+}
+
+.resume-contact { margin-top: 6px; font-size: 12px; color: #4b4e5a; }
+.resume-contact a { color: inherit; text-decoration: none; }
+.resume-contact a:hover { text-decoration: underline; }
+
+.resume-availability {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 2px 8px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #1f6b44;
+  border: 1px solid #1f6b44;
+  border-radius: 999px;
+}
+
+.resume-section { margin-bottom: 16px; break-inside: avoid; }
+
+.resume-heading {
+  margin-bottom: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #4a3aad;
+}
+
+.resume-summary { max-width: 64ch; }
+
+.resume-entries,
+.resume-pairs { margin: 0; padding: 0; list-style: none; }
+
+.resume-entries li { display: flex; flex-direction: column; }
+.resume-entries li + li { margin-top: 7px; }
+.resume-entry-title { font-weight: 700; }
+.resume-entry-detail { color: #4b4e5a; }
+
+.resume-pairs li + li { margin-top: 3px; }
+
+.resume-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  column-gap: 32px;
+}
+
+@media (max-width: 600px) {
+  .resume-sheet { padding: 28px 22px; }
+}
+
+/*
+ * Print: just the sheet, edge to edge on A4. No toolbar, no shadow, no desk,
+ * and links print as plain text.
+ */
+@page { size: A4; margin: 14mm; }
+
+@media print {
+  /* The page behind the sheet carries the desktop's theme colour (base.css);
+     with "background graphics" on, it printed as a grey block under the CV. */
+  html, body { background: #fff !important; }
+  .resume-toolbar { display: none; }
+  .resume-root { position: static; padding: 0; background: #fff; min-height: 0; overflow: visible; }
+  .resume-sheet { max-width: none; padding: 0; box-shadow: none; }
+  .resume-contact a { color: inherit; }
+  /*
+   * Wide tracking reads well on screen but splits words when a PDF is parsed:
+   * applicant-tracking systems extracted "PROFILE" as "PROF I L E". Tight
+   * tracking in print keeps every heading a searchable word.
+   */
+  .resume-heading,
+  .resume-availability { letter-spacing: 0.02em; }
+}

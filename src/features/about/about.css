@@ -238,3 +238,22 @@
 @media (prefers-reduced-motion: reduce) {
   .os-status-dot { animation: none; }
 }
+
+/* Email row: the link, then a copy button for visitors without a mail app. */
+.os-contact-line { display: flex; align-items: center; gap: 4px; min-width: 0; }
+.os-contact-line .os-contact-row { flex: 1; }
+
+.os-contact-copy {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  color: var(--os-text-secondary);
+  background: none;
+  border: 1px solid transparent;
+  border-radius: var(--os-btn-radius);
+  cursor: pointer;
+  transition: color var(--os-dur-fast) var(--os-ease), border-color var(--os-dur-fast) var(--os-ease);
+}
+.os-contact-copy:hover { color: var(--os-accent); border-color: var(--os-border-dark); }

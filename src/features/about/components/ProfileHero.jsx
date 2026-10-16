@@ -1,6 +1,6 @@
 import { Download, Mail, MapPin } from 'lucide-react'
 import { profile } from '@/shared/config/profile'
-import { downloadResume, openHireEmail } from '@/shared/lib/browser'
+import { openHireEmail, openResume } from '@/shared/lib/browser'
 import ContactCard from './ContactCard'
 
 /**
@@ -83,13 +83,13 @@ const ProfileHero = () => (
           <button
             type="button"
             className="quick-action-btn quick-action-primary"
-            onClick={() => openHireEmail({ subject: 'Hire Request' })}
+            onClick={() => openHireEmail()}
           >
             <Mail size={12} aria-hidden="true" />
             Hire Me
           </button>
 
-          <button type="button" className="quick-action-btn" onClick={downloadResume}>
+          <button type="button" className="quick-action-btn" onClick={openResume}>
             <Download size={12} aria-hidden="true" />
             Resume
           </button>

@@ -16,7 +16,8 @@ export const profile = {
   phone: '+959795847089',
 
   avatar: '/myPf.png',
-  resume: '/KhaingWutYiWinResume.pdf',
+  /** The generated résumé page (`features/resume`), built from this file. */
+  resume: '/resume',
   github: 'https://github.com/hoshikwyw',
 
   about:
