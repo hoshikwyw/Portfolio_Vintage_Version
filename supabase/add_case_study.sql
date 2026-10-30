@@ -22,8 +22,13 @@ ALTER TABLE projects
   ADD COLUMN IF NOT EXISTS outcome TEXT;
 
 -- The app reads the view, never the table, so it has to be republished to
--- expose the new columns. CREATE OR REPLACE keeps existing grants intact.
-CREATE OR REPLACE VIEW projects_with_details AS
+-- expose the new columns. It is dropped and recreated rather than replaced:
+-- CREATE OR REPLACE can only append columns, so it fails whenever the existing
+-- view's column order differs ("cannot change name of view column"). Dropping
+-- loses the view's grants, so they are restored below.
+DROP VIEW IF EXISTS projects_with_details;
+
+CREATE VIEW projects_with_details AS
 SELECT
   p.id,
   p.title,
@@ -33,10 +38,6 @@ SELECT
   p.status,
   p.sort_order,
   p.created_at,
-  p.year,
-  p.role,
-  p.problem,
-  p.outcome,
   -- Aggregate tags into an array
   COALESCE(
     ARRAY_AGG(DISTINCT t.name) FILTER (WHERE t.name IS NOT NULL),
@@ -48,9 +49,16 @@ SELECT
     WHERE pi.project_id = p.id
     ORDER BY pi.is_cover DESC, pi.sort_order ASC
     LIMIT 1
-  ) AS cover_image
+  ) AS cover_image,
+  p.year,
+  p.role,
+  p.problem,
+  p.outcome
 FROM projects p
 LEFT JOIN project_tags pt ON pt.project_id = p.id
 LEFT JOIN tags t ON t.id = pt.tag_id
 GROUP BY p.id
 ORDER BY p.sort_order ASC, p.id ASC;
+
+-- Public read, as before: the portfolio fetches this view with the anon key.
+GRANT SELECT ON projects_with_details TO anon, authenticated;
