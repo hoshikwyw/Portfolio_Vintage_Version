@@ -17,7 +17,7 @@ Built with **React 19**, **Vite**, **Tailwind CSS v4**, **Framer Motion**, and
 | Window / Surface | What it does |
 |---|---|
 | **Boot Splash** | Animated OS startup on a first visit; any key or click skips it, and returning visitors and deep links go straight to the desktop |
-| **Desktop** | Wallpaper, animated gradient orbs, desktop shortcuts, Resume / Hire Me quick actions, right-click menu |
+| **Desktop** | Wallpaper, animated gradient orbs, desktop shortcuts, Resume / Hire Me / One-page view quick actions, right-click menu |
 | **Helper bot** | A guide that suggests windows to explore and tracks progress; steps aside over fullscreen windows |
 | **Windows** | Drag, 8-direction resize, minimize / fullscreen / close; snap to screen halves or maximize at the top edge; double-click a title bar to maximize; Alt+` switches windows |
 | **About** | Profile card with contact, status pill, experience / education timelines, what I build, skills, tools, languages |
@@ -28,6 +28,7 @@ Built with **React 19**, **Vite**, **Tailwind CSS v4**, **Framer Motion**, and
 | **Settings** | 3 chrome themes (+ follow-the-OS) and 6 wallpapers, persisted to `localStorage` |
 | **Taskbar** | Start menu with search, running-app buttons, live weather widget, real-time clock |
 | **Dashboard** | Supabase-auth-gated admin: summary tiles, project list + editor with drag reorder, case-study preview, image uploads with cover picker, tags |
+| **One-page site** (`/portfolio`) | The whole portfolio as a conventional scrolling page — hero, experience, skills, projects with case-study dialogs, contact — for visitors who would rather read than explore. Opened from the desktop, start menu or footer links |
 | **Résumé** (`/resume`) | Printable one-page résumé generated from `profile.js`, with Save as PDF |
 
 ---
@@ -77,15 +78,16 @@ src/
 │       └── window/          #   WindowLayer, WindowFrame (floating + fullscreen), chrome
 │
 ├── features/                # vertical slices — one per window
-│   ├── about/  projects/  gallery/  terminal/  settings/  minesweeper/  admin/  seo/  resume/
+│   ├── about/  projects/  gallery/  terminal/  settings/  minesweeper/  admin/  seo/
+│   ├── resume/  portfolio/  #   standalone pages (/resume, /portfolio), not windows
 │   └── …each with: api/ · hooks/ · components/ · <feature>.css · index.js (window entry)
 │
 ├── shared/                  # feature-agnostic building blocks
-│   ├── config/              #   profile.js (all personal copy), theme.js
+│   ├── config/              #   profile.js (all personal copy), theme.js, paths.js
 │   ├── constants/           #   fonts.js, palette.js
 │   ├── lib/                 #   supabase (+ unwrap), queryClient, browser side effects,
 │   │                        #   motionFeatures (lazy Framer Motion bundle)
-│   ├── hooks/               #   useClock, useOutsideClick
+│   ├── hooks/               #   useClock, useOutsideClick, useRestoreFocus, usePageMeta
 │   └── components/          #   ui/ (Panel, Skeleton) · icons/ · feedback/ (errors, 404)
 │
 └── styles/                  # global CSS, imported in cascade order by index.css
@@ -146,9 +148,13 @@ Repo tooling lives in [`scripts/`](scripts/) — currently
   screen) and each window individually — a single broken window shows an inline
   error while the rest of the desktop keeps running. Unknown window ids render a
   retro `NotFound` (404) instead of a blank frame.
-- **Routing.** React Router drives three routes: `/` (desktop), `/window/:appId`
-  (a shareable deep link that opens one window on load), and `*` (a full-page
-  404). `vercel.json` rewrites all non-`/api` paths to `index.html` so these
+- **Routing.** React Router drives the routes: `/` (desktop), `/window/:appId`
+  (a shareable deep link that opens one window on load), two standalone pages,
+  `/portfolio` and `/resume` (lazy-loaded, outside the OS shell), and `*` (a
+  full-page 404). Every route is served the same `index.html`, whose canonical
+  points at the desktop, so each standalone page sets its own title,
+  description and canonical URL through `usePageMeta` — otherwise search
+  engines would treat it as a copy of the home page. `vercel.json` rewrites all non-`/api` paths to `index.html` so these
   resolve on direct load / refresh.
 
 ---
