@@ -101,7 +101,7 @@ const StartMenu = ({ onClose }) => {
           {/* User */}
           <div className="px-3 py-2.5 flex items-center gap-2" style={{ borderBottom: '1px solid var(--os-border-dark)' }}>
             <div className="w-7 h-7 rounded-sm overflow-hidden" style={{ border: '1px solid var(--os-border-dark)' }}>
-              <img src={profile.avatar} alt="" className="w-full h-full object-cover" />
+              <img src={profile.avatar} alt="" className="w-full h-full object-cover" style={{ objectPosition: '50% 25%' }} />
             </div>
             <div>
               <p className="text-[11px] font-bold" style={{ color: 'var(--os-text)' }}>{profile.name}</p>

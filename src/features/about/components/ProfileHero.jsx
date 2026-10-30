@@ -1,4 +1,4 @@
-import { Download, Mail, MapPin } from 'lucide-react'
+import { FileText, Mail, MapPin } from 'lucide-react'
 import { profile } from '@/shared/config/profile'
 import { openHireEmail, openResume } from '@/shared/lib/browser'
 import ContactCard from './ContactCard'
@@ -27,9 +27,9 @@ const ProfileHero = () => (
     <div className="os-hero-body">
       <img
         src={profile.avatar}
-        alt={profile.alias}
-        width={104}
-        height={104}
+        alt={`Portrait of ${profile.name}`}
+        width={112}
+        height={140}
         decoding="async"
         className="os-hero-avatar"
         style={{ border: 'var(--os-input-border)', background: 'var(--os-input-bg)' }}
@@ -90,7 +90,7 @@ const ProfileHero = () => (
           </button>
 
           <button type="button" className="quick-action-btn" onClick={openResume}>
-            <Download size={12} aria-hidden="true" />
+            <FileText size={12} aria-hidden="true" />
             Resume
           </button>
         </div>

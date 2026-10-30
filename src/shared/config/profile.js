@@ -15,7 +15,8 @@ export const profile = {
   email: 'khaingwutyiwin1712@gmail.com',
   phone: '+959795847089',
 
-  avatar: '/myPf.png',
+  /** Headshot, 600x800 (3:4). Crops anchor near the top, where the face is. */
+  avatar: '/profile-photo.jpg',
   /** The generated résumé page (`features/resume`), built from this file. */
   resume: '/resume',
   github: 'https://github.com/hoshikwyw',

@@ -30,16 +30,19 @@
   .os-contact-card { grid-column: auto; align-self: start; }
 }
 
+/*
+ * A real headshot now, in a portrait frame to suit it. It used to be a square
+ * cartoon held in greyscale until hovered — fine for a doodle, wrong for a
+ * photo, and on a phone (no hover) it never got its colour back.
+ * Anchored high so the face, not the jacket, fills the frame.
+ */
 .os-hero-avatar {
   flex-shrink: 0;
-  width: 104px;
-  height: 104px;
+  width: 112px;
+  height: 140px;
   object-fit: cover;
-  /* Colour arrives on hover, matching the project cards' cover treatment. */
-  filter: grayscale(1);
-  transition: filter 500ms var(--os-ease);
+  object-position: 50% 22%;
 }
-.os-hero:hover .os-hero-avatar { filter: grayscale(0); }
 
 /*
  * Timeline rail. The line is drawn on the list and the nodes on each item, so
