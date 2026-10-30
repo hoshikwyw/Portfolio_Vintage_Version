@@ -21,6 +21,13 @@ const OnePagePortfolio = () => {
     return () => { document.title = previous }
   }, [])
 
+  // The page is a lazy route, so it mounts after the browser has already
+  // tried (and failed) to jump to a #section in the URL. Jump once it exists.
+  useEffect(() => {
+    const id = decodeURIComponent(window.location.hash.slice(1))
+    if (id) document.getElementById(id)?.scrollIntoView()
+  }, [])
+
   return (
     <div className="op-root" id="op-scroll">
       <a href="#main" className="op-skip">Skip to content</a>

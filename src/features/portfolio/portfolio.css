@@ -150,13 +150,23 @@
   border-radius: 8px;
 }
 
+/*
+ * The links may outgrow a narrow header; they then scroll sideways inside it
+ * rather than widening the page.
+ */
 .op-nav {
   display: flex;
   gap: 4px;
+  min-width: 0;
   margin-right: auto;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
+.op-nav::-webkit-scrollbar { display: none; }
 
 .op-nav-link {
+  flex-shrink: 0;
+  white-space: nowrap;
   padding: 6px 12px;
   font-size: 14px;
   font-weight: 500;
@@ -167,9 +177,11 @@
 }
 .op-nav-link:hover { color: var(--op-text); background: var(--op-surface); }
 
-.op-header-actions { display: flex; gap: 8px; margin-left: auto; }
+.op-header-actions { display: flex; flex-shrink: 0; gap: 8px; margin-left: auto; }
 
 @media (max-width: 640px) {
+  .op-header-inner { gap: 12px; padding: 0 16px; }
+  .op-nav-link { padding: 6px 8px; }
   .op-brand-name { display: none; }
   /* Icon-only on a phone; the label stays for screen readers via title text. */
   .op-header-actions .op-btn span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
@@ -507,3 +519,207 @@
  */
 .op-card:has(> .op-meters) { display: flex; flex-direction: column; }
 .op-meters { flex: 1; align-content: space-evenly; }
+
+/* --- projects --- */
+
+.op-projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+  gap: 22px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.op-project {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+.op-project:hover,
+.op-project:focus-within {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--op-accent) 45%, var(--op-border));
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22);
+}
+
+.op-project-cover {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--op-bg-2);
+  border-bottom: 1px solid var(--op-border);
+}
+.op-project-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 300ms ease;
+}
+.op-project:hover .op-project-cover img { transform: scale(1.04); }
+.op-project.is-soon .op-project-cover img { filter: saturate(0.4) brightness(0.85); }
+
+.op-project-cover-empty {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--op-muted);
+  background: repeating-linear-gradient(45deg, transparent 0 10px, color-mix(in srgb, var(--op-muted) 8%, transparent) 10px 20px);
+}
+
+/* On the screenshot itself, so they carry their own dark scrim in any theme. */
+.op-project-badge {
+  position: absolute;
+  top: 10px;
+  padding: 3px 9px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  background: rgba(15, 16, 30, 0.75);
+  border-radius: 6px;
+  backdrop-filter: blur(4px);
+}
+.op-project-year { right: 10px; }
+.op-project-soon { left: 10px; }
+
+.op-project-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+}
+
+.op-project-title { font-size: 18px; font-weight: 700; }
+.op-project-desc { font-size: 14.5px; line-height: 1.6; color: var(--op-muted); }
+
+.op-link-btn {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--op-accent);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.op-link-btn:hover { text-decoration: underline; text-underline-offset: 4px; }
+.op-link-btn svg { transition: transform 150ms ease; }
+.op-link-btn:hover svg { transform: translateX(3px); }
+
+.op-project-tags .op-chip { font-size: 12px; padding: 3px 10px; }
+
+/* Pinned to the foot of the card, so links line up across a row. */
+.op-project-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; padding-top: 4px; }
+.op-project-links .op-btn { padding: 8px 14px; font-size: 13.5px; }
+
+.op-notice {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--op-muted);
+}
+
+/* Loading placeholders. */
+.op-shimmer {
+  position: relative;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--op-muted) 14%, transparent);
+}
+.op-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--op-text) 10%, transparent), transparent);
+  animation: op-shimmer 1.4s ease infinite;
+}
+@keyframes op-shimmer { to { transform: translateX(100%); } }
+.op-skel-line { display: block; height: 12px; border-radius: 6px; }
+.op-skel-title { height: 18px; width: 60%; }
+.op-skel-short { width: 45%; }
+
+@media (prefers-reduced-motion: reduce) {
+  .op-shimmer::after { animation: none; }
+}
+
+/* --- case-study dialog --- */
+
+/* The page behind a modal should not scroll along with the dialog. */
+.op-root:has(dialog[open]) { overflow: hidden; }
+
+.op-dialog {
+  width: min(720px, calc(100vw - 32px));
+  max-height: min(86dvh, 900px);
+  margin: auto;
+  padding: 0;
+  color: var(--op-text);
+  background: var(--op-surface);
+  border: 1px solid var(--op-border);
+  border-radius: 18px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+}
+.op-dialog::backdrop {
+  background: rgba(6, 7, 16, 0.6);
+  backdrop-filter: blur(3px);
+}
+.op-dialog[open] { animation: op-dialog-in 200ms ease; }
+@keyframes op-dialog-in { from { opacity: 0; transform: translateY(8px) scale(0.98); } }
+@media (prefers-reduced-motion: reduce) {
+  .op-dialog[open] { animation: none; }
+}
+
+.op-dialog-body { display: flex; flex-direction: column; gap: 20px; padding: 26px 28px 30px; }
+
+.op-dialog-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.op-dialog-title { margin-top: 4px; font-size: clamp(1.4rem, 3vw, 1.8rem); font-weight: 800; line-height: 1.2; }
+
+.op-icon-btn {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  color: var(--op-muted);
+  background: transparent;
+  border: 1px solid var(--op-border);
+  border-radius: 10px;
+  cursor: pointer;
+}
+.op-icon-btn:hover { color: var(--op-text); border-color: var(--op-accent); }
+
+.op-dialog-cover {
+  width: 100%;
+  max-height: 340px;
+  object-fit: contain;
+  background: var(--op-bg-2);
+  border: 1px solid var(--op-border);
+  border-radius: 12px;
+}
+
+.op-dialog-label {
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--op-accent);
+}
+.op-dialog-text { font-size: 15.5px; line-height: 1.7; white-space: pre-line; }
+
+.op-dialog-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 18px;
+  border-top: 1px solid var(--op-border);
+}
