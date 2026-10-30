@@ -1,6 +1,9 @@
 import { useEffect } from 'react'
 import { profile } from '@/shared/config/profile'
+import { PATHS } from '@/shared/config/paths'
+import { usePageMeta } from '@/shared/hooks/usePageMeta'
 import SiteHeader from './components/SiteHeader'
+import SiteFooter from './components/SiteFooter'
 import { SECTIONS } from './sections'
 import './portfolio.css'
 
@@ -15,11 +18,11 @@ import './portfolio.css'
  * plain, fast, scrollable layout.
  */
 const OnePagePortfolio = () => {
-  useEffect(() => {
-    const previous = document.title
-    document.title = `${profile.name} — ${profile.role}`
-    return () => { document.title = previous }
-  }, [])
+  usePageMeta({
+    title: `${profile.name} — ${profile.role}`,
+    description: `${profile.name} (${profile.alias}), ${profile.role.toLowerCase()} in ${profile.location}. Experience, skills, projects and contact details on one page.`,
+    path: PATHS.portfolio,
+  })
 
   // The page is a lazy route, so it mounts after the browser has already
   // tried (and failed) to jump to a #section in the URL. Jump once it exists.
@@ -35,6 +38,7 @@ const OnePagePortfolio = () => {
       <main id="main">
         {SECTIONS.map(({ id, Component }) => <Component key={id} id={id} />)}
       </main>
+      <SiteFooter />
     </div>
   )
 }

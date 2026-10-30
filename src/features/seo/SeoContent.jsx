@@ -32,9 +32,7 @@ const TimelineList = ({ items }) => (
 const SeoContent = () => (
   <div aria-hidden="true" style={visuallyHidden}>
     <h1>{profile.name} — {profile.role} Portfolio</h1>
-    <p>
-      Hi! I'm {profile.alias} — {profile.about}
-    </p>
+    <p>{profile.about}</p>
 
     <h2>Contact</h2>
     <p>Email: {profile.email}</p>

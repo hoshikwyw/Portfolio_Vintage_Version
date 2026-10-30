@@ -1,9 +1,10 @@
-import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowLeft, Printer } from 'lucide-react'
 import {
   currently, education, experience, languages, platforms, profile, skills, summary, tools,
 } from '@/shared/config/profile'
+import { PATHS } from '@/shared/config/paths'
+import { usePageMeta } from '@/shared/hooks/usePageMeta'
 import './resume.css'
 
 const Section = ({ title, children }) => (
@@ -47,11 +48,11 @@ const Pairs = ({ items }) => (
  * recruiters' applicant systems, not for the retro desktop.
  */
 const ResumePage = () => {
-  useEffect(() => {
-    const previous = document.title
-    document.title = `${profile.name} — Résumé`
-    return () => { document.title = previous }
-  }, [])
+  usePageMeta({
+    title: `${profile.name} — Résumé`,
+    description: `Résumé of ${profile.name}, ${profile.role.toLowerCase()} in ${profile.location}: experience, skills, tools and education.`,
+    path: PATHS.resume,
+  })
 
   const githubLabel = profile.github.replace(/^https?:\/\//, '')
 

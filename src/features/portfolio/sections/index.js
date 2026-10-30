@@ -2,6 +2,7 @@ import HeroSection from './HeroSection'
 import ExperienceSection from './ExperienceSection'
 import SkillsSection from './SkillsSection'
 import ProjectsSection from './ProjectsSection'
+import ContactSection from './ContactSection'
 
 /**
  * The page's sections, top to bottom. `nav` is the header link's label; a
@@ -13,4 +14,5 @@ export const SECTIONS = [
   { id: 'experience', nav: 'Experience', Component: ExperienceSection },
   { id: 'skills', nav: 'Skills', Component: SkillsSection },
   { id: 'projects', nav: 'Projects', Component: ProjectsSection },
+  { id: 'contact', nav: 'Contact', Component: ContactSection },
 ]
