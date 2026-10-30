@@ -28,6 +28,17 @@ export const profile = {
   availability: 'Open to freelance work',
 }
 
+/**
+ * The bio without its greeting — "Hi! I'm Kayv — a mid-level…" becomes
+ * "A mid-level…" — for places that introduce Kayv some other way first: the
+ * résumé's Profile section and the one-page site's hero. If the bio is ever
+ * reworded without the greeting, it is used whole.
+ */
+export const summary = (() => {
+  const rest = profile.about.replace(/^Hi! I'm \w+ — /, '')
+  return rest.charAt(0).toUpperCase() + rest.slice(1)
+})()
+
 /** Skills rendered as progress bars in the About window. */
 export const skills = [
   { name: 'React.js', level: 90 },

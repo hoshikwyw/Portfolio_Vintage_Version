@@ -1,0 +1,301 @@
+/* ============================
+   ONE-PAGE PORTFOLIO
+   ============================ */
+
+/*
+ * A conventional site rather than the OS: its own small palette, dark by
+ * default (the classic and glass desktops are dark) and light when the visitor
+ * picked the light retro theme. `data-theme` is stamped on <html> by the boot
+ * script in index.html, so a direct visit to /portfolio is themed from the
+ * first paint too.
+ */
+.op-root {
+  --op-bg: #0e0f1d;
+  --op-bg-2: #13152a;
+  --op-surface: #181b33;
+  --op-border: rgba(255, 255, 255, 0.09);
+  --op-text: #ecebf4;
+  --op-muted: #a6a8c2;
+  --op-accent: #8b7cf6;
+  --op-accent-strong: #6f5ce6;
+  --op-on-accent: #fff;
+  --op-success: #3ecf8e;
+  --op-header-h: 64px;
+
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+  color: var(--op-text);
+  background:
+    radial-gradient(900px 500px at 85% -10%, color-mix(in srgb, var(--op-accent) 22%, transparent), transparent 70%),
+    radial-gradient(700px 400px at -10% 30%, color-mix(in srgb, #3a8fd6 14%, transparent), transparent 70%),
+    var(--op-bg);
+  background-attachment: local;
+  scroll-behavior: smooth;
+  /* Anchor jumps land below the sticky header, not under it. */
+  scroll-padding-top: calc(var(--op-header-h) + 12px);
+}
+
+:root[data-theme='light'] .op-root {
+  --op-bg: #f6f5f1;
+  --op-bg-2: #efede6;
+  --op-surface: #ffffff;
+  --op-border: #e2dfd6;
+  --op-text: #1f2128;
+  --op-muted: #5b5e6b;
+  --op-accent: #4a3aad;
+  --op-accent-strong: #3d2f94;
+  --op-success: #1f7a4d;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .op-root { scroll-behavior: auto; }
+}
+
+.op-container {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* Keyboard users can jump past the header straight to the content. */
+.op-skip {
+  position: absolute;
+  left: 12px;
+  top: -48px;
+  z-index: 20;
+  padding: 8px 14px;
+  font-weight: 700;
+  color: var(--op-on-accent);
+  background: var(--op-accent-strong);
+  border-radius: 8px;
+}
+.op-skip:focus { top: 12px; }
+
+/* --- buttons --- */
+
+.op-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--op-text);
+  text-decoration: none;
+  background: var(--op-surface);
+  border: 1px solid var(--op-border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 150ms ease, border-color 150ms ease, background-color 150ms ease;
+}
+.op-btn:hover { border-color: var(--op-accent); transform: translateY(-1px); }
+.op-btn:active { transform: translateY(0); }
+
+.op-btn-primary {
+  color: var(--op-on-accent);
+  background: var(--op-accent-strong);
+  border-color: var(--op-accent-strong);
+}
+.op-btn-primary:hover { background: var(--op-accent); border-color: var(--op-accent); }
+
+.op-btn-ghost {
+  padding: 7px 12px;
+  font-size: 13px;
+  background: transparent;
+}
+
+/* --- header --- */
+
+.op-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: var(--op-header-h);
+  background: color-mix(in srgb, var(--op-bg) 78%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--op-border);
+}
+
+.op-header-inner {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  height: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.op-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  color: var(--op-text);
+  text-decoration: none;
+}
+
+.op-brand-mark {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--op-on-accent);
+  background: var(--op-accent-strong);
+  border-radius: 8px;
+}
+
+.op-nav {
+  display: flex;
+  gap: 4px;
+  margin-right: auto;
+}
+
+.op-nav-link {
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--op-muted);
+  text-decoration: none;
+  border-radius: 8px;
+  transition: color 150ms ease, background-color 150ms ease;
+}
+.op-nav-link:hover { color: var(--op-text); background: var(--op-surface); }
+
+.op-header-actions { display: flex; gap: 8px; margin-left: auto; }
+
+@media (max-width: 640px) {
+  .op-brand-name { display: none; }
+  /* Icon-only on a phone; the label stays for screen readers via title text. */
+  .op-header-actions .op-btn span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+}
+
+/* --- hero --- */
+
+.op-hero {
+  display: flex;
+  align-items: center;
+  min-height: calc(100dvh - var(--op-header-h));
+  padding: 48px 0 64px;
+}
+
+.op-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+  align-items: center;
+  gap: 56px;
+}
+
+.op-eyebrow {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--op-accent);
+  letter-spacing: 0.02em;
+}
+
+.op-hero-name {
+  margin-top: 8px;
+  font-size: clamp(2.2rem, 5.5vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.op-hero-role {
+  margin-top: 10px;
+  font-size: clamp(1.1rem, 2.4vw, 1.4rem);
+  font-weight: 600;
+  color: var(--op-muted);
+}
+
+.op-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  margin-top: 18px;
+}
+
+.op-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--op-muted);
+}
+
+.op-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--op-text);
+  background: var(--op-surface);
+  border: 1px solid var(--op-border);
+  border-radius: 999px;
+}
+
+.op-pill-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--op-success);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--op-success) 25%, transparent);
+}
+
+.op-hero-bio {
+  max-width: 60ch;
+  margin-top: 22px;
+  font-size: 16.5px;
+  line-height: 1.7;
+  color: var(--op-muted);
+}
+
+.op-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.op-hero-photo-wrap {
+  position: relative;
+  justify-self: center;
+  width: 100%;
+  max-width: 320px;
+}
+
+/* An offset accent frame behind the photo — a quiet nod to the OS's bevels. */
+.op-hero-photo-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 14px -14px -14px 14px;
+  border: 2px solid color-mix(in srgb, var(--op-accent) 60%, transparent);
+  border-radius: 22px;
+}
+
+.op-hero-photo {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: 50% 22%;
+  border-radius: 22px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.28);
+}
+
+@media (max-width: 820px) {
+  .op-hero { min-height: 0; padding-top: 32px; }
+  .op-hero-grid { grid-template-columns: 1fr; gap: 36px; }
+  /* Photo first on a narrow screen, so the face greets before the text. */
+  .op-hero-photo-wrap { order: -1; max-width: 220px; }
+}

@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowLeft, Printer } from 'lucide-react'
 import {
-  currently, education, experience, languages, platforms, profile, skills, tools,
+  currently, education, experience, languages, platforms, profile, skills, summary, tools,
 } from '@/shared/config/profile'
 import './resume.css'
 
@@ -24,15 +24,6 @@ const Entries = ({ items }) => (
     ))}
   </ul>
 )
-
-/**
- * The About bio without its greeting: "Hi! I'm Kayv — a mid-level…" becomes
- * "A mid-level…". If the bio is ever reworded, it is used whole.
- */
-const summaryFrom = (about) => {
-  const rest = about.replace(/^Hi! I'm \w+ — /, '')
-  return rest.charAt(0).toUpperCase() + rest.slice(1)
-}
 
 /** `{ name, tag }` rows as "Name — tag". */
 const Pairs = ({ items }) => (
@@ -92,7 +83,7 @@ const ResumePage = () => {
         </header>
 
         <Section title="Profile">
-          <p className="resume-summary">{summaryFrom(profile.about)}</p>
+          <p className="resume-summary">{summary}</p>
         </Section>
 
         <Section title="Experience">

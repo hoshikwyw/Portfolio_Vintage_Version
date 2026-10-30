@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react'
 import { m } from 'framer-motion'
-import { FileText, Mail, Search } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
+import { FileText, Mail, PanelsTopLeft, Search } from 'lucide-react'
 import { useOSActions } from '@/os/hooks/useOS'
 import { startMenuApps } from '@/os/config/apps'
 import { Z_LAYERS } from '@/os/constants'
+import { PATHS } from '@/shared/config/paths'
 import { profile } from '@/shared/config/profile'
 import { openGoogleSearch, openHireEmail, openResume } from '@/shared/lib/browser'
 import { useOutsideClick } from '@/shared/hooks/useOutsideClick'
@@ -26,6 +28,7 @@ const MenuRow = ({ icon, label, onClick, onPreload }) => (
 
 const StartMenu = ({ onClose }) => {
   const { openWindow } = useOSActions()
+  const navigate = useNavigate()
   const [query, setQuery] = useState('')
   const ref = useOutsideClick(onClose)
   const inputRef = useRef(null)
@@ -72,6 +75,7 @@ const StartMenu = ({ onClose }) => {
   const handleSearch = andClose((e) => { e.preventDefault(); openGoogleSearch(query); setQuery('') })
 
   const actions = [
+    { label: 'One-page View', icon: <PanelsTopLeft size={14} />, onClick: andClose(() => navigate(PATHS.portfolio)) },
     { label: 'View Resume', icon: <FileText size={14} />, onClick: andClose(openResume) },
     { label: 'Hire Me', icon: <Mail size={14} />, onClick: andClose(() => openHireEmail()) },
   ]
