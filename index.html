@@ -9,7 +9,9 @@
     <meta name="description" content="Portfolio of Khaing Wut Yi Win (Kayv), a mid-level Full Stack Developer at IT-Wizard in Yangon, Myanmar. Builds web and mobile apps with React, Next.js, Capacitor PWAs and React Native with Expo; studying Computer Science at the University of the People and learning Python." />
     <meta name="keywords" content="Khaing Wut Yi Win, Kayv, full stack developer, React developer, React Native, Expo, Capacitor, PWA, mobile app developer, Git, GitHub, Supabase, AWS, Docker, Google Vision API, Maps API, DBeaver, portfolio, Yangon, Myanmar, Computer Science, University of the People, UoPeople, Python, Claude, Tailwind CSS, Next.js" />
     <meta name="author" content="Khaing Wut Yi Win" />
-    <meta name="robots" content="index, follow" />
+    <!-- max-image-preview:large lets Google show the photo as a full-size
+         thumbnail in results instead of a small, cropped one. -->
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <link rel="canonical" href="https://kayv-portfolio-vintage-version.vercel.app/" />
 
     <!-- Browser UI chrome, matched to whichever theme the OS will resolve to. -->
@@ -83,10 +85,26 @@
     <link rel="manifest" href="/manifest.json" />
 
     <!-- JSON-LD Structured Data -->
+    <!--
+      The page's main image, for search results. Google picks a result
+      thumbnail from images the page points at; this used to be the cartoon
+      avatar, which is what results kept showing.
+    -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfilePage",
+      "url": "https://kayv-portfolio-vintage-version.vercel.app/",
+      "primaryImageOfPage": "https://kayv-portfolio-vintage-version.vercel.app/profile-photo.jpg",
+      "mainEntity": { "@id": "https://kayv-portfolio-vintage-version.vercel.app/#person" }
+    }
+    </script>
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Person",
+      "@id": "https://kayv-portfolio-vintage-version.vercel.app/#person",
       "name": "Khaing Wut Yi Win",
       "alternateName": "Kayv",
       "url": "https://kayv-portfolio-vintage-version.vercel.app/",
