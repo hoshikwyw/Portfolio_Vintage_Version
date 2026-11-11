@@ -202,8 +202,16 @@ SQL for schema, the `projects_with_details` view, and auth policies lives in
 [`supabase/`](supabase/):
 
 - `migration.sql` — tables + the `projects_with_details` view
-- `auth_policies.sql` — row-level security policies
+- `auth_policies.sql` — original write policies (superseded, see below)
 - `update_images.sql` — gallery image helpers
+- `add_case_study.sql` — year / role / problem / outcome columns
+- `lock_down_shared_project.sql` — limits every write to the portfolio admin
+
+The Supabase project is shared with another app (Yumli), which signs in with
+its own service account. So writes are not open to every signed-in user:
+`public.app_access` records which user may write to which app, and each write
+policy checks `has_app_access('portfolio')`. Public reads are unchanged. Keep
+**Authentication → Allow new users to sign up** turned off.
 
 Projects are read through the `projects_with_details` view (projects joined with
 tags + cover image); gallery images come from `project_images` filtered by

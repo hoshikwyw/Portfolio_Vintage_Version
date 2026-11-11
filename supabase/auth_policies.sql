@@ -1,3 +1,6 @@
+-- SUPERSEDED by lock_down_shared_project.sql, which replaces these "any signed-in
+-- user" write policies with ones limited to the portfolio admin. Kept for history.
+
 -- ============================================================
 -- STEP 1: Create your admin user in Supabase Dashboard
 -- Go to: Authentication > Users > Add User
