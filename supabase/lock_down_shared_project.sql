@@ -4,15 +4,15 @@
 --
 -- Until now every write policy said `TO authenticated USING (true)`: any
 -- signed-in user could edit the portfolio. That was safe only while the
--- project had exactly one user. This project now also hosts Yumli, which signs
--- in with its own service account, so access is granted per app instead:
+-- project had exactly one user. Other apps may share this project and sign
+-- in with their own accounts, so access is granted per app instead:
 --
 --   public.app_access     which user may write to which app
 --   has_app_access(app)   used by every write policy
 --
 -- The portfolio's public reads do not change.
 --
--- RUN THIS FIRST, before creating Yumli's service account: it grants the
+-- RUN THIS FIRST, before creating any other app's account: it grants the
 -- 'portfolio' app to the one user the project has now (your admin login), and
 -- stops with an error if it finds more or fewer than one.
 --

@@ -207,7 +207,7 @@ SQL for schema, the `projects_with_details` view, and auth policies lives in
 - `add_case_study.sql` — year / role / problem / outcome columns
 - `lock_down_shared_project.sql` — limits every write to the portfolio admin
 
-The Supabase project is shared with another app (Yumli), which signs in with
+The Supabase project may be shared with other apps, each signing in with
 its own service account. So writes are not open to every signed-in user:
 `public.app_access` records which user may write to which app, and each write
 policy checks `has_app_access('portfolio')`. Public reads are unchanged. Keep
