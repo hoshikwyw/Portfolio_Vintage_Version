@@ -191,3 +191,65 @@
   text-align: center;
   color: var(--os-accent);
 }
+
+/* --- dig / flag switch (touch screens only) --- */
+
+.ms-mode {
+  display: flex;
+  gap: 8px;
+}
+
+.ms-mode-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  color: var(--os-text);
+  background: var(--os-btn-bg);
+  border: 2px solid var(--os-btn-border-bottom);
+  border-top-color: var(--os-btn-border-top);
+  border-left-color: var(--os-btn-border-top);
+  border-radius: var(--os-btn-radius);
+}
+
+/* Flag mode is a different game state, so it is loud about being on. */
+.ms-mode-btn.is-active {
+  color: #fff;
+  background: var(--os-accent);
+  border-color: var(--os-accent);
+}
+.ms-mode-btn.is-active:last-child { background: var(--os-danger); border-color: var(--os-danger); }
+
+/*
+ * Touch screens: 24px squares are a mouse's target. Squares grow to fill the
+ * width the window has (up to 44px), never below 28px; Medium and Expert
+ * still scroll. The other controls get a fingertip's 44px.
+ */
+@media (pointer: coarse) {
+  .ms-root { container-type: inline-size; }
+
+  .ms-shell {
+    /* Board width = root's content width minus the field's padding/border. */
+    --ms-cell: clamp(26px, calc((100cqw - 16px - (var(--ms-cols) - 1) * 1px) / var(--ms-cols)), 44px);
+  }
+
+  .ms-toolbar { gap: 8px; }
+  .ms-difficulty { min-height: 44px; font-size: 11px; }
+  .ms-face { width: 44px; height: 44px; font-size: 20px; }
+
+  .ms-cell {
+    font-size: 15px;
+    /* No text-selection or iOS callout popping up under a long press. */
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+  }
+
+  .ms-message { font-size: 12px; }
+}

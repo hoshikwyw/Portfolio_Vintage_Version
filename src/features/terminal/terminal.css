@@ -169,3 +169,14 @@
   --os-scrollbar-thumb-hover: var(--os-terminal-muted);
   --os-scrollbar-thumb-solid: var(--os-terminal-border);
 }
+
+/*
+ * Touch screens: command chips grow to 44px with room between them, and the
+ * prompt's field is 16px — under that, iOS zooms the page in on focus — and
+ * as tall as a fingertip, so tapping the prompt line lands in it.
+ */
+@media (pointer: coarse) {
+  .os-term-chips { gap: 8px; }
+  .os-term-chip { min-height: 44px; padding: 0 14px; font-size: 13px; }
+  .os-term-input { min-height: 44px; font-size: 16px; }
+}

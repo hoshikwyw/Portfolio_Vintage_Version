@@ -187,3 +187,13 @@
   flex: 1 1 auto;
   justify-content: center;
 }
+
+/* Touch screens: the text link gets a 44px-tall hit area without changing its look. */
+@media (pointer: coarse) {
+  .os-project-case {
+    min-height: 44px;
+    padding: 0 6px;
+    margin-left: -6px;
+    font-size: 12px;
+  }
+}

@@ -140,6 +140,8 @@
 
 /* Contact, set into the profile card as an inset panel. */
 .os-contact-card {
+  /* Lets the grid column shrink below the email's full width; it truncates. */
+  min-width: 0;
   justify-self: stretch;
   display: flex;
   flex-direction: column;
@@ -260,3 +262,14 @@
   transition: color var(--os-dur-fast) var(--os-ease), border-color var(--os-dur-fast) var(--os-ease);
 }
 .os-contact-copy:hover { color: var(--os-accent); border-color: var(--os-border-dark); }
+
+/*
+ * Touch screens: the contact rows are 23px-tall links stacked 2px apart, and
+ * the copy button is 24px beside the email link. A finger gets 44px rows and
+ * a 44px copy button, with the text a little larger to match.
+ */
+@media (pointer: coarse) {
+  .os-contact-row { min-height: 44px; font-size: 12px; }
+  .os-contact-line { gap: 8px; }
+  .os-contact-copy { width: 44px; height: 44px; }
+}
