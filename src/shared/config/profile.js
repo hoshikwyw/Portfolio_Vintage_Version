@@ -26,7 +26,7 @@ export const profile = {
     "Hi! I'm Kayv — a mid-level full stack developer at IT-Wizard, building web and mobile apps end to end: Java and Spring Boot APIs on Oracle and MariaDB, React and Next.js on the web, PWAs with Capacitor, and native apps with React Native and Expo. I'm studying Computer Science at the University of the People, learning Python, and building with Claude as my AI pair programmer.",
 
   /** Status shown beside the role in About Me. Set to null to hide it. */
-  availability: 'Open to freelance work',
+  availability: 'Open to remote roles',
 }
 
 /**
