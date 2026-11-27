@@ -3,7 +3,7 @@ import { AnimatePresence } from 'framer-motion'
 import { useOSActions, useOSWindows } from '@/os/hooks/useOS'
 import { useViewportSize } from '@/os/hooks/useViewportSize'
 import { useWindowLayout } from '@/os/hooks/useWindowLayout'
-import { TASKBAR_HEIGHT, Z_LAYERS } from '@/os/constants'
+import { Z_LAYERS } from '@/os/constants'
 import { windowTitleId } from '@/os/config/apps'
 import WindowFrame from './WindowFrame'
 import { snapRect } from './snap'
@@ -82,7 +82,7 @@ const WindowLayer = () => {
         left: 0,
         width: '100vw',
         // dvh: the area a phone actually shows, excluding its browser toolbar.
-        height: `calc(100dvh - ${TASKBAR_HEIGHT}px)`,
+        height: 'calc(100dvh - var(--os-taskbar-h))',
         zIndex: Z_LAYERS.windowLayer,
         pointerEvents: 'none',
         overflow: 'hidden',

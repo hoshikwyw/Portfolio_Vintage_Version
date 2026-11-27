@@ -134,6 +134,46 @@
 [data-theme="glass"] .windowControls button { width: 12px; height: 12px; border-radius: 50%; }
 
 .minimizeBtn, .fullscreenBtn, .closeBtn { margin: 0 !important; padding: 0 !important; }
+
+/*
+ * Touch screens: 20px buttons 2px apart (12px dots in the glass theme) are a
+ * mouse's targets. A finger gets 44x44 with 8px between, so closing a window
+ * cannot land on minimize. Glass keeps its small coloured dot, drawn inside
+ * the larger button, with the symbol always shown (there is no hover to
+ * reveal it).
+ */
+@media (pointer: coarse) {
+  .windowHeader { padding: 2px 4px 2px 12px; }
+  .windowControls { gap: 8px; }
+  .windowControls button { width: 44px; height: 44px; }
+  .windowControls button svg { width: 14px; height: 14px; }
+
+  [data-theme="glass"] .windowControls button,
+  [data-theme="glass"] .windowControls button:nth-child(n) {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    margin-left: 0;
+    background: transparent;
+  }
+  [data-theme="glass"] .windowControls button::before {
+    content: '';
+    position: absolute;
+    inset: 11px;
+    border-radius: 50%;
+    background: var(--os-dot);
+  }
+  [data-theme="glass"] .windowControls button:nth-child(1) { --os-dot: #febc2e; }
+  [data-theme="glass"] .windowControls button:nth-child(2) { --os-dot: #28c840; }
+  [data-theme="glass"] .windowControls button:nth-child(3) { --os-dot: #ff5f57; }
+  [data-theme="glass"] .windowControls button svg {
+    position: relative;
+    width: 10px;
+    height: 10px;
+    opacity: 1;
+    color: rgba(0, 0, 0, 0.6);
+  }
+}
 .closeBtn img { width: 10px; height: 10px; filter: brightness(0) invert(0.9); }
 
 /* ============================

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import { TASKBAR_HEIGHT } from '@/os/constants'
+import { getTaskbarHeight } from '@/os/constants'
 
 const measure = () => ({
   width: window.innerWidth,
-  height: window.innerHeight - TASKBAR_HEIGHT,
+  height: window.innerHeight - getTaskbarHeight(),
 })
 
 /**

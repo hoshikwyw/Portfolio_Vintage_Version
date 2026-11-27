@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { m, useDragControls, useMotionValue } from 'framer-motion'
-import { RESIZE_DIRECTIONS, TASKBAR_HEIGHT, Z_LAYERS } from '@/os/constants'
+import { RESIZE_DIRECTIONS, Z_LAYERS } from '@/os/constants'
 import { useResizable } from '@/os/hooks/useResizable'
 import { useWindowA11y } from '@/os/hooks/useWindowA11y'
 import { WindowBody, WindowTitleBar } from './WindowChrome'
@@ -11,7 +11,7 @@ import { snapZoneAt } from './snap'
  * A fullscreen window fills the desktop *above* the taskbar, like maximizing.
  *
  * It used to be a full `100vh`, but it lives in the window layer, which
- * stacks below the taskbar — so the taskbar covered its bottom 42px, and the
+ * stacks below the taskbar — so the taskbar covered its bottom edge, and the
  * end of any scrolling content (the terminal's prompt, the last rows of a
  * list) sat out of sight and out of reach.
  *
@@ -23,7 +23,8 @@ const FULLSCREEN_STYLE = {
   top: 0,
   left: 0,
   right: 0,
-  height: `calc(100dvh - ${TASKBAR_HEIGHT}px)`,
+  // --os-taskbar-h: the taskbar's height, taller on touch screens.
+  height: 'calc(100dvh - var(--os-taskbar-h))',
   zIndex: Z_LAYERS.fullscreenWindow,
   borderRadius: 0,
 }

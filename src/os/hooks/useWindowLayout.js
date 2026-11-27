@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { getApp } from '@/os/config/apps'
 import {
+  COMPACT_QUERY,
+  getTaskbarHeight,
   MIN_WINDOW_HEIGHT,
   MIN_WINDOW_WIDTH,
-  TASKBAR_HEIGHT,
   WINDOW_CASCADE_STEP,
   WINDOW_CASCADE_WRAP,
   WINDOW_INITIAL_HEIGHT_RATIO,
@@ -23,7 +24,7 @@ import {
  */
 const cascadedGeometry = (step, preferred) => {
   const areaW = window.innerWidth
-  const areaH = window.innerHeight - TASKBAR_HEIGHT
+  const areaH = window.innerHeight - getTaskbarHeight()
   const offset = (step % WINDOW_CASCADE_WRAP) * WINDOW_CASCADE_STEP
 
   /*
@@ -78,11 +79,27 @@ export const useWindowLayout = (openWindows) => {
     })
   }, [openWindows])
 
+  /*
+   * On a phone a floating window is a small box with empty desktop below it,
+   * its content scrolling in a fraction of the screen. There, windows open
+   * filling the desktop instead; the fullscreen button still shrinks one back
+   * to a floating window. `seen` makes this apply once, when a window first
+   * opens, so a window the visitor shrank is not re-maximized on re-render.
+   */
+  const seen = useRef(new Set())
+  useEffect(() => {
+    const opened = openWindows.filter((id) => !seen.current.has(id))
+    opened.forEach((id) => seen.current.add(id))
+    if (!opened.length || !window.matchMedia(COMPACT_QUERY).matches) return
+    setFullscreen((prev) => ({ ...prev, ...Object.fromEntries(opened.map((id) => [id, true])) }))
+  }, [openWindows])
+
   const setGeometry = useCallback((id, geometry) => {
     setGeometries((prev) => ({ ...prev, [id]: geometry }))
   }, [])
 
   const forgetWindow = useCallback((id) => {
+    seen.current.delete(id)
     setGeometries(({ [id]: _dropped, ...rest }) => rest)
     setFullscreen(({ [id]: _flag, ...rest }) => rest)
   }, [])

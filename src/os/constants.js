@@ -1,7 +1,21 @@
 /** Layout and stacking constants for the desktop shell. */
 
-/** Height of the fixed taskbar, subtracted from the usable desktop area. */
+/**
+ * Height of the fixed taskbar, subtracted from the usable desktop area.
+ * On touch screens it is taller, so its buttons can be a fingertip's 44px.
+ * Keep both values in step with `--os-taskbar-h` in styles/desktop.css.
+ */
 export const TASKBAR_HEIGHT = 42
+export const TASKBAR_HEIGHT_TOUCH = 52
+
+/** A finger rather than a mouse: tap targets grow to 44px. */
+export const TOUCH_QUERY = '(pointer: coarse)'
+
+/** Phones (narrow, or a phone on its side): windows open filling the screen. */
+export const COMPACT_QUERY = '(max-width: 640px), (max-height: 500px)'
+
+export const getTaskbarHeight = () =>
+  window.matchMedia(TOUCH_QUERY).matches ? TASKBAR_HEIGHT_TOUCH : TASKBAR_HEIGHT
 
 /** Smallest a window may be resized to. */
 export const MIN_WINDOW_WIDTH = 400

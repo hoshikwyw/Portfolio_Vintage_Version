@@ -20,7 +20,7 @@ const QuickActions = () => {
   const navigate = useNavigate()
 
   return (
-    <div className="absolute top-5 right-5 flex flex-col items-end gap-1.5" style={{ zIndex: Z_LAYERS.desktopItem }}>
+    <div className="quick-actions absolute top-5 right-5 flex flex-col items-end gap-1.5" style={{ zIndex: Z_LAYERS.desktopItem }}>
       <button onClick={openResume} className="quick-action-btn group" title="View Resume">
         <FileText size={14} className="flex-shrink-0" />
         <span>Resume</span>

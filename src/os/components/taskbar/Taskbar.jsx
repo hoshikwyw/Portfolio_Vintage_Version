@@ -17,7 +17,7 @@ const AppButton = ({ id, isMinimized, onClick }) => (
     // The visible label is hidden on narrow screens and the icon is
     // decorative, so the name has to be stated here.
     aria-label={isMinimized ? `${getAppLabel(id)} (minimized)` : getAppLabel(id)}
-    className="flex items-center gap-1.5 h-7 px-2 cursor-pointer flex-shrink-0"
+    className="taskbar-btn flex items-center gap-1.5 h-7 px-2 cursor-pointer flex-shrink-0"
     style={{
       // The icon inherits this; without it the button took the page's light
       // text colour and the icon washed out against the classic taskbar.
@@ -48,7 +48,7 @@ const StartButton = ({ isOpen, onToggle }) => (
     aria-haspopup="true"
     aria-expanded={isOpen}
     aria-label="Start menu"
-    className="flex items-center gap-1.5 h-7 px-2.5 cursor-pointer"
+    className="taskbar-btn flex items-center gap-1.5 h-7 px-2.5 cursor-pointer"
     style={{
       background: isOpen ? 'var(--os-panel-bg)' : 'var(--os-btn-bg)',
       border: '1px solid var(--os-border-dark)',
@@ -81,7 +81,7 @@ const Taskbar = () => {
   return (
     <div className="fixed bottom-0 left-0 right-0" style={{ zIndex: Z_LAYERS.taskbar }}>
       <div
-        className="taskbar relative flex items-center h-10 px-1"
+        className="taskbar relative flex items-center px-1"
         style={{
           background: 'var(--os-taskbar)',
           borderTop: '2px solid var(--os-taskbar-border)',
@@ -99,7 +99,7 @@ const Taskbar = () => {
 
         <div className="h-6 w-[2px] mx-1 flex-shrink-0" style={{ borderLeft: '1px solid var(--os-border-dark)', borderRight: '1px solid var(--os-border-light)' }} />
 
-        <div className="flex-1 flex items-center gap-1 overflow-x-auto scrollbar-hide px-1">
+        <div className="taskbar-apps flex-1 flex items-center gap-1 overflow-x-auto scrollbar-hide px-1">
           {openWindows.map((id) => (
             <AppButton
               key={id}

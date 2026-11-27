@@ -1,3 +1,13 @@
+/*
+ * Taskbar height, read by the window layer and fullscreen windows. Taller
+ * where the pointer is a finger, so its buttons can be 44px. Keep in step
+ * with TASKBAR_HEIGHT / TASKBAR_HEIGHT_TOUCH in os/constants.js.
+ */
+:root { --os-taskbar-h: 42px; }
+@media (pointer: coarse) {
+  :root { --os-taskbar-h: 52px; }
+}
+
 /* ============================
    DESKTOP BACKGROUND
    ============================ */
@@ -171,7 +181,7 @@
 .os-bot-dock {
   position: absolute;
   right: 16px;
-  bottom: 56px;
+  bottom: calc(var(--os-taskbar-h) + 14px);
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -639,3 +649,32 @@
   transition: opacity var(--os-dur-fast) var(--os-ease);
 }
 .start-menu-row:hover .os-app-icon { opacity: 1; }
+
+/* ============================
+   TOUCH SIZES
+   ============================ */
+
+/*
+ * The shell is sized for a mouse: 28px taskbar buttons, 30px menu rows. Where
+ * the pointer is a finger, every control grows to at least 44px (Apple HIG,
+ * WCAG 2.5.5) with room between them, so a tap lands where it was aimed.
+ * Mouse users keep the compact desktop.
+ */
+.taskbar { height: calc(var(--os-taskbar-h) - 2px); } /* minus its 2px top border */
+
+@media (pointer: coarse) {
+  .taskbar-btn {
+    height: 44px;
+    min-width: 44px;
+    justify-content: center;
+  }
+  .taskbar-apps { gap: 8px; }
+
+  .start-menu-row { min-height: 44px; }
+  .start-menu-search { min-height: 44px; }
+  /* Under 16px, iOS zooms the whole page in when a field is focused. */
+  .start-menu-search input { font-size: 16px; align-self: stretch; }
+
+  .quick-actions { gap: 8px; }
+  .quick-action-btn { min-height: 44px; }
+}
