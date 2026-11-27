@@ -146,3 +146,19 @@
   .resume-heading,
   .resume-availability { letter-spacing: 0.02em; }
 }
+
+/*
+ * Screen only (the toolbar never prints): the two buttons get a fingertip's
+ * 44px. On touch screens the email / phone / GitHub links in the header,
+ * 12px text separated by dots, get a 44px-tall hit area through padding that
+ * negative margins take back, so the printed-résumé look is unchanged.
+ */
+.resume-btn { min-height: 44px; }
+
+@media (pointer: coarse) {
+  .resume-contact a {
+    display: inline-block;
+    padding: 15px 4px;
+    margin: -15px -4px;
+  }
+}

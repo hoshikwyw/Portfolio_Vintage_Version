@@ -861,3 +861,29 @@ a.op-channel-value::after { content: ''; position: absolute; inset: 0; }
   text-decoration: none;
 }
 .op-footer-link:hover { color: var(--op-accent); }
+/* --- tap targets --- */
+
+/*
+ * Every control is at least 44x44 (Apple HIG, WCAG 2.5.5), at every width:
+ * on a conventional page a 44px button reads as normal, not oversized, and a
+ * laptop with a touch screen gets the same comfort as a phone. Spacing
+ * between neighbours is 8px or more throughout.
+ */
+.op-skip { display: inline-flex; align-items: center; min-height: 44px; }
+.op-btn { min-height: 44px; justify-content: center; }
+.op-icon-btn { width: 44px; height: 44px; }
+.op-brand { min-height: 44px; }
+.op-nav-link { display: inline-flex; align-items: center; min-height: 44px; }
+.op-footer-link { min-height: 44px; }
+
+/*
+ * "Read the case study" is a text link between the description and the tags;
+ * a 44px-tall box with the extra height taken back by negative margins grows
+ * the hit area without moving anything on the card.
+ */
+.op-link-btn { min-height: 44px; margin-block: -11px; }
+
+/* Icon-only header buttons on a phone: square 44px, not 34px. */
+@media (max-width: 640px) {
+  .op-header-actions .op-btn { min-width: 44px; padding: 0; }
+}
