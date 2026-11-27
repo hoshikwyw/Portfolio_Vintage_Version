@@ -17,4 +17,31 @@ html, body {
  */
 html {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  /* iOS enlarges text on its own when a phone turns sideways; sizes here are deliberate. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/*
+ * Touch: every control responds to a single tap at once. `manipulation`
+ * drops the double-tap-to-zoom wait some browsers add before a tap counts,
+ * while pinch-zoom keeps working. The grey flash Android paints on a tapped
+ * element is turned off: controls here have their own pressed (:active)
+ * state, and the flash covered it with a rectangle that ignored rounded
+ * corners.
+ */
+a, button, input, select, textarea, label, summary, [role='button'] {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/*
+ * Scrolling a window, menu or dialog to its end stops there instead of
+ * dragging the page behind it, or pulling to refresh the whole site.
+ */
+.windowContent,
+.start-menu-panel,
+.op-dialog,
+.op-nav[data-open] {
+  overscroll-behavior: contain;
 }

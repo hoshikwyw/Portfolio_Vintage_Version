@@ -253,3 +253,7 @@
 
   .ms-message { font-size: 12px; }
 }
+
+/* --- pressed --- */
+.ms-difficulty:active,
+.ms-mode-btn:active { filter: brightness(0.9); }

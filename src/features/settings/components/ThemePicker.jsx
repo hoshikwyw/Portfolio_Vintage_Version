@@ -41,7 +41,7 @@ const ThemePicker = ({ value, onChange, resolvedTheme }) => (
             key={theme.key}
             onClick={() => onChange(theme.key)}
             aria-pressed={isSelected}
-            className="text-left p-3 cursor-pointer transition-all relative overflow-hidden"
+            className="text-left p-3 cursor-pointer transition-all relative overflow-hidden active:scale-[0.98]"
             style={{
               background: theme.preview,
               border: `2px solid ${isSelected ? 'var(--os-accent)' : 'var(--os-border-dark)'}`,

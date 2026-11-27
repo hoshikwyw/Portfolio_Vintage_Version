@@ -671,7 +671,8 @@
   .taskbar-apps { gap: 8px; }
 
   .start-menu-row { min-height: 44px; }
-  .start-menu-search { min-height: 44px; }
+  /* No vertical padding: the field itself fills the 44px box, so any tap on it lands in the input. */
+  .start-menu-search { min-height: 44px; padding-top: 0; padding-bottom: 0; }
   /* Under 16px, iOS zooms the whole page in when a field is focused. */
   .start-menu-search input { font-size: 16px; align-self: stretch; }
 

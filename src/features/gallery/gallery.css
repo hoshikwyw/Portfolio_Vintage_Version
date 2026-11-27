@@ -47,8 +47,11 @@
   transition: transform var(--os-dur-base) var(--os-ease);
 }
 
-.masonry-item:hover {
-  transform: translateY(-3px);
+/* Movement on hover only where hover exists: on a phone it sticks after a tap. */
+@media (hover: hover) {
+  .masonry-item:hover {
+    transform: translateY(-3px);
+  }
 }
 
 .masonry-item:active {
@@ -65,8 +68,11 @@
   transition: box-shadow var(--os-dur-base) var(--os-ease);
 }
 
-.masonry-item:hover .image-card {
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+/* Movement on hover only where hover exists: on a phone it sticks after a tap. */
+@media (hover: hover) {
+  .masonry-item:hover .image-card {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  }
 }
 
 /* Slow push-in on the photo itself, so the tile has depth rather than just lifting. */
@@ -290,4 +296,13 @@
     min-width: 40px;
     min-height: 40px;
   }
+}
+
+/* --- pressed --- */
+.image-modal-close:active,
+.image-modal-action-btn:active { filter: brightness(0.9); transform: scale(0.96); }
+
+/* Touch: the modal's close button reaches the full 44px, like every other control. */
+@media (hover: none) and (pointer: coarse) {
+  .image-modal-close { min-width: 44px; min-height: 44px; }
 }

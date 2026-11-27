@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Check, Copy, Github, Mail, Phone } from 'lucide-react'
+import { Check, Copy, Github, Linkedin, Mail, Phone } from 'lucide-react'
 import { profile } from '@/shared/config/profile'
 
 /** How long the "copied" tick shows before reverting to the copy icon. */
@@ -92,6 +92,9 @@ const ContactCard = () => (
     </ContactLink>
     <ContactLink icon={Github} href={profile.github} label={`${profile.name} on GitHub`} external>
       {profile.github.replace(/^https?:\/\//, '')}
+    </ContactLink>
+    <ContactLink icon={Linkedin} href={profile.linkedin} label={`${profile.name} on LinkedIn`} external>
+      {profile.linkedin.replace(/^https?:\/\/(www\.)?/, '')}
     </ContactLink>
   </div>
 )

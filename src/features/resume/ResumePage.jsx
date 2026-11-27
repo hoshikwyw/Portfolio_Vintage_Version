@@ -55,6 +55,7 @@ const ResumePage = () => {
   })
 
   const githubLabel = profile.github.replace(/^https?:\/\//, '')
+  const linkedinLabel = profile.linkedin.replace(/^https?:\/\/(www\.)?/, '')
 
   return (
     <div className="resume-root">
@@ -79,6 +80,8 @@ const ResumePage = () => {
             <a href={`tel:${profile.phone.replace(/\s+/g, '')}`}>{profile.phone}</a>
             <span aria-hidden="true"> · </span>
             <a href={profile.github}>{githubLabel}</a>
+            <span aria-hidden="true"> · </span>
+            <a href={profile.linkedin}>{linkedinLabel}</a>
           </p>
           {profile.availability && <p className="resume-availability">{profile.availability}</p>}
         </header>

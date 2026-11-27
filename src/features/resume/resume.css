@@ -162,3 +162,6 @@
     margin: -15px -4px;
   }
 }
+
+/* --- pressed --- */
+.resume-btn:active { transform: translateY(1px); }

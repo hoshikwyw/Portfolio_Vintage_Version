@@ -40,10 +40,16 @@
 }
 
 /* Lift on hover, and when a keyboard user tabs into one of its actions. */
-.os-project-card:hover,
 .os-project-card:focus-within {
   transform: translateY(-3px);
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
+}
+/* Movement on hover only where hover exists: on a phone it sticks after a tap. */
+@media (hover: hover) {
+  .os-project-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
+  }
 }
 
 /* --- cover --- */
@@ -66,7 +72,10 @@
     transform var(--os-dur-base) var(--os-ease);
 }
 .os-project-cover-img.is-loaded { opacity: 1; }
-.os-project-card:hover .os-project-cover-img { transform: scale(1.04); }
+/* Movement on hover only where hover exists: on a phone it sticks after a tap. */
+@media (hover: hover) {
+  .os-project-card:hover .os-project-cover-img { transform: scale(1.04); }
+}
 
 /* Not live yet: the screenshot sits back. */
 .os-project-card[data-coming-soon] .os-project-cover-img { filter: saturate(0.35) brightness(0.85); }
@@ -173,7 +182,10 @@
 }
 .os-project-case:hover { text-decoration: underline; text-underline-offset: 3px; }
 .os-project-case-arrow { transition: transform var(--os-dur-fast) var(--os-ease); }
-.os-project-case:hover .os-project-case-arrow { transform: translateX(3px); }
+/* Movement on hover only where hover exists: on a phone it sticks after a tap. */
+@media (hover: hover) {
+  .os-project-case:hover .os-project-case-arrow { transform: translateX(3px); }
+}
 
 /* Pushed to the bottom, so actions align across a row of uneven cards. */
 .os-project-actions {
@@ -197,3 +209,6 @@
     font-size: 12px;
   }
 }
+
+/* --- pressed --- */
+.os-project-case:active { opacity: 0.7; }

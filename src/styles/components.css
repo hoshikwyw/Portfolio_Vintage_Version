@@ -21,10 +21,13 @@
   border-radius: var(--os-btn-radius);
 }
 
-.quick-action-btn:hover {
-  filter: brightness(1.1);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.22);
+/* Movement on hover only where hover exists: on a phone it sticks after a tap. */
+@media (hover: hover) {
+  .quick-action-btn:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.22);
+  }
 }
 
 .quick-action-btn:active {
@@ -37,7 +40,10 @@
 .quick-action-btn svg {
   transition: transform var(--os-dur-base) var(--os-ease-back);
 }
-.quick-action-btn:hover svg { transform: translateY(-1px) scale(1.1); }
+/* Movement on hover only where hover exists: on a phone it sticks after a tap. */
+@media (hover: hover) {
+  .quick-action-btn:hover svg { transform: translateY(-1px) scale(1.1); }
+}
 
 .quick-action-primary {
   background: var(--os-accent) !important;

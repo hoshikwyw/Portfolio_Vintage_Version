@@ -23,7 +23,7 @@ const WallpaperPicker = ({ value, onChange, resolvedTheme }) => {
               key={wallpaper.key}
               onClick={() => onChange(wallpaper.key)}
               aria-pressed={isSelected}
-              className="relative h-14 overflow-hidden cursor-pointer"
+              className="relative h-14 overflow-hidden cursor-pointer transition-transform active:scale-[0.96]"
               style={{
                 background: gradientFor(wallpaper, resolvedTheme),
                 border: `2px solid ${isSelected ? 'var(--os-accent)' : 'var(--os-border-dark)'}`,

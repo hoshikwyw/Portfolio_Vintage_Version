@@ -20,9 +20,10 @@ export const profile = {
   /** The generated résumé page (`features/resume`), built from this file. */
   resume: '/resume',
   github: 'https://github.com/hoshikwyw',
+  linkedin: 'https://www.linkedin.com/in/khaingwutyiwin',
 
   about:
-    "Hi! I'm Kayv — a mid-level full stack developer at IT-Wizard, building web and mobile apps end to end: React and Next.js on the web, PWAs with Capacitor, and native apps with React Native and Expo. I'm studying Computer Science at the University of the People, learning Python, and building with Claude as my AI pair programmer.",
+    "Hi! I'm Kayv — a mid-level full stack developer at IT-Wizard, building web and mobile apps end to end: Java and Spring Boot APIs on Oracle and MariaDB, React and Next.js on the web, PWAs with Capacitor, and native apps with React Native and Expo. I'm studying Computer Science at the University of the People, learning Python, and building with Claude as my AI pair programmer.",
 
   /** Status shown beside the role in About Me. Set to null to hide it. */
   availability: 'Open to freelance work',
@@ -41,6 +42,8 @@ export const summary = (() => {
 
 /** Skills rendered as progress bars in the About window. */
 export const skills = [
+  { name: 'Java', level: 75 },
+  { name: 'Spring Boot', level: 75 },
   { name: 'React.js', level: 90 },
   { name: 'Tailwind CSS', level: 85 },
   { name: 'Next.js', level: 75 },
@@ -49,7 +52,7 @@ export const skills = [
 ]
 
 /** Short skill list surfaced by the terminal `skills` command. */
-export const terminalSkills = ['React', 'Tailwind', 'GSAP', 'Node']
+export const terminalSkills = ['Java', 'Spring Boot', 'React', 'TypeScript', 'Tailwind', 'GSAP', 'Node']
 
 /**
  * What Kayv is working on right now, shown as the "Currently" panel in About
@@ -68,6 +71,7 @@ export const currently = [
  * self-rated level.
  */
 export const platforms = [
+  { name: 'Back-end APIs', tag: 'Java · Spring Boot' },
   { name: 'Web apps', tag: 'React · Next.js' },
   { name: 'PWAs & hybrid apps', tag: 'Capacitor' },
   { name: 'Native mobile apps', tag: 'React Native · Expo' },
@@ -79,7 +83,8 @@ export const platforms = [
  */
 export const tools = [
   { name: 'Version control', tag: 'Git · GitHub' },
-  { name: 'Backend & databases', tag: 'Supabase · DBeaver' },
+  { name: 'Backend', tag: 'Spring Boot · MyBatis · Supabase' },
+  { name: 'Databases', tag: 'Oracle · MariaDB · PostgreSQL' },
   { name: 'Cloud & DevOps', tag: 'AWS · Docker' },
   { name: 'APIs', tag: 'Google Vision · Maps' },
 ]

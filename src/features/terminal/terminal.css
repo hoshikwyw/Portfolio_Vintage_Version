@@ -180,3 +180,9 @@
   .os-term-chip { min-height: 44px; padding: 0 14px; font-size: 13px; }
   .os-term-input { min-height: 44px; font-size: 16px; }
 }
+
+/* --- pressed --- */
+.os-term-chip:active:not(:disabled) {
+  background: color-mix(in srgb, var(--os-terminal-accent) 24%, transparent);
+  border-color: var(--os-terminal-accent);
+}

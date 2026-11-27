@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Check, Copy, Github, Mail, MapPin, Phone } from 'lucide-react'
+import { Check, Copy, Github, Linkedin, Mail, MapPin, Phone } from 'lucide-react'
 import { profile } from '@/shared/config/profile'
 import { openHireEmail } from '@/shared/lib/browser'
 import SectionHeading from '../components/SectionHeading'
@@ -46,6 +46,7 @@ const CHANNELS = [
   { key: 'email', Icon: Mail, label: 'Email', value: profile.email, href: `mailto:${profile.email}` },
   { key: 'phone', Icon: Phone, label: 'Phone', value: profile.phone, href: `tel:${profile.phone}` },
   { key: 'github', Icon: Github, label: 'GitHub', value: profile.github.replace(/^https?:\/\//, ''), href: profile.github, external: true },
+  { key: 'linkedin', Icon: Linkedin, label: 'LinkedIn', value: profile.linkedin.replace(/^https?:\/\/(www\.)?/, ''), href: profile.linkedin, external: true },
   { key: 'location', Icon: MapPin, label: 'Based in', value: profile.location },
 ]
 

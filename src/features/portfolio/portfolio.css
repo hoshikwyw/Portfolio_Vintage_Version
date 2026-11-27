@@ -101,7 +101,10 @@
   cursor: pointer;
   transition: transform 150ms ease, border-color 150ms ease, background-color 150ms ease;
 }
-.op-btn:hover { border-color: var(--op-accent); transform: translateY(-1px); }
+/* Movement on hover only where hover exists: on a phone it sticks after a tap. */
+@media (hover: hover) {
+  .op-btn:hover { border-color: var(--op-accent); transform: translateY(-1px); }
+}
 .op-btn:active { transform: translateY(0); }
 
 .op-btn-primary {
@@ -473,7 +476,10 @@
 }
 
 .op-platform { transition: transform 150ms ease, border-color 150ms ease; }
-.op-platform:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--op-accent) 50%, var(--op-border)); }
+/* Movement on hover only where hover exists: on a phone it sticks after a tap. */
+@media (hover: hover) {
+  .op-platform:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--op-accent) 50%, var(--op-border)); }
+}
 
 .op-platform-icon {
   display: grid;
@@ -583,11 +589,18 @@
   overflow: hidden;
   transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
-.op-project:hover,
 .op-project:focus-within {
   transform: translateY(-3px);
   border-color: color-mix(in srgb, var(--op-accent) 45%, var(--op-border));
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22);
+}
+/* The hover half only where hover exists: on a phone it sticks after a tap. */
+@media (hover: hover) {
+  .op-project:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--op-accent) 45%, var(--op-border));
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.22);
+  }
 }
 
 .op-project-cover {
@@ -603,7 +616,10 @@
   object-fit: cover;
   transition: transform 300ms ease;
 }
-.op-project:hover .op-project-cover img { transform: scale(1.04); }
+/* Movement on hover only where hover exists: on a phone it sticks after a tap. */
+@media (hover: hover) {
+  .op-project:hover .op-project-cover img { transform: scale(1.04); }
+}
 .op-project.is-soon .op-project-cover img { filter: saturate(0.4) brightness(0.85); }
 
 .op-project-cover-empty {
@@ -657,7 +673,10 @@
 }
 .op-link-btn:hover { text-decoration: underline; text-underline-offset: 4px; }
 .op-link-btn svg { transition: transform 150ms ease; }
-.op-link-btn:hover svg { transform: translateX(3px); }
+/* Movement on hover only where hover exists: on a phone it sticks after a tap. */
+@media (hover: hover) {
+  .op-link-btn:hover svg { transform: translateX(3px); }
+}
 
 .op-project-tags .op-chip { font-size: 12px; padding: 3px 10px; }
 
@@ -887,3 +906,14 @@ a.op-channel-value::after { content: ''; position: absolute; inset: 0; }
 @media (max-width: 640px) {
   .op-header-actions .op-btn { min-width: 44px; padding: 0; }
 }
+
+/* --- pressed --- */
+
+/* Every control answers a tap at once (the browser's own tap flash is off). */
+.op-nav-link:active,
+.op-footer-link:active,
+.op-link-btn:active,
+.op-brand:active,
+.op-channel:has(a):active { opacity: 0.7; }
+.op-icon-btn:active { transform: scale(0.94); }
+.op-icon-btn { transition: transform 120ms ease, color 150ms ease, border-color 150ms ease; }

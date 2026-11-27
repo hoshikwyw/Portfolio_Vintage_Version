@@ -273,3 +273,7 @@
   .os-contact-line { gap: 8px; }
   .os-contact-copy { width: 44px; height: 44px; }
 }
+
+/* --- pressed --- */
+.os-contact-row:active { background: var(--os-panel-bg); opacity: 0.8; }
+.os-contact-copy:active { color: var(--os-accent); transform: scale(0.92); }
